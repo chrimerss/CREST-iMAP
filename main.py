@@ -18,6 +18,9 @@ class HHModel(object):
         self.mesh= None
         self.crest= CREST(self.grids, self.syspar.crest_params)
 
-    def step():
+    def step(self, timestamp):
+        
+
+    def run(self):
         pass
         
