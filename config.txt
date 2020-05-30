@@ -1,0 +1,17 @@
+[System]
+cores=8
+
+[CREST]
+RainFact=0.4
+Ksat=0.1
+WM=0.1
+B=0.1
+IM=0.4
+KE=0.5
+coeM=0.3
+coeR=0.2
+coeS=0.6
+KS=0.9
+KI=0.8
+
+[HH]

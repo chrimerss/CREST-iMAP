@@ -2,7 +2,7 @@
 from osgeo import gdal
 from CREST.flow import Flow
 from logs import logger
-
+import numpy as np
 
 class Grid(object):
     """Construct georeferenced grids according to DEM file"""
@@ -13,20 +13,18 @@ class Grid(object):
         xsize, ysize, x_res, y_res, llcrn= self.geoinfo(DEM)
         self.nrows= ysize
         self.ncols= xsize
-        states= self.intialize_crest_states()
-        fluxes= self.initialize_crest_fluxes()
-        self.data= {'DEM': flow.dem,
+        self.states= self.intialize_crest_states()
+        self.fluxes= self.initialize_crest_fluxes()
+        self.static= {'DEM': flow.dem,
                     'flow_dir': flow.dir,
                     'flow_acc': flow.acc,
-                    'states': states,
-                    'fluxes': fluxes,
                     'xsize': xsize,
                     'ysize': ysize,
                     'x_res': x_res,
                     'y_res': y_res,
                     'llcrn': llcrn}
-        logger.warning('Completed grid initialization: %s'%([self.data[key] for key in self.data if self.data[key] is not None]))
-        del DEM, flow, states, fluxes
+        # logger.warning('Completed grid initialization: %s'%([self.data[key] for key in self.data if self.data[key] is not None]))
+        del DEM, flow
     
     def geoinfo(self, dem):
         if dem.endswith('.tif'):
@@ -49,7 +47,43 @@ class Grid(object):
         self.data[fieled]=np.zeros((self.nrows, self.ncols), dtype= dtype)
 
     def intialize_crest_states(self):
-        pass
+        states= np.zeros((self.nrows,
+                 self.ncols), dtype= {
+                     'names': ('SS0', 'SI0', 'W0'),
+                     'formats': ('f4', 'f4', 'f4')
+                 })
+
+        return states
+
 
     def initialize_crest_fluxes(self):
-        pass
+        fluxes= np.zeros((self.nrows,
+                 self.ncols), dtype= {
+                     'names': ('RI', 'RS'),
+                     'formats': ('f4', 'f4')
+                 })
+
+        return fluxes
+
+    @property
+    def fluxes(self):
+        """The fluxes property."""
+        return self.fluxes
+
+    @fluxes.setter
+    def fluxes(self, *args):
+        m,n,RI, RS= args
+        self.fluxes['RI'][m,n]= RI
+        self.fluxes['RS'][m,n]= RS
+
+    @property
+    def states(self):
+        """The states property."""
+        return self.states
+
+    @states.setter
+    def states(self, *args):
+        m,n, SS, SI, W = args
+        self.states['SS0'][m,n]= SS
+        self.states['SI0'][m,n]= SS
+        self.states['W0'][m,n]= SS
