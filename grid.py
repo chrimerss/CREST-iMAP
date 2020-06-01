@@ -1,8 +1,10 @@
 # Initialize grid class
 from osgeo import gdal
 from CREST.flow import Flow
-from logs import logger
+from logs import formatter
 import numpy as np
+
+LOGGER= formatter(__name__)
 
 class Grid(object):
     """Construct georeferenced grids according to DEM file"""
@@ -13,8 +15,8 @@ class Grid(object):
         xsize, ysize, x_res, y_res, llcrn= self.geoinfo(DEM)
         self.nrows= ysize
         self.ncols= xsize
-        self.states= self.intialize_crest_states()
-        self.fluxes= self.initialize_crest_fluxes()
+        self._states= self.intialize_crest_states()
+        self._fluxes= self.initialize_crest_fluxes()
         self.static= {'DEM': flow.dem,
                     'flow_dir': flow.dir,
                     'flow_acc': flow.acc,
@@ -30,17 +32,18 @@ class Grid(object):
         if dem.endswith('.tif'):
             raster= gdal.Open(dem)
             geotransform= raster.GetGeoTransform()
-            xsize= raster.RasterXSize
-            ysize= raster.RasterYSize
-            x_reso= geotransform[1]
-            y_reso= geotransform[-1]
-            llcrn= (geotransform[0], geotransform[3])
+            xsize= int(raster.RasterXSize)
+            ysize= int(raster.RasterYSize)
+            x_res= geotransform[1]
+            y_res= geotransform[-1]
+            if y_res>0: llcrn= (geotransform[0], geotransform[3])
+            elif y_res<=0: llcrn= (geotransform[0], geotransform[3]+geotransform[-1]*ysize)
 
         else:
             # TODO read asc file or h5
             pass
 
-        return (xsize, ysize, x_reso, y_reso, llcrn)
+        return (xsize, ysize, x_res, y_res, llcrn)
 
     def update(self, field, dtype):
 
@@ -68,22 +71,23 @@ class Grid(object):
     @property
     def fluxes(self):
         """The fluxes property."""
-        return self.fluxes
+        return self._fluxes
 
     @fluxes.setter
     def fluxes(self, *args):
         m,n,RI, RS= args
-        self.fluxes['RI'][m,n]= RI
-        self.fluxes['RS'][m,n]= RS
+        self._fluxes['RI'][m,n]= RI
+        self._fluxes['RS'][m,n]= RS
 
     @property
     def states(self):
         """The states property."""
-        return self.states
+        return self._states
 
     @states.setter
     def states(self, *args):
+        print(args)
         m,n, SS, SI, W = args
-        self.states['SS0'][m,n]= SS
-        self.states['SI0'][m,n]= SS
-        self.states['W0'][m,n]= SS
+        self._states['SS0'][m,n]= SS
+        self._states['SI0'][m,n]= SS
+        self._states['W0'][m,n]= SS

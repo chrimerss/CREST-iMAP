@@ -1,14 +1,16 @@
 import logging
+def formatter(module):
+    logger = logging.getLogger(module)
 
-logger = logging.getLogger('CREST')
+    infoHandler= logging.StreamHandler()
+    infoHandler.setLevel(logging.INFO)
 
-infoHandler= logging.StreamHandler()
-infoHandler.setLevel(logging.INFO)
+    infoFormatter= logging.Formatter('%(name)s  -  %(asctime)s  -  %(message)s')
 
-infoFormatter= logging.Formatter('%(name)s  -  %(asctime)s  -  %(message)s')
+    infoHandler.setFormatter(infoFormatter)
 
-infoHandler.setFormatter(infoFormatter)
+    logger.addHandler(infoHandler)
 
-logger.addHandler(infoHandler)
+    return logger
 
-logger.warning('starts processing...')
+    # logger.warning('starts processing...')

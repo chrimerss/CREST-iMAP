@@ -1,6 +1,8 @@
 # Read config file 
 # TODO
 import configparser
+import dateparser
+import datetime
 
 class Config(object):
     """Read configuration file"""
@@ -12,23 +14,41 @@ class Config(object):
         self._crest= self.getCrestParams(config)
         self._HH= self.getHHParams(config)
         self._sys= self.getSysParams(config)
+        self._forcing= self.getForcingParams(config)
+        # print('forcing', self._forcing)
         
     def getCrestParams(self, config):
 
-        return {key:config['CREST'][key] for key in config['CREST'].keys()}
+        return {key:float(config['CREST'][key]) for key in config['CREST'].keys()}
 
     def getHHParams(self, config):
         
-        return {key:config['HH'][key] for key in config['HH'].keys()}
+        return {key:float(config['HH'][key]) for key in config['HH'].keys()}
     
     def getSysParams(self, config):
-        return {key:config['System'][key] for key in config['System'].keys()}
+        # def _resolveTimeStep(string):
+            # if string.endswith('H'):
+            #     return datetime.timedelta(hours=int(string[:-1]))
+            # elif string.endswith('M'):
+            #     return datetime.timedelta(minutess=int(string[:-1]))
+            # elif string.endswith('S'):
+            #     return datetime.timedelta(seconds=int(string[:-1]))
+        mapper= {'cores': float,
+                 'TimeStep': str,
+                 'start': dateparser.parse,
+                 'end': dateparser.parse}
+        
+
+        return {key:mapper[key](config['System'][key]) for key in config['System'].keys()}
+
+    def getForcingParams(self, config):
+        return {key:config['Forcing'][key] for key in config['Forcing'].keys()}
 
     @property
     def crest(self):
         return self._crest
 
-    @@property
+    @property
     def HH(self):
         """The HH property."""
         return self._HH
@@ -36,10 +56,22 @@ class Config(object):
     def HH(self, value):
         self._HH = value
 
-    @@property
+    @property
     def sys(self):
         """The sys property."""
         return self._sys
     @sys.setter
     def sys(self, value):
         self._sys = value
+
+    @property
+    def forcing(self):
+        """The forcing property."""
+        return self._forcing
+    @forcing.setter
+    def forcing(self, value):
+        self._forcing = value
+
+
+if __name__=='__main__':
+    config= Config('config.txt')

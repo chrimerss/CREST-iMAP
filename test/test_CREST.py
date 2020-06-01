@@ -1,9 +1,11 @@
 import sys
+import pandas as pd
 sys.path.append('..')
 
-# from CREST.model import CREST
+from CREST.model import CREST
 from grid import Grid
 from config import Config
+import time
 
 def get_grids():
     grids= Grid(DEMpath='../data/dem/DEM.tif')
@@ -11,16 +13,29 @@ def get_grids():
     return grids
 
 def get_params():
-    params= Config('../config.txt')
-    print('System parameters:'%(params.sys))
-    print('Crest parameters:'%(params.crest))
+    params= Config('/home/ZhiLi/CRESTHH/config.txt')
+    print('System parameters:%s'%(params.sys))
+    print('Crest parameters:%s'%(params.crest))
+    print('Forcing folders:%s'%(params.forcing))
 
-def test_crest():
-    crest_mode= CREST()
+    return params
+
+def test_crest(grids, params):
+    crest_model= CREST(grids, params)
+    start=params.sys['start']
+    end= params.sys['end']
+    periods= pd.date_range(start, end, freq=params.sys['TimeStep'])
+    for date in periods:
+        states, fluxes= crest_model.step(date)
+        np.save('temp_checking/%s_states_fluxes.npy'%date.strftime('%Y%m%d%H%M'), np.concatenate([states, fluxes]))
+        print()
+
 
 def main():
     # test config file parser
-    get_params()
+    params= get_params()
+    grids= get_grids()
+    test_crest(grids, params)
 
 if __name__=='__main__':
     main()

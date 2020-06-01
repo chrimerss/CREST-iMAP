@@ -1,5 +1,15 @@
 [System]
 cores=8
+TimeStep=1H
+start=2017-08-25 00:00:00
+end=2017-08-25 23:00:00
+
+[Forcing]
+DEM=/home/ZhiLi/CRESTHH/data/DEM
+Precipitation=/home/ZhiLi/CRESTHH/data/precip/imerg%Y%m%dS%H%M%S.tif
+Evaporation=/home/ZhiLi/CRESTHH/data/evap/imerg%Y%m%dS%H%M%S.tif
+
+
 
 [CREST]
 RainFact=0.4
@@ -13,5 +23,6 @@ coeR=0.2
 coeS=0.6
 KS=0.9
 KI=0.8
+
 
 [HH]
