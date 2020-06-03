@@ -3,6 +3,7 @@
 import configparser
 import dateparser
 import datetime
+import distutils
 
 class Config(object):
     """Read configuration file"""
@@ -18,8 +19,15 @@ class Config(object):
         # print('forcing', self._forcing)
         
     def getCrestParams(self, config):
-
-        return {key:float(config['CREST'][key]) for key in config['CREST'].keys()}
+        crest_params= {key:config['CREST'][key] for key in config['CREST'].keys()}
+        apriori= distutils.util.strtobool(crest_params.pop('apriori'))
+        
+        # print('apriori:', apriori)
+        if apriori:
+            return {key:str(config['CREST'][key]) for key in crest_params.keys()}
+        else:
+            return {key:float(config['CREST'][key]) for key in crest_params.keys()}
+            
 
     def getHHParams(self, config):
         
@@ -33,7 +41,7 @@ class Config(object):
             #     return datetime.timedelta(minutess=int(string[:-1]))
             # elif string.endswith('S'):
             #     return datetime.timedelta(seconds=int(string[:-1]))
-        mapper= {'cores': float,
+        mapper= {'cores': int,
                  'TimeStep': str,
                  'start': dateparser.parse,
                  'end': dateparser.parse}
@@ -47,6 +55,9 @@ class Config(object):
     @property
     def crest(self):
         return self._crest
+    @crest.setter
+    def crest(self, value):
+        self._HH = value        
 
     @property
     def HH(self):

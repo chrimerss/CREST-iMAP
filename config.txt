@@ -1,5 +1,5 @@
 [System]
-cores=8
+cores=16
 TimeStep=1H
 start=2017-08-25 00:00:00
 end=2017-08-25 23:00:00
@@ -10,8 +10,8 @@ Precipitation=/home/ZhiLi/CRESTHH/data/precip/imerg%Y%m%dS%H%M%S.tif
 Evaporation=/home/ZhiLi/CRESTHH/data/evap/imerg%Y%m%dS%H%M%S.tif
 
 
-
 [CREST]
+apriori=False
 RainFact=0.4
 Ksat=0.1
 WM=0.1
@@ -19,6 +19,7 @@ B=0.1
 IM=0.4
 KE=0.5
 coeM=0.3
+expM=0.2
 coeR=0.2
 coeS=0.6
 KS=0.9

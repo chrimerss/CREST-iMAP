@@ -6,9 +6,10 @@ from CREST.model import CREST
 from grid import Grid
 from config import Config
 import time
+import numpy as np
 
-def get_grids():
-    grids= Grid(DEMpath='../data/dem/DEM.tif')
+def get_grids(param):
+    grids= Grid(crest_param=param.crest,DEMpath='../data/dem/DEM.tif', )
 
     return grids
 
@@ -27,14 +28,14 @@ def test_crest(grids, params):
     periods= pd.date_range(start, end, freq=params.sys['TimeStep'])
     for date in periods:
         states, fluxes= crest_model.step(date)
-        np.save('temp_checking/%s_states_fluxes.npy'%date.strftime('%Y%m%d%H%M'), np.concatenate([states, fluxes]))
-        print()
+        np.save('temp_checking/%s_states_fluxes.npy'%date.strftime('%Y%m%d%H%M'), np.concatenate([states['SI0'], fluxes['RI']]))
+        # print()
 
 
 def main():
     # test config file parser
     params= get_params()
-    grids= get_grids()
+    grids= get_grids(params)
     test_crest(grids, params)
 
 if __name__=='__main__':
