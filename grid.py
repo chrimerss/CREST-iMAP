@@ -14,7 +14,7 @@ class Grid(object):
         super(Grid, self).__init__()
         DEM= pth['DEMpath']
         flow= Flow(demFilePath= DEM)
-        xsize, ysize, x_res, y_res, llcrn= self.geoinfo(DEM)
+        xsize, ysize, x_res, y_res, llcrn, proj= self.geoinfo(DEM)
         llx= llcrn[0]; lly= llcrn[1]
         ulx= llx;lrx=llx+x_res*xsize;
         if y_res<=0: uly= llcrn[1] + (-y_res)*ysize; lry=lly
@@ -31,7 +31,8 @@ class Grid(object):
                     'ysize': ysize,
                     'x_res': x_res,
                     'y_res': y_res,
-                    'llcrn': llcrn}
+                    'llcrn': llcrn,
+                    'proj': proj}
         # logger.warning('Completed grid initialization: %s'%([self.data[key] for key in self.data if self.data[key] is not None]))
         del DEM, flow
         
@@ -55,12 +56,13 @@ class Grid(object):
             y_res= geotransform[-1]
             if y_res>0: llcrn= (geotransform[0], geotransform[3])
             elif y_res<=0: llcrn= (geotransform[0], geotransform[3]+geotransform[-1]*ysize)
+            proj= raster.GetProjection()
 
         else:
             # TODO read asc file or h5
             pass
 
-        return (xsize, ysize, x_res, y_res, llcrn)
+        return (xsize, ysize, x_res, y_res, llcrn, proj)
 
     def update(self, field, dtype):
 

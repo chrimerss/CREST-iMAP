@@ -4,6 +4,9 @@ import configparser
 import dateparser
 import datetime
 import distutils
+from logs import formatter
+
+LOGGER= formatter(__name__)
 
 class Config(object):
     """Read configuration file"""
@@ -17,6 +20,11 @@ class Config(object):
         self._sys= self.getSysParams(config)
         self._forcing= self.getForcingParams(config)
         # print('forcing', self._forcing)
+        LOGGER.warning('\n\================================\n\
+                        ===========CRESTHH==============\n\
+                        ================================\n\
+                        System parameters: %s\nCREST parameters: %s\n\
+                        Forcing folders: %s'%(self._sys,self._crest, self._forcing))
         
     def getCrestParams(self, config):
         crest_params= {key:config['CREST'][key] for key in config['CREST'].keys()}
