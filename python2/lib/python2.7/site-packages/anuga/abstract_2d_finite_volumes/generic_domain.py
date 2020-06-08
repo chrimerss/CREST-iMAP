@@ -11,6 +11,13 @@
    Ole Nielsen, Stephen Roberts, Duncan Gray
    Geoscience Australia
 """
+import sys
+sys.path.append('/home/ZhiLi/CRESTHH/crest')
+import os
+import crest_core
+# from multiprocessing import Pool
+import datetime
+import pandas as pd
 
 from time import time as walltime
 
@@ -449,6 +456,89 @@ class Generic_Domain:
     def set_georeference(self, *args, **kwargs):
         self.mesh.set_georeference(*args, **kwargs)
         self.geo_reference = self.mesh.geo_reference
+
+    def get_forcing(self):
+        if hasattr(self, 'precip_dir') and hasattr(self, 'evap_dir') and hasattr(self, 'timestamp') and hasattr(self, '_time_interval'):
+            return (self.precip_dir, self.evap_dir, self.timestamp, self._time_interval, self.precip_freq, self.evap_freq)
+        else:
+            msg= 'Haven initialized forcing, please check domain.set_forcing(P, ET, timestamp)'
+            raise Exception(msg)
+
+    def set_precip_dir(self, folder, pattern=None, freq=None):
+        if not isinstance(folder, str):
+            msg= 'Expected argument is string'
+            raise Exception(msg)
+        else:
+            self.precip_dir= folder
+            self.precip_pattern= pattern
+            self.precip_freq= freq
+
+    def get_precip_dir(self):
+        if hasattr(self, 'precip_dir'):
+            return self.precip_dir
+        else:
+            msg= 'No attribute precip_dir, you need to initialize it by domain.set_timestamp'
+            raise Exception(msg)
+
+    def set_evap_dir(self, folder, pattern=None, freq=None):
+        if not isinstance(folder, str):
+            msg= 'Expected argument is string'
+            raise Exception(msg)
+        else:
+            self.evap_dir= folder
+            self.evap_pattern= pattern
+            self.evap_freq= freq  
+
+    def get_evap_dir(self):
+        if hasattr(self, 'evap_dir'):
+            return self.evap_dir
+        else:
+            msg= 'No attribute evap_dir, you need to initialize it by domain.set_timestamp'
+            raise Exception(msg)        
+
+    def set_timestamp(self, timestamp, format):
+        import datetime
+        if not isinstance(format, str):
+            msg= 'Expected argument format is string'
+            raise Exception(msg)
+        else:
+            self.timestamp= datetime.datetime.strptime(timestamp, format)
+
+
+    def get_timestamp(self):
+        if hasattr(self, 'timestamp'):
+            return self.timestamp
+        else:
+            msg= 'No attribute timestamp, you need to initialize it by domain.set_timestamp'
+            raise Exception(msg)
+
+    def set_time_interval(self, interval):
+        '''Interval should be int+tima unit e.g., 1H'''
+        import datetime
+        if not isinstance(interval, str):
+            msg= 'Expected argument format is string'
+            raise Exception(msg)
+        else:
+            if interval=='1H':
+                self._time_interval= datetime.timedelta(hours=1)
+            elif interval=='1M':
+                self._time_interval= datetime.timedelta(minutes=1)
+            elif interval=='1S':
+                self._time_interval= datetime.timedelta(seconds=1)
+
+    def get_time_interval(self):
+        if hasattr(self, 'timestamp'):
+            return self._time_interval
+        else:
+            msg= 'No attribute timestamp, you need to initialize it by domain.set_timestamp'
+            raise Exception(msg)    
+
+    def set_forcing(self):
+        precipFolder= self.get_precip_dir()
+        evapFolder= self.get_evap_dir()
+        timestamp= self.get_timestamp()
+        time_interval= self.get_time_interval()
+        
 
     def build_tagged_elements_dictionary(self, *args, **kwargs):
         self.mesh.build_tagged_elements_dictionary(*args, **kwargs)
@@ -1623,7 +1713,7 @@ class Generic_Domain:
 
         self._order_ = self.default_order
 
-
+        precipFolder, evapFolder, timestamp, time_interval, precip_freq, evap_freq= self.get_forcing()
         
         if finaltime is not None and duration is not None:
             msg = 'Only one of finaltime and duration may be specified'
@@ -1664,7 +1754,7 @@ class Generic_Domain:
         # Update extrema if necessary (for reporting)
         self.update_extrema()
         
-
+        log.critical('evolving elements: %d'%len(self.quantities['W0'].centroid_values))
 
         # Or maybe restore from latest checkpoint
         #if self.checkpoint is True:
@@ -1680,28 +1770,72 @@ class Generic_Domain:
             
             yield(self.get_time())      # Yield initial values
             
-            
+        freq_mapper= {'D':24*3600,'H':3600,'M':60,'S':1}
+        _time_interval_func= lambda d: int(d[0])*freq_mapper[d[1]]
 
         while True:
 
             initial_time = self.get_time()
+            current_time= timestamp + datetime.timedelta(seconds=self.get_time())
+            # print self.timestep
+
+            # ==========================================
+            # To get excessive rainfall step
+            # ==========================================
+            if self.get_time()%_time_interval_func(precip_freq)==0:
+                # print self.get_time()
+                
+                precip_pth= os.path.join(self.precip_dir,
+                            self.precip_pattern.replace('%Y', '%04d'%current_time.year).replace('%m',
+                            '%02d'%current_time.month).replace('%d', '%02d'%(current_time.day)).replace('%H',
+                            '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
+                                '%02d'%(current_time.second)))
+                # try:
+                self.quantities['P'].set_values_from_utm_grid_file(precip_pth,
+                                location='centroids')
+                self.quantities['P']/=(_time_interval_func(precip_freq)*1000)
+                # except:
+                    # print '%s not found in precipitation'%precip_pth
+            if self.get_time()%_time_interval_func(evap_freq)==0:
+                # try:
+                evap_pth= os.path.join(self.evap_dir, self.evap_pattern.replace('%Y', '%04d'%(current_time.year)).replace('%m',
+                            '%02d'%(current_time.month)).replace('%d', '%02d'%(current_time.day)).replace('%H',
+                            '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
+                            '%02d'%(current_time.second)))
+                self.quantities['ET'].set_values_from_utm_grid_file(evap_pth,
+                            location='centroids')
+                self.quantities['ET']/=(_time_interval_func(evap_freq)*1000*30)
+                # except:
+                    # print '%s not found in evaporation!'%evap_pth
+            
+            # print "initialize completed!  Start excessive rainfall calculation"       
+
+                # excessRain= excessRain * self.timestep
+                # print "excessive rainfall computed, assign to stage."
+                
+
+            if self.get_time()%self._time_interval.seconds==0:
+                cent_ids, excessRain= self.evolve_crest()
+                self.set_quantity('excess_rain', excessRain,location='centroids')
             
             #==========================================
             # Apply fluid flow fractional step
             #==========================================
             if self.get_timestepping_method() == 'euler':
-                self.evolve_one_euler_step(yieldstep, self.finaltime)
+                self.evolve_one_euler_step(yieldstep, self.finaltime, excessRain)
 
             elif self.get_timestepping_method() == 'rk2':
-                self.evolve_one_rk2_step(yieldstep, self.finaltime)
+                self.evolve_one_rk2_step(yieldstep, self.finaltime, excessRain)
 
             elif self.get_timestepping_method() == 'rk3':
-                self.evolve_one_rk3_step(yieldstep, self.finaltime)
+                self.evolve_one_rk3_step(yieldstep, self.finaltime, excessRain)
 
             #==========================================
             # Apply other fractional steps
             #==========================================
             self.apply_fractional_steps()
+
+            
 
             #==========================================
             # Centroid Values of variables should be ok,
@@ -1716,6 +1850,8 @@ class Generic_Domain:
             self.update_extrema()            
 
             self.number_of_steps += 1
+
+            # log.critical('proc %d: number of steps: %d'%(self.processor, self.number_of_steps))
 
             if self._order_ == 1:
                 self.number_of_first_order_steps += 1
@@ -1761,7 +1897,76 @@ class Generic_Domain:
                 self.max_speed = num.zeros(N, num.float)
 
 
-    def evolve_one_euler_step(self, yieldstep, finaltime):
+    def evolve_crest(self):
+        # self.q_rain= self.quantities['P'].centroid_values
+        # self.q_evap= evap.centroid_values
+        # q_RI= self.quantities['RI'].centroid_values
+        # q_RS= self.quantities['RS'].centroid_values
+        # q_SS= self.quantities['SS0'].centroid_values
+        # q_SI= self.quantities['SI0'].centroid_values
+        # q_W= self.quantities['W0'].centroid_values
+        # q_RainFact= self.quantities['RainFact'].centroid_values
+        # q_Ksat= self.quantities['Ksat'].centroid_values
+        # q_WM= self.quantities['WM'].centroid_values
+        # q_B= self.quantities['B'].centroid_values
+        # q_IM= self.quantities['IM'].centroid_values
+        # q_KE= self.quantities['KE'].centroid_values
+        # q_coeM= self.quantities['coeM'].centroid_values
+        # q_expM= self.quantities['expM'].centroid_values
+        # q_coeR= self.quantities['coeR'].centroid_values
+        # q_coeS= self.quantities['coeS'].centroid_values
+        # q_KS= self.quantities['KS'].centroid_values
+        # q_KI= self.quantities['KI'].centroid_values
+        # args= [(q_rain, q_evap, q_RI,q_RS,q_SS,q_SI,
+        #         q_W, q_RainFact, q_Ksat, q_WM, q_B,
+        #         q_IM, q_KE, q_coeM, q_expM, q_coeR, q_coeS,
+        #         q_KS, q_KI) for i in len(q_rain)]
+        # pool= Pool(16)
+        # results= pool.map(self._evolve_crest,
+        #             num.arange(len(self.quantities['W0'].centroid_values)))
+        # pool.close()
+        excessive_rain= []
+        cent_id= []
+        # for (N, RI, RS, SI0, SS0, W0) in results:
+        #     excessive_rain.append((RI+RS)*3.6)
+        #     self.quantities['W0'].centroid_values[N]= W0
+        #     self.quantities['SI0'].centroid_values[N]= SI0
+        #     self.quantities['SS0'].centroid_values[N]= SS0
+
+        for i in num.arange(len(self.quantities['W0'].centroid_values)):
+            N, RI, RS, SI0, SS0, W0= self._evolve_crest(i)
+            excessive_rain.append((RI+RS))
+            self.quantities['W0'].centroid_values[N]= W0
+            self.quantities['SI0'].centroid_values[N]= SI0
+            self.quantities['SS0'].centroid_values[N]= SS0
+            # print 'RI: %.2f, RS: %.2f, W0: %.2f, SI0: %.2f, SS0: %.2f'%(RI, RS, W0, SI0, SS0)
+        return cent_id, num.array(excessive_rain)
+
+    
+    def _evolve_crest(self, N):
+        P= self.quantities['P'].centroid_values[N]
+        ET= self.quantities['ET'].centroid_values[N]
+        SS= self.quantities['SS0'].centroid_values[N]
+        SI= self.quantities['SI0'].centroid_values[N]
+        W= self.quantities['W0'].centroid_values[N]
+        RainFact= self.quantities['RainFact'].centroid_values[N]
+        Ksat= self.quantities['Ksat'].centroid_values[N]
+        WM= self.quantities['WM'].centroid_values[N]
+        B= self.quantities['B'].centroid_values[N]
+        IM= self.quantities['IM'].centroid_values[N]
+        KE= self.quantities['KE'].centroid_values[N]
+        coeM= self.quantities['coeM'].centroid_values[N]
+        expM= self.quantities['expM'].centroid_values[N]
+        coeR= self.quantities['coeR'].centroid_values[N]
+        coeS= self.quantities['coeS'].centroid_values[N]
+        KS= self.quantities['KS'].centroid_values[N]
+        KI= self.quantities['KI'].centroid_values[N]
+        (RI,RS, SI,SS,W)= crest_core.model(P,ET,SS,SI,W,RainFact,Ksat,WM,B,IM,KE,coeM,expM,
+                                    coeR,coeS,KS,KI,1)
+
+        return N, RI, RS, SI, SS, W
+    
+    def evolve_one_euler_step(self, yieldstep, finaltime,forcing):
         """One Euler Time Step
         Q^{n+1} = E(h) Q^n
 
@@ -1780,6 +1985,8 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
+        self.quantities['stage'].explicit_update[:]+=(forcing)
+
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
 
@@ -1794,7 +2001,7 @@ class Generic_Domain:
 
 
 
-    def evolve_one_rk2_step(self, yieldstep, finaltime):
+    def evolve_one_rk2_step(self, yieldstep, finaltime, forcing):
         """One 2nd order RK timestep
         Q^{n+1} = 0.5 Q^n + 0.5 E(h)^2 Q^n
         
@@ -1820,6 +2027,8 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
+
+        self.quantities['stage'].explicit_update[:]+=(forcing)
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
@@ -1857,6 +2066,8 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
+        self.quantities['stage'].explicit_update[:]+=(forcing)
+
         # Update conserved quantities
         self.update_conserved_quantities()
 
@@ -1875,7 +2086,7 @@ class Generic_Domain:
         #self.update_ghosts()
 
 
-    def evolve_one_rk3_step(self, yieldstep, finaltime):
+    def evolve_one_rk3_step(self, yieldstep, finaltime, forcing):
         """One 3rd order RK timestep
         Q^(1) = 3/4 Q^n + 1/4 E(h)^2 Q^n  (at time t^n + h/2)
         Q^{n+1} = 1/3 Q^n + 2/3 E(h) Q^(1) (at time t^{n+1})
@@ -1903,7 +2114,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-
+        self.quantities['stage'].explicit_update[:]+=(forcing)
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
 
@@ -1973,7 +2184,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-
+        self.quantities['stage'].explicit_update[:]+=(forcing)
         # Update conserved quantities
         self.update_conserved_quantities()
 

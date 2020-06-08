@@ -192,7 +192,10 @@ class Domain(Generic_Domain):
 
         if other_quantities is None:
             other_quantities = ['elevation', 'friction', 'height',
-                                'xvelocity', 'yvelocity', 'x', 'y']
+                                'xvelocity', 'yvelocity', 'x', 'y',
+                                'P','ET','excess_rain','SS0','SI0','W0','RainFact', #CREST parameters
+                                'Ksat','WM','B','IM','KE','coeM','expM',
+                                'coeR','coeS','KS','KI'] 
 
 
 
@@ -407,6 +410,7 @@ class Domain(Generic_Domain):
 
         parameters['optimised_gradient_limiter']        = self.optimised_gradient_limiter
         parameters['extrapolate_velocity_second_order'] = self.extrapolate_velocity_second_order
+        
 
 
 

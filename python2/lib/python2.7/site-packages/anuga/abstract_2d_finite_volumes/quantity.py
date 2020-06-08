@@ -1344,6 +1344,9 @@ class Quantity:
             x,y,Z = dem2array(filename)
         elif filename_ext == '.tif':
             x,y,Z= tif2array(filename)
+        else:
+            msg= 'The file extension is not suportted... Only .asc, .grd, .dem, .tif are supported.'
+            Exception(msg)
 
         if location == 'centroids':
             points = self.domain.centroid_coordinates

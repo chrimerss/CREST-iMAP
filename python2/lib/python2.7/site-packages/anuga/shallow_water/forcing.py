@@ -586,6 +586,7 @@ class Rainfall(General_forcing):
                                  verbose=verbose)
 
 
+
 class Inflow(General_forcing):
     """Class Inflow - general 'rain and drain' forcing term.
 
