@@ -538,6 +538,13 @@ class Generic_Domain:
         evapFolder= self.get_evap_dir()
         timestamp= self.get_timestamp()
         time_interval= self.get_time_interval()
+
+    def set_proj(self, proj):
+        if not isinstance(proj, str):
+            msg= 'Excepted argument is str e.g., +proj=utm +zone=23K, +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs"'
+            raise Exception(msg)
+        else:
+            self.proj= proj
         
 
     def build_tagged_elements_dictionary(self, *args, **kwargs):
@@ -1791,8 +1798,8 @@ class Generic_Domain:
                             '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
                                 '%02d'%(current_time.second)))
                 # try:
-                self.quantities['P'].set_values_from_utm_grid_file(precip_pth,
-                                location='centroids')
+                self.quantities['P'].set_values_from_lat_long_tif_file(precip_pth,
+                                location='centroids' ,proj=self.proj)
                 self.quantities['P']/=(_time_interval_func(precip_freq)*1000)
                 # except:
                     # print '%s not found in precipitation'%precip_pth
@@ -1802,8 +1809,8 @@ class Generic_Domain:
                             '%02d'%(current_time.month)).replace('%d', '%02d'%(current_time.day)).replace('%H',
                             '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
                             '%02d'%(current_time.second)))
-                self.quantities['ET'].set_values_from_utm_grid_file(evap_pth,
-                            location='centroids')
+                self.quantities['ET'].set_values_from_lat_long_tif_file(evap_pth,
+                            location='centroids', proj=self.proj)
                 self.quantities['ET']/=(_time_interval_func(evap_freq)*1000*30)
                 # except:
                     # print '%s not found in evaporation!'%evap_pth

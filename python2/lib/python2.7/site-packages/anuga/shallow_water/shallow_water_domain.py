@@ -91,6 +91,7 @@ import numpy as num
 import sys
 import os
 import time
+from pyproj import Proj
 
 try:
     import dill as cPickle
