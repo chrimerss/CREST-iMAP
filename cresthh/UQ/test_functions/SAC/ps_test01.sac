@@ -1,0 +1,70 @@
+--- BASIN ID ---                                                                
+01608500 02070001  SOUTH BRANCH POTOMAC RIVER NEAR SPRINGFIELD, WV
+--- DATA PERIOD STARTING AND ENDING DATES ---                                   
+    1    1 1960   31   12 1979
+--- CALIBRATION PERIOD STARTING AND ENDING DATES ---                            
+    1    1 1979   31   12 1998
+--- BASIN AREA AND LONGITUDE AND LATITUDE ---                                   
+ 3809.8899   39.4469  -78.6544
+--- DATA FORMAT, IRAIN, IDET ---                                                
+MOPEX 0 0
+--- MODEL SELECTION (SWB,OSU,SAC) ---                                           
+SAC
+--- OBJECTIVE FUNCTION SELECTION ---                                            
+NOCAL
+--- MODEL TIME STEP (IN HOURS, MINUTES) ---                                     
+    6    0
+IPE(0-M VAL;1-TS;2-PAN;3-PILPS), IZEN(0-N,1-Y), IPC(1-PIL_CLIM;2-PIL_TS) ---    
+    1    0    0
+PE-POT ADJUSTMENT FACTORS FOR THE 16TH OF EACH MONTH ---                        
+  0.53  0.54  0.64  0.74  1.26  1.33  1.32  1.29  1.26  0.94  0.64  0.51
+--- NUMBER OF COORDINATES IN UH (>=0) & TIME STEP FOR UH (IN HOURS)) ---        
+  10    6.00
+--- UNIT HYDROGRAPH VALUES ---                                                  
+  0.021289  0.075726  0.143566  0.269755  0.309429  0.143820  0.029452  0.005906
+  0.001011  0.000047
+--- MODEL PARAMETERS (A10,G10.3)---                                                        
+UZTWM         49.231  
+UZFWM         32.275  
+UZK            0.494  
+PCTIM          0.062 
+ADIMP          0.174 
+RIVA       0.210E-01
+ZPERC        349.531  
+REXP           3.896  
+LZTWM        130.938  
+LZFSM        268.095  
+LZFPM        575.867  
+LZSK           0.277  
+LZPK           0.006  
+PFREE          0.326  
+SIDE           0.000
+RSERV          0.300
+UN1            0.000
+UT             0.000
+--- NUMBER OF SOIL MOISTURE STORAGES ---                                        
+       6
+--- INITIAL SOIL MOISTURE CONTENT ---                                           
+   33.20    0.00   63.70    0.00    0.00   33.20
+--- PARAMETERS TO BE OPTIMIZED ---                                              
+UZTWM            64.8650   10.0000  300.0000
+UZFWM            49.5779    5.0000  150.0000
+UZK               0.4373    0.1000    0.7500
+ZPERC            97.7848    5.0000  350.0000
+REXP              1.8564    1.0000    5.0000
+LZTWM           130.0658   10.0000  500.0000
+LZFSM            12.9418    5.0000  400.0000
+LZFPM            99.2415   10.0000 1000.0000
+LZSK              0.1092    0.0100    0.3500
+LZPK              0.0131    0.0010    0.0500
+PFREE             0.1315    0.0000    0.8000
+ADIMP             0.0630    0.0000    0.2000
+PCTIM             0.0110    0.0000    0.1000
+END                                                                             
+--- DIRECTORY AND NAME OF HYDROLOGICAL DATA SET - DAILY FILE 1 ---
+.\data_files\01608500.hyd.dly.synthetic
+--- DIRECTORY AND NAME OF HYDROLOGICAL DATA SET - HOURLY FILE 2 ---
+.\data_files\01608500.mpx
+--- SCE ALGORITHMIC CONTROL PARAMETERS ---
+ 5000   100.010    4   -3    1
+    0    0    0    0    0    0

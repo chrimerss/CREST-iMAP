@@ -1,0 +1,130 @@
+2020-06-06 22:27:28,289 INFO           anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-06 22:27:28,291 CRITICAL            generic_domain:2409|WARNING: Too small timestep 0.0000000000000001 reached even after 50 steps of 1 order scheme
+2020-06-06 22:27:28,294 CRITICAL            generic_domain:2413|Time = 1.0117, delta t in [0.00000000, 0.00209769], steps=232 (0s)
+------------------------------------------------
+  Speeds in [0.000000, 74866372193832.609375]
+  Histogram:
+    [0.000000, 7486637219383.260742[: 950
+    [7486637219383.260742, 14973274438766.521484[: 0
+    [14973274438766.521484, 22459911658149.781250[: 0
+    [22459911658149.781250, 29946548877533.042969[: 2
+    [29946548877533.042969, 37433186096916.304688[: 1
+    [37433186096916.304688, 44919823316299.562500[: 0
+    [44919823316299.562500, 52406460535682.828125[: 0
+    [52406460535682.828125, 59893097755066.085938[: 0
+    [59893097755066.085938, 67379734974449.343750[: 0
+    [67379734974449.343750, 74866372193832.609375]: 1
+  Percentiles (10%):
+    95 speeds in [0.000000, 0.000000]
+    95 speeds in [0.000000, 0.000000]
+    95 speeds in [0.000000, 2.411420]
+    95 speeds in [2.411420, 3.363699]
+    95 speeds in [3.363699, 4.800173]
+    95 speeds in [4.800173, 6.393390]
+    95 speeds in [6.393390, 8.380776]
+    95 speeds in [8.380776, 12.333063]
+    95 speeds in [12.333063, 22.324259]
+    95 speeds in [22.324259, 28037945802018.246094]
+    4 speeds in [28037945802018.246094, 74866372193832.609375]
+  Triangle #932 with centroid (-95.8217, 30.0710), area = 0.0003 and radius = 0.0071 had the largest computed speed: 74866372193832.609375 m/s (timestep=0.000000)
+    Quantity------------
+    xvelocity   : vertex_values =  0.0000,	 0.0000,	 0.0000
+    xvelocity   : edge_values =    0.0000,	 0.0000,	 0.0000
+    xvelocity   : centroid_value = 0.0000
+    WM          : vertex_values =  0.5000,	 0.5000,	 0.5000
+    WM          : edge_values =    0.5000,	 0.5000,	 0.5000
+    WM          : centroid_value = 0.5000
+    SS0         : vertex_values =  0.5000,	 0.5000,	 0.5000
+    SS0         : edge_values =    0.5000,	 0.5000,	 0.5000
+    SS0         : centroid_value = 0.1250
+    friction    : vertex_values =  0.3000,	 0.3000,	 0.3000
+    friction    : edge_values =    0.3000,	 0.3000,	 0.3000
+    friction    : centroid_value = 0.3000
+    height      : vertex_values =  0.2529,	 0.2529,	 0.2529
+    height      : edge_values =    0.2529,	 0.2529,	 0.2529
+    height      : centroid_value = 0.2529
+    RainFact    : vertex_values =  0.5000,	 0.5000,	 0.5000
+    RainFact    : edge_values =    0.5000,	 0.5000,	 0.5000
+    RainFact    : centroid_value = 0.5000
+    xmomentum   : vertex_values =  18934915452267.0469,	 18934915452264.3945,	 18934915452264.9492
+    xmomentum   : edge_values =    18934915452264.6719,	 18934915452265.9961,	 18934915452265.7227
+    xmomentum   : centroid_value = 18934915452265.4648
+    yvelocity   : vertex_values =  0.0000,	 0.0000,	 0.0000
+    yvelocity   : edge_values =    0.0000,	 0.0000,	 0.0000
+    yvelocity   : centroid_value = 0.0000
+    ymomentum   : vertex_values =  -144163.8874,	 -144163.8874,	 -144163.8874
+    ymomentum   : edge_values =    -144163.8874,	 -144163.8874,	 -144163.8874
+    ymomentum   : centroid_value = -144163.8874
+    B           : vertex_values =  0.5000,	 0.5000,	 0.5000
+    B           : edge_values =    0.5000,	 0.5000,	 0.5000
+    B           : centroid_value = 0.5000
+    elevation   : vertex_values =  70.5888,	 65.8318,	 68.2435
+    elevation   : edge_values =    67.0376,	 69.4162,	 68.2103
+    elevation   : centroid_value = 68.2214
+    excess_rain : vertex_values =  0.2500,	 0.2500,	 0.2500
+    excess_rain : edge_values =    0.2500,	 0.2500,	 0.2500
+    excess_rain : centroid_value = 0.2500
+    P           : vertex_values =  0.0000,	 0.0000,	 0.0000
+    P           : edge_values =    0.0000,	 0.0000,	 0.0000
+    P           : centroid_value = 0.0000
+    IM          : vertex_values =  0.5000,	 0.5000,	 0.5000
+    IM          : edge_values =    0.5000,	 0.5000,	 0.5000
+    IM          : centroid_value = 0.5000
+    expM        : vertex_values =  0.5000,	 0.5000,	 0.5000
+    expM        : edge_values =    0.5000,	 0.5000,	 0.5000
+    expM        : centroid_value = 0.5000
+    ET          : vertex_values =  0.0000,	 0.0000,	 0.0000
+    ET          : edge_values =    0.0000,	 0.0000,	 0.0000
+    ET          : centroid_value = 0.0000
+    stage       : vertex_values =  70.8417,	 66.0847,	 68.4964
+    stage       : edge_values =    67.2906,	 69.6691,	 68.4632
+    stage       : centroid_value = 68.4743
+    SI0         : vertex_values =  0.5000,	 0.5000,	 0.5000
+    SI0         : edge_values =    0.5000,	 0.5000,	 0.5000
+    SI0         : centroid_value = 0.1250
+    KE          : vertex_values =  0.5000,	 0.5000,	 0.5000
+    KE          : edge_values =    0.5000,	 0.5000,	 0.5000
+    KE          : centroid_value = 0.5000
+    KI          : vertex_values =  0.5000,	 0.5000,	 0.5000
+    KI          : edge_values =    0.5000,	 0.5000,	 0.5000
+    KI          : centroid_value = 0.5000
+    coeM        : vertex_values =  0.5000,	 0.5000,	 0.5000
+    coeM        : edge_values =    0.5000,	 0.5000,	 0.5000
+    coeM        : centroid_value = 0.5000
+    KS          : vertex_values =  0.5000,	 0.5000,	 0.5000
+    KS          : edge_values =    0.5000,	 0.5000,	 0.5000
+    KS          : centroid_value = 0.5000
+    coeS        : vertex_values =  0.5000,	 0.5000,	 0.5000
+    coeS        : edge_values =    0.5000,	 0.5000,	 0.5000
+    coeS        : centroid_value = 0.5000
+    coeR        : vertex_values =  0.5000,	 0.5000,	 0.5000
+    coeR        : edge_values =    0.5000,	 0.5000,	 0.5000
+    coeR        : centroid_value = 0.5000
+    Ksat        : vertex_values =  0.5000,	 0.5000,	 0.5000
+    Ksat        : edge_values =    0.5000,	 0.5000,	 0.5000
+    Ksat        : centroid_value = 0.5000
+    W0          : vertex_values =  0.5000,	 0.5000,	 0.5000
+    W0          : edge_values =    0.5000,	 0.5000,	 0.5000
+    W0          : centroid_value = 0.5000
+    y           : vertex_values =  0.2681,	 0.2825,	 0.2925
+    y           : edge_values =    0.2875,	 0.2803,	 0.2753
+    y           : centroid_value = 0.2810
+    x           : vertex_values =  0.0000,	 0.0248,	 0.0000
+    x           : edge_values =    0.0124,	 0.0000,	 0.0124
+    x           : centroid_value = 0.0083
+    depth       : vertex_values =  0.2529,	 0.2529,	 0.2529
+    depth       : edge_values =    0.2529,	 0.2529,	 0.2529
+    depth       : centroid_value = 0.2529
+    U           : vertex_values =  74866372193534.9688,	 74866372193537.1094,	 74866372193539.2969
+    U           : edge_values =    74866372193534.0000,	 74866372193535.0156,	 74866372193533.9375
+    U           : centroid_value = 74866372193532.9219
+    V           : vertex_values =  -570006.6250,	 -570006.6250,	 -570006.6250
+    V           : edge_values =    -570006.6250,	 -570006.6250,	 -570006.6250
+    V           : centroid_value = -570006.6250
+    Froude (x)  : vertex_values =  47553825578448.5000,	 47553825578453.8672,	 47553825578455.2578
+    Froude (x)  : edge_values =    47553825578450.5625,	 47553825578449.8750,	 47553825578449.1875
+    Froude (x)  : centroid_value = 47553825578448.5391
+    Froude (y)  : vertex_values =  -362058.3558,	 -362058.3558,	 -362058.3558
+    Froude (y)  : edge_values =    -362058.3558,	 -362058.3558,	 -362058.3558
+    Froude (y)  : centroid_value = -362058.3558
+

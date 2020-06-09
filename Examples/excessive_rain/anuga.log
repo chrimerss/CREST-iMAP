@@ -1,0 +1,2 @@
+2020-06-09 14:52:44,601 INFO           anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-09 14:52:44,603 CRITICAL            generic_domain:1764|evolving elements: 10203
