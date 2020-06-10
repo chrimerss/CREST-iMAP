@@ -1,6 +1,6 @@
 
-from anuga.coordinate_transforms.geo_reference import Geo_reference
-from anuga.geospatial_data.geospatial_data import Geospatial_data
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
+from cresthh.anuga.geospatial_data.geospatial_data import Geospatial_data
 
 def _read_hecras_cross_sections(lines):
     """Return block of surface lines for each cross section

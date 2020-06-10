@@ -1,14 +1,14 @@
-from anuga import Domain
-from anuga import Quantity
-from anuga.utilities.sparse import Sparse, Sparse_CSR
-from anuga.utilities.cg_solve import conjugate_gradient
-import anuga.abstract_2d_finite_volumes.neighbour_mesh as neighbour_mesh
-from anuga import Dirichlet_boundary
+from cresthh.anuga import Domain
+from cresthh.anuga import Quantity
+from cresthh.anuga.utilities.sparse import Sparse, Sparse_CSR
+from cresthh.anuga.utilities.cg_solve import conjugate_gradient
+from cresthh.anuga.abstract_2d_finite_volumes import neighbour_mesh as neighbour_mesh
+from cresthh.anuga import Dirichlet_boundary
 import numpy as num
 import kinematic_viscosity_operator_ext
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
-from anuga.operators.base_operator import Operator
+from cresthh.anuga.operators.base_operator import Operator
 
 
 

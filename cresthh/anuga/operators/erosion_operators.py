@@ -12,10 +12,10 @@ __date__ ="$09/03/2012 4:46:39 PM$"
 import numpy as num
 
 
-from anuga import Domain
-from anuga import Quantity
-from anuga.operators.base_operator import Operator
-from anuga import Region
+from cresthh.anuga import Domain
+from cresthh.anuga import Quantity
+from cresthh.anuga.operators.base_operator import Operator
+from cresthh.anuga import Region
 
 
 class Erosion_operator(Operator, Region):

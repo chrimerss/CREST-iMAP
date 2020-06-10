@@ -11,6 +11,8 @@
 import random
 import numpy as np
 from ..test_functions import functn
+import matplotlib
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
 
 ################################################################################

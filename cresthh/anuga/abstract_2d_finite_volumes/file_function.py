@@ -14,12 +14,12 @@ have an undefined value.
 
 import numpy as num
 
-from anuga.geospatial_data.geospatial_data import ensure_absolute
-from anuga.file.netcdf import NetCDFFile
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a
-from anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.geospatial_data.geospatial_data import ensure_absolute
+from cresthh.anuga.file.netcdf import NetCDFFile
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 
 def file_function(filename,

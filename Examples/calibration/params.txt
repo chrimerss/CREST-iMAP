@@ -1,0 +1,12 @@
+RainFact 0.5 1.2
+Ksat 0 3000
+WM 80 200
+B 0.05 1.5
+IM 0 0.2
+KE 0.1 1.5
+coeM 1 150
+expM 0.1 2
+coeR 1 3
+coeS 0.001 1
+KS 0 1
+KI 0 1

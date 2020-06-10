@@ -26,17 +26,17 @@
       save time/memory.
 """
 
-from anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
-from anuga.caching import cache
-from anuga.geospatial_data.geospatial_data import Geospatial_data, \
+from cresthh.anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
+from cresthh.anuga.caching import cache
+from cresthh.anuga.geospatial_data.geospatial_data import Geospatial_data, \
      ensure_absolute
-from anuga.fit_interpolate.general_fit_interpolate import FitInterpolate
+from cresthh.anuga.fit_interpolate.general_fit_interpolate import FitInterpolate
 
-from anuga.utilities.sparse import Sparse_CSR
-from anuga.utilities.numerical_tools import ensure_numeric
-from anuga.utilities.cg_solve import conjugate_gradient
-from anuga.config import default_smoothing_parameter as DEFAULT_ALPHA
-import anuga.utilities.log as log
+from cresthh.anuga.utilities.sparse import Sparse_CSR
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities.cg_solve import conjugate_gradient
+from cresthh.anuga.config import default_smoothing_parameter as DEFAULT_ALPHA
+from cresthh.anuga.utilities import log
 
 import exceptions
 class TooFewPointsError(exceptions.Exception): pass

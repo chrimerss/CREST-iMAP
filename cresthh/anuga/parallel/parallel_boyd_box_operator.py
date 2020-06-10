@@ -1,8 +1,8 @@
-import anuga
+from cresthh.anuga import Structure_operator
 import math
 import numpy
 
-from anuga.structures.boyd_box_operator import boyd_box_function 
+from cresthh.anuga.structures.boyd_box_operator import boyd_box_function 
 
 from parallel_inlet_operator import Parallel_Inlet_operator
 from parallel_structure_operator import Parallel_Structure_operator

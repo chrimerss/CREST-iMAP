@@ -23,15 +23,15 @@ import tempfile
 import profile , pstats
 from math import sqrt
 
-from anuga.fit_interpolate.interpolate import Interpolate
-from anuga.fit_interpolate.fit import Fit
-from anuga.pmesh.mesh import Mesh
-from anuga.geospatial_data.geospatial_data import Geospatial_data
-from anuga.shallow_water.shallow_water_domain import Domain
-from anuga.fit_interpolate.fit import Fit, fit_to_mesh
-from anuga.fit_interpolate.interpolate import benchmark_interpolate
-from anuga.coordinate_transforms.geo_reference import Geo_reference
-from anuga.fit_interpolate.general_fit_interpolate import \
+from cresthh.anuga.fit_interpolate.interpolate import Interpolate
+from cresthh.anuga.fit_interpolate.fit import Fit
+from cresthh.anuga.pmesh.mesh import Mesh
+from cresthh.anuga.geospatial_data.geospatial_data import Geospatial_data
+from cresthh.anuga.shallow_water.shallow_water_domain import Domain
+from cresthh.anuga.fit_interpolate.fit import Fit, fit_to_mesh
+from cresthh.anuga.fit_interpolate.interpolate import benchmark_interpolate
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
+from cresthh.anuga.fit_interpolate.general_fit_interpolate import \
      get_build_quadtree_time
 
 

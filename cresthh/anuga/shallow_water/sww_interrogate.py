@@ -3,15 +3,15 @@
 '''
 
 import os
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 import numpy as num
 
-from anuga.utilities.file_utils import get_all_swwfiles
-from anuga.coordinate_transforms.geo_reference import Geo_reference 
-from anuga.abstract_2d_finite_volumes.util import file_function
-from anuga.geometry.polygon import is_inside_polygon
-from anuga.file.sww import get_mesh_and_quantities_from_file
-from anuga.abstract_2d_finite_volumes.neighbour_mesh import segment_midpoints
+from cresthh.anuga.utilities.file_utils import get_all_swwfiles
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference 
+from cresthh.anuga.abstract_2d_finite_volumes.util import file_function
+from cresthh.anuga.geometry.polygon import is_inside_polygon
+from cresthh.anuga.file.sww import get_mesh_and_quantities_from_file
+from cresthh.anuga.abstract_2d_finite_volumes.neighbour_mesh import segment_midpoints
 
 
 def get_interpolated_quantities_at_polyline_midpoints(filename,

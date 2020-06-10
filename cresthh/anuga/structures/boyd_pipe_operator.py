@@ -1,4 +1,4 @@
-import anuga
+from cresthh.anuga import Structure_operator
 import math
 import numpy
 
@@ -7,7 +7,7 @@ import numpy
 # The class
 #=====================================================================
 
-class Boyd_pipe_operator(anuga.Structure_operator):
+class Boyd_pipe_operator(Structure_operator):
     """Culvert flow - transfer water from one location to another via a circular pipe culvert.
     Sets up the geometry of problem
     

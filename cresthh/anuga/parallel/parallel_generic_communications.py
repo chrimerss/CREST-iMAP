@@ -9,7 +9,7 @@ Geoscience Australia, 2004-2010
 
 import numpy as num
 
-import anuga.utilities.parallel_abstraction as pypar
+from cresthh.anuga.utilities import parallel_abstraction as pypar
 
 
 

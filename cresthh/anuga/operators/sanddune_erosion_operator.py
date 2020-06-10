@@ -82,8 +82,8 @@ Version       1.00 October 2015
 =======
 """
 
-from anuga.operators.base_operator import Operator
-from anuga import Region
+from cresthh.anuga.operators.base_operator import Operator
+from cresthh.anuga import Region
 
 import math
 import numpy as num

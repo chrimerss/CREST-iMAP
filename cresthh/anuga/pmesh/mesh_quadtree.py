@@ -18,14 +18,14 @@
 
 """
 
-from anuga.config import max_float
+from cresthh.anuga.config import max_float
 
-from anuga.geometry.quad import Cell
-from anuga.geometry.aabb import AABB
+from cresthh.anuga.geometry.quad import Cell
+from cresthh.anuga.geometry.aabb import AABB
 
 import numpy as num
-from anuga.utilities.numerical_tools import ensure_numeric
-import anuga.fit_interpolate.fitsmooth as fitsmooth
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.fit_interpolate import fitsmooth
 
 
 # PADARN NOTE: I don't think much from Cell is used anymore, if

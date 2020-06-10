@@ -5,16 +5,16 @@ Setting up a simulation class
 #------------------------------------------------------------------------------
 # IMPORT NECESSARY MODULES
 #------------------------------------------------------------------------------
-import anuga
+import cresthh.anuga
 import time
 import numpy
 import os
 
 
-from anuga import myid, barrier, finalize, numprocs
-from anuga.parallel.sequential_distribute import sequential_distribute_load
-from anuga.parallel.sequential_distribute import sequential_distribute_dump
-from anuga.parallel.sequential_distribute import sequential_distribute_load_pickle_file
+from cresthh.anuga import myid, barrier, finalize, numprocs
+from cresthh.anuga.parallel.sequential_distribute import sequential_distribute_load
+from cresthh.anuga.parallel.sequential_distribute import sequential_distribute_dump
+from cresthh.anuga.parallel.sequential_distribute import sequential_distribute_load_pickle_file
 from os.path import join
 
 
@@ -47,7 +47,7 @@ class Simulation(object):
 
         if self.checkpointing:
             # try to read in from checkpoint file
-            from anuga import load_checkpoint_file
+            from cresthh.anuga import load_checkpoint_file
             try:
                 if myid == 0 and self.verbose:
                     print 'TRYING TO OPEN CHECKPOINT FILES'
@@ -226,7 +226,7 @@ def parse_args(argument_adder, from_commandline=False, **kwargs):
 
     """
     # set up default arguments common to all simulations
-    parser = anuga.create_standard_parser()
+    parser = cresthh.anuga.create_standard_parser()
 
     # add any benchmark-specific arguments
     argument_adder(parser)
@@ -257,7 +257,7 @@ def parse_args_and_parameters(argument_adder=None, from_commandline=False, **kwa
 
 
 
-    parser = anuga.create_standard_parser()
+    parser = cresthh.anuga.create_standard_parser()
 
     try:
         import project

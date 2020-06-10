@@ -6,7 +6,7 @@ downloaded from INTERGOVERNMENTAL COMMITTEE ON SURVEYING & MAPPING (ICSM)
 http://www.icsm.gov.au/icsm/
 
 """
-from anuga.coordinate_transforms.geo_reference import Geo_reference, DEFAULT_ZONE
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference, DEFAULT_ZONE
 
 
 def degminsec2decimal_degrees(dd,mm,ss):

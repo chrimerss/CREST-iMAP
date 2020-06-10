@@ -46,7 +46,7 @@
           filenames, and ensure that in each case, the output will be as desired.
 
 """
-from anuga.file.netcdf import NetCDFFile
+from cresthh.anuga.file.netcdf import NetCDFFile
 import numpy
 import copy
 import matplotlib.cm

@@ -16,7 +16,7 @@ Modified by Linda Stals, March 2006, to include ghost boundaries
 import sys
 import numpy as num
 
-from anuga.config import epsilon
+from cresthh.anuga.config import epsilon
 
 
 from parallel_api import distribute

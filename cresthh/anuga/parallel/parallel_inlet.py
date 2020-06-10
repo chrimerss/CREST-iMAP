@@ -1,13 +1,13 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-import anuga.geometry.polygon
-from anuga.geometry.polygon import inside_polygon, is_inside_polygon, line_intersect
-from anuga.config import velocity_protection, g
+import cresthh.anuga.geometry.polygon
+from cresthh.anuga.geometry.polygon import inside_polygon, is_inside_polygon, line_intersect
+from cresthh.anuga.config import velocity_protection, g
 import math
 
 import numpy as num
-from anuga.structures.inlet import Inlet
+from cresthh.anuga.structures.inlet import Inlet
 import warnings
 
 class Parallel_Inlet(Inlet):

@@ -9,12 +9,12 @@ import sys
 from os import sep, path
 sys.path.append('..'+sep+'pyvolution')
 
-from anuga import Domain
-from anuga.abstract_2d_finite_volumes.pmesh2domain import pmesh_to_domain_instance
+from cresthh.anuga import Domain
+from cresthh.anuga.abstract_2d_finite_volumes.pmesh2domain import pmesh_to_domain_instance
 import time, os 
-from anuga.file.sww import SWW_file
-from anuga.utilities.numerical_tools import mean
-import anuga.utilities.log as log
+from cresthh.anuga.file.sww import SWW_file
+from cresthh.anuga.utilities.numerical_tools import mean
+from cresthh.anuga.utilities import log
 
 
 def tsh2sww(infilename, sww_file_name = None, verbose = False):

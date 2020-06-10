@@ -9,20 +9,19 @@ __author__="steve"
 __date__ ="$09/03/2012 4:46:39 PM$"
 
 
-from anuga import Domain
-from anuga import Quantity
+from cresthh.anuga import Domain
+from cresthh.anuga import Quantity
 import numpy as num
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
-from anuga.geometry.polygon import inside_polygon
-from anuga.utilities.function_utils import determine_function_type
-from anuga.utilities.numerical_tools import ensure_numeric
-
-from anuga.operators.base_operator import Operator
-from anuga import Region
-from anuga.fit_interpolate.interpolate import Modeltime_too_early, \
+from cresthh.anuga.geometry.polygon import inside_polygon
+from cresthh.anuga.utilities.function_utils import determine_function_type
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.operators.base_operator import Operator
+from cresthh.anuga import Region
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_early, \
                                               Modeltime_too_late
-from anuga.config import indent
+from cresthh.anuga.config import indent
 
 
 

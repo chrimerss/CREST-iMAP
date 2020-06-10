@@ -1,5 +1,5 @@
 
-from anuga.utilities.system_tools import log_to_file
+from cresthh.anuga.utilities.system_tools import log_to_file
 
 
 class Operator:
@@ -92,7 +92,7 @@ class Operator:
 
     def log_timestepping_statistics(self):
 
-        from anuga.utilities.system_tools import log_to_file
+        from cresthh.anuga.utilities.system_tools import log_to_file
         if self.logging:
             log_to_file(self.log_filename, self.timestepping_statistics())
 

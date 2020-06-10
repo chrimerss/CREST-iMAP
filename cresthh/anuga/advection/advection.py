@@ -30,9 +30,9 @@ Geoscience Australia, 2004
 #    pass
 
 
-from anuga.abstract_2d_finite_volumes.generic_domain \
+from cresthh.anuga.abstract_2d_finite_volumes.generic_domain \
                 import Generic_Domain
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 import numpy as num
 

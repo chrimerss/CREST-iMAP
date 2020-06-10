@@ -5,9 +5,9 @@ Basic helper routines
 
 """
 
-import anuga
+import cresthh.anuga
 #from anuga.fit_interpolate.interpolate2d import interpolate2d
-from anuga.fit_interpolate.interpolate2d import interpolate_raster
+from cresthh.anuga.fit_interpolate.interpolate2d import interpolate_raster
 import pylab as pl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,7 +15,7 @@ import os
 from os.path import join
 import fnmatch
 import gzip
-from anuga.file.netcdf import NetCDFFile
+from cresthh.anuga.file.netcdf import NetCDFFile
 
 
 #-----------------------------------------------------------------------------------------

@@ -1,14 +1,15 @@
-import anuga
+import cresthh.anuga
 import numpy as num
 import math
 import inlet_enquiry
 
-from anuga.utilities.system_tools import log_to_file
-from anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities.system_tools import log_to_file
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga import Operator
 
 
 
-class Structure_operator(anuga.Operator):
+class Structure_operator(Operator):
     """Structure Operator - transfer water from one rectangular box to another.
     Sets up the geometry of problem
     

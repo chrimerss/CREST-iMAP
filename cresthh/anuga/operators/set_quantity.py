@@ -9,14 +9,14 @@ __date__ ="$09/03/2012 4:46:39 PM$"
 
 import numpy as num
 
-from anuga import Domain
-from anuga import Quantity
+from cresthh.anuga import Domain
+from cresthh.anuga import Quantity
 
-import anuga.utilities.log as log
-from anuga.geometry.polygon import inside_polygon
-from anuga.utilities.function_utils import determine_function_type
-from anuga import Region
-from anuga.config import indent
+from cresthh.anuga.utilities import log
+from cresthh.anuga.geometry.polygon import inside_polygon
+from cresthh.anuga.utilities.function_utils import determine_function_type
+from cresthh.anuga import Region
+from cresthh.anuga.config import indent
 
 class Set_quantity(Region):
     """

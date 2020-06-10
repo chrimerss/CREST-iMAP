@@ -5,8 +5,8 @@ class PreconditionerError(exceptions.Exception): pass
 
 import numpy as num
 
-import anuga.utilities.log as log
-from anuga.utilities.sparse import Sparse, Sparse_CSR
+from cresthh.anuga.utilities import log
+from cresthh.anuga.utilities.sparse import Sparse, Sparse_CSR
 
 # Setup for C conjugate gradient solver
 from cg_ext import cg_solve_c

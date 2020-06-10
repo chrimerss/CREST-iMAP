@@ -1,8 +1,8 @@
 import copy
 import numpy as num
 
-from anuga.coordinate_transforms.geo_reference import Geo_reference
-import anuga.utilities.log as log
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
+from cresthh.anuga.utilities import log
 
 class General_mesh:
     """Collection of 2D triangular elements

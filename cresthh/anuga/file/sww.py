@@ -9,22 +9,22 @@ class DataDomainError(exceptions.Exception): pass
 class DataTimeError(exceptions.Exception): pass
 
 import numpy
-from anuga.coordinate_transforms.geo_reference import Geo_reference
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a
-from anuga.config import netcdf_float, netcdf_float32, netcdf_int, netcdf_float64
-from anuga.config import max_float
-from anuga.utilities.numerical_tools import ensure_numeric
-import anuga.utilities.log as log
-from anuga.file.netcdf import NetCDFFile
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a
+from cresthh.anuga.config import netcdf_float, netcdf_float32, netcdf_int, netcdf_float64
+from cresthh.anuga.config import max_float
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities import log
+from cresthh.anuga.file.netcdf import NetCDFFile
 
-from anuga.config import minimum_storable_height as default_minimum_storable_height
+from cresthh.anuga.config import minimum_storable_height as default_minimum_storable_height
 
 from sts import Write_sts
 
-from anuga.coordinate_transforms.geo_reference import \
+from cresthh.anuga.coordinate_transforms.geo_reference import \
         ensure_geo_reference
 
-from anuga.utilities.file_utils import create_filename
+from cresthh.anuga.utilities.file_utils import create_filename
 import numpy as num
 
 class Data_format:
@@ -565,8 +565,8 @@ class Write_sww(Write_sts):
         number_of_points - the number of vertices in the mesh
         """
 
-        from anuga import get_revision_number
-        from anuga import get_version
+        from cresthh.anuga import get_revision_number
+        from cresthh.anuga import get_version
 
         outfile.institution = 'Geoscience Australia'
         outfile.description = description
@@ -591,12 +591,12 @@ class Write_sww(Write_sts):
         # Allow None to be stored as a string
         outfile.revision_number = str(revision_number)
 
-        try:
-            anuga_version = get_version()
-        except:
+        # try:
+        anuga_version = get_version()
+        # except:
             # This will be triggered if the system cannot get the
             # version.
-            version = None
+        version = None
         # Allow None to be stored as a string
         outfile.anuga_version = str(anuga_version)
 
@@ -1137,7 +1137,7 @@ def load_sww_as_domain(filename, boundary=None, t=None,
     give a different final boundary, or crash.
     """
 
-    from anuga.shallow_water.shallow_water_domain import Domain
+    from cresthh.anuga.shallow_water.shallow_water_domain import Domain
 
     # initialise NaN.
     NaN = 9.969209968386869e+036
@@ -1333,7 +1333,7 @@ def get_mesh_and_quantities_from_file(filename,
     # FIXME (Ole): Maybe refactor filefunction using this more fundamental code.
 
     import types
-    from anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
+    from cresthh.anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
 
     if verbose: log.critical('Reading from %s' % filename)
 

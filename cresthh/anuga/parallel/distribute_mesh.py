@@ -25,8 +25,8 @@ from math import floor
 import numpy as num
 import numpy.lib.arraysetops as numset
 
-from anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
-from anuga import indent
+from cresthh.anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
+from cresthh.anuga import indent
 
 try:
     import local_config as config
@@ -122,7 +122,7 @@ def reorder_new(quantities, epart_order, proc_sum):
 #path.append('..' + sep + 'pymetis')
 
 try:
-    from anuga.pymetis.metis_ext import partMeshNodal
+    from cresthh.anuga.pymetis.metis_ext import partMeshNodal
 except ImportError:
     print "***************************************************"
     print "         Metis is probably not compiled."

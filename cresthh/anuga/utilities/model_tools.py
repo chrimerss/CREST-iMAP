@@ -80,11 +80,11 @@ from anuga.utilities.model_tools import get_BUILDING_polygon_value_list
 import os
 import glob
 import numpy
-from anuga.geometry.polygon import read_polygon
-from anuga import Boyd_box_operator
-from anuga import Boyd_pipe_operator
-from anuga import Weir_orifice_trapezoid_operator
-from anuga import Inlet_operator
+from cresthh.anuga.geometry.polygon import read_polygon
+from cresthh.anuga import Boyd_box_operator
+from cresthh.anuga import Boyd_pipe_operator
+from cresthh.anuga import Weir_orifice_trapezoid_operator
+from cresthh.anuga import Inlet_operator
 
 
 

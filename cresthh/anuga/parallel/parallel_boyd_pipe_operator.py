@@ -1,8 +1,8 @@
-import anuga
+import cresthh.anuga
 import math
 import numpy
 
-from anuga.structures.boyd_pipe_operator import boyd_pipe_function
+from cresthh.anuga.structures.boyd_pipe_operator import boyd_pipe_function
 
 from parallel_inlet_operator import Parallel_Inlet_operator
 from parallel_structure_operator import Parallel_Structure_operator

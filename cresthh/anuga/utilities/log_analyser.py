@@ -1,7 +1,7 @@
 import sys
 import os
 import re
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 import csv
 
 defaultOutputFile ='timing.csv'

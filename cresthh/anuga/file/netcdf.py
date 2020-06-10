@@ -3,15 +3,15 @@
 
 import numpy as num
 
-from anuga.coordinate_transforms.redfearn import \
+from cresthh.anuga.coordinate_transforms.redfearn import \
      convert_from_latlon_to_utm
-from anuga.config import minimum_storable_height as \
+from cresthh.anuga.config import minimum_storable_height as \
      default_minimum_storable_height
-from anuga.config import netcdf_mode_r, netcdf_mode_w
-from anuga.config import netcdf_float, netcdf_int
-from anuga.utilities.numerical_tools import ensure_numeric,  mean
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w
+from cresthh.anuga.config import netcdf_float, netcdf_int
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric,  mean
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 
 # Definitions of various NetCDF dimension names, etc.

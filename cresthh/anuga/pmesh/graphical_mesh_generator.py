@@ -14,9 +14,9 @@ import types
 import visualmesh
 import os, sys
 import profile
-import anuga.load_mesh.loadASCII
-from anuga.alpha_shape.alpha_shape import AlphaError
-import anuga.utilities.log as log
+import cresthh.anuga.load_mesh.loadASCII
+from cresthh.anuga.alpha_shape.alpha_shape import AlphaError
+from cresthh.anuga.utilities import log
 
 # CONSTANTS 
 VERT_SELECT_ADDING_SEG_COLOR = 'orange'

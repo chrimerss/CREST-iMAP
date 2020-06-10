@@ -93,7 +93,7 @@ Good luck!
         # svn 1.7 no longer has a .svn folder in all folders
         # so will need a better way to get revision number
         
-        from anuga.revision import revision_info
+        from cresthh.anuga.revision import revision_info
         return process_revision_info(revision_info)
 
     line = fd.readlines()[3]
@@ -191,8 +191,8 @@ def get_version():
     """Get anuga version number as stored in anuga.__version__
     """
 
-    import anuga
-    return anuga.__version__
+    import cresthh.anuga
+    return cresthh.anuga.__version__
 
     
     
@@ -200,7 +200,7 @@ def get_revision_number():
     """Get the (svn) revision number of this repository copy.
     If svn not available just return 0
     """
-    from anuga import __svn_revision__ as revision
+    from cresthh.anuga import __svn_revision__ as revision
     return revision
     
 #     try:
@@ -215,7 +215,7 @@ def get_revision_date():
     If svn not available just return 0
     """
 
-    from anuga import __svn_revision_date__ as revision_date
+    from cresthh.anuga import __svn_revision_date__ as revision_date
     return revision_date 
   
 #     try:
@@ -287,7 +287,7 @@ def store_revision_info(destination_path='.', verbose=False):
     # (e.g. for creating new ANUGA releases), so maybe it should move
     # to somewhere else.
     
-    import anuga.config as config
+    from cresthh.anuga import config
     import subprocess
 
     #txt = subprocess.Popen('svn info', shell=True, stdout=subprocess.PIPE).communicate()[0]

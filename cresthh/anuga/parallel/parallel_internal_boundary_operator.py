@@ -1,4 +1,4 @@
-import anuga
+import cresthh.anuga
 import math
 import numpy
 from numpy.linalg import solve

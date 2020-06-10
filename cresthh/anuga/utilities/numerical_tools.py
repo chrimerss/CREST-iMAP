@@ -6,8 +6,8 @@ from __future__ import division, print_function
 from math import acos, pi, sqrt
 from warnings import warn
 
-#from  . import log as log
-import anuga.utilities.log as anuga_log
+from  . import log as log
+# import cresthh.anuga.utilities.log as anuga_log
 import numpy as num
 
 #After having migrated to numpy we should use the native NAN.

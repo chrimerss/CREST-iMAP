@@ -1,5 +1,5 @@
 import os
-from anuga import barrier, numprocs, myid
+from cresthh.anuga import barrier, numprocs, myid
 import numpy
 
 class RiverWall:

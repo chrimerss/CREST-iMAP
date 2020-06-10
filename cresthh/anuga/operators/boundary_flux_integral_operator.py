@@ -15,7 +15,7 @@ __date__ ="$10/07/2014 $"
 
 
 import numpy as num
-from anuga.operators.base_operator import Operator
+from cresthh.anuga.operators.base_operator import Operator
 
 class boundary_flux_integral_operator(Operator):
     """

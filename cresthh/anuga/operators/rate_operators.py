@@ -10,15 +10,15 @@ __date__ ="$09/03/2012 4:46:39 PM$"
 
 
 
-from anuga.config import indent
+from cresthh.anuga.config import indent
 import numpy as num
-import anuga.utilities.log as log
-from anuga.utilities.function_utils import evaluate_temporal_function
+from cresthh.anuga.utilities import log
+from cresthh.anuga.utilities.function_utils import evaluate_temporal_function
 
 
-from anuga import Quantity
-from anuga.operators.base_operator import Operator
-from anuga import Region
+from cresthh.anuga import Quantity
+from cresthh.anuga.operators.base_operator import Operator
+from cresthh.anuga import Region
 
 class Rate_operator(Operator,Region):
     """

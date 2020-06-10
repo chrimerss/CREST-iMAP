@@ -1,15 +1,15 @@
-import anuga
+from cresthh.anuga import Operator
 import numpy as num
 import math
 import parallel_inlet_enquiry 
 import pypar
 
-from anuga.utilities.system_tools import log_to_file
-from anuga.utilities.numerical_tools import ensure_numeric
-from anuga.structures.inlet_enquiry import Inlet_enquiry
+from cresthh.anuga.utilities.system_tools import log_to_file
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.structures.inlet_enquiry import Inlet_enquiry
 
 
-class Parallel_Structure_operator(anuga.Operator):
+class Parallel_Structure_operator(Operator):
     """Parallel Structure Operator - transfer water from one rectangular box to another.
     Sets up the geometry of problem
     

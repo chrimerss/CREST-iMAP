@@ -21,9 +21,9 @@ Author: Vanessa Robins, ANU
 import exceptions
 import random
 
-from anuga.load_mesh.loadASCII import export_boundary_file
-from anuga.geospatial_data.geospatial_data import Geospatial_data
-from anuga.utilities import log 
+from cresthh.anuga.load_mesh.loadASCII import export_boundary_file
+from cresthh.anuga.geospatial_data.geospatial_data import Geospatial_data
+from cresthh.anuga.utilities import log 
 
 import numpy as num
 

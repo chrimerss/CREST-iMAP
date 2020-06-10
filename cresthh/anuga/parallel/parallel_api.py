@@ -6,30 +6,30 @@
 import numpy as num
 
 # The abstract Python-MPI interface
-from anuga.utilities.parallel_abstraction import size, rank, get_processor_name
-from anuga.utilities.parallel_abstraction import finalize, send, receive
-from anuga.utilities.parallel_abstraction import pypar_available, barrier
+from cresthh.anuga.utilities.parallel_abstraction import size, rank, get_processor_name
+from cresthh.anuga.utilities.parallel_abstraction import finalize, send, receive
+from cresthh.anuga.utilities.parallel_abstraction import pypar_available, barrier
 
 
 
 # ANUGA parallel engine (only load if pypar can)
 if pypar_available:
-    from anuga.parallel.sequential_distribute import sequential_distribute_dump
-    from anuga.parallel.sequential_distribute import sequential_distribute_load
+    from cresthh.anuga.parallel.sequential_distribute import sequential_distribute_dump
+    from cresthh.anuga.parallel.sequential_distribute import sequential_distribute_load
 
-    from anuga.parallel.distribute_mesh  import send_submesh
-    from anuga.parallel.distribute_mesh  import rec_submesh
-    from anuga.parallel.distribute_mesh  import extract_submesh
+    from cresthh.anuga.parallel.distribute_mesh  import send_submesh
+    from cresthh.anuga.parallel.distribute_mesh  import rec_submesh
+    from cresthh.anuga.parallel.distribute_mesh  import extract_submesh
 
     # Mesh partitioning using Metis
-    from anuga.parallel.distribute_mesh import build_submesh
-    from anuga.parallel.distribute_mesh import pmesh_divide_metis_with_map
+    from cresthh.anuga.parallel.distribute_mesh import build_submesh
+    from cresthh.anuga.parallel.distribute_mesh import pmesh_divide_metis_with_map
 
-    from anuga.parallel.parallel_shallow_water import Parallel_domain
+    from cresthh.anuga.parallel.parallel_shallow_water import Parallel_domain
 
 
 
-from anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
+from cresthh.anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
 
 #------------------------------------------------------------------------------
 # Read in processor information

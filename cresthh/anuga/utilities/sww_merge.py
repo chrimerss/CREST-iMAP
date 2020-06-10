@@ -4,12 +4,12 @@
 """
 
 import numpy as num
-from anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
 
-from anuga.file.netcdf import NetCDFFile
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a
-from anuga.config import netcdf_float, netcdf_float32, netcdf_int
-from anuga.file.sww import SWW_file, Write_sww
+from cresthh.anuga.file.netcdf import NetCDFFile
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a
+from cresthh.anuga.config import netcdf_float, netcdf_float32, netcdf_int
+from cresthh.anuga.file.sww import SWW_file, Write_sww
 
 def sww_merge(domain_global_name, np, verbose=False):
 

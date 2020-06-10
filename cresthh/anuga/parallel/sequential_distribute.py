@@ -5,17 +5,17 @@
 
 import numpy as num
 
-from anuga import Domain
+from cresthh.anuga import Domain
 
-from anuga.parallel.distribute_mesh  import send_submesh
-from anuga.parallel.distribute_mesh  import rec_submesh
-from anuga.parallel.distribute_mesh  import extract_submesh
+from cresthh.anuga.parallel.distribute_mesh  import send_submesh
+from cresthh.anuga.parallel.distribute_mesh  import rec_submesh
+from cresthh.anuga.parallel.distribute_mesh  import extract_submesh
 
 # Mesh partitioning using Metis
-from anuga.parallel.distribute_mesh import build_submesh
-from anuga.parallel.distribute_mesh import pmesh_divide_metis_with_map
+from cresthh.anuga.parallel.distribute_mesh import build_submesh
+from cresthh.anuga.parallel.distribute_mesh import pmesh_divide_metis_with_map
 
-from anuga.parallel.parallel_shallow_water import Parallel_domain
+from cresthh.anuga.parallel.parallel_shallow_water import Parallel_domain
 
 
 

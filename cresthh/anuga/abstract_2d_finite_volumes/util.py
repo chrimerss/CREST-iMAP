@@ -4,7 +4,7 @@ It is also a clearing house for functions that may later earn a module
 of their own.
 """
 
-import anuga.geometry.polygon
+import cresthh.anuga.geometry.polygon
 import sys
 import os
 
@@ -13,17 +13,17 @@ from os.path import exists, basename, split,join
 from warnings import warn
 from shutil import copy
 
-from anuga.utilities.numerical_tools import ensure_numeric, angle, NAN
-from anuga.file.csv_file import load_csv_as_dict
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric, angle, NAN
+from cresthh.anuga.file.csv_file import load_csv_as_dict
 
 from math import sqrt, atan, degrees
 
 # FIXME (Ole): Temporary short cuts -
 # FIXME (Ole): remove and update scripts where they are used
-from anuga.utilities.system_tools import get_revision_number
-from anuga.utilities.system_tools import store_revision_info
+from cresthh.anuga.utilities.system_tools import get_revision_number
+from cresthh.anuga.utilities.system_tools import store_revision_info
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 import numpy as num
 

@@ -12,9 +12,9 @@ __date__ ="$09/03/2012 4:46:39 PM$"
 
 import numpy
 
-from anuga.operators.base_operator import Operator
-from anuga import Region
-from anuga.config import indent
+from cresthh.anuga.operators.base_operator import Operator
+from cresthh.anuga import Region
+from cresthh.anuga.config import indent
 
 
 default_friction_min = 0.01

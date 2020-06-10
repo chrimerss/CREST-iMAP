@@ -22,11 +22,11 @@ import os
 import sys
 import tempfile
 import time
-import anuga.config as config
-from anuga.utilities.terminal_width import terminal_width
-import anuga.utilities.system_tools as aust
-from anuga import __version__
-from anuga import pypar_available
+import cresthh.anuga.config as config
+from cresthh.anuga.utilities.terminal_width import terminal_width
+import cresthh.anuga.utilities.system_tools as aust
+from cresthh.anuga import __version__
+from cresthh.anuga import pypar_available
 
 
 #List files that should be excluded from the testing process.

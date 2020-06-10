@@ -8,8 +8,8 @@
 """
 
 from general_mesh import General_mesh
-from anuga.caching import cache
-import anuga.utilities.log as log
+from cresthh.anuga.caching import cache
+from cresthh.anuga.utilities import log
 
 from math import pi, sqrt
 
@@ -358,7 +358,7 @@ class Mesh(General_mesh):
         self.boundary is defined.
         """
 
-        from anuga.config import default_boundary_tag
+        from cresthh.anuga.config import default_boundary_tag
 
         #arr_neighbours = num.array(self.neighbours)
 
@@ -385,7 +385,7 @@ class Mesh(General_mesh):
             self.boundary is defined.
         """
 
-        from anuga.config import default_boundary_tag
+        from cresthh.anuga.config import default_boundary_tag
 
         if boundary is None:
             boundary = {}
@@ -585,7 +585,7 @@ class Mesh(General_mesh):
         All points are in absolute UTM coordinates
         """
 
-        from anuga.utilities.numerical_tools import angle, ensure_numeric
+        from cresthh.anuga.utilities.numerical_tools import angle, ensure_numeric
 
         # Get mesh extent
         xmin, xmax, ymin, ymax = self.get_extent(absolute=True)
@@ -733,8 +733,8 @@ class Mesh(General_mesh):
         Neighbour structure will be checked by class Mesh
         """
 
-        from anuga.config import epsilon
-        from anuga.utilities.numerical_tools import anglediff
+        from cresthh.anuga.config import epsilon
+        from cresthh.anuga.utilities.numerical_tools import anglediff
 
         N = len(self)
 
@@ -1049,7 +1049,7 @@ class Mesh(General_mesh):
         """Output statistics about mesh
         """
 
-        from anuga.utilities.numerical_tools import histogram, create_bins
+        from cresthh.anuga.utilities.numerical_tools import histogram, create_bins
 
         vertex_coordinates = self.vertex_coordinates # Relative coordinates
         areas = self.areas
@@ -1126,7 +1126,7 @@ class Mesh(General_mesh):
         # because I needed it for diagnostics.
         # We should make it fast - probably based on the
         # quad tree structure.
-        from anuga.geometry.polygon import is_outside_polygon,\
+        from cresthh.anuga.geometry.polygon import is_outside_polygon,\
              is_inside_polygon
 
         polygon = self.get_boundary_polygon()
@@ -1230,7 +1230,7 @@ class Mesh(General_mesh):
         if hasattr(self, 'interpolation_object'):
             I = self.interpolation_object
         else:
-            from anuga.fit_interpolate.interpolate import Interpolate
+            from cresthh.anuga.fit_interpolate.interpolate import Interpolate
 
             # Get discontinuous mesh - this will match internal
             # representation of vertex values
@@ -1296,8 +1296,8 @@ def _get_intersecting_segments(V, N, line,
     more documentation.
     """
 
-    from anuga.geometry.polygon import intersection
-    from anuga.geometry.polygon import is_inside_polygon
+    from cresthh.anuga.geometry.polygon import intersection
+    from cresthh.anuga.geometry.polygon import is_inside_polygon
 
     msg = 'Line segment must contain exactly two points'
     assert len(line) == 2, msg

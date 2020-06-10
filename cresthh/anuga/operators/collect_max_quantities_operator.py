@@ -10,12 +10,12 @@ __date__ ="$01/08/2014 4:46:39 PM$"
 
 
 import numpy as num
-from anuga.geometry.polygon import inside_polygon
-from anuga.operators.base_operator import Operator
-from anuga import Quantity
-from anuga.parallel import myid
-from anuga.config import velocity_protection
-from anuga.config import max_float
+from cresthh.anuga.geometry.polygon import inside_polygon
+from cresthh.anuga.operators.base_operator import Operator
+from cresthh.anuga import Quantity
+from cresthh.anuga.parallel import myid
+from cresthh.anuga.config import velocity_protection
+from cresthh.anuga.config import max_float
 
 
 class collect_max_quantities_operator(Operator):

@@ -1,4 +1,4 @@
-import anuga
+from cresthh.anuga import Structure_operator
 import math
 import numpy
 from numpy.linalg import solve
@@ -11,7 +11,7 @@ import scipy.optimize as sco
 #=====================================================================
 
 
-class Internal_boundary_operator(anuga.Structure_operator):
+class Internal_boundary_operator(Structure_operator):
     """
        The internal_boundary_function must accept 2 input arguments (hw, tw). It 
        returns Q:

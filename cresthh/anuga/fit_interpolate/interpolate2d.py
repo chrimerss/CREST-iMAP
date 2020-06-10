@@ -22,7 +22,7 @@ __copyright__ = 'Copyright 2012, Australia Indonesia Facility for '
 __copyright__ += 'Disaster Reduction'
 
 import numpy
-from anuga.anuga_exceptions import ANUGAError
+from cresthh.anuga.anuga_exceptions import ANUGAError
 
 
 def interpolate2d(x, y, Z, points, mode='linear', bounds_error=False):

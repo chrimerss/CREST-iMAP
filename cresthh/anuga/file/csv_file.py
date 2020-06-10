@@ -13,7 +13,7 @@
 
 import csv
 import numpy as num
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 
 def load_csv_as_dict(file_name, title_check_list=None, delimiter=',',

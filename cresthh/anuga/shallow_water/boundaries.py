@@ -23,14 +23,14 @@ ModifiedBy:
 """
 
 
-from anuga.abstract_2d_finite_volumes.generic_boundary_conditions\
+from cresthh.anuga.abstract_2d_finite_volumes.generic_boundary_conditions\
      import Boundary, File_boundary
 import numpy as num
 
-import anuga.utilities.log as log
-from anuga.fit_interpolate.interpolate import Modeltime_too_late
-from anuga.fit_interpolate.interpolate import Modeltime_too_early
-from anuga.config import g as gravity
+from cresthh.anuga.utilities import log
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_late
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_early
+from cresthh.anuga.config import g as gravity
      
 from shallow_water_ext import rotate
 

@@ -25,17 +25,17 @@ import exceptions
 import numpy as num
 
 
-from anuga.coordinate_transforms.geo_reference import Geo_reference, \
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference, \
      DEFAULT_ZONE
-from  anuga.load_mesh.loadASCII import NOMAXAREA, export_mesh_file, \
+from  cresthh.anuga.load_mesh.loadASCII import NOMAXAREA, export_mesh_file, \
      import_mesh_file 
-import anuga.alpha_shape.alpha_shape
-from anuga.geospatial_data.geospatial_data import Geospatial_data, \
+import cresthh.anuga.alpha_shape.alpha_shape
+from cresthh.anuga.geospatial_data.geospatial_data import Geospatial_data, \
      ensure_geospatial, ensure_absolute, ensure_numeric
-from anuga.mesh_engine.mesh_engine import generate_mesh
-import anuga.utilities.log as log
+from cresthh.anuga.mesh_engine.mesh_engine import generate_mesh
+from cresthh.anuga.utilities import log
 
-from anuga.file.ungenerate import load_ungenerate
+from cresthh.anuga.file.ungenerate import load_ungenerate
 
 try:  
     import kinds  
@@ -713,7 +713,7 @@ class Mesh:
         """
         # Only import this if necessary.
         # Trying to get pmesh working in an uncompiled environment
-        from anuga.geometry.polygon import point_in_polygon
+        from cresthh.anuga.geometry.polygon import point_in_polygon
         
         #get absolute values
         if geo_reference is not None:

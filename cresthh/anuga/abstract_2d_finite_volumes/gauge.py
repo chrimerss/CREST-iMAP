@@ -10,7 +10,7 @@
 
 import numpy as num
 
-from anuga.geospatial_data.geospatial_data import ensure_absolute
+from cresthh.anuga.geospatial_data.geospatial_data import ensure_absolute
 from util import check_list, calc_bearing
 from file_function import file_function
 
@@ -18,7 +18,7 @@ import os
 
 from os import remove, mkdir, access, F_OK, R_OK, W_OK, sep, getcwd
 from os.path import exists, split, join
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 from math import sqrt
 

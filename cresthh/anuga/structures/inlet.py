@@ -1,7 +1,7 @@
-import anuga.geometry.polygon
-from anuga.geometry.polygon import inside_polygon, is_inside_polygon, line_intersect
-from anuga.config import velocity_protection, g
-from anuga import Region
+import cresthh.anuga.geometry.polygon
+from cresthh.anuga.geometry.polygon import inside_polygon, is_inside_polygon, line_intersect
+from cresthh.anuga.config import velocity_protection, g
+from cresthh.anuga import Region
 
 import math
 

@@ -3,7 +3,7 @@
 
 import numpy as num
 
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_float
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_float
 
 def dem2dem(name_in, stencil, cellsize_new, name_out=None,
                  verbose=False):

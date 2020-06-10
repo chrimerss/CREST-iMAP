@@ -1,13 +1,13 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 
-import anuga
+import cresthh.anuga
 import numpy
 import math
-import anuga.structures.inlet
+import cresthh.anuga.structures.inlet
 
-from anuga.utilities.system_tools import log_to_file
-from anuga.structures.inlet_operator import Inlet_operator
+from cresthh.anuga.utilities.system_tools import log_to_file
+from cresthh.anuga.structures.inlet_operator import Inlet_operator
 import parallel_inlet
 
 

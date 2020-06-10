@@ -1,9 +1,9 @@
 # external modules
 import numpy as num
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 # ANUGA modules
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a, \
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_mode_a, \
                             netcdf_float
 
 def asc2dem(name_in, name_out=None,

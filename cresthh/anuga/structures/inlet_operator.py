@@ -1,10 +1,11 @@
-import anuga
+import cresthh.anuga
 import numpy
 import inlet
+from cresthh.anuga import Operator
 
 import warnings
 
-class Inlet_operator(anuga.Operator):
+class Inlet_operator(Operator):
     """Inlet Operator - add water to an inlet.
     Sets up the geometry of problem
 

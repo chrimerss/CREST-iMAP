@@ -55,10 +55,10 @@
 
 import sys
 import getopt
-from anuga.utilities import log
-from anuga.file.netcdf import NetCDFFile
-from anuga.file.csv_file import load_csv_as_dict
-from anuga.config import netcdf_mode_w, netcdf_float
+from cresthh.anuga.utilities import log
+from cresthh.anuga.file.netcdf import NetCDFFile
+from cresthh.anuga.file.csv_file import load_csv_as_dict
+from cresthh.anuga.config import netcdf_mode_w, netcdf_float
 
 
 def csv2sts(infile, outfile, latitude = None, longitude = None,

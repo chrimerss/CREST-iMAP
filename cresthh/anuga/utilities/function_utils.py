@@ -2,8 +2,8 @@
 """
 
 import numpy as num
-from anuga.fit_interpolate.interpolate import Modeltime_too_early
-from anuga.fit_interpolate.interpolate import Modeltime_too_late
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_early
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_late
 
 import warnings
 #warnings.filterwarnings('default')

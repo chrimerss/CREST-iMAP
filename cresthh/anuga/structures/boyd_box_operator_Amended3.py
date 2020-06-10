@@ -1,4 +1,4 @@
-import anuga
+import cresthh.anuga
 import math
 
 class Boyd_box_operator(anuga.Structure_operator):

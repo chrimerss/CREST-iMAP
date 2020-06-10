@@ -98,18 +98,18 @@ try:
 except:
     import cPickle
 
-from anuga.abstract_2d_finite_volumes.generic_domain \
+from cresthh.anuga.abstract_2d_finite_volumes.generic_domain \
                     import Generic_Domain
 
-from anuga.shallow_water.forcing import Cross_section
-from anuga.utilities.numerical_tools import mean
-from anuga.file.sww import SWW_file
+from cresthh.anuga.shallow_water.forcing import Cross_section
+from cresthh.anuga.utilities.numerical_tools import mean
+from cresthh.anuga.file.sww import SWW_file
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
-from anuga.utilities.parallel_abstraction import size, rank, get_processor_name
-from anuga.utilities.parallel_abstraction import finalize, send, receive
-from anuga.utilities.parallel_abstraction import pypar_available, barrier
+from cresthh.anuga.utilities.parallel_abstraction import size, rank, get_processor_name
+from cresthh.anuga.utilities.parallel_abstraction import finalize, send, receive
+from cresthh.anuga.utilities.parallel_abstraction import pypar_available, barrier
 
 
 #from pypar import size, rank, send, receive, barrier
@@ -286,15 +286,15 @@ class Domain(Generic_Domain):
 
         # Riverwalls -- initialise with dummy values
         # Presently only works with DE algorithms, will fail otherwise
-        import anuga.structures.riverwall
-        self.riverwallData=anuga.structures.riverwall.RiverWall(self)
+        from cresthh.anuga.structures import riverwall
+        self.riverwallData=riverwall.RiverWall(self)
 
         ## Keep track of the fluxes through the boundaries
         ## Only works for DE algorithms at present
         max_time_substeps=3 # Maximum number of substeps supported by any timestepping method
         # boundary_flux_sum holds boundary fluxes on each sub-step [unused substeps = 0.]
         self.boundary_flux_sum=num.array([0.]*max_time_substeps)
-        from anuga.operators.boundary_flux_integral_operator import boundary_flux_integral_operator
+        from cresthh.anuga.operators.boundary_flux_integral_operator import boundary_flux_integral_operator
         self.boundary_flux_integral=boundary_flux_integral_operator(self)
         # Make an integer counting how many times we call compute_fluxes_central -- so we know which substep we are on
         #self.call=1
@@ -338,20 +338,20 @@ class Domain(Generic_Domain):
         and just redefine the defaults for the new class
         """
 
-        from anuga.config import minimum_storable_height
-        from anuga.config import minimum_allowed_height, maximum_allowed_speed
-        from anuga.config import g
-        from anuga.config import tight_slope_limiters
-        from anuga.config import extrapolate_velocity_second_order
-        from anuga.config import alpha_balance
-        from anuga.config import optimise_dry_cells
-        from anuga.config import optimised_gradient_limiter
-        from anuga.config import use_edge_limiter
-        from anuga.config import use_centroid_velocities
-        from anuga.config import compute_fluxes_method
-        from anuga.config import distribute_to_vertices_and_edges_method
-        from anuga.config import sloped_mannings_function
-        from anuga.config import low_froude
+        from cresthh.anuga.config import minimum_storable_height
+        from cresthh.anuga.config import minimum_allowed_height, maximum_allowed_speed
+        from cresthh.anuga.config import g
+        from cresthh.anuga.config import tight_slope_limiters
+        from cresthh.anuga.config import extrapolate_velocity_second_order
+        from cresthh.anuga.config import alpha_balance
+        from cresthh.anuga.config import optimise_dry_cells
+        from cresthh.anuga.config import optimised_gradient_limiter
+        from cresthh.anuga.config import use_edge_limiter
+        from cresthh.anuga.config import use_centroid_velocities
+        from cresthh.anuga.config import compute_fluxes_method
+        from cresthh.anuga.config import distribute_to_vertices_and_edges_method
+        from cresthh.anuga.config import sloped_mannings_function
+        from cresthh.anuga.config import low_froude
 
 
         # Early algorithms need elevation to remain continuous
@@ -1352,7 +1352,7 @@ class Domain(Generic_Domain):
 
     def set_use_kinematic_viscosity(self, flag=True):
 
-        from anuga.operators.kinematic_viscosity_operator import Kinematic_viscosity_operator
+        from cresthh.anuga.operators.kinematic_viscosity_operator import Kinematic_viscosity_operator
 
         if flag :
             # Create Operator if necessary
@@ -1558,7 +1558,7 @@ class Domain(Generic_Domain):
 
         # Water depth below which it is considered to be 0 in the model
         # FIXME (Ole): Allow this to be specified as a keyword argument as well
-        from anuga.config import minimum_allowed_height
+        from cresthh.anuga.config import minimum_allowed_height
 
         if minimum_height is None:
             minimum_height = minimum_allowed_height
@@ -1609,7 +1609,7 @@ class Domain(Generic_Domain):
 
     def get_water_volume(self):
 
-        from anuga import numprocs
+        from cresthh.anuga import numprocs
 
         #print self.evolved_called
 
@@ -1618,7 +1618,7 @@ class Domain(Generic_Domain):
             Elev =  self.quantities['elevation']
             h_c = Stage.centroid_values - Elev.centroid_values
             #print h_c
-            from anuga import Quantity
+            from cresthh.anuga import Quantity
             Height = Quantity(self)
             Height.set_values(h_c, location='centroids')
             #print Height.centroid_values
@@ -1637,7 +1637,7 @@ class Domain(Generic_Domain):
             return volume
 
         # isolated parallel code
-        from anuga import myid, send, receive, barrier
+        from cresthh.anuga import myid, send, receive, barrier
 
         if myid == 0:
             water_volume = volume
@@ -1664,7 +1664,7 @@ class Domain(Generic_Domain):
             Should work in parallel
         """
 
-        from anuga import numprocs
+        from cresthh.anuga import numprocs
 
         if not self.compute_fluxes_method=='DE':
             msg='Boundary flux integral only supported for DE fluxes '+\
@@ -1677,7 +1677,7 @@ class Domain(Generic_Domain):
             return flux_integral
 
         # isolate parallel code
-        from anuga import myid, send, receive, barrier
+        from cresthh.anuga import myid, send, receive, barrier
 
         if myid == 0:
             for i in range(1,numprocs):
@@ -1704,7 +1704,7 @@ class Domain(Generic_Domain):
             Should work in parallel
         """
 
-        from anuga import numprocs
+        from cresthh.anuga import numprocs
 
         flux_integral = self.fractional_step_volume_integral
 
@@ -1712,7 +1712,7 @@ class Domain(Generic_Domain):
             return flux_integral
 
         # isolate parallel code
-        from anuga import myid, send, receive, barrier
+        from cresthh.anuga import myid, send, receive, barrier
 
         if myid == 0:
             for i in range(1,numprocs):
@@ -2522,7 +2522,7 @@ class Domain(Generic_Domain):
         report.
         """
 
-        from anuga.config import epsilon, g
+        from cresthh.anuga.config import epsilon, g
 
         # Call basic machinery from parent class
         msg = Generic_Domain.timestepping_statistics(self, track_speeds,
@@ -2786,7 +2786,7 @@ class Domain(Generic_Domain):
         If verbose, print a summary
         If returnStats, return a list with the volume statistics
         """
-        from anuga import myid
+        from cresthh.anuga import myid
 
         if(self.compute_fluxes_method is not 'DE'):
             if(myid==0):
@@ -2822,8 +2822,8 @@ class Domain(Generic_Domain):
         Useful in models
         with complex meshes, to find ways to speed up the model
         """
-        from anuga.parallel import myid, numprocs
-        from anuga.config import g, epsilon
+        from cresthh.anuga.parallel import myid, numprocs
+        from cresthh.anuga.config import g, epsilon
 
         if(threshold_depth is None):
             threshold_depth=self.minimum_allowed_height

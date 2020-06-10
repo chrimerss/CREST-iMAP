@@ -4,9 +4,9 @@ import matplotlib.tri as tri
 from pylab import *
 
 # The abstract Python-MPI interface
-from anuga.utilities.parallel_abstraction import size, rank, get_processor_name
-from anuga.utilities.parallel_abstraction import finalize, send, receive
-from anuga.utilities.parallel_abstraction import pypar_available, barrier
+from cresthh.anuga.utilities.parallel_abstraction import size, rank, get_processor_name
+from cresthh.anuga.utilities.parallel_abstraction import finalize, send, receive
+from cresthh.anuga.utilities.parallel_abstraction import pypar_available, barrier
 
 import random
 

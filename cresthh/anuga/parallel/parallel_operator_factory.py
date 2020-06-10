@@ -6,10 +6,10 @@
 import os.path
 import sys
 
-from anuga.utilities.system_tools import get_pathname_from_package
-from anuga.geometry.polygon_function import Polygon_function
+from cresthh.anuga.utilities.system_tools import get_pathname_from_package
+from cresthh.anuga.geometry.polygon_function import Polygon_function
 
-import anuga
+import cresthh.anuga
 from math import pi, pow, sqrt
 import numpy as num
 from parallel_inlet_operator import Parallel_Inlet_operator
@@ -20,17 +20,17 @@ from parallel_weir_orifice_trapezoid_operator import Parallel_Weir_orifice_trape
 from parallel_internal_boundary_operator import Parallel_Internal_boundary_operator
 
 from . import distribute, myid, numprocs, finalize
-from anuga.geometry.polygon import inside_polygon, is_inside_polygon, line_intersect
+from cresthh.anuga.geometry.polygon import inside_polygon, is_inside_polygon, line_intersect
 
-import anuga.structures.boyd_box_operator
-import anuga.structures.boyd_pipe_operator
-import anuga.structures.inlet_operator
-import anuga.structures.internal_boundary_operator
+import cresthh.anuga.structures.boyd_box_operator
+import cresthh.anuga.structures.boyd_pipe_operator
+import cresthh.anuga.structures.inlet_operator
+import cresthh.anuga.structures.internal_boundary_operator
 
-import anuga.structures.weir_orifice_trapezoid_operator
+import cresthh.anuga.structures.weir_orifice_trapezoid_operator
 
-from anuga.utilities.numerical_tools import ensure_numeric
-from anuga.parallel.parallel_shallow_water import Parallel_domain
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.parallel.parallel_shallow_water import Parallel_domain
 
 import math
 

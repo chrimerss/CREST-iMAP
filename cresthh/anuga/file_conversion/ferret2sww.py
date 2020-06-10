@@ -6,14 +6,14 @@ import numpy as num
 
 
 # ANUGA modules
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_float
-from anuga.file.sww import Write_sww  
-from anuga.coordinate_transforms.geo_reference import Geo_reference, \
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_float
+from cresthh.anuga.file.sww import Write_sww  
+from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference, \
      write_NetCDF_georeference                          
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 #local modules
-from anuga.file_conversion.file_conversion import get_min_max_indices                            
+from cresthh.anuga.file_conversion.file_conversion import get_min_max_indices                            
 
 
 def ferret2sww(basename_in, name_out=None,

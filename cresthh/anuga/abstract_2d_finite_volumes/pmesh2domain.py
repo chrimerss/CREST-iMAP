@@ -8,7 +8,7 @@
 
 import sys
 import numpy as num
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 
 
@@ -25,7 +25,7 @@ def pmesh_to_domain_instance(source, DomainClass, use_cache=False,
     """
 
     if use_cache is True:
-        from anuga.caching import cache
+        from cresthh.anuga.caching import cache
         result = cache(_pmesh_to_domain_instance, (source, DomainClass),
                        dependencies=[source], verbose=verbose)
     else:
@@ -40,7 +40,7 @@ def _pmesh_to_domain_instance(source, DomainClass):
     Internal function. See public interface pmesh_to_domain_instance for details
     """
 
-    from anuga.abstract_2d_finite_volumes.generic_domain import Generic_Domain 
+    from cresthh.anuga.abstract_2d_finite_volumes.generic_domain import Generic_Domain 
 
     # ensure the required class is a subclass of Domain
     msg = ('The class %s is not a subclass of the generic domain class %s'
@@ -93,7 +93,7 @@ def pmesh_to_domain(file_name=None, mesh_instance=None, use_cache=False,
     if verbose: log.critical('Pmesh_to_Domain: Initialising')
     
     if use_cache is True:
-        from anuga.caching import cache
+        from cresthh.anuga.caching import cache
         result = cache(_pmesh_to_domain, (file_name, mesh_instance),
                        dependencies=[file_name], verbose=verbose)
 
@@ -111,7 +111,7 @@ def _pmesh_to_domain(file_name=None, mesh_instance=None, use_cache=False,
     that can be used to instantiate a domain object.
     """
 
-    from anuga.load_mesh.loadASCII import import_mesh_file
+    from cresthh.anuga.load_mesh.loadASCII import import_mesh_file
 
     # get data from mesh instance or file
     if file_name is None:
@@ -210,7 +210,7 @@ def pmesh_dict_to_tag_dict(mesh_dict):
     #print segments
     #print segment_tags
 
-    from anuga.abstract_2d_finite_volumes.pmesh2domain_ext import build_boundary_dictionary
+    from cresthh.anuga.abstract_2d_finite_volumes.pmesh2domain_ext import build_boundary_dictionary
 
     tag_dict = build_boundary_dictionary(triangles, segments, segment_tags, tag_dict)
     
@@ -276,7 +276,7 @@ def calc_sides_c(triangles):
 
     #print ntriangles
 
-    from anuga.abstract_2d_finite_volumes.pmesh2domain_ext import build_sides_dictionary
+    from cresthh.anuga.abstract_2d_finite_volumes.pmesh2domain_ext import build_sides_dictionary
     sides = build_sides_dictionary(triangles, sides)
 
 

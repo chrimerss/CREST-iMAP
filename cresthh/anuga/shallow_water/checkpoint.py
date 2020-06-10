@@ -16,7 +16,7 @@ domain = load_last_checkpoint_file(domain_name, checkpoint_dir)
 
 """
 
-from anuga import send, receive, myid, numprocs, barrier
+from cresthh.anuga import send, receive, myid, numprocs, barrier
 from time import time as walltime
 
 

@@ -4,7 +4,7 @@
     As of June 2010 this module has a pylint quality rating of 8.85/10.
 """
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 import numpy as num
 from polygon import inside_polygon
 

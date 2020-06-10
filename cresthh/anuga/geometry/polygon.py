@@ -5,10 +5,10 @@
 import numpy as num
 import math
 
-from anuga.utilities.numerical_tools import ensure_numeric
-from anuga.geospatial_data.geospatial_data import ensure_absolute, \
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.geospatial_data.geospatial_data import ensure_absolute, \
                                                     Geospatial_data
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 from aabb import AABB
 

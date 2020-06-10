@@ -1,4 +1,4 @@
-import anuga
+from cresthh.anuga import Structure_operator
 import math
 import numpy
 
@@ -7,7 +7,7 @@ import numpy
 # The class
 #=====================================================================
 
-class Weir_orifice_trapezoid_operator(anuga.Structure_operator):
+class Weir_orifice_trapezoid_operator(Structure_operator):
     """Culvert flow - transfer water from one trapezoidal section to another.
     Sets up the geometry of problem
 

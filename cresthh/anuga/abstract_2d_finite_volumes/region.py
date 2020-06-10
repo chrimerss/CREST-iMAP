@@ -5,17 +5,17 @@ Define region
 __author__="steve"
 __date__ ="$09/03/2012 4:46:39 PM$"
 
-from anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
 
-from anuga import Domain
-from anuga import Quantity
+from cresthh.anuga import Domain
+from cresthh.anuga import Quantity
 import numpy as num
 from pprint import pprint
 
 
-from anuga.geometry.polygon import inside_polygon, line_intersect
+from cresthh.anuga.geometry.polygon import inside_polygon, line_intersect
 
-from anuga.utilities.function_utils import determine_function_type
+from cresthh.anuga.utilities.function_utils import determine_function_type
 
 #from anuga import indent
 

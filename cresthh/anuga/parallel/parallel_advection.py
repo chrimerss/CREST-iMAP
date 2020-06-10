@@ -12,9 +12,9 @@ Ole Nielsen, Stephen Roberts, Duncan Gray, Christopher Zoppou
 Geoscience Australia, 2004-2005
 """
 
-from anuga.advection import *
+from cresthh.anuga.advection import *
 
-from anuga import Domain
+from cresthh.anuga import Domain
 
 import numpy as num
 

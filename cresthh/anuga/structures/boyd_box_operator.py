@@ -1,4 +1,4 @@
-import anuga
+from cresthh.anuga import Structure_operator
 import math
 import numpy
 
@@ -7,7 +7,7 @@ import numpy
 # The class
 #=====================================================================
 
-class Boyd_box_operator(anuga.Structure_operator):
+class Boyd_box_operator(Structure_operator):
     """Culvert flow - transfer water from one rectangular box to another.
     Sets up the geometry of problem
     

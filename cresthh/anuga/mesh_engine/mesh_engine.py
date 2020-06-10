@@ -7,13 +7,13 @@ from types import ListType, TupleType
 import exceptions
 
 class NoTrianglesError(exceptions.Exception): pass
-import anuga.mesh_engine.mesh_engine_c_layer as triang
+from cresthh.anuga.mesh_engine import mesh_engine_c_layer as triang
 #import anuga.mesh_engine.list_dic as triang
 
 import numpy as num
 
-from anuga.utilities.numerical_tools import ensure_numeric
-from anuga.anuga_exceptions import ANUGAError
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.anuga_exceptions import ANUGAError
     
 def generate_mesh(points=None,
                   segments=None,holes=None,regions=None,

@@ -11,23 +11,25 @@
    Ole Nielsen, Stephen Roberts, Duncan Gray
    Geoscience Australia
 """
-import sys
-sys.path.append('/home/ZhiLi/CRESTHH/crest')
+
 import os
+import sys
+sys.path.append('/home/ZhiLi/CRESTHH/cresthh/crest')
 import crest_core
+# import cresthh.crest
 # from multiprocessing import Pool
 import datetime
 import pandas as pd
 
 from time import time as walltime
 
-from anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
+from cresthh.anuga.abstract_2d_finite_volumes.neighbour_mesh import Mesh
 from pmesh2domain import pmesh_to_domain
 from tag_region import Set_tag_region as region_set_tag_region
-from anuga.geometry.polygon import inside_polygon
-from anuga.abstract_2d_finite_volumes.util import get_textual_float
+from cresthh.anuga.geometry.polygon import inside_polygon
+from cresthh.anuga.abstract_2d_finite_volumes.util import get_textual_float
 from quantity import Quantity
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 import numpy as num
 
@@ -290,13 +292,13 @@ class Generic_Domain:
         # Defaults
         if verbose: log.critical('Domain: Set defaults')
 
-        from anuga.config import max_smallsteps, beta_w, epsilon
-        from anuga.config import CFL
-        from anuga.config import timestepping_method
-        from anuga.config import protect_against_isolated_degenerate_timesteps
-        from anuga.config import default_order
-        from anuga.config import max_timestep, min_timestep
-        from anuga.config import g
+        from cresthh.anuga.config import max_smallsteps, beta_w, epsilon
+        from cresthh.anuga.config import CFL
+        from cresthh.anuga.config import timestepping_method
+        from cresthh.anuga.config import protect_against_isolated_degenerate_timesteps
+        from cresthh.anuga.config import default_order
+        from cresthh.anuga.config import max_timestep, min_timestep
+        from cresthh.anuga.config import g
 
         self.g = g
         self.beta_w = beta_w
@@ -338,7 +340,7 @@ class Generic_Domain:
         self.monitor_indices = None
 
         # Checkpointing and storage
-        from anuga.config import default_datadir
+        from cresthh.anuga.config import default_datadir
 
         self.datadir = default_datadir
         self.simulation_name = 'domain'
@@ -923,7 +925,7 @@ class Generic_Domain:
             Absolute_momentum = domain.create_quantity_from_expression(exp)
         """
 
-        from anuga.abstract_2d_finite_volumes.util import\
+        from cresthh.anuga.abstract_2d_finite_volumes.util import\
              apply_expression_to_dictionary
 
         return apply_expression_to_dictionary(expression, self.quantities)
@@ -1025,8 +1027,8 @@ class Generic_Domain:
             # If Boundary set to Compute_fluxes_boundary identify as flux boundary
             #print vol_id, edge_id, B
 
-            import anuga
-            if ( isinstance(B,anuga.Compute_fluxes_boundary) ):
+            import cresthh.anuga
+            if ( isinstance(B,cresthh.anuga.Compute_fluxes_boundary) ):
                 self.boundary_flux_type[k]=1
 
 
@@ -1089,7 +1091,7 @@ class Generic_Domain:
         that interval. If omitted all timesteps will be included.
         """
 
-        from anuga.abstract_2d_finite_volumes.util import\
+        from cresthh.anuga.abstract_2d_finite_volumes.util import\
              apply_expression_to_dictionary
 
         if q is None:
@@ -1188,7 +1190,7 @@ class Generic_Domain:
         triangle rather than the one with the largest speed.
         """
 
-        from anuga.utilities.numerical_tools import histogram, create_bins
+        from cresthh.anuga.utilities.numerical_tools import histogram, create_bins
 
         # qwidth determines the the width of the text field used for quantities
         qwidth = self.qwidth = 12
@@ -1196,17 +1198,18 @@ class Generic_Domain:
         msg = ''
 
         model_time = self.get_time(relative_time=relative_time)
+        absolute_time= self.timestamp + datetime.timedelta(seconds=model_time)
  
         if self.recorded_min_timestep == self.recorded_max_timestep:
-            msg += 'Time = %.4f, delta t = %.8f, steps=%d' \
-                       % (model_time, self.recorded_min_timestep, \
+            msg += 'Time = %s, delta t = %.8f, steps=%d' \
+                       % (absolute_time, self.recorded_min_timestep, \
                                     self.number_of_steps)
         elif self.recorded_min_timestep > self.recorded_max_timestep:
-            msg += 'Time = %.4f, steps=%d' \
-                       % (model_time, self.number_of_steps)
+            msg += 'Time = %s, steps=%d' \
+                       % (absolute_time, self.number_of_steps)
         else:
-            msg += 'Time = %.4f, delta t in [%.8f, %.8f], steps=%d' \
-                       % (model_time, self.recorded_min_timestep,
+            msg += 'Time = %s, delta t in [%.8f, %.8f], steps=%d' \
+                       % (absolute_time, self.recorded_min_timestep,
                           self.recorded_max_timestep, self.number_of_steps)
 
         msg += ' (%ds)' % (walltime() - self.last_walltime)
@@ -1398,7 +1401,7 @@ class Generic_Domain:
         """
 
         # Define a tolerance for extremum computations
-        from anuga.config import single_precision as epsilon
+        from cresthh.anuga.config import single_precision as epsilon
 
         if self.quantities_to_be_monitored is None:
             return
@@ -1681,7 +1684,7 @@ class Generic_Domain:
         All times are given in seconds
         """
 
-        from anuga.config import epsilon
+        from cresthh.anuga.config import epsilon
 
         # FIXME: Maybe lump into a larger check prior to evolving
         msg = ('Boundary tags must be bound to boundary objects before '
@@ -1797,23 +1800,28 @@ class Generic_Domain:
                             '%02d'%current_time.month).replace('%d', '%02d'%(current_time.day)).replace('%H',
                             '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
                                 '%02d'%(current_time.second)))
-                # try:
-                self.quantities['P'].set_values_from_lat_long_tif_file(precip_pth,
+                try:
+                    self.quantities['P'].set_values_from_lat_long_tif_file(precip_pth,
                                 location='centroids' ,proj=self.proj)
-                self.quantities['P']/=(_time_interval_func(precip_freq)*1000)
-                # except:
+                    self.quantities['P']/=(_time_interval_func(precip_freq)*1000)
+                except:
+                    msg= '%s not found in precipitation, assume 0 everywhere'%precip_pth
+                    log.critical(msg)
+                    self.quantities['P'].set_values_from_constant(0, 'centroids',None,None)
                     # print '%s not found in precipitation'%precip_pth
             if self.get_time()%_time_interval_func(evap_freq)==0:
-                # try:
-                evap_pth= os.path.join(self.evap_dir, self.evap_pattern.replace('%Y', '%04d'%(current_time.year)).replace('%m',
-                            '%02d'%(current_time.month)).replace('%d', '%02d'%(current_time.day)).replace('%H',
-                            '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
-                            '%02d'%(current_time.second)))
-                self.quantities['ET'].set_values_from_lat_long_tif_file(evap_pth,
-                            location='centroids', proj=self.proj)
-                self.quantities['ET']/=(_time_interval_func(evap_freq)*1000*30)
-                # except:
-                    # print '%s not found in evaporation!'%evap_pth
+                try:
+                    evap_pth= os.path.join(self.evap_dir, self.evap_pattern.replace('%Y', '%04d'%(current_time.year)).replace('%m',
+                                '%02d'%(current_time.month)).replace('%d', '%02d'%(current_time.day)).replace('%H',
+                                '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
+                                '%02d'%(current_time.second)))
+                    self.quantities['ET'].set_values_from_lat_long_tif_file(evap_pth,
+                                location='centroids', proj=self.proj)
+                    self.quantities['ET']/=(_time_interval_func(evap_freq)*1000*30)
+                except:
+                    msg= '%s not found in evaporation!'%evap_pth
+                    log.critical(msg)
+                    self.quantities['ET'].set_values_from_constant(0, 'centroids',None,None)
             
             # print "initialize completed!  Start excessive rainfall calculation"       
 
@@ -2584,7 +2592,7 @@ class Generic_Domain:
             return
 
         # Setup 10 bins for speed histogram
-        from anuga.utilities.numerical_tools import histogram, create_bins
+        from cresthh.anuga.utilities.numerical_tools import histogram, create_bins
 
         bins = create_bins(self.max_speed, 10)
         hist = histogram(self.max_speed, bins)

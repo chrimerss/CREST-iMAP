@@ -51,7 +51,7 @@ if os.name in ['nt', 'dos', 'win32', 'what else?']:
 else:
   unix = True
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
 import numpy as num
 

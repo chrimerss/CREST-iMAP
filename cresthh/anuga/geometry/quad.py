@@ -12,7 +12,7 @@ As of June 2010 this module has a pylint quality rating of 10/10.
 
 """
 
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
             
 class Cell():

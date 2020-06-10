@@ -9,15 +9,15 @@ __author__="steve"
 __date__ ="$09/03/2012 4:46:39 PM$"
 
 
-from anuga import Domain
-from anuga import Quantity
+from cresthh.anuga import Domain
+from cresthh.anuga import Quantity
 import numpy as num
-import anuga.utilities.log as log
+from cresthh.anuga.utilities import log
 
-from anuga.geometry.polygon import inside_polygon
+from cresthh.anuga.geometry.polygon import inside_polygon
 
-from anuga.operators.set_quantity_operator import Set_quantity_operator
-from anuga.config import indent
+from cresthh.anuga.operators.set_quantity_operator import Set_quantity_operator
+from cresthh.anuga.config import indent
 
 
 

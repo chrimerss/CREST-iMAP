@@ -2,7 +2,7 @@
     Read a mux2 file.
 """
 
-from anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
 import numpy as num     
         
 ################################################################################

@@ -5,10 +5,10 @@ boundary.py - Classes for implementing boundary conditions
 
 from warnings import warn
 
-from anuga.utilities.numerical_tools import NAN    
-from anuga.fit_interpolate.interpolate import Modeltime_too_late
-from anuga.fit_interpolate.interpolate import Modeltime_too_early
-import anuga.utilities.log as log
+from cresthh.anuga.utilities.numerical_tools import NAN    
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_late
+from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_early
+from cresthh.anuga.utilities.log import log
 
 import numpy as num
 

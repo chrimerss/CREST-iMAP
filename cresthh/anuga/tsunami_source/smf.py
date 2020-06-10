@@ -48,7 +48,7 @@ Geoscience Australia, June 2005
 
 import numpy as num
 
-import anuga.utilities.log as lg
+from cresthh.anuga.utilities import log as lg
 
 
 def find_min(x0, wa, kappad, dx):

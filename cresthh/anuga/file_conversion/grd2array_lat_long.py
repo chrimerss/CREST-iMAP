@@ -9,7 +9,7 @@ import numpy as num
 import os
 from pyproj import Proj
 
-from anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_float
+from cresthh.anuga.config import netcdf_mode_r, netcdf_mode_w, netcdf_float
 
 def grd2array_lat_long(filename, verbose=False, proj=None):
         """Read Digital Elevation model from the following ASCII format (.asc or .grd)
