@@ -99,7 +99,7 @@ class Domain_plotter:
 
         plt.show()
 
-    def make_depth_animation(self):
+    def make_depth_animation(self, save_gif=False, fps=None, dst=None):
 
         import numpy as np
         import glob
@@ -136,6 +136,10 @@ class Domain_plotter:
 
         anim = animation.FuncAnimation(fig, animate, init_func=init,
                                        frames=len(img_files), interval=200, blit=True)
+        #include opportunity to save as gif
+        if save_gif:
+            mywriter = animation.FFMpegWriter(fps=1)
+            ani.save(dst)
 
         plt.close()
 
@@ -196,7 +200,7 @@ class Domain_plotter:
 
         plt.show()
 
-    def make_stage_animation(self):
+    def make_stage_animation(self, save_gif=False, fps=None, dst=None):
 
         import numpy as np
         import glob
@@ -234,7 +238,9 @@ class Domain_plotter:
 
         anim = animation.FuncAnimation(fig, animate, init_func=init,
                                        frames=len(img_files), interval=200, blit=True)
-
+        if save_gif:
+            mywriter = animation.FFMpegWriter(fps=1)
+            ani.save(dst)
         plt.close()
 
         return anim
@@ -294,7 +300,7 @@ class Domain_plotter:
 
         plt.show()
 
-    def make_speed_animation(self):
+    def make_speed_animation(self, save_gif=False, fps=None, dst=None):
 
         import numpy as np
         import glob
@@ -332,7 +338,10 @@ class Domain_plotter:
 
         anim = animation.FuncAnimation(fig, animate, init_func=init,
                                        frames=len(img_files), interval=200, blit=True)
-
+        if save_gif:
+            mywriter = animation.FFMpegWriter(fps=1)
+            ani.save(dst)
+            
         plt.close()
 
         return anim
