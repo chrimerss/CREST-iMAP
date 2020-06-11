@@ -1,10 +1,10 @@
 import numpy as num
 # from print_stats import print_test_stats, build_full_flag
-import anuga
-from anuga import Domain
+import cresthh.anuga
+from cresthh.anuga import Domain
 # from anuga import Transmissive_boundary, Refelective_boundary
 
-from anuga import distribute, myid, numprocs, finalize, barrier
+from cresthh.anuga import distribute, myid, numprocs, finalize, barrier
 import geopandas as gpd
 from pyproj import Proj, CRS, transform
 
@@ -30,7 +30,7 @@ if myid==0:
     myProj = Proj("+proj=utm +zone=15, +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     utm_coords= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]
     # domain= anuga.create_domain_from_regions(bounding_polygon, boundary_tags={'bottom':[0],}, maximum_triangle_area=0.001,verbose=True)
-    domain = anuga.create_domain_from_regions(
+    domain = cresthh.anuga.create_domain_from_regions(
                 utm_coords,
                 boundary_tags={'bottom': [0]},
                 maximum_triangle_area=1000,

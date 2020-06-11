@@ -381,7 +381,7 @@ class SWW_plotter:
         import os
         self.name = os.path.splitext(swwfile)[0]
 
-        from anuga.file.netcdf import NetCDFFile
+        from cresthh.anuga.file.netcdf import NetCDFFile
         p = NetCDFFile(swwfile)
 
         self.x = np.array(p.variables['x'])

@@ -24,6 +24,7 @@ def RMSE(obs, sim):
     return np.nanmean((obs-sim)**2)**.5
 
 def single_thread(*params):
+    global OBS, GAUGE_LOC
     params= params[0]
     shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
     topo_file= '/home/ZhiLi/CRESTHH/data/Example-cali/DEM_filled.tif'
@@ -34,6 +35,7 @@ def single_thread(*params):
             utm_coords,
             boundary_tags={'bottom': [0]},
             maximum_triangle_area=1000000)
+    DOMAIN.set_name('cali-'+str(params[-1]))
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction', 0.03, location='centroids')                        # Constant friction 
@@ -57,7 +59,7 @@ def single_thread(*params):
     DOMAIN.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq='1H')
     DOMAIN.set_timestamp('20170401050000', format='%Y%m%d%H%M%S')
     DOMAIN.set_time_interval('1H')
-    total_seconds= (pd.to_datetime('20170901000000') - pd.to_datetime('20170401050000')).total_seconds()
+    total_seconds= (pd.to_datetime('20170410000000') - pd.to_datetime('20170401050000')).total_seconds()
     Br = anuga.Reflective_boundary(DOMAIN)
     Bt = anuga.Transmissive_boundary(DOMAIN)
 
@@ -67,16 +69,19 @@ def single_thread(*params):
     for t in DOMAIN.evolve(yieldstep=3600, duration=total_seconds):
         DOMAIN.print_timestepping_statistics()
 
-    swwfile = 'cali-'+params[-1]
+    swwfile = 'cali-'+str(params[-1])+'.sww'
     splotter = anuga.SWW_plotter(swwfile)
     depth= splotter.depth
     # collocate gauge point
-    to_utm_x, to_utm_y= myProj(GAUGE_LOC)
+    to_utm_x, to_utm_y= myProj(GAUGE_LOC[0], GAUGE_LOC[1])
     xc = splotter.xc + splotter.xllcorner
     yc = splotter.yc + splotter.yllcorner
     iloc= np.argmin( (xc-to_utm_x)**2 + (yc-to_utm_y)**2 )
     sim= depth[:,iloc]
-    loss= RMSE(obs, sim)
+    obs= OBS.resample('1H', label='right').mean().loc[pd.date_range('20170401050000',
+                    '20170410000000', freq='1H'),'H']
+    print obs, sim
+    loss= RMSE(obs.values, sim)
     
     return loss
 
@@ -84,7 +89,7 @@ def evaluate(values):
     print values.shape
     Y= []
     for i in range(len(values)):
-        args= values[i,:]+i
+        args= np.append(values[i,:],int(i))
         Y.append(single_thread(args))
 
     return Y

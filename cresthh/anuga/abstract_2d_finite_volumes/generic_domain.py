@@ -1950,7 +1950,7 @@ class Generic_Domain:
 
         for i in num.arange(len(self.quantities['W0'].centroid_values)):
             N, RI, RS, SI0, SS0, W0= self._evolve_crest(i)
-            excessive_rain.append((RI+RS))
+            excessive_rain.append((RS))
             self.quantities['W0'].centroid_values[N]= W0
             self.quantities['SI0'].centroid_values[N]= SI0
             self.quantities['SS0'].centroid_values[N]= SS0
@@ -2199,7 +2199,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        self.quantities['height'].explicit_update[:]+=(forcing)
         # Update conserved quantities
         self.update_conserved_quantities()
 
