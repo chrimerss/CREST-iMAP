@@ -1,7 +1,12 @@
 import numpy as num
 # from print_stats import print_test_stats, build_full_flag
+# import cresthh.anuga
+import sys
+sys.path.append('/home/ZhiLi/CRESTHH')
 import cresthh.anuga
+from cresthh import anuga
 from cresthh.anuga import Domain
+import pandas as pd
 # from anuga import Transmissive_boundary, Refelective_boundary
 
 from cresthh.anuga import distribute, myid, numprocs, finalize, barrier
@@ -33,8 +38,7 @@ if myid==0:
     domain = cresthh.anuga.create_domain_from_regions(
                 utm_coords,
                 boundary_tags={'bottom': [0]},
-                maximum_triangle_area=1000,
-                
+                maximum_triangle_area=1000000,
                 )
 
     domain.set_name('excessive_rain_para')    
@@ -61,9 +65,10 @@ if myid==0:
 
     Br = anuga.Reflective_boundary(domain)
     Bt = anuga.Transmissive_boundary(domain)
+    Bi = anuga.Dirichlet_boundary([0, 0, 0]) 
 
     domain.set_boundary({'bottom':   Bt,
-                        'exterior': Br})
+                        'exterior': Bi})
 else:
     domain=None
 
@@ -79,12 +84,13 @@ domain.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +
 
 domain.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
 # domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='nimerg%Y%m%dS%H%M%S.tif', freq='H')
-domain.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq='2M')
-domain.set_timestamp('20170825180000', format='%Y%m%d%H%M%S')
+domain.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq='1H')
+domain.set_timestamp('20170826050000', format='%Y%m%d%H%M%S')
 domain.set_time_interval('1H')
+total_seconds= (pd.to_datetime('20170901000000') - pd.to_datetime('20170826050000')).total_seconds()
 
 
-for t in domain.evolve(yieldstep=120, duration=3600*24):
+for t in domain.evolve(yieldstep=3600, duration=total_seconds):
     if myid==0:
         domain.write_time()
 

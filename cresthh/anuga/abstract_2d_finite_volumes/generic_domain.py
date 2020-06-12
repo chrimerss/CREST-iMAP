@@ -2000,7 +2000,7 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
@@ -2043,7 +2043,7 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
@@ -2081,7 +2081,7 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
 
         # Update conserved quantities
         self.update_conserved_quantities()
@@ -2129,7 +2129,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
 
@@ -2199,7 +2199,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['height'].explicit_update[:]+=(forcing)
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
         # Update conserved quantities
         self.update_conserved_quantities()
 
