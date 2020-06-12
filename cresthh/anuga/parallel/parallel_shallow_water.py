@@ -162,7 +162,7 @@ class Parallel_domain(Domain):
 
         # now on processor 0 pull all the separate sww files together
         if self.processor == 0 and self.numproc > 1 and self.store :
-            import anuga.utilities.sww_merge as merge
+            from cresthh.anuga.utilities import sww_merge as merge
 
             global_name = join(self.get_datadir(),self.get_global_name())
             
