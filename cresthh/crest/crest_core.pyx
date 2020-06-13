@@ -78,4 +78,4 @@ def model(double Rain, double PET, double SS0, double SI0,
    #                 SI0, W0)
     
 
-    return RI, RS, SI0, SS0, W0
+    return RI, RS, SI0, SS0, W0, actualEvap

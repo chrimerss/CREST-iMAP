@@ -521,12 +521,7 @@ class Generic_Domain:
             msg= 'Expected argument format is string'
             raise Exception(msg)
         else:
-            if interval=='1H':
-                self._time_interval= datetime.timedelta(hours=1)
-            elif interval=='1M':
-                self._time_interval= datetime.timedelta(minutes=1)
-            elif interval=='1S':
-                self._time_interval= datetime.timedelta(seconds=1)
+            self._time_interval= interval
 
     def get_time_interval(self):
         if hasattr(self, 'timestamp'):
@@ -668,7 +663,8 @@ class Generic_Domain:
         if relative_time:
             return self.time
         else:
-            return self.starttime + self.time
+            return self.timestamp + datetime.timedelta(seconds=self.time)
+
  
     def set_zone(self,zone):  
         """Set zone for domain."""
@@ -1829,7 +1825,7 @@ class Generic_Domain:
                 # print "excessive rainfall computed, assign to stage."
                 
 
-            if self.get_time()%self._time_interval.seconds==0:
+            if self.get_time()%_time_interval_func(self._time_interval)==0:
                 cent_ids, excessRain= self.evolve_crest()
                 self.set_quantity('excess_rain', excessRain,location='centroids')
             
@@ -1949,11 +1945,12 @@ class Generic_Domain:
         #     self.quantities['SS0'].centroid_values[N]= SS0
 
         for i in num.arange(len(self.quantities['W0'].centroid_values)):
-            N, RI, RS, SI0, SS0, W0= self._evolve_crest(i)
+            N, RI, RS, SI0, SS0, W0, ET= self._evolve_crest(i)
             excessive_rain.append((RS))
             self.quantities['W0'].centroid_values[N]= W0
             self.quantities['SI0'].centroid_values[N]= SI0
             self.quantities['SS0'].centroid_values[N]= SS0
+            # self.quantities['ET'].centroid_values[N]=ET
             # print 'RI: %.2f, RS: %.2f, W0: %.2f, SI0: %.2f, SS0: %.2f'%(RI, RS, W0, SI0, SS0)
         return cent_id, num.array(excessive_rain)
 
@@ -1976,10 +1973,10 @@ class Generic_Domain:
         coeS= self.quantities['coeS'].centroid_values[N]
         KS= self.quantities['KS'].centroid_values[N]
         KI= self.quantities['KI'].centroid_values[N]
-        (RI,RS, SI,SS,W)= crest_core.model(P,ET,SS,SI,W,RainFact,Ksat,WM,B,IM,KE,coeM,expM,
+        (RI,RS, SI,SS,W, ET)= crest_core.model(P,ET,SS,SI,W,RainFact,Ksat,WM,B,IM,KE,coeM,expM,
                                     coeR,coeS,KS,KI,1)
 
-        return N, RI, RS, SI, SS, W
+        return N, RI, RS, SI, SS, W, ET
     
     def evolve_one_euler_step(self, yieldstep, finaltime,forcing):
         """One Euler Time Step
@@ -2000,7 +1997,8 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep()+self.quantities['SS0'].centroid_values)
+        
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)

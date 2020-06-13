@@ -257,7 +257,11 @@ class Domain(Generic_Domain):
                                         'friction':1,
                                         'stage': 2,
                                         'xmomentum': 2,
-                                        'ymomentum': 2}
+                                        'ymomentum': 2,
+                                        'SS0':2,
+                                        'SI0':2,
+                                        'W0':2,
+                                        'excess_rain':2}
 
         #-------------------------------
         # Set up check pointing every n

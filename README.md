@@ -38,6 +38,7 @@ Impact of hydraulic structures (e.g., dam breaks)__
 ## Prerequisites
 
 1. Python 2.7
+2. pypar
 
 This package is not migrated to python 3 yet. We recommend to use virtualenv or conda environment to create a standalone environment to install this package.
 

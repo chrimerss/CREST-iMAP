@@ -163,7 +163,7 @@ def _sww_merge(swwfiles, output, verbose=False):
 
 
 
-    from anuga.coordinate_transforms.geo_reference import Geo_reference
+    from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
     geo_reference = Geo_reference()
     
     sww.store_triangulation(fido, points, out_tris, points_georeference=geo_reference)
@@ -467,7 +467,7 @@ def _sww_merge_parallel_smooth(swwfiles, output,  verbose=False, delete_old=Fals
 
 
 
-    from anuga.coordinate_transforms.geo_reference import Geo_reference
+    from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
     geo_reference = Geo_reference()
     
     sww.store_triangulation(fido, g_points, g_volumes, points_georeference=geo_reference)
@@ -714,7 +714,7 @@ def _sww_merge_parallel_non_smooth(swwfiles, output,  verbose=False, delete_old=
                              sww_precision=netcdf_float32)
 
 
-    from anuga.coordinate_transforms.geo_reference import Geo_reference
+    from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
     geo_reference = Geo_reference()
 
     sww.store_triangulation(fido, g_points, g_volumes, points_georeference=geo_reference)
@@ -803,7 +803,7 @@ def _sww_merge_parallel_non_smooth(swwfiles, output,  verbose=False, delete_old=
 if __name__ == "__main__":
 
     import argparse
-    from anuga.anuga_exceptions import ANUGAError
+    from cresthh.anuga.anuga_exceptions import ANUGAError
 
 
     parser = argparse.ArgumentParser(description='Merge sww files created from parallel run')

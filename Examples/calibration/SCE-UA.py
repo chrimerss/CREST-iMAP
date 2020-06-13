@@ -14,10 +14,10 @@ import numpy as np
 param_file = 'params.txt'
 pf= read_param_file(param_file)
 
-param_values= morris_oat.sample(10, pf['num_vars'], num_levels=4, grid_jump=2)
-scale_samples_general(param_values, pf['bounds'])
+# param_values= morris_oat.sample(10, pf['num_vars'], num_levels=4, grid_jump=2)
+# scale_samples_general(param_values, pf['bounds'])
 
-np.savetxt('Input_params.txt', param_values, delimiter=' ')
+# np.savetxt('Input_params.txt', param_values, delimiter=' ')
 
 shutil.copy('model.py', '/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py')
 bl=np.empty(0)

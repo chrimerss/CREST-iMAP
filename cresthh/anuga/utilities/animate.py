@@ -48,7 +48,7 @@ class Domain_plotter:
         import matplotlib.pyplot as plt
 
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
         
         self.depth = self.stage - self.elev
 
@@ -56,7 +56,7 @@ class Domain_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Depth: Time {0:0>4}'.format(time))
+        plt.title('Depth: Time :%s'%(time))
 
         self.triang.set_mask(self.depth > md)
         plt.tripcolor(self.triang,
@@ -79,15 +79,15 @@ class Domain_plotter:
 
         plot_dir = self.plot_dir
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
 
         self._depth_frame(figsize, dpi, vmin, vmax)
 
         if plot_dir is None:
-            plt.savefig(name+'_depth_{0:0>10}.png'.format(int(time)))
+            plt.savefig(name+'_depth_%s.png'%(str(time)))
         else:
             plt.savefig(os.path.join(plot_dir, name
-                                     + '_depth_{0:0>10}.png'.format(int(time))))
+                                     + '_depth_%s.png'%(str(time))))
         plt.close()
 
     def plot_depth_frame(self, figsize=(5, 3), dpi=80,
@@ -108,7 +108,7 @@ class Domain_plotter:
 
         plot_dir = self.plot_dir
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
 
         if plot_dir is None:
             expression = name+'_depth_*.png'
@@ -150,7 +150,7 @@ class Domain_plotter:
         import matplotlib.pyplot as plt
 
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
         
         self.depth = self.stage - self.elev
 
@@ -158,7 +158,7 @@ class Domain_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Stage: Time {0:0>4}'.format(time))
+        plt.title('Stage: Time %s'%s(time))
 
         self.triang.set_mask(self.depth > md)
         plt.tripcolor(self.triang,
@@ -180,15 +180,15 @@ class Domain_plotter:
 
         plot_dir = self.plot_dir
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
 
         self._stage_frame(figsize, dpi, vmin, vmax)
 
         if plot_dir is None:
-            plt.savefig(name+'_stage_{0:0>10}.png'.format(int(time)))
+            plt.savefig(name+'_stage_%s.png'%s(str(time)))
         else:
             plt.savefig(os.path.join(plot_dir, name
-                                     + '_stage_{0:0>10}.png'.format(int(time))))
+                                     + '_stage_%s.png'.format(str(time))))
         plt.close()
 
     def plot_stage_frame(self, figsize=(5, 3), dpi=80,
@@ -209,7 +209,7 @@ class Domain_plotter:
 
         plot_dir = self.plot_dir
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
 
         if plot_dir is None:
             expression = name+'_stage_*.png'
@@ -250,7 +250,7 @@ class Domain_plotter:
         import matplotlib.pyplot as plt
 
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
         
         self.depth = self.stage - self.elev
 
@@ -258,7 +258,7 @@ class Domain_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Speed: Time {0:0>4}'.format(time))
+        plt.title('Speed: Time %s'%(time))
 
         self.triang.set_mask(self.depth > md)
         plt.tripcolor(self.triang,
@@ -280,15 +280,15 @@ class Domain_plotter:
 
         plot_dir = self.plot_dir
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
 
         self._speed_frame(figsize, dpi, vmin, vmax)
 
         if plot_dir is None:
-            plt.savefig(name+'_speed_{0:0>10}.png'.format(int(time)))
+            plt.savefig(name+'_speed_%s.png'%s(str(time)))
         else:
             plt.savefig(os.path.join(plot_dir, name
-                                     + '_speed_{0:0>10}.png'.format(int(time))))
+                                     + '_speed_%s.png'%s(str(time))))
         plt.close()
 
     def plot_speed_frame(self, figsize=(5, 3), dpi=80,
@@ -309,7 +309,7 @@ class Domain_plotter:
 
         plot_dir = self.plot_dir
         name = self.domain.get_name()
-        time = self.domain.get_time()
+        time = self.domain.get_time(relative_time=False).strftime('%Y%m%d%H%M%S')
 
         if plot_dir is None:
             expression = name+'_speed_*.png'
@@ -414,6 +414,10 @@ class SWW_plotter:
         self.stage = np.array(p.variables['stage_c'])
         self.xmom = np.array(p.variables['xmomentum_c'])
         self.ymom = np.array(p.variables['ymomentum_c'])
+        self.exc_rain= np.array(p.variables['excessive_rain_c'])
+        self.W0= np.array(p.variables['W0_c'])
+        self.SI0= np.array(p.variables['SI0_c'])
+        self.SS0= np.array(p.variables['SS0_c'])
 
         self.depth = np.zeros_like(self.stage)
         if(len(self.elev.shape) == 2):
@@ -450,7 +454,7 @@ class SWW_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Depth: Time {0:0>4}'.format(time))
+        plt.title('Depth: Time %s'%(time))
 
         self.triang.set_mask(depth > md)
         plt.tripcolor(self.triang,
@@ -477,10 +481,10 @@ class SWW_plotter:
         self._depth_frame(figsize, dpi, frame, vmin, vmax)
 
         if plot_dir is None:
-            plt.savefig(name+'_depth_{0:0>10}.png'.format(int(time)))
+            plt.savefig(name+'_depth_%s.png'%(str(time)))
         else:
             plt.savefig(os.path.join(plot_dir, name
-                                     + '_depth_{0:0>10}.png'.format(int(time))))
+                                     + '_depth_%s.png'%(str(time))))
         plt.close()
 
     def plot_depth_frame(self, figsize=(5, 3), dpi = 80, frame=-1,
@@ -512,7 +516,7 @@ class SWW_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Stage: Time {0:0>4}'.format(time))
+        plt.title('Stage: Time %s'%(stime))
 
         self.triang.set_mask(depth > md)
         plt.tripcolor(self.triang,
@@ -539,10 +543,10 @@ class SWW_plotter:
         self._stage_frame(figsize, dpi, frame, vmin, vmax)
 
         if plot_dir is None:
-            plt.savefig(name+'_stage_{0:0>10}.png'.format(int(time)))
+            plt.savefig(name+'_stage_%s.png'%s(str(time)))
         else:
             plt.savefig(os.path.join(plot_dir, name
-                                     + '_stage_{0:0>10}.png'.format(int(time))))
+                                     + '_stage_%s.png'%(str(time))))
         plt.close()
 
     def plot_stage_frame(self, figsize=(5, 3), dpi=80, frame=-1,
@@ -574,7 +578,7 @@ class SWW_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Speed: Time {0:0>4}'.format(time))
+        plt.title('Speed: Time %s'%(time))
 
         self.triang.set_mask(depth > md)
         plt.tripcolor(self.triang,
@@ -601,10 +605,10 @@ class SWW_plotter:
         self._speed_frame(figsize, dpi, frame, vmin, vmax)
 
         if plot_dir is None:
-            plt.savefig(name+'_speed_{0:0>10}.png'.format(int(time)))
+            plt.savefig(name+'_speed_%s.png'.format(str(time)))
         else:
             plt.savefig(os.path.join(plot_dir, name
-                                     + '_speed_{0:0>10}.png'.format(int(time))))
+                                     + '_speed_%s.png'%(str(time))))
         plt.close()
 
     def plot_speed_frame(self, figsize=(5, 3), dpi=80, frame=-1,

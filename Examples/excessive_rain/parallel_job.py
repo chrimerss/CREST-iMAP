@@ -85,9 +85,9 @@ domain.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +
 domain.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
 # domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='nimerg%Y%m%dS%H%M%S.tif', freq='H')
 domain.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq='1H')
-domain.set_timestamp('20170826050000', format='%Y%m%d%H%M%S')
+domain.set_timestamp('20170401050000', format='%Y%m%d%H%M%S')
 domain.set_time_interval('1H')
-total_seconds= (pd.to_datetime('20170901000000') - pd.to_datetime('20170826050000')).total_seconds()
+total_seconds= (pd.to_datetime('20170901000000') - pd.to_datetime('20170401050000')).total_seconds()
 
 
 for t in domain.evolve(yieldstep=3600, duration=total_seconds):
