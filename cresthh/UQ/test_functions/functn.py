@@ -33,7 +33,7 @@ def single_thread(*params):
     
     global OBS, GAUGE_LOC, myid
     start='20170401050000'
-    end=  '20170405000000'
+    end=  '20170402000000'
     interval= '1H'
     yieldstep= pd.Timedelta(interval).total_seconds()    
     params= params[0]
@@ -96,9 +96,10 @@ def single_thread(*params):
         if myid==0:
             DOMAIN.print_timestepping_statistics()
 
-    DOMAIN.sww_merge(verbose=False)
+    DOMAIN.sww_merge(verbose=True)
     if myid==0:
         swwfile = '/home/ZhiLi/CRESTHH/Examples/calibration/temp.sww'
+        os.system('rm temp_P*')
         splotter = anuga.SWW_plotter(swwfile)
         stage= splotter.stage
         speed= splotter.speed
@@ -125,6 +126,8 @@ def single_thread(*params):
         print 'LOSS: ', loss
     
         return loss
+    else:
+        pass
 
 def evaluate(values):
 
@@ -133,11 +136,11 @@ def evaluate(values):
     for i in range(len(values)):
         args= np.append(values[i,:],int(i))
         loss= single_thread(args)
-        if loss<prev_loss:
+        if loss<prev_loss and myid==0:
             os.system('mv temp.sww best.sww')
             os.system('rm temp.sww')
 
-        Y.append()
+        Y.append(loss)
 
     return Y
 

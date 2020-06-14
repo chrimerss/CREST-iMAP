@@ -1,25 +1,10 @@
-2020-06-13 16:08:03,647 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-06-13 16:08:03,649 CRITICAL            generic_domain:1763|evolving elements: 775
-2020-06-13 16:08:04,638 CRITICAL                       log:178 |
-Traceback (most recent call last):
-  File "SCE-UA.py", line 29, in <module>
-    SCE.sceua(bl, bu, pf, ngs=2)
-  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 119, in sceua
-    xf=functn.evaluate(x)
-  File "/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py", line 133, in evaluate
-  File "/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py", line 94, in single_thread
-    DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/shallow_water/shallow_water_domain.py", line 2447, in evolve
-    skip_initial_step=skip_initial_step):
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/abstract_2d_finite_volumes/generic_domain.py", line 1836, in _evolve_base
-    self.evolve_one_euler_step(yieldstep, self.finaltime, excessRain)
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/abstract_2d_finite_volumes/generic_domain.py", line 1995, in evolve_one_euler_step
-    self.compute_fluxes()
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/shallow_water/shallow_water_domain.py", line 1928, in compute_fluxes
-    flux_timestep = compute_fluxes_ext(self, timestep)
-KeyboardInterrupt
-
-/shallow_water/shallow_water_domain.py", line 3156, in manning_friction_implicit
-    ymom_update)
-KeyboardInterrupt
-
+2020-06-13 19:33:06,461 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-13 19:33:06,463 CRITICAL            generic_domain:1763|evolving elements: 652
+2020-06-13 19:33:43,908 CRITICAL            generic_domain:1763|evolving elements: 728
+2020-06-13 19:34:21,496 CRITICAL            generic_domain:1763|evolving elements: 639
+2020-06-13 19:34:59,037 CRITICAL            generic_domain:1763|evolving elements: 773
+2020-06-13 19:35:36,185 CRITICAL            generic_domain:1763|evolving elements: 828
+2020-06-13 19:36:13,249 CRITICAL            generic_domain:1763|evolving elements: 786
+2020-06-13 19:36:50,374 CRITICAL            generic_domain:1763|evolving elements: 773
+2020-06-13 19:37:27,739 CRITICAL            generic_domain:1763|evolving elements: 796
+2020-06-13 19:38:04,984 CRITICAL            generic_domain:1763|evolving elements: 796
