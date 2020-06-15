@@ -1,2 +1,2 @@
-2020-06-13 17:51:51,508 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-06-13 17:51:51,510 CRITICAL            generic_domain:1763|evolving elements: 10203
+2020-06-14 18:52:55,947 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-14 18:52:55,949 CRITICAL            generic_domain:1767|evolving elements: 10203

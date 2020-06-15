@@ -62,7 +62,7 @@ def _sww_merge(swwfiles, output, verbose=False):
         print "MERGING SWW Files"
         
     static_quantities = ['elevation']
-    dynamic_quantities = ['stage', 'xmomentum', 'ymomentum','excess_rain', 'W0', 'SI0', 'SS0']
+    dynamic_quantities = ['stage', 'xmomentum', 'ymomentum','excess_rain', 'SM']
     
     first_file = True
     tri_offset = 0
@@ -270,7 +270,7 @@ def _sww_merge_parallel_smooth(swwfiles, output,  verbose=False, delete_old=Fals
             #=====================================
             quantities = set(['elevation', 'friction', 'stage', 'xmomentum',
                               'ymomentum', 'xvelocity', 'yvelocity', 'height',
-                              'excess_rain', 'W0', 'SS0', 'SI0'])
+                              'excess_rain', 'SM'])
             variables = set(fid.variables.keys())
 
             quantities = list(quantities & variables)
@@ -298,7 +298,7 @@ def _sww_merge_parallel_smooth(swwfiles, output,  verbose=False, delete_old=Fals
             #=======================================
             quantities = set(['elevation_c', 'friction_c', 'stage_c', 'xmomentum_c',
                               'ymomentum_c', 'xvelocity_c', 'yvelocity_c', 'height_c',
-                              'excess_rain_c', 'SI0_c', 'SS0_c', 'W0_c'])
+                              'excess_rain_c', 'SM_c'])
             variables = set(fid.variables.keys())
 
             quantities = list(quantities & variables)

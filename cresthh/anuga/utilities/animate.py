@@ -415,9 +415,9 @@ class SWW_plotter:
         self.xmom = np.array(p.variables['xmomentum_c'])
         self.ymom = np.array(p.variables['ymomentum_c'])
         self.exc_rain= np.array(p.variables['excess_rain_c'])
-        self.W0= np.array(p.variables['W0_c'])
-        self.SI0= np.array(p.variables['SI0_c'])
-        self.SS0= np.array(p.variables['SS0_c'])
+        self.SM= np.array(p.variables['SM'])
+        # self.SI0= np.array(p.variables['SI0_c'])
+        # self.SS0= np.array(p.variables['SS0_c'])
 
         self.depth = np.zeros_like(self.stage)
         if(len(self.elev.shape) == 2):

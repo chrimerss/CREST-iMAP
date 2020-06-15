@@ -1,10 +1,22 @@
-2020-06-13 19:33:06,461 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-06-13 19:33:06,463 CRITICAL            generic_domain:1763|evolving elements: 652
-2020-06-13 19:33:43,908 CRITICAL            generic_domain:1763|evolving elements: 728
-2020-06-13 19:34:21,496 CRITICAL            generic_domain:1763|evolving elements: 639
-2020-06-13 19:34:59,037 CRITICAL            generic_domain:1763|evolving elements: 773
-2020-06-13 19:35:36,185 CRITICAL            generic_domain:1763|evolving elements: 828
-2020-06-13 19:36:13,249 CRITICAL            generic_domain:1763|evolving elements: 786
-2020-06-13 19:36:50,374 CRITICAL            generic_domain:1763|evolving elements: 773
-2020-06-13 19:37:27,739 CRITICAL            generic_domain:1763|evolving elements: 796
-2020-06-13 19:38:04,984 CRITICAL            generic_domain:1763|evolving elements: 796
+2020-06-14 21:17:38,694 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-14 21:17:38,696 CRITICAL            generic_domain:1767|evolving elements: 404
+2020-06-14 21:18:10,675 CRITICAL                       log:178 |
+Traceback (most recent call last):
+  File "SCE-UA.py", line 29, in <module>
+    SCE.sceua(bl, bu, pf, ngs=2)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 119, in sceua
+    xf=functn.evaluate(x)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py", line 143, in evaluate
+    loss= single_thread(args)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py", line 67, in single_thread
+    DOMAIN= distribute(DOMAIN)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/parallel_api.py", line 83, in distribute
+    partition.distribute(numprocs)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/sequential_distribute.py", line 83, in distribute
+    quantities, triangles_per_proc, parameters=parameters)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/distribute_mesh.py", line 1005, in build_submesh
+    submeshf = submesh_full(mesh, triangles_per_proc)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/distribute_mesh.py", line 332, in submesh_full
+    if (k[0] >=tlower and k[0] < tupper):
+KeyboardInterrupt
+

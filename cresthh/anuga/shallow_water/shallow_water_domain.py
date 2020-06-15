@@ -194,9 +194,8 @@ class Domain(Generic_Domain):
         if other_quantities is None:
             other_quantities = ['elevation', 'friction', 'height',
                                 'xvelocity', 'yvelocity', 'x', 'y',
-                                'P','ET','excess_rain','SS0','SI0','W0','RainFact', #CREST parameters
-                                'Ksat','WM','B','IM','KE','coeM','expM',
-                                'coeR','coeS','KS','KI'] 
+                                'P','ET','excess_rain','SM','Ksat',  #CREST parameters
+                                'WM','B','IM','KE'] 
 
 
 
@@ -258,9 +257,7 @@ class Domain(Generic_Domain):
                                         'stage': 2,
                                         'xmomentum': 2,
                                         'ymomentum': 2,
-                                        'SS0':2,
-                                        'SI0':2,
-                                        'W0':2,
+                                        'SM':2,
                                         'excess_rain':2}
 
         #-------------------------------

@@ -22,7 +22,7 @@ warnings.simplefilter("ignore")
 OBS= pd.read_csv('/home/ZhiLi/CRESTHH/data/streamGauge/08068500.txt', delimiter='\t',
                  names=['USGS','ID','date','TZ','Q',' ','H',' '], converters={'date':pd.to_datetime}).set_index('date')
 OBS.index= OBS.index.tz_localize('US/Central').tz_convert('UTC').tz_localize(None)
-GAUGE_LOC= (-94.4359, 30.1109)
+GAUGE_LOC= (-95.43666, 30.11085)
 
 
 def RMSE(obs, sim):
@@ -33,7 +33,7 @@ def single_thread(*params):
     
     global OBS, GAUGE_LOC, myid
     start='20170401050000'
-    end=  '20170402000000'
+    end=  '20170901000000'
     interval= '1H'
     yieldstep= pd.Timedelta(interval).total_seconds()    
     params= params[0]
@@ -45,11 +45,14 @@ def single_thread(*params):
         lons= np.array(shp.exterior[1].coords)[:,0]; lats=np.array(shp.exterior[1].coords)[:,1]
         
         utm_coords= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]
-        
-        DOMAIN= anuga.create_domain_from_regions(
+        if os.path.exists('1km.msh'):
+            DOMAIN= anuga.create_domain_from_file('1km.msh')
+        else:
+            DOMAIN= anuga.create_domain_from_regions(
                 utm_coords,
                 boundary_tags={'bottom': [0]},
-                maximum_triangle_area=1000000)
+                maximum_triangle_area=1000000,
+                mesh_filename='1km.msh')
         DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
         DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
         DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
@@ -65,10 +68,7 @@ def single_thread(*params):
     DOMAIN.set_name('temp')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
   
-    DOMAIN.set_quantity('SS0', 0, location='centroids')
-    DOMAIN.set_quantity('SI0', 0, location='centroids')
-    DOMAIN.set_quantity('W0', 0, location='centroids')    
-    DOMAIN.set_quantity('RainFact', params[0], location='centroids')
+    DOMAIN.set_quantity('SM', 0.01, location='centroids')
     DOMAIN.set_quantity('Ksat', filename='/hydros/MengyuChen/ef5_param/crest_params/ksat_usa.tif', location='centroids')
     DOMAIN.quantities['Ksat'].centroid_values[:]*= params[1]
     DOMAIN.set_quantity('WM', filename='/hydros/MengyuChen/ef5_param/crest_params/wm_usa.tif', location='centroids')
@@ -78,12 +78,7 @@ def single_thread(*params):
     DOMAIN.set_quantity('IM', filename='/hydros/MengyuChen/ef5_param/crest_params/im_usa.tif', location='centroids')
     DOMAIN.quantities['IM'].centroid_values[:]*= params[4]
     DOMAIN.set_quantity('KE', params[5], location='centroids')
-    DOMAIN.set_quantity('coeM', params[6], location='centroids')
-    DOMAIN.set_quantity('expM', params[7], location='centroids')
-    DOMAIN.set_quantity('coeR', params[8], location='centroids')
-    DOMAIN.set_quantity('coeS', params[9], location='centroids')
-    DOMAIN.set_quantity('KS', params[10], location='centroids')
-    DOMAIN.set_quantity('KI', params[11], location='centroids')
+
     DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
     DOMAIN.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',
             pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
@@ -97,14 +92,20 @@ def single_thread(*params):
             DOMAIN.print_timestepping_statistics()
 
     DOMAIN.sww_merge(verbose=False)
+    # finalize()
     if myid==0:
         swwfile = '/home/ZhiLi/CRESTHH/Examples/calibration/temp.sww'
         os.system('rm temp_P*')
         splotter = anuga.SWW_plotter(swwfile)
         stage= splotter.stage
         speed= splotter.speed
+        exc_rain= splotter.exc_rain
+        SM= splotter.SM
         # collocate gauge point
-        to_utm_y, to_utm_x= myProj(GAUGE_LOC[0], GAUGE_LOC[1])
+        proj= "+proj=utm +zone=15, +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+        wgs84= CRS('EPSG:4326')
+        UTM= CRS(proj)
+        to_utm_x, to_utm_y= transform(UTM,wgs84,GAUGE_LOC[0], GAUGE_LOC[1])
         xc = splotter.xc + splotter.xllcorner
         yc = splotter.yc + splotter.yllcorner
         iloc= np.argmin( (xc-to_utm_x)**2 + (yc-to_utm_y)**2 )
@@ -120,17 +121,21 @@ def single_thread(*params):
         df['Stage_obs']= obs.H.values*0.3048
         df['Velocity_sim']= sim_v
         df['Q_obs']= obs.Q.values
+        df['excessive_rain']= exc_rain[:,iloc]
+        df['SM']= SM[:,iloc]
+
+        df['Q_obs']= obs.Q.values
         df.to_csv('%s.csv'%(str(params[-1])))
         loss= RMSE(obs.H.values*0.3048, sim) 
         
         print 'LOSS: ', loss
-    
+
         return loss
-    else:
-        pass
+    # else:
+    #     pass
 
 def evaluate(values):
-
+    
     Y= []
     prev_loss= np.inf
     for i in range(len(values)):
@@ -140,9 +145,9 @@ def evaluate(values):
             os.system('mv temp.sww best.sww')
             os.system('rm temp.sww')
 
-        Y.append(loss)
-
-    return Y
+            Y.append(loss)
+    if myid==0:
+        return Y
 
 # Global variables
 # SHP= gpd.read_file('watershed_shp/watershed.shp')

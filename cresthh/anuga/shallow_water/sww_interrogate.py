@@ -468,9 +468,9 @@ def get_maximum_inundation_data(filename, polygon=None, time_interval=None,
     # Water depth below which it is considered to be 0 in the model
     # FIXME (Ole): Allow this to be specified as a keyword argument as well
 
-    from anuga.geometry.polygon import inside_polygon
-    from anuga.config import minimum_allowed_height
-    from anuga.file.netcdf import NetCDFFile
+    from cresthh.anuga.geometry.polygon import inside_polygon
+    from cresthh.anuga.config import minimum_allowed_height
+    from cresthh.anuga.file.netcdf import NetCDFFile
 
     # Just find max inundation over one file
     dir, base = os.path.split(filename)
