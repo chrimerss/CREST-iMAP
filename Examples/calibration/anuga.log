@@ -1,22 +1,33 @@
-2020-06-14 21:17:38,694 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-06-14 21:17:38,696 CRITICAL            generic_domain:1767|evolving elements: 404
-2020-06-14 21:18:10,675 CRITICAL                       log:178 |
-Traceback (most recent call last):
-  File "SCE-UA.py", line 29, in <module>
-    SCE.sceua(bl, bu, pf, ngs=2)
-  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 119, in sceua
-    xf=functn.evaluate(x)
-  File "/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py", line 143, in evaluate
-    loss= single_thread(args)
-  File "/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py", line 67, in single_thread
-    DOMAIN= distribute(DOMAIN)
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/parallel_api.py", line 83, in distribute
-    partition.distribute(numprocs)
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/sequential_distribute.py", line 83, in distribute
-    quantities, triangles_per_proc, parameters=parameters)
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/distribute_mesh.py", line 1005, in build_submesh
-    submeshf = submesh_full(mesh, triangles_per_proc)
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/parallel/distribute_mesh.py", line 332, in submesh_full
-    if (k[0] >=tlower and k[0] < tupper):
-KeyboardInterrupt
-
+2020-06-14 21:19:48,394 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-14 21:19:48,396 CRITICAL            generic_domain:1767|evolving elements: 404
+2020-06-14 21:20:48,320 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170403-080000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:22:13,060 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170407-050000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:29:29,641 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170427-120000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:33:57,410 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170509-230000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:33:59,211 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170510-010000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:34:05,622 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170510-080000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:34:27,710 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170511-090000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:34:37,382 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170511-200000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:34:43,498 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170512-030000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:34:46,198 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170512-060000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:35:00,603 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170512-220000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:35:04,267 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-020000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:35:06,829 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-050000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:35:11,200 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-100000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 21:35:21,723 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-220000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:19:20,575 CRITICAL            generic_domain:1767|evolving elements: 534
+2020-06-14 22:20:21,478 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170403-080000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:21:48,440 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170407-050000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:29:17,467 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170427-120000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:34:52,599 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170509-230000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:34:54,808 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170510-010000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:35:03,539 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170510-080000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:35:32,958 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170511-090000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:35:46,411 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170511-200000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:35:55,315 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170512-030000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:35:58,780 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170512-060000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:36:19,097 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170512-220000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:36:23,885 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-020000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:36:27,479 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-050000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:36:33,648 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-100000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-14 22:36:47,767 CRITICAL            generic_domain:1809|/hydros/MengyuChen/mrmsPrecRate/PrecipRate_00.00_20170513-220000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
