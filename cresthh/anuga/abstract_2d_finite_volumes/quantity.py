@@ -1187,7 +1187,7 @@ class Quantity:
         values = geospatial_data.get_attributes()
         data_georef = geospatial_data.get_geo_reference()
 
-        from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
+        # from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
 
         points = ensure_numeric(points, num.float)
         values = ensure_numeric(values, num.float)

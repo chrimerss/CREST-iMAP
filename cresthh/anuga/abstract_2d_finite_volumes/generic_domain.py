@@ -631,6 +631,19 @@ class Generic_Domain:
 
         return self.CFL
     
+    def set_coupled(self, coupled=True):
+        """
+        Set the option to use hydrologic modeling or not
+        """
+        self._coupled=coupled
+
+    def get_coupled(self):
+
+        if hasattr(self, '_coupled'):
+            return self._coupled
+        else:
+            msg= "You haven't set coupled option, please see domain.set_coupled(False)"
+            raise Exception(msg)
 
     def set_CFL(self, cfl=1.0):
         """Set CFL parameter, warn if greater than 2.0
@@ -1724,6 +1737,8 @@ class Generic_Domain:
         self._order_ = self.default_order
 
         precipFolder, evapFolder, timestamp, time_interval, precip_freq, evap_freq= self.get_forcing()
+
+        coupled= self.get_coupled()
         
         if finaltime is not None and duration is not None:
             msg = 'Only one of finaltime and duration may be specified'
@@ -1830,9 +1845,12 @@ class Generic_Domain:
                 
 
             if self.get_time()%_time_interval_func(self._time_interval)==0 and self.get_timestep()>0:
-                cent_ids, excessRain= self.evolve_crest()
+                if coupled:
+                    cent_ids, excessRain= self.evolve_crest()
+                else:
+                    cent_ids, excessRain= self.evolve_plain()
                 self.set_quantity('excess_rain', excessRain,location='centroids')
-            else:
+            elif self.get_timestep()==0:
                 excessRain= num.zeros(len(self.quantities['stage'].centroid_values))
             
             #==========================================
@@ -1913,8 +1931,24 @@ class Generic_Domain:
                 self.number_of_first_order_steps = 0
                 self.max_speed = num.zeros(N, num.float)
 
+    def evolve_plain(self):
+        """
+        Here we evolve only use Rain - Evaporation as excessive rainfall
+        """
+        excess_rain= []
+        cent_ids= []
+        for i in num.arange(len(self.quantities['stage'].centroid_values)):
+            excess_rain.append(self.quantities['P'].centroid_values[i] - \
+                             self.quantities['ET'].centroid_values[i])
+            cent_ids.append(i)
+
+        return cent_ids, excess_rain
+
 
     def evolve_crest(self):
+        """
+        Core of CREST model, here we import crest simplified model
+        """
         # self.q_rain= self.quantities['P'].centroid_values
         # self.q_evap= evap.centroid_values
         # q_RI= self.quantities['RI'].centroid_values
@@ -1950,7 +1984,7 @@ class Generic_Domain:
         #     self.quantities['SI0'].centroid_values[N]= SI0
         #     self.quantities['SS0'].centroid_values[N]= SS0
 
-        for i in num.arange(len(self.quantities['SM'].centroid_values)):
+        for i in num.arange(len(self.quantities['stage'].centroid_values)):
             N, SM,overland,interflow,ET= self._evolve_crest(i)
             excessive_rain.append((overland))
             self.quantities['SM'].centroid_values[N]= SM
@@ -1993,8 +2027,8 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        if self.get_timestep()>0:
-            self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        
+        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
         
 
         # Update timestep to fit yieldstep and finaltime

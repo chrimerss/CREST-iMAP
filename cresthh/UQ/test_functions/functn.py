@@ -33,18 +33,25 @@ def single_thread(*params):
     
     global OBS, GAUGE_LOC, myid
     start='20170401050000'
-    end=  '20170901000000'
+    end=  '20170825000000'
     interval= '1H'
     yieldstep= pd.Timedelta(interval).total_seconds()    
     params= params[0]
     myProj= Proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-    topo_file= '/home/ZhiLi/CRESTHH/data/Example-cali/DEM_filled.tif'    
+    topo_file= '/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/subDEM_filled.tif'
+    study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
+    interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_river_buffer_cliped.shp')
+    base_resolution = 1000000 #1km
+    interior_resolution= 1000 #10 m2    
     if myid==0:
-        shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
+        # shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
 
-        lons= np.array(shp.exterior[1].coords)[:,0]; lats=np.array(shp.exterior[1].coords)[:,1]
+        lons= np.array(study_area.exterior[0].coords)[:,0]; lats=np.array(study_area.exterior[0].coords)[:,1]
+        utm_coords_ext= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]
+        lons= np.array(interior_area.exterior[4].coords)[:,0]; lats=np.array(interior_area.exterior[4].coords)[:,1]
+        utm_coords_int= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]
+
         
-        utm_coords= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]
         if os.path.exists('1km.msh'):
             DOMAIN= anuga.create_domain_from_file('1km.msh')
         else:
@@ -52,7 +59,8 @@ def single_thread(*params):
                 utm_coords,
                 boundary_tags={'bottom': [0]},
                 maximum_triangle_area=1000000,
-                mesh_filename='1km.msh')
+                interior_regions=[[utm_coords_int, interior_resolution]],
+                mesh_filename='1km_082500.msh')
         DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
         DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
         DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
