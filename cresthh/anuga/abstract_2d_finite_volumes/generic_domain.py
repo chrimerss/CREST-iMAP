@@ -1849,6 +1849,7 @@ class Generic_Domain:
                     cent_ids, excessRain= self.evolve_crest()
                 else:
                     cent_ids, excessRain= self.evolve_plain()
+                    excessRain= num.array(excessRain)
                 self.set_quantity('excess_rain', excessRain,location='centroids')
             elif self.get_timestep()==0:
                 excessRain= num.zeros(len(self.quantities['stage'].centroid_values))
@@ -1938,8 +1939,12 @@ class Generic_Domain:
         excess_rain= []
         cent_ids= []
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
-            excess_rain.append(self.quantities['P'].centroid_values[i] - \
-                             self.quantities['ET'].centroid_values[i])
+            val= self.quantities['P'].centroid_values[i] - \
+                             self.quantities['ET'].centroid_values[i]
+            if self.isInvalidValues(val):
+                excess_rain.append(0)
+            else:
+                excess_rain.append(val)
             cent_ids.append(i)
 
         return cent_ids, excess_rain
@@ -1986,8 +1991,11 @@ class Generic_Domain:
 
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
             N, SM,overland,interflow,ET= self._evolve_crest(i)
-            excessive_rain.append((overland))
-            self.quantities['SM'].centroid_values[N]= SM
+            if self.isInvalidValues(overland):
+                excessive_rain.append(0)
+            else:
+                excessive_rain.append((overland-ET))
+                self.quantities['SM'].centroid_values[N]= SM
 
             # self.quantities['ET'].centroid_values[N]=ET
             # print 'RI: %.2f, RS: %.2f, W0: %.2f, SI0: %.2f, SS0: %.2f'%(RI, RS, W0, SI0, SS0)
@@ -2648,6 +2656,15 @@ class Generic_Domain:
                     self.max_speed[i]=0.0
                     d += 1
 
+    def isInvalidValues(self,val):
+        """
+        Check if a value is invald, containing nan, inf, etc.
+        return bool
+        """
+        if num.isnan(val) or num.isinf(val):
+            return True
+        else:
+            return False
 
 ######
 # Initialise module

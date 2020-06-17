@@ -90,5 +90,7 @@ for i,t in enumerate(domain.evolve(yieldstep=3600,  duration=total_seconds)):
 
 # TODO
 
+- [ ] Optimize the current code using one node to IO file, and pass variables internally
 - [ ] Create Docker file to better minimize the installation process
 - [ ] Option to provide land cover data and infer friction
+- [ ] Complete examples for each feature

@@ -1,0 +1,90 @@
+Authors
+-------
+
+* Alan D. Snow
+* Aldo Culquicondor
+* Alessandro Amici
+* Alexander
+* Alexander Ivanov
+* Amit Kapadia
+* Andrew Annex
+* Andrew Catellier
+* Ariel Zerahia
+* AsgerPetersen
+* Bas Couwenberg
+* Ben Lewis
+* Brendan Ward
+* Caleb Robinson
+* Charlie Loyd
+* Chris Holden
+* Chris Holdgraf
+* Christoph Rieke
+* Colin Talbert
+* Damien Ayers
+* Dan "Ducky" Little
+* Dan Baston
+* Darren Weber
+* Denis Rykov
+* Erik Seglem
+* Etienne B. Racine
+* Even Rouault
+* Filipe
+* Frédéric Bonifas
+* Gregory Raevski
+* Guillaume Lostis
+* Guy Doulberg
+* Ismail Sunni
+* Jacques Tardie
+* James Hiebert
+* James McBride
+* James Seppi
+* Jeffrey Gerard
+* Jennifer Reiber Kyle
+* Jeremy Hooke
+* Jesse Crocker
+* Johan Van de Wauw
+* Jonas Sølvsteen
+* Joris Van den Bossche
+* Joshua Arnott
+* Juan Luis Cano Rodríguez
+* Kelsey Jordahl
+* Kevin Wurster
+* Kirill Kouzoubov
+* Koshy Thomas
+* Leah Wasser
+* Lukasz
+* Martijn Visser
+* Martin Kaesberger
+* Martin Raspaud
+* Matt Savoie
+* Matthew Perry
+* Maxim Dubinin
+* Mike Taves
+* Nat Wilson
+* Nick Grue
+* Pablo Sanfilippo
+* Patrick Young
+* Pratik Yadav
+* RK Aranas
+* Raaj Tilak Sarma
+* Robert Sare
+* Robin Wilson
+* Ryan Grout
+* Sam Murphy
+* Sean Gillies
+* Seth Fitzsimmons
+* Trevor R.H. Clarke
+* Tyler Erickson
+* Vincent Sarago
+* Vincent Schut
+* Yuvi Panda
+* appanacca
+* asmith26
+* cgohlke
+* derekjanni
+* dnomadb
+* firas omrane
+* grovduck
+* jaredairbusaerial
+* morrme
+* sshuair
