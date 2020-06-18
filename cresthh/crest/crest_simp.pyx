@@ -110,6 +110,7 @@ def model(double precipIn, double petIn, double SM, double Ksat,
     overland= overland/1000/timestep
     interflow= interflow/1000/timestep
     SM= SM/1000
+    actET/=(1000*timestep)
 
     
 

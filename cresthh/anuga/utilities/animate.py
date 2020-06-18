@@ -139,7 +139,7 @@ class Domain_plotter:
         #include opportunity to save as gif
         if save_gif:
             mywriter = animation.FFMpegWriter(fps=1)
-            ani.save(dst)
+            anim.save(dst)
 
         plt.close()
 
@@ -240,7 +240,7 @@ class Domain_plotter:
                                        frames=len(img_files), interval=200, blit=True)
         if save_gif:
             mywriter = animation.FFMpegWriter(fps=1)
-            ani.save(dst)
+            anim.save(dst)
         plt.close()
 
         return anim
@@ -340,11 +340,19 @@ class Domain_plotter:
                                        frames=len(img_files), interval=200, blit=True)
         if save_gif:
             mywriter = animation.FFMpegWriter(fps=1)
-            ani.save(dst)
+            anim.save(dst)
             
         plt.close()
 
         return anim
+    
+    #TODO make cross section frame
+    def plot_cross_section_frame(self, figsize=(5, 3)):
+        pass
+
+    #TODO make cross section animations
+    def make_cross_section_profile_animation(self):
+        pass
 
     def make_plot_dir(self, clobber=True):
         """
@@ -368,6 +376,8 @@ class Domain_plotter:
                 os.system("mkdir %s" % plot_dir)
             print "Figure files for each frame will be stored in " + plot_dir
 
+    
+
 
 class SWW_plotter:
     """
@@ -377,7 +387,8 @@ class SWW_plotter:
 
     def __init__(self, swwfile='domain.sww', plot_dir='_plot',
                  min_depth = 0.01,
-                 minimum_allowed_depth=1.0e-03):
+                 minimum_allowed_depth=1.0e-03,
+                 start_time=None):
 
         self.plot_dir = plot_dir
         self.make_plot_dir()
@@ -415,7 +426,7 @@ class SWW_plotter:
         self.xmom = np.array(p.variables['xmomentum_c'])
         self.ymom = np.array(p.variables['ymomentum_c'])
         self.exc_rain= np.array(p.variables['excess_rain_c'])
-        self.SM= np.array(p.variables['SM'])
+        self.SM= np.array(p.variables['SM_c'])*1000 # To mm
         # self.SI0= np.array(p.variables['SI0_c'])
         # self.SS0= np.array(p.variables['SS0_c'])
 
@@ -433,14 +444,23 @@ class SWW_plotter:
 
         self.speed = np.sqrt(self.xvel**2 + self.yvel**2)
 
-        self.time = np.array(p.variables['time'])
+        if start_time:
+            import pandas
+            import datetime
+            if isinstance(start_time, pandas._libs.tslibs.timestamps.Timestamp):
+                self.time= [(start_time + datetime.timedelta(seconds=second)) for second in np.array(p.variables['time'])]
+            else:
+                msg= 'expected pandas timestamp, pd.to_datetime()'
+                raise Exception(msg)
+        else:
+            self.time = np.array(p.variables['time'])
 
     def _depth_frame(self, figsize, dpi, frame, vmin, vmax):
 
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame]
+        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
         depth = self.depth[frame, :]
         
         md = self.min_depth
@@ -475,7 +495,7 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame]
+        time = self.time[frame].strftime('%Y%m%d%H%M%S')
         plot_dir = self.plot_dir
 
         self._depth_frame(figsize, dpi, frame, vmin, vmax)
@@ -501,7 +521,7 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame]
+        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
         stage = self.stage[frame, :]
         depth = self.depth[frame, :]
         
@@ -516,7 +536,7 @@ class SWW_plotter:
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        plt.title('Stage: Time %s'%(stime))
+        plt.title('Stage: Time %s'%(time))
 
         self.triang.set_mask(depth > md)
         plt.tripcolor(self.triang,
@@ -537,7 +557,7 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame]
+        time = self.time[frame].strftime('%Y%m%d%H%M%S')
         plot_dir = self.plot_dir
 
         self._stage_frame(figsize, dpi, frame, vmin, vmax)
@@ -563,7 +583,7 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame]
+        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
         depth = self.depth[frame, :]
         
         md = self.min_depth
@@ -599,7 +619,7 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame]
+        time = self.time[frame].strftime('%Y%m%d%H%M%S')
         plot_dir = self.plot_dir
 
         self._speed_frame(figsize, dpi, frame, vmin, vmax)
@@ -620,19 +640,150 @@ class SWW_plotter:
 
         plt.show()
 
-    def make_depth_animation(self):
+    def _soil_frame(self, figsize, dpi, frame, vmin, vmax):
+    
+        import matplotlib.pyplot as plt
 
-        return self._make_quantity_animation(quantity='depth')
+        name = self.name
+        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        soil = self.SM[frame, :]
+        depth= self.depth[frame, :]
+        md = self.min_depth
+        
+        try:
+            elev = self.elev[frame, :]
+        except:
+            elev = self.elev
 
-    def make_speed_animation(self):
+        fig = plt.figure(figsize=figsize, dpi=dpi)
 
-        return self._make_quantity_animation(quantity='speed')
+        plt.title('Soil moisture: Time %s'%(time))
 
-    def make_stage_animation(self):
+        self.triang.set_mask(depth > md)
+        plt.tripcolor(self.triang,
+                      facecolors=elev,
+                      cmap='Greys_r')
 
-        return self._make_quantity_animation(quantity='stage')
+        self.triang.set_mask(depth < md)
+        plt.tripcolor(self.triang,
+                      facecolors=soil,
+                      cmap='viridis',
+                      vmin=vmin, vmax=vmax)
 
-    def _make_quantity_animation(self, quantity='depth'):
+        plt.colorbar()
+
+    def save_soil_frame(self, figsize=(10, 6), dpi=160, frame=-1,
+                         vmin=0.0, vmax=300.0):
+
+        import matplotlib.pyplot as plt
+
+        name = self.name
+        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        plot_dir = self.plot_dir
+
+        self._soil_frame(figsize, dpi, frame, vmin, vmax)
+
+        if plot_dir is None:
+            plt.savefig(name+'_soil_%s.png'.format(str(time)))
+        else:
+            plt.savefig(os.path.join(plot_dir, name
+                                     + '_soil_%s.png'%(str(time))))
+        plt.close()
+
+    def plot_soil_frame(self, figsize=(5, 3), dpi=80, frame=-1,
+                         vmin=0.0, vmax=10.0):
+
+        import matplotlib.pyplot as plt
+
+        self._soil_frame(figsize, dpi, frame, vmin, vmax)
+
+        plt.show()        
+
+    #MODIFIED BY ALLEN LI 2020/06/17
+    def _longitudinal_frame(self, figsize, dpi, frame, pnts):
+        '''
+        Plot cross-section profile/longitutional profile with given pnts
+
+        Inputs:
+        -----------------------
+        pnts - List; a sequence of points with their coordinates
+        '''
+        import matplotlib.pyplot as plt
+
+        name = self.name
+        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        depths = []
+        stages= []
+        ilocs= []
+        dists= []
+        #order by distance starting from origin
+        for pnt in pnts:
+            dist= (pnt[0]-self.xllcorner)**2+(pnt[1]-self.yllcorner)**2
+            iloc= np.argmin((pnt[0]-self.xc-self.xllcorner)**2+(pnt[1]-self.yc-self.yllcorner)**2)
+            stage= self.stage[frame,iloc]
+            depth= self.depth[frame,iloc]
+            dists.append(dist)
+            ilocs.append(iloc)
+            stages.append(stage)
+            depths.append(depth)
+        ilocs= np.array(ilocs)
+        stages= np.array(stages)
+        depths= np.array(depths)
+        dists= np.array(dists)
+        ranks= np.argsort(dists)
+        stages= stages[ranks]
+        depths= depths[ranks]
+        dists= dists[ranks]
+        fig = plt.figure(figsize=figsize, dpi=dpi)
+        plt.title('Channel profile: Time %s'%(time))
+        plt.plot(dists, stages,color='b')
+        plt.plot(dists, stages-depths, color='k')
+        plt.fill_between(dists, stages-depths, stages, color='aqua')
+
+    def save_longitudinal_frame(self, pnts, figsize=(15, 6), dpi=160, frame=-1):
+        name = self.name
+        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        plot_dir = self.plot_dir
+        import matplotlib.pyplot as plt
+        self._longitudinal_frame(figsize, dpi, frame, pnts)
+
+        if plot_dir is None:
+            plt.savefig(name+'_channel_%s.png'.format(str(time)))
+        else:
+            plt.savefig(os.path.join(plot_dir, name
+                                     + '_channel_%s.png'%(str(time))))
+        plt.close()        
+    
+    def plot_longitudinal_frame(self,pnts, figsize=(15, 6), dpi=80, frame=-1):
+
+        import matplotlib.pyplot as plt
+
+        self._longitudinal_frame(figsize, dpi, frame, pnts)
+
+        plt.show()
+
+
+    def make_depth_animation(self, save_gif=False, dst='temp.gif'):
+
+        return self._make_quantity_animation(quantity='depth', save_gif=False, dst='temp.gif')
+
+    def make_speed_animation(self, save_gif=False, dst='temp.gif'):
+
+        return self._make_quantity_animation(quantity='speed', save_gif=False, dst='temp.gif')
+
+    def make_stage_animation(self, save_gif=False, dst='temp.gif'):
+
+        return self._make_quantity_animation(quantity='stage', save_gif=False, dst='temp.gif')
+
+    def make_longitudinal_animation(self, save_gif=False, dst='temp.gif'):
+
+        return self._make_quantity_animation(quantity='channel', save_gif=False, dst='temp.gif')
+
+    def make_soil_animation(self, save_gif=False, dst='temp.gif'):
+    
+        return self._make_quantity_animation(quantity='soil', save_gif=False, dst='temp.gif')        
+
+    def _make_quantity_animation(self, quantity='depth', save_gif=False, dst='temp.gif'):
 
         import numpy as np
         import glob
@@ -649,6 +800,8 @@ class SWW_plotter:
         img_files = sorted(glob.glob(expression))
 
         figsize = (10, 6)
+        if quantity=='channel':
+            figsize=(15,6)
 
         fig = plt.figure(figsize=figsize, dpi=80)
         ax = fig.add_axes([0, 0, 1, 1])
@@ -667,7 +820,9 @@ class SWW_plotter:
         anim = animation.FuncAnimation(fig, animate, init_func=init,
                                        frames=len(img_files),
                                        interval=200, blit=True)
-
+        if save_gif:
+            mywriter = animation.FFMpegWriter(fps=10)
+            anim.save(dst)
         plt.close()
 
         return anim

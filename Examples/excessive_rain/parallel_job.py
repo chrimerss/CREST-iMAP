@@ -17,7 +17,7 @@ from pyproj import Proj, CRS, transform
 
 
 myProj= Proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-start='20170802000000'
+start='20170825000000'
 end=  '20170901000000'
 interval= '2M'
 if myid==0:
@@ -29,7 +29,6 @@ if myid==0:
     interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_river_buffer_cliped.shp')
     base_resolution = 1000000 #1km
     interior_resolution= 1000 #10 m2    
-    # study_area= gpd.read_file('watershed_shp/watershed.shp')
     
     myProj = Proj("+proj=utm +zone=15, +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     
@@ -44,10 +43,10 @@ if myid==0:
             utm_coords_ext,
             boundary_tags={'bottom': [0]},
             maximum_triangle_area=1000000,
-            # interior_regions=[[utm_coords_int, interior_resolution]],
+            interior_regions=[[utm_coords_int, interior_resolution]],
             mesh_filename='1km_082500.msh')    
     # domain= anuga.create_domain_from_regions(bounding_polygon, boundary_tags={'bottom':[0],}, maximum_triangle_area=0.001,verbose=True)
-    DOMAIN.set_name('Aug_Sep_coupled')
+    DOMAIN.set_name('Aug_Sep_coupled_refined_channel')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 

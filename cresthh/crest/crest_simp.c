@@ -2091,7 +2091,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  *     overland= overland/1000/timestep
  *     interflow= interflow/1000/timestep             # <<<<<<<<<<<<<<
  *     SM= SM/1000
- * 
+ *     actET/=(1000*timestep)
  */
   __pyx_t_2 = (__pyx_v_interflow / 1000.0);
   if (unlikely(__pyx_v_timestep == 0)) {
@@ -2104,26 +2104,40 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  *     overland= overland/1000/timestep
  *     interflow= interflow/1000/timestep
  *     SM= SM/1000             # <<<<<<<<<<<<<<
- * 
+ *     actET/=(1000*timestep)
  * 
  */
   __pyx_v_SM = (__pyx_v_SM / 1000.0);
 
-  /* "crest_simp.pyx":116
+  /* "crest_simp.pyx":113
+ *     interflow= interflow/1000/timestep
+ *     SM= SM/1000
+ *     actET/=(1000*timestep)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_t_2 = (1000.0 * __pyx_v_timestep);
+  if (unlikely(__pyx_t_2 == 0)) {
+    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
+    __PYX_ERR(0, 113, __pyx_L1_error)
+  }
+  __pyx_v_actET = (__pyx_v_actET / __pyx_t_2);
+
+  /* "crest_simp.pyx":117
  * 
  * 
  *     return SM, overland, interflow,actET             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);

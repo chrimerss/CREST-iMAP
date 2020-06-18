@@ -86,7 +86,11 @@ domain.set_boundary({'bottom':   Bt,
 for i,t in enumerate(domain.evolve(yieldstep=3600,  duration=total_seconds)):
     #To do sth in the evolve
 ```
+# Updates
 
+- [x] 2020.06.17 Add options to create longitudinal profile and animation
+
+<img src="img/channel.gif">
 
 # TODO
 

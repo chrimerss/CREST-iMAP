@@ -1991,10 +1991,10 @@ class Generic_Domain:
 
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
             N, SM,overland,interflow,ET= self._evolve_crest(i)
-            if self.isInvalidValues(overland):
+            if self.isInvalidValues(overland-ET):
                 excessive_rain.append(0)
             else:
-                excessive_rain.append((overland-ET))
+                excessive_rain.append((overland))
                 self.quantities['SM'].centroid_values[N]= SM
 
             # self.quantities['ET'].centroid_values[N]=ET
