@@ -92,6 +92,10 @@ for i,t in enumerate(domain.evolve(yieldstep=3600,  duration=total_seconds)):
 
 <img src="img/channel.gif">
 
+- [x] 2020.06.17 Add options to create soil moisture animation
+
+<img src="img/soilmoisture.gif">
+
 # TODO
 
 - [ ] Optimize the current code using one node to IO file, and pass variables internally

@@ -487,7 +487,8 @@ class SWW_plotter:
                       cmap='viridis',
                       vmin=vmin, vmax=vmax)
 
-        plt.colorbar()
+        cbar= plt.colorbar()
+        cbar.set_label('m', fontsize=15)
 
     def save_depth_frame(self, figsize=(10, 6), dpi=160, frame=-1,
                          vmin=0.0, vmax=20.0):
@@ -549,7 +550,8 @@ class SWW_plotter:
                       cmap='viridis',
                       vmin=vmin, vmax=vmax)
 
-        plt.colorbar()
+        cbar= plt.colorbar()
+        cbar.set_label('m', fontsize=15)
 
     def save_stage_frame(self, figsize=(10, 6), dpi=160, frame=-1,
                          vmin=-20.0, vmax=20.0):
@@ -611,7 +613,8 @@ class SWW_plotter:
                       cmap='viridis',
                       vmin=vmin, vmax=vmax)
 
-        plt.colorbar()
+        cbar= plt.colorbar()
+        cbar.set_label('m/s', fontsize=15)
 
     def save_speed_frame(self, figsize=(10, 6), dpi=160, frame=-1,
                          vmin=0.0, vmax=10.0):
@@ -670,10 +673,11 @@ class SWW_plotter:
                       cmap='viridis',
                       vmin=vmin, vmax=vmax)
 
-        plt.colorbar()
+        cbar= plt.colorbar()
+        cbar.set_label('mm', fontsize=15)
 
     def save_soil_frame(self, figsize=(10, 6), dpi=160, frame=-1,
-                         vmin=0.0, vmax=300.0):
+                         vmin=0.0, vmax=100.0):
 
         import matplotlib.pyplot as plt
 
@@ -691,7 +695,7 @@ class SWW_plotter:
         plt.close()
 
     def plot_soil_frame(self, figsize=(5, 3), dpi=80, frame=-1,
-                         vmin=0.0, vmax=10.0):
+                         vmin=0.0, vmax=50.0):
 
         import matplotlib.pyplot as plt
 
