@@ -97,6 +97,8 @@ for i,t in enumerate(domain.evolve(yieldstep=3600,  duration=total_seconds)):
 
 <img src="img/soilmoisture.gif">
 
+- [x] 2020.06.23 Created interface to read .mesh file from mesher. Therefore, it supports creating mesh by considering the heterogeneity of the topography/river networks and so forth.
+
 # TODO
 
 - [ ] Optimize the current code using one node to IO file, and pass variables internally
