@@ -165,12 +165,14 @@ class General_mesh:
         y2 = V2[:,1]
 
         self.areas[:] = -((x1*y0-x0*y1) + (x2*y1-x1*y2) + (x0*y2-x2*y0))/2.0
+        
 
         #areas = -((x0-x1)*(y2-y1) - (y0-y1)*(x2-x1))/2.0
 
         #assert num.allclose(self.areas, areas)
 
         ind = num.where(self.areas <= 0.0)
+        print self.areas[ind]
         msg = 'Degenerate Triangle(s) '+str(ind[0])
         assert num.all(self.areas > 0.0), msg
 

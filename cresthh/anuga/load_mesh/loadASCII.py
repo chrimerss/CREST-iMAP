@@ -91,6 +91,8 @@ def import_mesh_file(ofile):
             dict = _read_tsh_file(ofile)
         elif ofile[-4:] == ".msh":
             dict = _read_msh_file(ofile)
+        elif ofile[-5:] == ".mesh":
+            dict = _read_mesh_file(ofile)
         else:
             msg = 'Extension .%s is unknown' % ofile[-4:]
             raise IOError, msg
@@ -894,6 +896,131 @@ def _read_msh_file(file_name):
         mesh['geo_reference'] = None
 
     fid.close()
+
+    return mesh
+
+def _read_mesh_file(file_name):
+    """ Read in an mesh file and return Mesh instance"""
+    import json
+    from cresthh.anuga.pmesh.mesh import Mesh
+    from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference,DEFAULT_ZONE
+    from matplotlib.tri import Triangulation
+    #Check contents.  Get json input
+    with open(file_name, 'r') as f:
+        contents= json.loads(f.read())
+
+    
+    mesh = {}
+
+    # Get the variables - the triangulation
+    try:
+        xllcorner= num.array(contents['mesh']['vertex'])[:,0].min()
+        yllcorner= num.array(contents['mesh']['vertex'])[:,1].min()
+        mesh['vertices'] = [[vert[0]-xllcorner, vert[1]-yllcorner] for vert in contents['mesh']['vertex']]
+    except KeyError:
+        mesh['vertices'] = num.array([], num.int)      #array default#
+    tri= Triangulation(x=num.array(contents['mesh']['vertex'])[:,0]-xllcorner,\
+                       y=num.array(contents['mesh']['vertex'])[:,1]-yllcorner,\
+                       triangles=contents['mesh']['elem'])
+    try:
+        mesh['vertex_attributes'] = contents['mesh']['vertex_attributes'][:]
+    except KeyError:
+        mesh['vertex_attributes'] = None
+
+    mesh['vertex_attribute_titles'] = []
+    try:
+        titles = contents['mesh']['vertex_attribute_titles']
+        mesh['vertex_attribute_titles'] = [x.tostring().strip() for x in titles]
+    except KeyError:
+        pass
+
+    try:
+        mesh['segments'] = tri.edges
+    except KeyError:
+        mesh['segments'] = num.array([], num.int)      #array default#
+
+    mesh['segment_tags'] = []
+    try:
+        tags = contents['mesh']['segment_tags'][:]
+        mesh['segment_tags'] = [x.tostring().strip() for x in tags]
+    except KeyError:
+        for ob in mesh['segments']:
+            mesh['segment_tags'].append('')
+
+    try:
+        mesh['triangles'] = contents['mesh']['elem']
+        mesh['triangle_neighbors'] = contents['mesh']['neigh']
+    except KeyError:
+        mesh['triangles'] = num.array([], num.int)              #array default#
+        mesh['triangle_neighbors'] = num.array([], num.int)     #array default#
+
+    mesh['triangle_tags'] = []
+    try:
+        tags = contents['mesh']['triangle_tags']
+        mesh['triangle_tags'] = [x.tostring().strip() for x in tags]
+    except KeyError:
+        for ob in mesh['triangles']:
+            mesh['triangle_tags'].append('')
+
+    #the outline
+    try:
+        mesh['points'] = contents['mesh']['points'][:]
+    except KeyError:
+        mesh['points'] = []
+
+    try:
+        mesh['point_attributes'] = contents['mesh']['point_attributes']
+    except KeyError:
+        mesh['point_attributes'] = []
+        for point in mesh['points']:
+            mesh['point_attributes'].append([])
+
+    try:
+        mesh['outline_segments'] = contents['mesh']['outline_segments']
+    except KeyError:
+        mesh['outline_segments'] = num.array([], num.int)      #array default#
+
+    mesh['outline_segment_tags'] =[]
+    try:
+        tags = contents['mesh']['outline_segment_tags']
+        for i, tag in enumerate(tags):
+            mesh['outline_segment_tags'].append(tags[i].tostring().strip())
+    except KeyError:
+        for ob in mesh['outline_segments']:
+            mesh['outline_segment_tags'].append('')
+
+    try:
+        mesh['holes'] = contents['mesh']['holes']
+    except KeyError:
+        mesh['holes'] = num.array([], num.int)          #array default#
+
+    try:
+        mesh['regions'] = contents['mesh']['regions']
+    except KeyError:
+        mesh['regions'] = num.array([], num.int)        #array default#
+
+    mesh['region_tags'] =[]
+    try:
+        tags = contents['mesh']['region_tags']
+        for i, tag in enumerate(tags):
+            mesh['region_tags'].append(tags[i].tostring().strip())
+    except KeyError:
+        for ob in mesh['regions']:
+            mesh['region_tags'].append('')
+
+    try:
+        mesh['region_max_areas'] = contents['mesh']['region_max_areas']
+    except KeyError:
+        mesh['region_max_areas'] = num.array([], num.int)      #array default#
+
+    try:
+        geo_reference= Geo_reference(xllcorner=xllcorner, yllcorner=yllcorner, zone=DEFAULT_ZONE)
+        mesh['geo_reference'] = geo_reference
+    except AttributeError, e:
+        #geo_ref not compulsory
+        # geo_reference= Geo_reference(xllcorner=xllcorner, yllcorner=yllcorner, zone=DEFAULT_ZONE)
+        mesh['geo_reference'] = []
+
 
     return mesh
 

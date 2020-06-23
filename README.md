@@ -39,6 +39,7 @@ Impact of hydraulic structures (e.g., dam breaks)__
 
 1. Python 2.7
 2. pypar
+3. GDAL>=2.2.3
 
 This package is not migrated to python 3 yet. We recommend to use virtualenv or conda environment to create a standalone environment to install this package.
 

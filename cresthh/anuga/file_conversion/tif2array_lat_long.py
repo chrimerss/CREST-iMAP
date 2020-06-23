@@ -15,10 +15,7 @@ def tif2array_lat_long(filename, variable_name='elevation',
              use_cache=False, verbose=False, proj=None, points=None):
     
     import os
-    wgs84= CRS('EPSG:4326')
-    UTM= CRS(proj)
-    # print points
-    utm_to_84_lons, utm_to_84_lats= transform(UTM,wgs84,points[:,0], points[:,1])
+
 
     raster= gdal.Open(filename)
     ncols= raster.RasterXSize
@@ -27,7 +24,14 @@ def tif2array_lat_long(filename, variable_name='elevation',
     NODATA_value= raster.GetRasterBand(1).GetNoDataValue()
     Z= raster.ReadAsArray()
     Z= np.where(Z==NODATA_value, np.nan, Z)
-    
+    maxRows, maxCols= Z.shape
+    try:
+        src_georeference= CRS(raster.GetProjection())
+    except:
+        src_georeference= CRS('EPSG:4326')
+    UTM= CRS(proj)
+    # print points
+    utm_to_84_lons, utm_to_84_lats= transform(UTM,src_georeference,points[:,0], points[:,1])
     transformer= Affine.from_gdal(*raster.GetGeoTransform())
     ilocs= np.array(~ transformer * (utm_to_84_lats,utm_to_84_lons))
     # print utm_to_84_lats, utm_to_84_lons
@@ -36,8 +40,20 @@ def tif2array_lat_long(filename, variable_name='elevation',
 
     #safe return
     # tobe_return= np.zeros(len(points)) * np.nan
-
-    return Z[irows, icols]
+    if (icols<maxCols).all() and (irows<maxRows).all():
+        return Z[irows, icols]
+    elif (icols-3<maxCols).all() and (irows<maxRows).all():
+        mask= (icols>=maxCols)
+        icols[mask]= maxCols-1
+        return Z[irows,icols]
+    elif (icols<maxCols).all() and (irows-3<maxRows).all():
+        mask= (irows>=maxRows)
+        irows[mask]= maxRows-1
+        return Z[irows,icols]        
+    else:
+        #if exceed the boundary by a little bit, then get the nearest neighbors
+        msg = 'the input file is inside the boundary, please crop with a larger extent'
+        raise ValueError(msg)
 
     
     
