@@ -452,15 +452,20 @@ class SWW_plotter:
             else:
                 msg= 'expected pandas timestamp, pd.to_datetime()'
                 raise Exception(msg)
+            self._abs_time=True
         else:
             self.time = np.array(p.variables['time'])
+            self._abs_time=False
 
     def _depth_frame(self, figsize, dpi, frame, vmin, vmax):
 
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         depth = self.depth[frame, :]
         
         md = self.min_depth
@@ -496,7 +501,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         plot_dir = self.plot_dir
 
         self._depth_frame(figsize, dpi, frame, vmin, vmax)
@@ -522,7 +530,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         stage = self.stage[frame, :]
         depth = self.depth[frame, :]
         
@@ -559,7 +570,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         plot_dir = self.plot_dir
 
         self._stage_frame(figsize, dpi, frame, vmin, vmax)
@@ -585,7 +599,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         depth = self.depth[frame, :]
         
         md = self.min_depth
@@ -622,7 +639,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         plot_dir = self.plot_dir
 
         self._speed_frame(figsize, dpi, frame, vmin, vmax)
@@ -648,7 +668,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         soil = self.SM[frame, :]
         depth= self.depth[frame, :]
         md = self.min_depth
@@ -682,7 +705,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         plot_dir = self.plot_dir
 
         self._soil_frame(figsize, dpi, frame, vmin, vmax)
@@ -715,7 +741,10 @@ class SWW_plotter:
         import matplotlib.pyplot as plt
 
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         depths = []
         stages= []
         ilocs= []
@@ -746,7 +775,10 @@ class SWW_plotter:
 
     def save_longitudinal_frame(self, pnts, figsize=(15, 6), dpi=160, frame=-1):
         name = self.name
-        time = self.time[frame].strftime('%Y%m%d%H%M%S')
+        if self._abs_time:
+            time = self.time[frame].strftime('%Y%m%d %H:%M:%S')
+        else:
+            time= self.time[frame]
         plot_dir = self.plot_dir
         import matplotlib.pyplot as plt
         self._longitudinal_frame(figsize, dpi, frame, pnts)

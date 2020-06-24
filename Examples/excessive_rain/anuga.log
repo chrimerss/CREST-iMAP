@@ -1,3 +1,2 @@
-2020-06-23 18:09:00,955 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-06-23 18:09:00,956 CRITICAL            generic_domain:1782|evolving elements: 163976
-2020-06-23 18:09:06,402 CRITICAL            generic_domain:1838|/home/ZhiLi/CRESTHH/data/evap/cov_et170825.asc.tif not found in evaporation!
+2020-06-23 21:01:04,135 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-06-23 21:01:04,136 CRITICAL            generic_domain:1782|evolving elements: 163976

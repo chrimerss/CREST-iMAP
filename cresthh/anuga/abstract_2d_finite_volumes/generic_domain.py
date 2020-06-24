@@ -1851,7 +1851,7 @@ class Generic_Domain:
                     cent_ids, excessRain= self.evolve_plain()
                     excessRain= num.array(excessRain)
                 self.set_quantity('excess_rain', excessRain,location='centroids')
-            elif self.get_timestep()==0:
+            else:
                 excessRain= num.zeros(len(self.quantities['stage'].centroid_values))
             
             #==========================================

@@ -33,6 +33,8 @@ Impact of hydraulic structures (e.g., dam breaks)__
 
 7. __Efficiency (bottlenecks in C)__
 
+8. __Flexible/Optimal mesh design__
+
 # Installation
 
 ## Prerequisites
@@ -40,6 +42,8 @@ Impact of hydraulic structures (e.g., dam breaks)__
 1. Python 2.7
 2. pypar
 3. GDAL>=2.2.3
+4. mesher
+5. Cython>=0.25
 
 This package is not migrated to python 3 yet. We recommend to use virtualenv or conda environment to create a standalone environment to install this package.
 
@@ -101,7 +105,6 @@ for i,t in enumerate(domain.evolve(yieldstep=3600,  duration=total_seconds)):
 
 # TODO
 
-- [ ] Optimize the current code using one node to IO file, and pass variables internally
 - [ ] Create Docker file to better minimize the installation process
 - [ ] Option to provide land cover data and infer friction
 - [ ] Complete examples for each feature
