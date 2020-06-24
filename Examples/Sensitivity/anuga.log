@@ -1,41 +1,164 @@
 2020-06-24 14:39:16,607 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
 2020-06-24 14:39:16,609 CRITICAL            generic_domain:1782|evolving elements: 10706
-2020-06-24 14:39:16,622 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:00:00, steps=0 (0s)
-2020-06-24 14:39:16,869 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:02:00, delta t in [46.85576656, 56.12330774], steps=3 (0s)
-2020-06-24 14:41:40,096 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:04:00, delta t in [0.00473950, 45.84028352], steps=9052 (143s)
-2020-06-24 14:45:13,659 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:06:00, delta t in [0.00858714, 0.00879392], steps=13824 (213s)
-2020-06-24 14:48:33,185 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:08:00, delta t in [0.00865202, 0.00994821], steps=13043 (199s)
-2020-06-24 14:51:22,129 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:10:00, delta t in [0.00994754, 0.01169162], steps=11126 (168s)
-2020-06-24 14:53:46,829 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:12:00, delta t in [0.01168725, 0.01340878], steps=9573 (144s)
-2020-06-24 14:55:54,820 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:14:00, delta t in [0.01340799, 0.01507394], steps=8439 (127s)
-2020-06-24 14:57:48,898 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:16:00, delta t in [0.01506716, 0.01674630], steps=7552 (114s)
-2020-06-24 14:59:32,042 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:18:00, delta t in [0.01672777, 0.01836352], steps=6846 (103s)
-2020-06-24 15:01:07,104 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:20:00, delta t in [0.01835376, 0.01996081], steps=6268 (95s)
-2020-06-24 15:02:36,320 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:22:00, delta t in [0.01994093, 0.02000887], steps=6008 (89s)
-2020-06-24 15:04:05,795 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:24:00, delta t in [0.01988059, 0.01994092], steps=6028 (89s)
-2020-06-24 15:05:35,170 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:26:00, delta t in [0.01983142, 0.01988058], steps=6045 (89s)
-2020-06-24 15:07:04,461 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:28:00, delta t in [0.01979336, 0.01983142], steps=6058 (89s)
-2020-06-24 15:08:37,070 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:30:00, delta t in [0.01976245, 0.01979336], steps=6068 (92s)
-2020-06-24 15:10:13,810 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:32:00, delta t in [0.01973413, 0.01976245], steps=6077 (96s)
-2020-06-24 15:11:43,205 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:34:00, delta t in [0.01970729, 0.01973413], steps=6086 (89s)
-2020-06-24 15:13:12,620 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:36:00, delta t in [0.01968442, 0.01970729], steps=6094 (89s)
-2020-06-24 15:14:42,045 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:38:00, delta t in [0.01966656, 0.01968442], steps=6100 (89s)
-2020-06-24 15:16:11,271 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:40:00, delta t in [0.01965119, 0.01966656], steps=6105 (89s)
-2020-06-24 15:17:40,948 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:42:00, delta t in [0.01963714, 0.01965119], steps=6109 (89s)
-2020-06-24 15:19:10,752 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:44:00, delta t in [0.01962126, 0.01963714], steps=6114 (89s)
-2020-06-24 15:20:40,741 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:46:00, delta t in [0.01960568, 0.01962125], steps=6119 (89s)
-2020-06-24 15:22:10,911 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:48:00, delta t in [0.01959085, 0.01960568], steps=6124 (90s)
-2020-06-24 15:23:41,014 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:50:00, delta t in [0.01957799, 0.01959085], steps=6128 (90s)
-2020-06-24 15:25:11,474 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:52:00, delta t in [0.01956502, 0.01957799], steps=6132 (90s)
-2020-06-24 15:26:42,283 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:54:00, delta t in [0.01955176, 0.01956502], steps=6136 (90s)
-2020-06-24 15:28:13,133 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:56:00, delta t in [0.01953769, 0.01955176], steps=6141 (90s)
-2020-06-24 15:29:44,053 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:58:00, delta t in [0.01952668, 0.01953769], steps=6144 (90s)
-2020-06-24 15:31:15,006 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:00:00, delta t in [0.01951326, 0.01952668], steps=6149 (90s)
-2020-06-24 15:32:45,694 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:02:00, delta t in [0.01950388, 0.01951326], steps=6152 (90s)
-2020-06-24 15:34:15,907 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:04:00, delta t in [0.01949473, 0.01950388], steps=6155 (90s)
-2020-06-24 15:35:46,197 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:06:00, delta t in [0.01948622, 0.01949473], steps=6158 (90s)
-2020-06-24 15:37:16,716 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:08:00, delta t in [0.01947934, 0.01948622], steps=6160 (90s)
-2020-06-24 15:38:47,391 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:10:00, delta t in [0.01947172, 0.01947934], steps=6162 (90s)
-2020-06-24 15:40:18,510 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:12:00, delta t in [0.01946216, 0.01947172], steps=6165 (91s)
-2020-06-24 15:41:49,045 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:14:00, delta t in [0.01945245, 0.01946216], steps=6168 (90s)
-2020-06-24 15:43:18,672 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:16:00, delta t in [0.01944234, 0.01945245], steps=6171 (89s)
+2020-06-24 16:18:40,291 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-020200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:20:11,538 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-020400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:21:42,844 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-020600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:23:14,058 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-020800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:24:45,347 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-021000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:26:16,429 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-021200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:27:47,128 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-021400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:29:17,886 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-021600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:30:48,582 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-021800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:32:19,202 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:33:49,851 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:35:20,546 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:36:50,954 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:38:21,150 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:39:51,300 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:41:22,053 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:42:52,099 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:44:22,438 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:45:52,638 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:47:23,069 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:48:53,154 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:50:23,064 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:51:56,217 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:53:35,833 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:55:03,824 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:56:32,005 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:57:59,823 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:59:27,707 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:00:55,733 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:02:24,140 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:03:52,277 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:05:20,395 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:06:48,529 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:08:16,378 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:09:44,205 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:11:11,992 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:12:39,886 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:14:07,723 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:15:35,613 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:17:03,558 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:18:56,155 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:21:17,872 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:23:54,344 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:26:37,953 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:29:25,467 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:32:21,986 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:35:16,636 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:38:11,485 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:41:06,637 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:44:01,263 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:46:55,230 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:49:47,787 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:52:40,506 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:55:34,108 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:58:27,460 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:01:20,438 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:04:13,167 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:07:05,485 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:09:57,608 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:12:49,747 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-040000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:15:53,379 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-040200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:35:20,533 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:24:00, delta t in [0.01922206, 0.01922435], steps=6243 (90s)
+2020-06-24 16:35:20,534 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:36:50,949 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:26:00, delta t in [0.01921996, 0.01922206], steps=6244 (90s)
+2020-06-24 16:36:50,950 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:38:21,141 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:28:00, delta t in [0.01921803, 0.01921996], steps=6244 (90s)
+2020-06-24 16:38:21,142 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-022800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:39:51,291 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:30:00, delta t in [0.01921624, 0.01921803], steps=6245 (90s)
+2020-06-24 16:39:51,292 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:41:22,045 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:32:00, delta t in [0.01921460, 0.01921624], steps=6245 (90s)
+2020-06-24 16:41:22,046 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:42:52,091 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:34:00, delta t in [0.01921307, 0.01921460], steps=6246 (90s)
+2020-06-24 16:42:52,091 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:44:22,429 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:36:00, delta t in [0.01921166, 0.01921307], steps=6246 (90s)
+2020-06-24 16:44:22,430 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:45:52,635 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:38:00, delta t in [0.01921035, 0.01921166], steps=6247 (90s)
+2020-06-24 16:45:52,636 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-023800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:47:23,060 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:40:00, delta t in [0.01920913, 0.01921035], steps=6247 (90s)
+2020-06-24 16:47:23,061 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:48:53,145 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:42:00, delta t in [0.01920799, 0.01920913], steps=6248 (90s)
+2020-06-24 16:48:53,146 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:50:23,055 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:44:00, delta t in [0.01920694, 0.01920799], steps=6248 (89s)
+2020-06-24 16:50:23,056 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:51:56,209 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:46:00, delta t in [0.01920595, 0.01920694], steps=6248 (93s)
+2020-06-24 16:51:56,209 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:53:35,825 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:48:00, delta t in [0.01920503, 0.01920595], steps=6249 (99s)
+2020-06-24 16:53:35,825 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-024800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:55:03,812 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:50:00, delta t in [0.01920416, 0.01920503], steps=6249 (87s)
+2020-06-24 16:55:03,813 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:56:31,997 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:52:00, delta t in [0.01920335, 0.01920416], steps=6249 (88s)
+2020-06-24 16:56:31,997 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:57:59,814 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:54:00, delta t in [0.01920259, 0.01920335], steps=6250 (87s)
+2020-06-24 16:57:59,815 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 16:59:27,698 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:56:00, delta t in [0.01920188, 0.01920259], steps=6250 (87s)
+2020-06-24 16:59:27,699 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:00:55,723 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:58:00, delta t in [0.01920121, 0.01920188], steps=6250 (88s)
+2020-06-24 17:00:55,724 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-025800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:02:24,131 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:00:00, delta t in [0.01920058, 0.01920121], steps=6250 (88s)
+2020-06-24 17:02:24,132 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:03:52,268 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:02:00, delta t in [0.01919998, 0.01920058], steps=6250 (88s)
+2020-06-24 17:03:52,269 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:05:20,386 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:04:00, delta t in [0.01919942, 0.01919998], steps=6251 (88s)
+2020-06-24 17:05:20,387 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:06:48,521 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:06:00, delta t in [0.01919889, 0.01919942], steps=6251 (88s)
+2020-06-24 17:06:48,522 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:08:16,369 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:08:00, delta t in [0.01919838, 0.01919889], steps=6251 (87s)
+2020-06-24 17:08:16,370 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-030800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:09:44,196 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:10:00, delta t in [0.01919791, 0.01919838], steps=6251 (87s)
+2020-06-24 17:09:44,197 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:11:11,983 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:12:00, delta t in [0.01919746, 0.01919791], steps=6251 (87s)
+2020-06-24 17:11:11,984 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:12:39,877 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:14:00, delta t in [0.01919703, 0.01919746], steps=6251 (87s)
+2020-06-24 17:12:39,878 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:14:07,714 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:16:00, delta t in [0.01919662, 0.01919703], steps=6252 (87s)
+2020-06-24 17:14:07,715 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:15:35,604 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:18:00, delta t in [0.01919624, 0.01919662], steps=6252 (87s)
+2020-06-24 17:15:35,605 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-031800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:17:03,549 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:20:00, delta t in [0.01919587, 0.01919624], steps=6252 (87s)
+2020-06-24 17:17:03,550 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:18:56,147 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:22:00, delta t in [0.01288641, 0.01919587], steps=8012 (112s)
+2020-06-24 17:18:56,148 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:21:17,864 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:24:00, delta t in [0.01120325, 0.01288634], steps=10086 (141s)
+2020-06-24 17:21:17,864 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:23:54,335 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:26:00, delta t in [0.01048122, 0.01120320], steps=11120 (156s)
+2020-06-24 17:23:54,336 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:26:37,945 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:28:00, delta t in [0.01014257, 0.01048119], steps=11661 (163s)
+2020-06-24 17:26:37,946 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-032800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:29:25,458 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:30:00, delta t in [0.00997941, 0.01014255], steps=11940 (167s)
+2020-06-24 17:29:25,459 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:32:21,982 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:32:00, delta t in [0.00990374, 0.00997941], steps=12077 (176s)
+2020-06-24 17:32:21,983 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:35:16,633 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:34:00, delta t in [0.00987223, 0.00990374], steps=12140 (174s)
+2020-06-24 17:35:16,634 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:38:11,477 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:36:00, delta t in [0.00986339, 0.00987223], steps=12163 (174s)
+2020-06-24 17:38:11,478 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:41:06,629 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:38:00, delta t in [0.00986326, 0.00986628], steps=12166 (175s)
+2020-06-24 17:41:06,629 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-033800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:44:01,260 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:40:00, delta t in [0.00986628, 0.00987523], steps=12158 (174s)
+2020-06-24 17:44:01,261 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:46:55,227 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:42:00, delta t in [0.00987523, 0.00988733], steps=12145 (173s)
+2020-06-24 17:46:55,228 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:49:47,784 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:44:00, delta t in [0.00988733, 0.00990105], steps=12129 (172s)
+2020-06-24 17:49:47,785 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:52:40,503 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:46:00, delta t in [0.00990105, 0.00991561], steps=12112 (172s)
+2020-06-24 17:52:40,504 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:55:34,104 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:48:00, delta t in [0.00991561, 0.00993058], steps=12094 (173s)
+2020-06-24 17:55:34,105 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-034800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 17:58:27,456 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:50:00, delta t in [0.00993058, 0.00994576], steps=12075 (173s)
+2020-06-24 17:58:27,457 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:01:20,435 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:52:00, delta t in [0.00994576, 0.00996102], steps=12057 (172s)
+2020-06-24 18:01:20,436 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:04:13,159 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:54:00, delta t in [0.00996102, 0.00996694], steps=12042 (172s)
+2020-06-24 18:04:13,159 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035400.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:07:05,483 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:56:00, delta t in [0.00996572, 0.00997052], steps=12040 (172s)
+2020-06-24 18:07:05,484 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035600.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:09:57,600 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:58:00, delta t in [0.00997052, 0.00998306], steps=12029 (172s)
+2020-06-24 18:09:57,600 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-035800.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:12:49,740 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:00:00, delta t in [0.00998306, 0.00999998], steps=12011 (172s)
+2020-06-24 18:12:49,741 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-040000.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere
+2020-06-24 18:15:53,371 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:02:00, delta t in [0.00999998, 0.01001945], steps=11989 (183s)
+2020-06-24 18:15:53,371 CRITICAL            generic_domain:1824|/home/ZhiLi/CRESTHH/data/synthetic_rainfall/PrecipRate_00.00_20170825-040200.grib2-var0-z0.tif not found in precipitation, assume 0 everywhere

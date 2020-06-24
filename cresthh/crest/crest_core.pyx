@@ -1,3 +1,9 @@
+'''
+Core of CREST model, three layers of soil moistures
+'''
+__author__='Allen Zhi Li'
+__date__='2020/06/05'
+
 cdef int checkWaterBalance(double P, double ET,
                     double RI, double RS, double SS0,
                     double SI0, double W0):

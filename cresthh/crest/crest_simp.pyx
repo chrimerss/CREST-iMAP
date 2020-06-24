@@ -1,3 +1,12 @@
+'''
+Simplified version of CREST model
+The soil moisture is represented by one layer soils
+See EF5
+'''
+
+__author__='Allen Zhi Li'
+__date__='2020/06/18'
+
 cdef int checkWaterBalance(double P, double ET,
                     double SW, double overland, double interflow):
 

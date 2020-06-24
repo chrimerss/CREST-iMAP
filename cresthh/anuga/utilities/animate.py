@@ -697,7 +697,7 @@ class SWW_plotter:
                       vmin=vmin, vmax=vmax)
 
         cbar= plt.colorbar()
-        cbar.set_label('mm', fontsize=15)
+        cbar.set_label('%', fontsize=15)
 
     def save_soil_frame(self, figsize=(10, 6), dpi=160, frame=-1,
                          vmin=0.0, vmax=100.0):
