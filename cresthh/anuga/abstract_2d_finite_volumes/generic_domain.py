@@ -1995,7 +1995,7 @@ class Generic_Domain:
                 excessive_rain.append(0)
             else:
                 excessive_rain.append((overland))
-                self.quantities['SM'].centroid_values[N]= SM
+                self.quantities['SM'].centroid_values[N]= SM/(self.quantities['WM'].centroid_values[N]+1e-5) #record percent of soil moisture
 
             # self.quantities['ET'].centroid_values[N]=ET
             # print 'RI: %.2f, RS: %.2f, W0: %.2f, SI0: %.2f, SS0: %.2f'%(RI, RS, W0, SI0, SS0)
@@ -2005,7 +2005,7 @@ class Generic_Domain:
     def _evolve_crest(self, N):
         P= self.quantities['P'].centroid_values[N]
         ET= self.quantities['ET'].centroid_values[N]
-        SM= self.quantities['SM'].centroid_values[N]
+        SM= self.quantities['SM'].centroid_values[N] * (self.quantities['WM'].centroid_values[N]+1e-5)
 
         Ksat= self.quantities['Ksat'].centroid_values[N]
         WM= self.quantities['WM'].centroid_values[N]
