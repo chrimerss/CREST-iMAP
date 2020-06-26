@@ -61,6 +61,7 @@ def model(double precipIn, double petIn, double SM, double Ksat,
         if SM>WM: SM= WM
 
         if SM<WM:
+
             Wmaxm=WM*(1+B)
             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
 
@@ -78,6 +79,7 @@ def model(double precipIn, double petIn, double SM, double Ksat,
         else:
             R= precipSoil
             Wo= WM
+        
         
         temX= (SM+Wo)/WM/2*Ksat*stepHour
 
@@ -121,6 +123,7 @@ def model(double precipIn, double petIn, double SM, double Ksat,
     SM= SM/1000
     actET/=(1000*timestep)
 
-    
+    #print 'overland flow:', overland
+    #print 'soil moisture: ',SM
 
     return SM, overland, interflow,actET

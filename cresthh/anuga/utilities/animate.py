@@ -426,7 +426,7 @@ class SWW_plotter:
         self.xmom = np.array(p.variables['xmomentum_c'])
         self.ymom = np.array(p.variables['ymomentum_c'])
         self.exc_rain= np.array(p.variables['excess_rain_c'])
-        self.SM= np.array(p.variables['SM_c'])*1000 # To mm
+        self.SM= np.array(p.variables['SM_c']) # To mm
         # self.SI0= np.array(p.variables['SI0_c'])
         # self.SS0= np.array(p.variables['SS0_c'])
 

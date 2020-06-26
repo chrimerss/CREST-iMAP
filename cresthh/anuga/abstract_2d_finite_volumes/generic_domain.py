@@ -1739,6 +1739,7 @@ class Generic_Domain:
         precipFolder, evapFolder, timestamp, time_interval, precip_freq, evap_freq= self.get_forcing()
 
         coupled= self.get_coupled()
+        log.critical('Settting coupled: %s'%coupled)
         
         if finaltime is not None and duration is not None:
             msg = 'Only one of finaltime and duration may be specified'
@@ -1795,7 +1796,7 @@ class Generic_Domain:
             
             yield(self.get_time())      # Yield initial values
             
-        freq_mapper= {'D':24*3600,'H':3600,'M':60,'S':1}
+        freq_mapper= {'D':24.0*3600.0,'H':3600.0,'M':60.0,'S':1.0}
         _time_interval_func= lambda d: int(d[0])*freq_mapper[d[1]]
 
         while True:
@@ -1818,7 +1819,7 @@ class Generic_Domain:
                 try:
                     self.quantities['P'].set_values_from_lat_long_tif_file(precip_pth,
                                 location='centroids' ,proj=self.proj)
-                    self.quantities['P']/=(_time_interval_func(precip_freq)*1000)
+                    self.quantities['P']/=(_time_interval_func(precip_freq)*1000.0)
                 except:
                     msg= '%s not found in precipitation, assume 0 everywhere'%precip_pth
                     log.critical(msg)
@@ -1832,9 +1833,9 @@ class Generic_Domain:
                                 '%02d'%(current_time.second)))
                     self.quantities['ET'].set_values_from_lat_long_tif_file(evap_pth,
                                 location='centroids', proj=self.proj)
-                    self.quantities['ET']/=(_time_interval_func(evap_freq)*1000*30)
+                    self.quantities['ET']/=(_time_interval_func(evap_freq)*1000.0*100.0)
                 except:
-                    msg= '%s not found in evaporation!'%evap_pth
+                    msg= '%s not found in evaporation, assume 0 everywhere'%evap_pth
                     log.critical(msg)
                     self.quantities['ET'].set_values_from_constant(0, 'centroids',None,None)
             
@@ -1842,7 +1843,6 @@ class Generic_Domain:
 
                 # excessRain= excessRain * self.timestep
                 # print "excessive rainfall computed, assign to stage."
-                
 
             if self.get_time()%_time_interval_func(self._time_interval)==0 and self.get_timestep()>0:
                 if coupled:
@@ -1991,11 +1991,12 @@ class Generic_Domain:
 
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
             N, SM,overland,interflow,ET= self._evolve_crest(i)
-            if self.isInvalidValues(overland-ET):
+            if self.isInvalidValues(overland):
                 excessive_rain.append(0)
             else:
-                excessive_rain.append((overland))
-                self.quantities['SM'].centroid_values[N]= SM/(self.quantities['WM'].centroid_values[N]+1e-5) #record percent of soil moisture
+                excessive_rain.append((overland-ET))
+                self.quantities['SM'].centroid_values[N]= SM*1000/\
+                        (self.quantities['WM'].centroid_values[N]+1e-5) #percentage
 
             # self.quantities['ET'].centroid_values[N]=ET
             # print 'RI: %.2f, RS: %.2f, W0: %.2f, SI0: %.2f, SS0: %.2f'%(RI, RS, W0, SI0, SS0)
@@ -2005,15 +2006,23 @@ class Generic_Domain:
     def _evolve_crest(self, N):
         P= self.quantities['P'].centroid_values[N]
         ET= self.quantities['ET'].centroid_values[N]
-        SM= self.quantities['SM'].centroid_values[N] * (self.quantities['WM'].centroid_values[N]+1e-5)
+        SM= self.quantities['SM'].centroid_values[N] *\
+            (self.quantities['WM'].centroid_values[N]+1e-5)/1000. #in m
 
         Ksat= self.quantities['Ksat'].centroid_values[N]
         WM= self.quantities['WM'].centroid_values[N]
         B= self.quantities['B'].centroid_values[N]
-        IM= self.quantities['IM'].centroid_values[N]
+        IM= self.quantities['IM'].centroid_values[N]/100.
         KE= self.quantities['KE'].centroid_values[N]
 
+        # if N==100:
+        #     print 'SM: %.2f, rain: %.2f, ET: %.2f before CREST'%(SM*1000, P*1000, ET*1000)
+        #     print 'soil maximum holding capacity: %.2f mm'%WM
+
         (SM,overland,interflow,ET)= model(P,ET,SM,Ksat,WM,B,IM,KE,self.get_timestep())
+
+        # if N==100:
+        #     print 'SM: %.2f, overland: %.2f actual ET: %.2f after CREST'%(SM*1000, overland*1000, ET*1000)
 
         return N, SM,overland,interflow,ET
     

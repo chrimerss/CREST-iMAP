@@ -1051,6 +1051,7 @@ static const char __pyx_k_Wo[] = "Wo";
 static const char __pyx_k_end[] = "end";
 static const char __pyx_k_pet[] = "pet";
 static const char __pyx_k_Ksat[] = "Ksat";
+static const char __pyx_k_date[] = "__date__";
 static const char __pyx_k_file[] = "file";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
@@ -1062,6 +1063,7 @@ static const char __pyx_k_model[] = "model";
 static const char __pyx_k_petIn[] = "petIn";
 static const char __pyx_k_print[] = "print";
 static const char __pyx_k_adjPET[] = "adjPET";
+static const char __pyx_k_author[] = "__author__";
 static const char __pyx_k_precip[] = "precip";
 static const char __pyx_k_ExcessET[] = "ExcessET";
 static const char __pyx_k_balanced[] = "balanced";
@@ -1070,8 +1072,10 @@ static const char __pyx_k_precipIn[] = "precipIn";
 static const char __pyx_k_stepHour[] = "stepHour";
 static const char __pyx_k_timestep[] = "timestep";
 static const char __pyx_k_interflow[] = "interflow";
+static const char __pyx_k_2020_06_18[] = "2020/06/18";
 static const char __pyx_k_crest_simp[] = "crest_simp";
 static const char __pyx_k_precipSoil[] = "precipSoil";
+static const char __pyx_k_Allen_Zhi_Li[] = "Allen Zhi Li";
 static const char __pyx_k_infiltration[] = "infiltration";
 static const char __pyx_k_precipImperv[] = "precipImperv";
 static const char __pyx_k_Water_balanced[] = "Water balanced !";
@@ -1079,7 +1083,10 @@ static const char __pyx_k_crest_simp_pyx[] = "crest_simp.pyx";
 static const char __pyx_k_interflowExcess[] = "interflowExcess";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_Water_not_balanced_deficit[] = "Water not balanced! deficit: ";
+static const char __pyx_k_Simplified_version_of_CREST_mod[] = "\nSimplified version of CREST model\nThe soil moisture is represented by one layer soils\nSee EF5\n";
+static PyObject *__pyx_kp_s_2020_06_18;
 static PyObject *__pyx_n_s_A;
+static PyObject *__pyx_kp_s_Allen_Zhi_Li;
 static PyObject *__pyx_n_s_B;
 static PyObject *__pyx_n_s_ExcessET;
 static PyObject *__pyx_n_s_IM;
@@ -1094,10 +1101,12 @@ static PyObject *__pyx_n_s_Wmaxm;
 static PyObject *__pyx_n_s_Wo;
 static PyObject *__pyx_n_s_actET;
 static PyObject *__pyx_n_s_adjPET;
+static PyObject *__pyx_n_s_author;
 static PyObject *__pyx_n_s_balanced;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_crest_simp;
 static PyObject *__pyx_kp_s_crest_simp_pyx;
+static PyObject *__pyx_n_s_date;
 static PyObject *__pyx_n_s_end;
 static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_infiltration;
@@ -1123,7 +1132,9 @@ static PyObject *__pyx_tuple_;
 static PyObject *__pyx_codeobj__2;
 /* Late includes */
 
-/* "crest_simp.pyx":1
+/* "crest_simp.pyx":10
+ * __date__='2020/06/18'
+ * 
  * cdef int checkWaterBalance(double P, double ET,             # <<<<<<<<<<<<<<
  *                     double SW, double overland, double interflow):
  * 
@@ -1141,7 +1152,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("checkWaterBalance", 0);
 
-  /* "crest_simp.pyx":6
+  /* "crest_simp.pyx":15
  *     cdef double balanced
  * 
  *     balanced = P-ET-SW-interflow-overland;             # <<<<<<<<<<<<<<
@@ -1150,7 +1161,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  */
   __pyx_v_balanced = ((((__pyx_v_P - __pyx_v_ET) - __pyx_v_SW) - __pyx_v_interflow) - __pyx_v_overland);
 
-  /* "crest_simp.pyx":7
+  /* "crest_simp.pyx":16
  * 
  *     balanced = P-ET-SW-interflow-overland;
  *     if balanced<1e-10:             # <<<<<<<<<<<<<<
@@ -1160,16 +1171,16 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
   __pyx_t_1 = ((__pyx_v_balanced < 1e-10) != 0);
   if (__pyx_t_1) {
 
-    /* "crest_simp.pyx":8
+    /* "crest_simp.pyx":17
  *     balanced = P-ET-SW-interflow-overland;
  *     if balanced<1e-10:
  *         print 'Water balanced !'             # <<<<<<<<<<<<<<
  *         return 1;
  *     else:
  */
-    if (__Pyx_PrintOne(0, __pyx_kp_s_Water_balanced) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+    if (__Pyx_PrintOne(0, __pyx_kp_s_Water_balanced) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
 
-    /* "crest_simp.pyx":9
+    /* "crest_simp.pyx":18
  *     if balanced<1e-10:
  *         print 'Water balanced !'
  *         return 1;             # <<<<<<<<<<<<<<
@@ -1179,7 +1190,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "crest_simp.pyx":7
+    /* "crest_simp.pyx":16
  * 
  *     balanced = P-ET-SW-interflow-overland;
  *     if balanced<1e-10:             # <<<<<<<<<<<<<<
@@ -1188,7 +1199,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  */
   }
 
-  /* "crest_simp.pyx":11
+  /* "crest_simp.pyx":20
  *         return 1;
  *     else:
  *         print 'Water not balanced! deficit: ',balanced             # <<<<<<<<<<<<<<
@@ -1196,9 +1207,9 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  * 
  */
   /*else*/ {
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_balanced); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_balanced); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 11, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_kp_s_Water_not_balanced_deficit);
     __Pyx_GIVEREF(__pyx_kp_s_Water_not_balanced_deficit);
@@ -1206,10 +1217,10 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
     __pyx_t_2 = 0;
-    if (__Pyx_Print(0, __pyx_t_3, 1) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
+    if (__Pyx_Print(0, __pyx_t_3, 1) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "crest_simp.pyx":12
+    /* "crest_simp.pyx":21
  *     else:
  *         print 'Water not balanced! deficit: ',balanced
  *         return 0;             # <<<<<<<<<<<<<<
@@ -1220,7 +1231,9 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
     goto __pyx_L0;
   }
 
-  /* "crest_simp.pyx":1
+  /* "crest_simp.pyx":10
+ * __date__='2020/06/18'
+ * 
  * cdef int checkWaterBalance(double P, double ET,             # <<<<<<<<<<<<<<
  *                     double SW, double overland, double interflow):
  * 
@@ -1237,7 +1250,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
   return __pyx_r;
 }
 
-/* "crest_simp.pyx":14
+/* "crest_simp.pyx":23
  *         return 0;
  * 
  * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
@@ -1301,53 +1314,53 @@ static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_petIn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 1); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 1); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_SM)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 2); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 2); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Ksat)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 3); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 3); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_WM)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 4); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 4); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_B)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 5); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 5); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IM)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 6); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 6); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_KE)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 7); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 7); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_timestep)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 8); __PYX_ERR(0, 14, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 8); __PYX_ERR(0, 23, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "model") < 0)) __PYX_ERR(0, 14, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "model") < 0)) __PYX_ERR(0, 23, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
       goto __pyx_L5_argtuple_error;
@@ -1362,19 +1375,19 @@ static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
     }
-    __pyx_v_precipIn = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_precipIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L3_error)
-    __pyx_v_petIn = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_petIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L3_error)
-    __pyx_v_SM = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_SM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L3_error)
-    __pyx_v_Ksat = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Ksat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L3_error)
-    __pyx_v_WM = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_WM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 15, __pyx_L3_error)
-    __pyx_v_B = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 15, __pyx_L3_error)
-    __pyx_v_IM = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_IM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 15, __pyx_L3_error)
-    __pyx_v_KE = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_KE == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 15, __pyx_L3_error)
-    __pyx_v_timestep = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_timestep == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 16, __pyx_L3_error)
+    __pyx_v_precipIn = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_precipIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_petIn = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_petIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_SM = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_SM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_Ksat = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Ksat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_WM = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_WM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_B = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_IM = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_IM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_KE = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_KE == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_timestep = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_timestep == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 14, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 23, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("crest_simp.model", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1419,7 +1432,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("model", 0);
 
-  /* "crest_simp.pyx":19
+  /* "crest_simp.pyx":28
  * 
  *     cdef double Wo
  *     cdef double stepHour= timestep/3600             # <<<<<<<<<<<<<<
@@ -1428,7 +1441,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_stepHour = (__pyx_v_timestep / 3600.0);
 
-  /* "crest_simp.pyx":20
+  /* "crest_simp.pyx":29
  *     cdef double Wo
  *     cdef double stepHour= timestep/3600
  *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm             # <<<<<<<<<<<<<<
@@ -1437,7 +1450,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_precip = ((__pyx_v_precipIn * __pyx_v_timestep) * 1000.0);
 
-  /* "crest_simp.pyx":21
+  /* "crest_simp.pyx":30
  *     cdef double stepHour= timestep/3600
  *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm
  *     cdef double pet= petIn * timestep*1000 #mm             # <<<<<<<<<<<<<<
@@ -1446,7 +1459,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_pet = ((__pyx_v_petIn * __pyx_v_timestep) * 1000.0);
 
-  /* "crest_simp.pyx":22
+  /* "crest_simp.pyx":31
  *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm
  *     cdef double pet= petIn * timestep*1000 #mm
  *     cdef double adjPET= pet * KE             # <<<<<<<<<<<<<<
@@ -1455,7 +1468,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_adjPET = (__pyx_v_pet * __pyx_v_KE);
 
-  /* "crest_simp.pyx":26
+  /* "crest_simp.pyx":35
  *     cdef double precipSoil, precipImperv, Wmaxm, A, R, infiltration, ExcessET, actET
  *     cdef int balanced
  *     SM*=1000 # mm             # <<<<<<<<<<<<<<
@@ -1464,7 +1477,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_SM = (__pyx_v_SM * 1000.0);
 
-  /* "crest_simp.pyx":34
+  /* "crest_simp.pyx":43
  *     #SI0+= RI*timestep
  *     # zero division protection
  *     if WM<0: WM=100             # <<<<<<<<<<<<<<
@@ -1476,7 +1489,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_v_WM = 100.0;
   }
 
-  /* "crest_simp.pyx":35
+  /* "crest_simp.pyx":44
  *     # zero division protection
  *     if WM<0: WM=100
  *     if SM<0: SM=0             # <<<<<<<<<<<<<<
@@ -1488,7 +1501,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_v_SM = 0.0;
   }
 
-  /* "crest_simp.pyx":36
+  /* "crest_simp.pyx":45
  *     if WM<0: WM=100
  *     if SM<0: SM=0
  *     if IM<0: IM=0             # <<<<<<<<<<<<<<
@@ -1501,7 +1514,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     goto __pyx_L5;
   }
 
-  /* "crest_simp.pyx":37
+  /* "crest_simp.pyx":46
  *     if SM<0: SM=0
  *     if IM<0: IM=0
  *     elif IM>1.0: IM=1.0             # <<<<<<<<<<<<<<
@@ -1514,7 +1527,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   }
   __pyx_L5:;
 
-  /* "crest_simp.pyx":38
+  /* "crest_simp.pyx":47
  *     if IM<0: IM=0
  *     elif IM>1.0: IM=1.0
  *     if B<0.0: B=1.0             # <<<<<<<<<<<<<<
@@ -1526,7 +1539,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_v_B = 1.0;
   }
 
-  /* "crest_simp.pyx":39
+  /* "crest_simp.pyx":48
  *     elif IM>1.0: IM=1.0
  *     if B<0.0: B=1.0
  *     if Ksat<0.0: Ksat=1.0             # <<<<<<<<<<<<<<
@@ -1538,7 +1551,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_v_Ksat = 1.0;
   }
 
-  /* "crest_simp.pyx":41
+  /* "crest_simp.pyx":50
  *     if Ksat<0.0: Ksat=1.0
  * 
  *     if precip>adjPET:             # <<<<<<<<<<<<<<
@@ -1548,7 +1561,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_1 = ((__pyx_v_precip > __pyx_v_adjPET) != 0);
   if (__pyx_t_1) {
 
-    /* "crest_simp.pyx":43
+    /* "crest_simp.pyx":52
  *     if precip>adjPET:
  *         #available precipitation in soil
  *         precipSoil= (precip-adjPET) * (1-IM)             # <<<<<<<<<<<<<<
@@ -1557,7 +1570,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_precipSoil = ((__pyx_v_precip - __pyx_v_adjPET) * (1.0 - __pyx_v_IM));
 
-    /* "crest_simp.pyx":45
+    /* "crest_simp.pyx":54
  *         precipSoil= (precip-adjPET) * (1-IM)
  * 
  *         precipImperv = precip -adjPET - precipSoil             # <<<<<<<<<<<<<<
@@ -1566,7 +1579,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_precipImperv = ((__pyx_v_precip - __pyx_v_adjPET) - __pyx_v_precipSoil);
 
-    /* "crest_simp.pyx":47
+    /* "crest_simp.pyx":56
  *         precipImperv = precip -adjPET - precipSoil
  * 
  *         interflowExcess = SM - WM             # <<<<<<<<<<<<<<
@@ -1575,7 +1588,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflowExcess = (__pyx_v_SM - __pyx_v_WM);
 
-    /* "crest_simp.pyx":49
+    /* "crest_simp.pyx":58
  *         interflowExcess = SM - WM
  * 
  *         if interflowExcess< 0.0:             # <<<<<<<<<<<<<<
@@ -1585,7 +1598,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_interflowExcess < 0.0) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":50
+      /* "crest_simp.pyx":59
  * 
  *         if interflowExcess< 0.0:
  *             interflowExcess= 0.0             # <<<<<<<<<<<<<<
@@ -1594,7 +1607,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_interflowExcess = 0.0;
 
-      /* "crest_simp.pyx":49
+      /* "crest_simp.pyx":58
  *         interflowExcess = SM - WM
  * 
  *         if interflowExcess< 0.0:             # <<<<<<<<<<<<<<
@@ -1603,7 +1616,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     }
 
-    /* "crest_simp.pyx":52
+    /* "crest_simp.pyx":61
  *             interflowExcess= 0.0
  * 
  *         if SM>WM: SM= WM             # <<<<<<<<<<<<<<
@@ -1615,27 +1628,27 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       __pyx_v_SM = __pyx_v_WM;
     }
 
-    /* "crest_simp.pyx":54
+    /* "crest_simp.pyx":63
  *         if SM>WM: SM= WM
  * 
  *         if SM<WM:             # <<<<<<<<<<<<<<
+ * 
  *             Wmaxm=WM*(1+B)
- *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  */
     __pyx_t_1 = ((__pyx_v_SM < __pyx_v_WM) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":55
- * 
+      /* "crest_simp.pyx":65
  *         if SM<WM:
+ * 
  *             Wmaxm=WM*(1+B)             # <<<<<<<<<<<<<<
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  * 
  */
       __pyx_v_Wmaxm = (__pyx_v_WM * (1.0 + __pyx_v_B));
 
-      /* "crest_simp.pyx":56
- *         if SM<WM:
+      /* "crest_simp.pyx":66
+ * 
  *             Wmaxm=WM*(1+B)
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))             # <<<<<<<<<<<<<<
  * 
@@ -1643,16 +1656,16 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       if (unlikely(__pyx_v_WM == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 56, __pyx_L1_error)
+        __PYX_ERR(0, 66, __pyx_L1_error)
       }
       __pyx_t_2 = (1.0 + __pyx_v_B);
       if (unlikely(__pyx_t_2 == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 56, __pyx_L1_error)
+        __PYX_ERR(0, 66, __pyx_L1_error)
       }
       __pyx_v_A = (__pyx_v_Wmaxm * (1.0 - pow((1.0 - (__pyx_v_SM / __pyx_v_WM)), (1.0 / __pyx_t_2))));
 
-      /* "crest_simp.pyx":58
+      /* "crest_simp.pyx":68
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  * 
  *             if precipSoil + A >=Wmaxm:             # <<<<<<<<<<<<<<
@@ -1662,7 +1675,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       __pyx_t_1 = (((__pyx_v_precipSoil + __pyx_v_A) >= __pyx_v_Wmaxm) != 0);
       if (__pyx_t_1) {
 
-        /* "crest_simp.pyx":59
+        /* "crest_simp.pyx":69
  * 
  *             if precipSoil + A >=Wmaxm:
  *                 R= precipSoil-(WM-SM)             # <<<<<<<<<<<<<<
@@ -1671,7 +1684,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         __pyx_v_R = (__pyx_v_precipSoil - (__pyx_v_WM - __pyx_v_SM));
 
-        /* "crest_simp.pyx":60
+        /* "crest_simp.pyx":70
  *             if precipSoil + A >=Wmaxm:
  *                 R= precipSoil-(WM-SM)
  *                 if R<0: R=0.0             # <<<<<<<<<<<<<<
@@ -1683,7 +1696,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
           __pyx_v_R = 0.0;
         }
 
-        /* "crest_simp.pyx":61
+        /* "crest_simp.pyx":71
  *                 R= precipSoil-(WM-SM)
  *                 if R<0: R=0.0
  *                 Wo=WM             # <<<<<<<<<<<<<<
@@ -1692,7 +1705,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         __pyx_v_Wo = __pyx_v_WM;
 
-        /* "crest_simp.pyx":58
+        /* "crest_simp.pyx":68
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  * 
  *             if precipSoil + A >=Wmaxm:             # <<<<<<<<<<<<<<
@@ -1702,7 +1715,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
         goto __pyx_L12;
       }
 
-      /* "crest_simp.pyx":63
+      /* "crest_simp.pyx":73
  *                 Wo=WM
  *             else:
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))             # <<<<<<<<<<<<<<
@@ -1712,16 +1725,16 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       /*else*/ {
         if (unlikely(__pyx_v_Wmaxm == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 63, __pyx_L1_error)
+          __PYX_ERR(0, 73, __pyx_L1_error)
         }
         __pyx_t_2 = (__pyx_v_A + __pyx_v_precipSoil);
         if (unlikely(__pyx_v_Wmaxm == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 63, __pyx_L1_error)
+          __PYX_ERR(0, 73, __pyx_L1_error)
         }
         __pyx_v_infiltration = (__pyx_v_WM * (pow((1.0 - (__pyx_v_A / __pyx_v_Wmaxm)), (1.0 + __pyx_v_B)) - pow((1.0 - (__pyx_t_2 / __pyx_v_Wmaxm)), (1.0 + __pyx_v_B))));
 
-        /* "crest_simp.pyx":64
+        /* "crest_simp.pyx":74
  *             else:
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))
  *                 if infiltration>precipSoil:             # <<<<<<<<<<<<<<
@@ -1731,7 +1744,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
         __pyx_t_1 = ((__pyx_v_infiltration > __pyx_v_precipSoil) != 0);
         if (__pyx_t_1) {
 
-          /* "crest_simp.pyx":65
+          /* "crest_simp.pyx":75
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))
  *                 if infiltration>precipSoil:
  *                     infiltration= precipSoil             # <<<<<<<<<<<<<<
@@ -1740,7 +1753,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
           __pyx_v_infiltration = __pyx_v_precipSoil;
 
-          /* "crest_simp.pyx":64
+          /* "crest_simp.pyx":74
  *             else:
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))
  *                 if infiltration>precipSoil:             # <<<<<<<<<<<<<<
@@ -1749,7 +1762,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         }
 
-        /* "crest_simp.pyx":66
+        /* "crest_simp.pyx":76
  *                 if infiltration>precipSoil:
  *                     infiltration= precipSoil
  *                 R = precipSoil - infiltration             # <<<<<<<<<<<<<<
@@ -1758,7 +1771,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         __pyx_v_R = (__pyx_v_precipSoil - __pyx_v_infiltration);
 
-        /* "crest_simp.pyx":67
+        /* "crest_simp.pyx":77
  *                     infiltration= precipSoil
  *                 R = precipSoil - infiltration
  *                 if R<0: R=0.0             # <<<<<<<<<<<<<<
@@ -1770,7 +1783,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
           __pyx_v_R = 0.0;
         }
 
-        /* "crest_simp.pyx":68
+        /* "crest_simp.pyx":78
  *                 R = precipSoil - infiltration
  *                 if R<0: R=0.0
  *                 Wo= SM+infiltration             # <<<<<<<<<<<<<<
@@ -1781,17 +1794,17 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       }
       __pyx_L12:;
 
-      /* "crest_simp.pyx":54
+      /* "crest_simp.pyx":63
  *         if SM>WM: SM= WM
  * 
  *         if SM<WM:             # <<<<<<<<<<<<<<
+ * 
  *             Wmaxm=WM*(1+B)
- *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  */
       goto __pyx_L11;
     }
 
-    /* "crest_simp.pyx":70
+    /* "crest_simp.pyx":80
  *                 Wo= SM+infiltration
  *         else:
  *             R= precipSoil             # <<<<<<<<<<<<<<
@@ -1801,19 +1814,19 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     /*else*/ {
       __pyx_v_R = __pyx_v_precipSoil;
 
-      /* "crest_simp.pyx":71
+      /* "crest_simp.pyx":81
  *         else:
  *             R= precipSoil
  *             Wo= WM             # <<<<<<<<<<<<<<
  * 
- *         temX= (SM+Wo)/WM/2*Ksat*stepHour
+ * 
  */
       __pyx_v_Wo = __pyx_v_WM;
     }
     __pyx_L11:;
 
-    /* "crest_simp.pyx":73
- *             Wo= WM
+    /* "crest_simp.pyx":84
+ * 
  * 
  *         temX= (SM+Wo)/WM/2*Ksat*stepHour             # <<<<<<<<<<<<<<
  * 
@@ -1822,11 +1835,11 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_2 = (__pyx_v_SM + __pyx_v_Wo);
     if (unlikely(__pyx_v_WM == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 73, __pyx_L1_error)
+      __PYX_ERR(0, 84, __pyx_L1_error)
     }
     __pyx_v_temX = ((((__pyx_t_2 / __pyx_v_WM) / 2.0) * __pyx_v_Ksat) * __pyx_v_stepHour);
 
-    /* "crest_simp.pyx":75
+    /* "crest_simp.pyx":86
  *         temX= (SM+Wo)/WM/2*Ksat*stepHour
  * 
  *         if R<=temX:             # <<<<<<<<<<<<<<
@@ -1836,7 +1849,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_R <= __pyx_v_temX) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":76
+      /* "crest_simp.pyx":87
  * 
  *         if R<=temX:
  *             interflow= R             # <<<<<<<<<<<<<<
@@ -1845,7 +1858,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_interflow = __pyx_v_R;
 
-      /* "crest_simp.pyx":75
+      /* "crest_simp.pyx":86
  *         temX= (SM+Wo)/WM/2*Ksat*stepHour
  * 
  *         if R<=temX:             # <<<<<<<<<<<<<<
@@ -1855,7 +1868,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       goto __pyx_L16;
     }
 
-    /* "crest_simp.pyx":78
+    /* "crest_simp.pyx":89
  *             interflow= R
  *         else:
  *             interflow= temX             # <<<<<<<<<<<<<<
@@ -1867,7 +1880,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     }
     __pyx_L16:;
 
-    /* "crest_simp.pyx":80
+    /* "crest_simp.pyx":91
  *             interflow= temX
  * 
  *         overland= R- interflow + precipImperv             # <<<<<<<<<<<<<<
@@ -1876,7 +1889,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_overland = ((__pyx_v_R - __pyx_v_interflow) + __pyx_v_precipImperv);
 
-    /* "crest_simp.pyx":82
+    /* "crest_simp.pyx":93
  *         overland= R- interflow + precipImperv
  * 
  *         actET= adjPET             # <<<<<<<<<<<<<<
@@ -1885,7 +1898,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_actET = __pyx_v_adjPET;
 
-    /* "crest_simp.pyx":84
+    /* "crest_simp.pyx":95
  *         actET= adjPET
  * 
  *         interflow+= interflowExcess             # <<<<<<<<<<<<<<
@@ -1894,7 +1907,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflow = (__pyx_v_interflow + __pyx_v_interflowExcess);
 
-    /* "crest_simp.pyx":41
+    /* "crest_simp.pyx":50
  *     if Ksat<0.0: Ksat=1.0
  * 
  *     if precip>adjPET:             # <<<<<<<<<<<<<<
@@ -1904,7 +1917,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     goto __pyx_L8;
   }
 
-  /* "crest_simp.pyx":86
+  /* "crest_simp.pyx":97
  *         interflow+= interflowExcess
  *     else:
  *         overland=0.0             # <<<<<<<<<<<<<<
@@ -1914,7 +1927,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   /*else*/ {
     __pyx_v_overland = 0.0;
 
-    /* "crest_simp.pyx":87
+    /* "crest_simp.pyx":98
  *     else:
  *         overland=0.0
  *         interflowExcess= SM -WM             # <<<<<<<<<<<<<<
@@ -1923,7 +1936,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflowExcess = (__pyx_v_SM - __pyx_v_WM);
 
-    /* "crest_simp.pyx":89
+    /* "crest_simp.pyx":100
  *         interflowExcess= SM -WM
  * 
  *         if interflowExcess<0.0:             # <<<<<<<<<<<<<<
@@ -1933,7 +1946,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_interflowExcess < 0.0) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":90
+      /* "crest_simp.pyx":101
  * 
  *         if interflowExcess<0.0:
  *             interflowExcess= 0.0             # <<<<<<<<<<<<<<
@@ -1942,7 +1955,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_interflowExcess = 0.0;
 
-      /* "crest_simp.pyx":89
+      /* "crest_simp.pyx":100
  *         interflowExcess= SM -WM
  * 
  *         if interflowExcess<0.0:             # <<<<<<<<<<<<<<
@@ -1951,7 +1964,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     }
 
-    /* "crest_simp.pyx":91
+    /* "crest_simp.pyx":102
  *         if interflowExcess<0.0:
  *             interflowExcess= 0.0
  *         interflow= interflowExcess             # <<<<<<<<<<<<<<
@@ -1960,7 +1973,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflow = __pyx_v_interflowExcess;
 
-    /* "crest_simp.pyx":92
+    /* "crest_simp.pyx":103
  *             interflowExcess= 0.0
  *         interflow= interflowExcess
  *         if SM>WM:             # <<<<<<<<<<<<<<
@@ -1970,7 +1983,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_SM > __pyx_v_WM) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":93
+      /* "crest_simp.pyx":104
  *         interflow= interflowExcess
  *         if SM>WM:
  *             SM= WM             # <<<<<<<<<<<<<<
@@ -1979,7 +1992,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_SM = __pyx_v_WM;
 
-      /* "crest_simp.pyx":92
+      /* "crest_simp.pyx":103
  *             interflowExcess= 0.0
  *         interflow= interflowExcess
  *         if SM>WM:             # <<<<<<<<<<<<<<
@@ -1988,7 +2001,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     }
 
-    /* "crest_simp.pyx":95
+    /* "crest_simp.pyx":106
  *             SM= WM
  * 
  *         ExcessET= (adjPET - precip)*SM/WM             # <<<<<<<<<<<<<<
@@ -1998,11 +2011,11 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_2 = ((__pyx_v_adjPET - __pyx_v_precip) * __pyx_v_SM);
     if (unlikely(__pyx_v_WM == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 95, __pyx_L1_error)
+      __PYX_ERR(0, 106, __pyx_L1_error)
     }
     __pyx_v_ExcessET = (__pyx_t_2 / __pyx_v_WM);
 
-    /* "crest_simp.pyx":97
+    /* "crest_simp.pyx":108
  *         ExcessET= (adjPET - precip)*SM/WM
  * 
  *         if ExcessET<SM:             # <<<<<<<<<<<<<<
@@ -2012,7 +2025,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_ExcessET < __pyx_v_SM) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":98
+      /* "crest_simp.pyx":109
  * 
  *         if ExcessET<SM:
  *             Wo= SM-ExcessET             # <<<<<<<<<<<<<<
@@ -2021,7 +2034,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_Wo = (__pyx_v_SM - __pyx_v_ExcessET);
 
-      /* "crest_simp.pyx":97
+      /* "crest_simp.pyx":108
  *         ExcessET= (adjPET - precip)*SM/WM
  * 
  *         if ExcessET<SM:             # <<<<<<<<<<<<<<
@@ -2031,7 +2044,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       goto __pyx_L19;
     }
 
-    /* "crest_simp.pyx":100
+    /* "crest_simp.pyx":111
  *             Wo= SM-ExcessET
  *         else:
  *             Wo= 0.0             # <<<<<<<<<<<<<<
@@ -2041,7 +2054,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     /*else*/ {
       __pyx_v_Wo = 0.0;
 
-      /* "crest_simp.pyx":101
+      /* "crest_simp.pyx":112
  *         else:
  *             Wo= 0.0
  *             ExcessET= SM             # <<<<<<<<<<<<<<
@@ -2052,7 +2065,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     }
     __pyx_L19:;
 
-    /* "crest_simp.pyx":103
+    /* "crest_simp.pyx":114
  *             ExcessET= SM
  * 
  *         actET = ExcessET + precip             # <<<<<<<<<<<<<<
@@ -2063,7 +2076,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   }
   __pyx_L8:;
 
-  /* "crest_simp.pyx":105
+  /* "crest_simp.pyx":116
  *         actET = ExcessET + precip
  * 
  *     SM= Wo             # <<<<<<<<<<<<<<
@@ -2072,7 +2085,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_SM = __pyx_v_Wo;
 
-  /* "crest_simp.pyx":110
+  /* "crest_simp.pyx":121
  * 
  *     #convert back to m or m/s
  *     overland= overland/1000/timestep             # <<<<<<<<<<<<<<
@@ -2082,11 +2095,11 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_2 = (__pyx_v_overland / 1000.0);
   if (unlikely(__pyx_v_timestep == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 110, __pyx_L1_error)
+    __PYX_ERR(0, 121, __pyx_L1_error)
   }
   __pyx_v_overland = (__pyx_t_2 / __pyx_v_timestep);
 
-  /* "crest_simp.pyx":111
+  /* "crest_simp.pyx":122
  *     #convert back to m or m/s
  *     overland= overland/1000/timestep
  *     interflow= interflow/1000/timestep             # <<<<<<<<<<<<<<
@@ -2096,11 +2109,11 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_2 = (__pyx_v_interflow / 1000.0);
   if (unlikely(__pyx_v_timestep == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 111, __pyx_L1_error)
+    __PYX_ERR(0, 122, __pyx_L1_error)
   }
   __pyx_v_interflow = (__pyx_t_2 / __pyx_v_timestep);
 
-  /* "crest_simp.pyx":112
+  /* "crest_simp.pyx":123
  *     overland= overland/1000/timestep
  *     interflow= interflow/1000/timestep
  *     SM= SM/1000             # <<<<<<<<<<<<<<
@@ -2109,35 +2122,35 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_SM = (__pyx_v_SM / 1000.0);
 
-  /* "crest_simp.pyx":113
+  /* "crest_simp.pyx":124
  *     interflow= interflow/1000/timestep
  *     SM= SM/1000
  *     actET/=(1000*timestep)             # <<<<<<<<<<<<<<
  * 
- * 
+ *     #print 'overland flow:', overland
  */
   __pyx_t_2 = (1000.0 * __pyx_v_timestep);
   if (unlikely(__pyx_t_2 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 113, __pyx_L1_error)
+    __PYX_ERR(0, 124, __pyx_L1_error)
   }
   __pyx_v_actET = (__pyx_v_actET / __pyx_t_2);
 
-  /* "crest_simp.pyx":117
- * 
+  /* "crest_simp.pyx":129
+ *     #print 'soil moisture: ',SM
  * 
  *     return SM, overland, interflow,actET             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 129, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);
@@ -2155,7 +2168,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "crest_simp.pyx":14
+  /* "crest_simp.pyx":23
  *         return 0;
  * 
  * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
@@ -2196,7 +2209,7 @@ static PyModuleDef_Slot __pyx_moduledef_slots[] = {
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
     "crest_simp",
-    0, /* m_doc */
+    __pyx_k_Simplified_version_of_CREST_mod, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
   #else
@@ -2224,7 +2237,9 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_kp_s_2020_06_18, __pyx_k_2020_06_18, sizeof(__pyx_k_2020_06_18), 0, 0, 1, 0},
   {&__pyx_n_s_A, __pyx_k_A, sizeof(__pyx_k_A), 0, 0, 1, 1},
+  {&__pyx_kp_s_Allen_Zhi_Li, __pyx_k_Allen_Zhi_Li, sizeof(__pyx_k_Allen_Zhi_Li), 0, 0, 1, 0},
   {&__pyx_n_s_B, __pyx_k_B, sizeof(__pyx_k_B), 0, 0, 1, 1},
   {&__pyx_n_s_ExcessET, __pyx_k_ExcessET, sizeof(__pyx_k_ExcessET), 0, 0, 1, 1},
   {&__pyx_n_s_IM, __pyx_k_IM, sizeof(__pyx_k_IM), 0, 0, 1, 1},
@@ -2239,10 +2254,12 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Wo, __pyx_k_Wo, sizeof(__pyx_k_Wo), 0, 0, 1, 1},
   {&__pyx_n_s_actET, __pyx_k_actET, sizeof(__pyx_k_actET), 0, 0, 1, 1},
   {&__pyx_n_s_adjPET, __pyx_k_adjPET, sizeof(__pyx_k_adjPET), 0, 0, 1, 1},
+  {&__pyx_n_s_author, __pyx_k_author, sizeof(__pyx_k_author), 0, 0, 1, 1},
   {&__pyx_n_s_balanced, __pyx_k_balanced, sizeof(__pyx_k_balanced), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_crest_simp, __pyx_k_crest_simp, sizeof(__pyx_k_crest_simp), 0, 0, 1, 1},
   {&__pyx_kp_s_crest_simp_pyx, __pyx_k_crest_simp_pyx, sizeof(__pyx_k_crest_simp_pyx), 0, 0, 1, 0},
+  {&__pyx_n_s_date, __pyx_k_date, sizeof(__pyx_k_date), 0, 0, 1, 1},
   {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
   {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_infiltration, __pyx_k_infiltration, sizeof(__pyx_k_infiltration), 0, 0, 1, 1},
@@ -2273,17 +2290,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "crest_simp.pyx":14
+  /* "crest_simp.pyx":23
  *         return 0;
  * 
  * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
  *         double WM, double B, double IM, double KE,
  *         double timestep):
  */
-  __pyx_tuple_ = PyTuple_Pack(27, __pyx_n_s_precipIn, __pyx_n_s_petIn, __pyx_n_s_SM, __pyx_n_s_Ksat, __pyx_n_s_WM, __pyx_n_s_B, __pyx_n_s_IM, __pyx_n_s_KE, __pyx_n_s_timestep, __pyx_n_s_Wo, __pyx_n_s_stepHour, __pyx_n_s_precip, __pyx_n_s_pet, __pyx_n_s_adjPET, __pyx_n_s_temX, __pyx_n_s_interflow, __pyx_n_s_overland, __pyx_n_s_interflowExcess, __pyx_n_s_precipSoil, __pyx_n_s_precipImperv, __pyx_n_s_Wmaxm, __pyx_n_s_A, __pyx_n_s_R, __pyx_n_s_infiltration, __pyx_n_s_ExcessET, __pyx_n_s_actET, __pyx_n_s_balanced); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(27, __pyx_n_s_precipIn, __pyx_n_s_petIn, __pyx_n_s_SM, __pyx_n_s_Ksat, __pyx_n_s_WM, __pyx_n_s_B, __pyx_n_s_IM, __pyx_n_s_KE, __pyx_n_s_timestep, __pyx_n_s_Wo, __pyx_n_s_stepHour, __pyx_n_s_precip, __pyx_n_s_pet, __pyx_n_s_adjPET, __pyx_n_s_temX, __pyx_n_s_interflow, __pyx_n_s_overland, __pyx_n_s_interflowExcess, __pyx_n_s_precipSoil, __pyx_n_s_precipImperv, __pyx_n_s_Wmaxm, __pyx_n_s_A, __pyx_n_s_R, __pyx_n_s_infiltration, __pyx_n_s_ExcessET, __pyx_n_s_actET, __pyx_n_s_balanced); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(9, 0, 27, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_crest_simp_pyx, __pyx_n_s_model, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(9, 0, 27, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_crest_simp_pyx, __pyx_n_s_model, 23, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2518,7 +2535,7 @@ if (!__Pyx_RefNanny) {
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("crest_simp", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("crest_simp", __pyx_methods, __pyx_k_Simplified_version_of_CREST_mod, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -2564,22 +2581,40 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "crest_simp.pyx":14
+  /* "crest_simp.pyx":7
+ * '''
+ * 
+ * __author__='Allen Zhi Li'             # <<<<<<<<<<<<<<
+ * __date__='2020/06/18'
+ * 
+ */
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_author, __pyx_kp_s_Allen_Zhi_Li) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+
+  /* "crest_simp.pyx":8
+ * 
+ * __author__='Allen Zhi Li'
+ * __date__='2020/06/18'             # <<<<<<<<<<<<<<
+ * 
+ * cdef int checkWaterBalance(double P, double ET,
+ */
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_date, __pyx_kp_s_2020_06_18) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+
+  /* "crest_simp.pyx":23
  *         return 0;
  * 
  * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
  *         double WM, double B, double IM, double KE,
  *         double timestep):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10crest_simp_1model, NULL, __pyx_n_s_crest_simp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10crest_simp_1model, NULL, __pyx_n_s_crest_simp); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_model, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_model, __pyx_t_1) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "crest_simp.pyx":1
- * cdef int checkWaterBalance(double P, double ET,             # <<<<<<<<<<<<<<
- *                     double SW, double overland, double interflow):
- * 
+ * '''             # <<<<<<<<<<<<<<
+ * Simplified version of CREST model
+ * The soil moisture is represented by one layer soils
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
