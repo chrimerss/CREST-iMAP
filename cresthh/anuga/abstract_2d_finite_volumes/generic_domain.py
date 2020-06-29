@@ -1940,7 +1940,7 @@ class Generic_Domain:
         cent_ids= []
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
             val= self.quantities['P'].centroid_values[i] - \
-                             self.quantities['ET'].centroid_values[i]
+                             self.quantities['ET'].centroid_values[i]*self.quantities['KE'].centroid_values[i]
             if self.isInvalidValues(val):
                 excess_rain.append(0)
             else:
@@ -2045,7 +2045,7 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
         
-        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        self.quantities['stage'].explicit_update[:]+=(forcing)
         
 
         # Update timestep to fit yieldstep and finaltime
@@ -2089,7 +2089,7 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        self.quantities['stage'].explicit_update[:]+=(forcing)
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
@@ -2127,7 +2127,7 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        self.quantities['stage'].explicit_update[:]+=(forcing)
 
         # Update conserved quantities
         self.update_conserved_quantities()
@@ -2175,7 +2175,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        self.quantities['stage'].explicit_update[:]+=(forcing)
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
 
@@ -2245,7 +2245,7 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['stage'].centroid_values[:]+=(forcing*self.get_timestep())
+        self.quantities['stage'].explicit_update[:]+=(forcing)
         # Update conserved quantities
         self.update_conserved_quantities()
 

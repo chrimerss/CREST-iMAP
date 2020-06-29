@@ -24,8 +24,8 @@ if myid==0:
 
     
     yieldstep= pd.Timedelta(interval).total_seconds()    
-    # topo_file= '/hydros/ZhiLi/demHouston033s_NAm83.tif'
-    topo_file='/hydros/ZhiLi/DEM_10m.tif'
+    topo_file= '/hydros/ZhiLi/demHouston033s_NAm83.tif'
+    # topo_file='/hydros/ZhiLi/DEM_10m.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/data/buffered_mainstream_new/mainstream_buffer.shp')
     # base_resolution = 1000000 #1km
@@ -53,7 +53,7 @@ if myid==0:
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
     DOMAIN.set_quantity('stage', expression='elevation', location='centroids')  
-    DOMAIN.set_quantity('SM', 0.012, location='centroids')
+    DOMAIN.set_quantity('SM', 0, location='centroids')
     DOMAIN.set_quantity('Ksat', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/ksat.tif', location='centroids')
     # DOMAIN.quantities['Ksat'].centroid_values[:]*= 289.0
     DOMAIN.set_quantity('WM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/wm_10m.tif', location='centroids')
@@ -70,7 +70,7 @@ if myid==0:
 
     DOMAIN.set_boundary({'bottom':   Bt,
                         'interior': Br,
-                        'exterior': Bi})
+                        'exterior': Br})
 else:
     DOMAIN=None
 

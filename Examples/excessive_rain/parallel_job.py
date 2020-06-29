@@ -24,7 +24,7 @@ if myid==0:
 
     
     yieldstep= pd.Timedelta(interval).total_seconds()    
-    topo_file= '/hydros/ZhiLi/DEM_10m.tif'
+    topo_file= '/hydros/ZhiLi/demHouston033s_NAm83.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/data/buffered_mainstream_new/mainstream_buffer.shp')
     # base_resolution = 1000000 #1km

@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 from cresthh.anuga import SWW_plotter
 
-def flowAreaCalc(samples, depth):
+def flowAreaCalc(samples, stage):
     '''
     calculate the lateral flow area based on the cross-section profile and depth
     first-order approximation
@@ -29,8 +29,8 @@ def flowAreaCalc(samples, depth):
     else:
         elev= samples.Value
         spacing= samples.distance(samples.shift()).iloc[1]
-        mask= np.where(elev<depth)[0]
-        area= ((depth-elev[mask]) * spacing).sum()
+        mask= np.where(elev<stage)[0]
+        area= ((stage-elev[mask]) * spacing).sum()
         return area
 
 def processSWW(swwfile, fields, obs_loc, start_time=None):

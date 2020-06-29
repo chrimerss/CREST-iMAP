@@ -426,7 +426,7 @@ class SWW_plotter:
         self.xmom = np.array(p.variables['xmomentum_c'])
         self.ymom = np.array(p.variables['ymomentum_c'])
         self.exc_rain= np.array(p.variables['excess_rain_c'])
-        self.SM= np.array(p.variables['SM_c']) # To mm
+        self.SM= np.array(p.variables['SM_c'])*100 # To %
         # self.SI0= np.array(p.variables['SI0_c'])
         # self.SS0= np.array(p.variables['SS0_c'])
 
@@ -457,7 +457,7 @@ class SWW_plotter:
             self.time = np.array(p.variables['time'])
             self._abs_time=False
 
-    def _depth_frame(self, figsize, dpi, frame, vmin, vmax):
+    def _depth_frame(self, figsize, dpi, frame, vmin, vmax, cmap='viridis'):
 
         import matplotlib.pyplot as plt
 
@@ -489,14 +489,14 @@ class SWW_plotter:
         self.triang.set_mask(depth < md)
         plt.tripcolor(self.triang,
                       facecolors=depth,
-                      cmap='viridis',
+                      cmap=cmap,
                       vmin=vmin, vmax=vmax)
 
         cbar= plt.colorbar()
         cbar.set_label('m', fontsize=15)
 
     def save_depth_frame(self, figsize=(10, 6), dpi=160, frame=-1,
-                         vmin=0.0, vmax=20.0):
+                         vmin=0.0, vmax=20.0, cmap='viridis'):
 
         import matplotlib.pyplot as plt
 
@@ -507,7 +507,7 @@ class SWW_plotter:
             time= self.time[frame]
         plot_dir = self.plot_dir
 
-        self._depth_frame(figsize, dpi, frame, vmin, vmax)
+        self._depth_frame(figsize, dpi, frame, vmin, vmax,cmap)
 
         if plot_dir is None:
             plt.savefig(name+'_depth_%s.png'%(str(time)))

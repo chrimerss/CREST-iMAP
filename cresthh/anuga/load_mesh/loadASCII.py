@@ -964,7 +964,7 @@ def _read_mesh_file(file_name):
 
     #the outline
     try:
-        mesh['points'] = contents['mesh']['points'][:]
+        mesh['points'] = contents['mesh']['outline'][:]
     except KeyError:
         mesh['points'] = []
 
@@ -976,7 +976,17 @@ def _read_mesh_file(file_name):
             mesh['point_attributes'].append([])
 
     try:
-        mesh['outline_segments'] = contents['mesh']['outline_segments']
+        outline= contents['mesh']['outline']
+        IDs= []
+        for coord in num.array(outline):
+            x= coord[0]-xllcorner
+            y= coord[1]-yllcorner
+            iloc= num.argmin((tri.x-x)**2+(tri.y-y)**2)
+            IDs.append(iloc)
+        mask1= num.isin(tri.edges[:,0], IDs)
+        mask2= num.isin(tri.edges[:,1], IDs)
+        mask= num.logical_and(mask1, mask2)
+        mesh['outline_segments'] = tri.edges[mask]
     except KeyError:
         mesh['outline_segments'] = num.array([], num.int)      #array default#
 
@@ -987,7 +997,7 @@ def _read_mesh_file(file_name):
             mesh['outline_segment_tags'].append(tags[i].tostring().strip())
     except KeyError:
         for ob in mesh['outline_segments']:
-            mesh['outline_segment_tags'].append('')
+            mesh['outline_segment_tags'].append('exterior')
 
     try:
         mesh['holes'] = contents['mesh']['holes']
