@@ -25,7 +25,7 @@ if myid==0:
     
     yieldstep= pd.Timedelta(interval).total_seconds()    
     topo_file= '/hydros/ZhiLi/demHouston033s_NAm83.tif'
-    # topo_file='/hydros/ZhiLi/DEM_10m.tif'
+    # topo_file='/hydros/ZhiLi/DEM_10m_channel.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/data/buffered_mainstream_new/mainstream_buffer.shp')
     # base_resolution = 1000000 #1km
@@ -48,7 +48,7 @@ if myid==0:
     #         interior_regions=[[utm_coords_int, interior_resolution]],
     #         mesh_filename='1km_082500.msh')    
     # domain= anuga.create_domain_from_regions(bounding_polygon, boundary_tags={'bottom':[0],}, maximum_triangle_area=0.001,verbose=True)
-    DOMAIN.set_name('Coupled_10m_modified_mesh')
+    DOMAIN.set_name('nonCoupled_10m_modified_mesh')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
@@ -78,7 +78,7 @@ barrier()
 
 DOMAIN= distribute(DOMAIN)
 DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-DOMAIN.set_coupled(True)
+DOMAIN.set_coupled(False)
 
 #domain.set_evap_dir('/hydros/MengyuChen/pet', pattern='cov_et17%m%d.asc', freq='D')
 #domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='imerg%Y%m%dS%H%M%S.tif', freq='H')
