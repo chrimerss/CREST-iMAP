@@ -388,10 +388,12 @@ class SWW_plotter:
     def __init__(self, swwfile='domain.sww', plot_dir='_plot',
                  min_depth = 0.01,
                  minimum_allowed_depth=1.0e-03,
-                 start_time=None):
+                 start_time=None,
+                 make_dir=True):
 
         self.plot_dir = plot_dir
-        self.make_plot_dir()
+        if make_dir:
+            self.make_plot_dir()
         
         self.min_depth = min_depth
 

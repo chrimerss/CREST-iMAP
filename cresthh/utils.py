@@ -9,6 +9,7 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 from cresthh.anuga import SWW_plotter
+from netCDF4 import Dataset
 
 def flowAreaCalc(samples, stage):
     '''
@@ -39,7 +40,7 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
 
     Args:
     ----------------------
-    swwfile - generated .sww file name
+    swwfile - generated .sww file name or Dataset
     field - list; field names to extract; supported ['depth','speed','stage','soil_moisture']
     obs_loc - tuple; location of observational point (on par with project projections)
     start_time - pandas time index; begin time
@@ -48,15 +49,28 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
     ----------------------
     results - pandas object
     '''
-    splotter= SWW_plotter(swwfile, start_time=start_time)
-    xc= splotter.xc+ splotter.xllcorner
-    yc= splotter.yc+ splotter.yllcorner
+    if isinstance(swwfile, str):
+        splotter= SWW_plotter(swwfile, start_time=start_time)
+        depth= splotter.depth
+        speed= splotter.speed
+        stage= splotter.stage
+        time= splotter.time
+        soil= splotter.SM
+        xc= splotter.xc+ splotter.xllcorner
+        yc= splotter.yc+ splotter.yllcorner
+    else:
+        splotter= swwfile
+        depth= splotter['depth'][:]
+        speed= splotter['speed'][:]
+        # stage= splotter['stage'][:]
+        time= splotter['time'][:]
+        soil= splotter['SM'][:]
+        xc= splotter['x']+splotter.xllcorner
+        yc= splotter['y']+splotter.yllcorner
+    
     iloc= np.argmin( (xc-obs_loc[0])**2 + (yc-obs_loc[1])**2 )
-    depth= splotter.depth
-    speed= splotter.speed
-    stage= splotter.stage
-    time= splotter.time
-    soil= splotter.SM
+    
+    
     results= pd.DataFrame(index=time)
 
     for field in fields:
@@ -68,5 +82,7 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
             results['stage']= stage[:,iloc]
         if field=='soil moisture':
             results['soil moisture']= soil[:,iloc]
+        # if field=='excess rain':
+        #     results['excess rain']= rain[:,iloc]
 
     return results
