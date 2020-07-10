@@ -6,7 +6,7 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 
 # Perform Morris Analysis on file of model results
-def analyze(pfile, input_file, output_file, column = 0, delim = ' ', num_resamples = 1000, plot = True):
+def analyze(pfile, input_file, output_file, column = 0, delim = ' ', num_resamples = 1000, plot = True, **kwargs):
     
     param_file = read_param_file(pfile)
     Y = np.loadtxt(output_file, delimiter = delim)
@@ -61,7 +61,7 @@ def analyze(pfile, input_file, output_file, column = 0, delim = ' ', num_resampl
         print "%s %f %f %f %f" % (param_file['names'][j], mu, sigma, mu_star, 1.96 * mu_star_conf.std(ddof=1))
         
     if plot:
-        fig=plt.figure()
+        fig=plt.figure(**kwargs)
         ax1=plt.subplot(121)
         for i in range(D):
             plt.plot(mu_star_x[i], sigma_y[i], 'ro')
@@ -78,7 +78,8 @@ def analyze(pfile, input_file, output_file, column = 0, delim = ' ', num_resampl
         plt.xlabel('Parameter Name')
         plt.ylabel('Modified Means (of gradients)')
         plt.show()
-        
+    
+    return mu_star_x, sigma_y, mu_star_conf_z
 
 def compute_mu_star_confidence(ee, N, num_resamples):
    

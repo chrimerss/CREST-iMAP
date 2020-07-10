@@ -21,7 +21,7 @@ def RMSE(obs, sim):
 param_file = 'params.txt'
 pf= read_param_file(param_file)
 
-param_values= morris_oat.sample(50, pf['num_vars'], num_levels=10, grid_jump=5)
+param_values= morris_oat.sample(10, pf['num_vars'], num_levels=10, grid_jump=1, plot=False)
 scale_samples_general(param_values, pf['bounds'])
 
 np.savetxt('Input_params.txt', param_values, delimiter=' ')
@@ -29,12 +29,13 @@ np.savetxt('Input_params.txt', param_values, delimiter=' ')
 shutil.copy('model.py', '/home/ZhiLi/CRESTHH/cresthh/UQ/test_functions/functn.py')
 Y= []
 for i, params in enumerate(param_values):
-    os.system('mpirun -n 40 python model.py %f %f %f %f %f %f %f > anuga.log'%(params[0],params[1],params[2],
-                                                                    params[3],params[4],params[5],params[6]))
+    # os.system('mpirun -n 40 python model.py %f %f %f %f %f %f %f > anuga.log'%(params[0],params[1],params[2],
+    #                                                                 params[3],params[4],params[5],params[6]))
+    os.system('mpirun -n 40 python model.py %f > anuga.log'%params)
     swwfile = 'temp.sww'
     os.system('rm temp_P*')
-    splotter = anuga.SWW_plotter(swwfile)
-    benchmark= anuga.SWW_plotter('Coupled_10m_modified_mesh.sww')
+    splotter = anuga.SWW_plotter(swwfile, make_dir=False)
+    benchmark= anuga.SWW_plotter('Coupled_10m_modified_mesh.sww', make_dir=False)
     
     OUTLET= (296090.4,3291818.4)
     xc= splotter.xc +splotter.xllcorner

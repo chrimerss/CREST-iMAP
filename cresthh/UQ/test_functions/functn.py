@@ -18,14 +18,15 @@ import warnings
 warnings.simplefilter("ignore")
 
 
+if __name__=='__main__':
 
-def RMSE(obs, sim):
-    '''Compute the RMSE of two time series data'''
-    return np.nanmean((obs-sim)**2)**.5
+    parser = argparse.ArgumentParser()
+    parser.add_argument('params', nargs='+', type=str)
+    params= parser.parse_args().params[0]
+    params= params.split(' ')
+    params= [float(param) for param in params]
 
-def main(*params):
-    
-    global OBS, GAUGE_LOC, myid
+    global myid
     start='20170825000000'
     end=  '20170826000000'
     interval= '2M'
@@ -54,8 +55,17 @@ def main(*params):
         DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
         DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
         DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')
-        DOMAIN.quantities['friction'].centroid_values[:]*= params[0]                        # Constant friction 
+                                # Constant friction 
         DOMAIN.set_quantity('stage', expression='elevation', location='centroids')  
+        
+        DOMAIN.set_quantity('Ksat', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/ksat.tif', location='centroids')
+        
+        DOMAIN.set_quantity('WM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/wm_10m.tif', location='centroids')
+        
+        DOMAIN.set_quantity('B', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/b_10m.tif', location='centroids')
+        
+        DOMAIN.set_quantity('IM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/im.tif', location='centroids')
+        
         Br = anuga.Reflective_boundary(DOMAIN)
         Bt = anuga.Transmissive_boundary(DOMAIN)        
         DOMAIN.set_boundary({'bottom':   Bt,
@@ -67,20 +77,17 @@ def main(*params):
     DOMAIN= distribute(DOMAIN)
     DOMAIN.set_name('temp')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-  
-    DOMAIN.set_quantity('SM', params[1], location='centroids')
-    DOMAIN.set_quantity('Ksat', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/ksat.tif', location='centroids')
-    DOMAIN.quantities['Ksat'].centroid_values[:]*= params[2]
-    DOMAIN.set_quantity('WM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/wm_10m.tif', location='centroids')
-    DOMAIN.quantities['WM'].centroid_values[:]*= params[3]
-    DOMAIN.set_quantity('B', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/b_10m.tif', location='centroids')
-    DOMAIN.quantities['B'].centroid_values[:]*= params[4]
-    DOMAIN.set_quantity('IM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/im.tif', location='centroids')
-    DOMAIN.quantities['IM'].centroid_values[:]*= params[5]
-    DOMAIN.set_quantity('KE', params[6], location='centroids')
+    DOMAIN.quantities['stage'].centroid_values[:]+= params[0]
+    DOMAIN.quantities['friction'].centroid_values[:]*= params[1]
+    DOMAIN.set_quantity('SM', params[2], location='centroids')
+    # DOMAIN.quantities['Ksat'].centroid_values[:]*= params[2]
+    # DOMAIN.quantities['WM'].centroid_values[:]*= params[3]
+    # DOMAIN.quantities['B'].centroid_values[:]*= params[4]
+    # DOMAIN.quantities['IM'].centroid_values[:]*= params[5]
+    # DOMAIN.set_quantity('KE', params[6], location='centroids')
 
     DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
-    DOMAIN.set_precip_dir('/home/ZhiLi/CRESTHH/data/synthetic_rainfall',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
+    DOMAIN.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
     DOMAIN.set_timestamp(start, format='%Y%m%d%H%M%S')
     DOMAIN.set_time_interval(interval)
     DOMAIN.set_coupled(True)
@@ -89,7 +96,8 @@ def main(*params):
 
     for t in DOMAIN.evolve(yieldstep=yieldstep, duration=total_seconds):
         if myid==0:
-            # DOMAIN.print_timestepping_statistics()
+            DOMAIN.print_timestepping_statistics()
+            print 'friction:', DOMAIN.get_quantity('friction').centroid_values[50]
             pass
 
     DOMAIN.sww_merge(verbose=False)
@@ -128,9 +136,3 @@ def main(*params):
 #     if myid==0:
 #         return Y
 
-if __name__=='__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('params', nargs='+', type=float)
-    args= parser.parse_args().params
-    # args=sys.argv[1:]
-    main(args)

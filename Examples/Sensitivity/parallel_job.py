@@ -25,7 +25,7 @@ if myid==0:
     
     yieldstep= pd.Timedelta(interval).total_seconds()    
     # topo_file= '/hydros/ZhiLi/demHouston033s_NAm83fel.tif'
-    topo_file='/hydros/ZhiLi/DEM_10m_filled.tif'
+    topo_file='/hydros/ZhiLi/DEM_100m_Harris_fill.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/data/buffered_mainstream_new/mainstream_buffer.shp')
     # base_resolution = 1000000 #1km
@@ -38,7 +38,7 @@ if myid==0:
     # lons= np.array(interior_area.exterior[0].coords)[:,0]; lats=np.array(interior_area.exterior[0].coords)[:,1]
     # utm_coords_int= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]    
     # if os.path.exists('1km_082500.msh'):
-    DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/Houston/stream_dem/DEM_100m.mesh')
+    DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/Harris/stream_dem/DEM_10m.mesh')
     # DOMAIN= anuga.create_domain_from_file('1km_Houston_house_removed.msh')
     # else:
     #     DOMAIN= anuga.create_domain_from_regions(

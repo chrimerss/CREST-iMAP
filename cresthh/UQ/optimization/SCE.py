@@ -10,7 +10,7 @@
 
 import random
 import numpy as np
-from ..test_functions import functn
+# from ..test_functions import functn
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
@@ -34,7 +34,7 @@ def SampleInputMatrix(nrows,npars,bu,bl,iseed,distname='randomUniform'):
         x[i,:] = bl + np.random.rand(1,npars)*bound
     return x
 
-def cceua(s,sf,bl,bu,icall,iseed):
+def cceua(s,sf,bl,bu,icall,iseed,func):
     #  This is the subroutine for generating a new point in a simplex
     nps,nopt=s.shape
     n = nps
@@ -47,6 +47,10 @@ def cceua(s,sf,bl,bu,icall,iseed):
     fb=sf[0]
     sw=s[-1,:]
     fw=sf[-1]
+
+    if not hasattr(func, __call__):
+        raise ValueError('expected object func is a callable.')
+
 
     # Compute the centroid of the simplex excluding the worst point:
     ce= np.mean(s[:-1,:],axis=0)
@@ -70,26 +74,26 @@ def cceua(s,sf,bl,bu,icall,iseed):
     if ibound >= 1:
         snew = SampleInputMatrix(1,nopt,bu,bl,iseed,distname='randomUniform')
 
-    fnew = functn.evaluate(snew)[0]
+    fnew = func(snew)[0]
     icall += 1
 
     # Reflection failed; now attempt a contraction point:
     if fnew > fw:
         snew[0] = sw + beta * (ce-sw)
-        fnew = functn.evaluate(snew)[0]
+        fnew = func.evaluate(snew)[0]
         icall += 1
 
     # Both reflection and contraction have failed, attempt a random point;
         if fnew > fw:
             snew = SampleInputMatrix(1,nopt,bu,bl,iseed,distname='randomUniform')
-            fnew = functn.evaluate(snew)[0]
+            fnew = func.evaluate(snew)[0]
             icall += 1
 
     # END OF CCE
     return snew[0],fnew,icall
 
 
-def sceua(bl,bu,pf,ngs,plot=True):
+def sceua(bl,bu,pf,ngs,func,plot=True):
 # This is the subroutine implementing the SCE algorithm,
 # written by Q.Duan, 9/2004 - converted to python by Van Hoey S.2011
 
@@ -116,7 +120,7 @@ def sceua(bl,bu,pf,ngs,plot=True):
     nloop=0
     icall=0
     xf=np.zeros(npt)
-    xf=functn.evaluate(x)
+    xf=func(x)
     for i in range(npt):
         icall += 1
     f0=xf[0]
@@ -206,7 +210,7 @@ def sceua(bl,bu,pf,ngs,plot=True):
                 s=cx[lcs,:]
                 sf = cf[lcs]
 
-                snew,fnew,icall=cceua(s,sf,bl,bu,icall,iseed)
+                snew,fnew,icall=cceua(s,sf,bl,bu,icall,iseed,func)
 
                 # Replace the worst point in Simplex with the new point:
                 s[-1,:] = snew
