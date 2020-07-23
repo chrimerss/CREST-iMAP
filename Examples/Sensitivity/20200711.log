@@ -1,0 +1,1200 @@
+[0.33333333 0.22222222 0.77777778 0.         0.33333333 0.88888889
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+0/240 loss: 21.184275
+[0.33333333 0.22222222 0.77777778 1.11111111 0.33333333 0.88888889
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+1/240 loss: 5.832756
+[0.33333333 0.22222222 0.88888889 1.11111111 0.33333333 0.88888889
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+2/240 loss: 5.737905
+[0.33333333 0.22222222 0.88888889 1.11111111 0.33333333 0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+3/240 loss: 2.760789
+[0.33333333 0.22222222 0.88888889 1.11111111 0.33333333 0.77777778
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+4/240 loss: 2.757897
+[0.44444444 0.22222222 0.88888889 1.11111111 0.33333333 0.77777778
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+5/240 loss: 2.140221
+[0.44444444 0.22222222 0.88888889 1.11111111 0.44444444 0.77777778
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+6/240 loss: 2.502200
+[0.44444444 0.33333333 0.88888889 1.11111111 0.44444444 0.77777778
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+7/240 loss: 7.529494
+[0.66666667 0.22222222 0.66666667 4.44444444 0.11111111 0.77777778
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+8/240 loss: 14.865847
+[0.66666667 0.22222222 0.66666667 4.44444444 0.11111111 0.77777778
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+9/240 loss: 14.864496
+[0.66666667 0.22222222 0.55555556 4.44444444 0.11111111 0.77777778
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+10/240 loss: 14.853096
+[0.77777778 0.22222222 0.55555556 4.44444444 0.11111111 0.77777778
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+11/240 loss: 14.912261
+[0.77777778 0.11111111 0.55555556 4.44444444 0.11111111 0.77777778
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+12/240 loss: 17.091408
+[0.77777778 0.11111111 0.55555556 4.44444444 0.         0.77777778
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+13/240 loss: 21.271264
+[0.77777778 0.11111111 0.55555556 4.44444444 0.         0.88888889
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+14/240 loss: 20.052737
+[0.77777778 0.11111111 0.55555556 5.55555556 0.         0.88888889
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+15/240 loss: 21.000686
+[0.44444444 0.66666667 0.33333333 4.44444444 0.77777778 0.55555556
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+16/240 loss: 10.402022
+[0.44444444 0.66666667 0.33333333 4.44444444 0.77777778 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+17/240 loss: 10.392877
+[0.44444444 0.66666667 0.22222222 4.44444444 0.77777778 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+18/240 loss: 10.513342
+[0.44444444 0.66666667 0.22222222 3.33333333 0.77777778 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+19/240 loss: 14.671464
+[0.33333333 0.66666667 0.22222222 3.33333333 0.77777778 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+20/240 loss: 18.448009
+[0.33333333 0.66666667 0.22222222 3.33333333 0.77777778 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+21/240 loss: 14.466427
+[0.33333333 0.66666667 0.22222222 3.33333333 0.88888889 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+22/240 loss: 15.267041
+[0.33333333 0.55555556 0.22222222 3.33333333 0.88888889 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+23/240 loss: 2.790849
+[0.44444444 0.44444444 0.66666667 1.11111111 0.33333333 0.
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+24/240 loss: 5.196276
+[0.55555556 0.44444444 0.66666667 1.11111111 0.33333333 0.
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+25/240 loss: 4.791598
+[0.55555556 0.33333333 0.66666667 1.11111111 0.33333333 0.
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+26/240 loss: 1.779451
+[0.55555556 0.33333333 0.66666667 1.11111111 0.33333333 0.
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+27/240 loss: 1.781299
+[0.55555556 0.33333333 0.66666667 1.11111111 0.33333333 0.11111111
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+28/240 loss: 1.954382
+[0.55555556 0.33333333 0.66666667 0.         0.33333333 0.11111111
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+29/240 loss: 1.954382
+[0.55555556 0.33333333 0.55555556 0.         0.33333333 0.11111111
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+30/240 loss: 1.954382
+[0.55555556 0.33333333 0.55555556 0.         0.22222222 0.11111111
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+31/240 loss: 1.954382
+[1.         0.88888889 0.88888889 6.66666667 0.22222222 0.11111111
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+32/240 loss: 17.650913
+[1.         0.88888889 1.         6.66666667 0.22222222 0.11111111
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+33/240 loss: 17.532852
+[1.         0.88888889 1.         6.66666667 0.22222222 0.11111111
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+34/240 loss: 17.524231
+[0.88888889 0.88888889 1.         6.66666667 0.22222222 0.11111111
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+35/240 loss: 18.561039
+[0.88888889 0.77777778 1.         6.66666667 0.22222222 0.11111111
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+36/240 loss: 2.825532
+[0.88888889 0.77777778 1.         6.66666667 0.11111111 0.11111111
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+37/240 loss: 2.854884
+[0.88888889 0.77777778 1.         6.66666667 0.11111111 0.
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+38/240 loss: 3.364329
+[0.88888889 0.77777778 1.         5.55555556 0.11111111 0.
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+39/240 loss: 2.101829
+[0.22222222 0.22222222 0.88888889 6.66666667 0.77777778 0.88888889
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+40/240 loss: 11.185688
+[0.11111111 0.22222222 0.88888889 6.66666667 0.77777778 0.88888889
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+41/240 loss: 10.880743
+[0.11111111 0.11111111 0.88888889 6.66666667 0.77777778 0.88888889
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+42/240 loss: 14.293160
+[0.11111111 0.11111111 0.88888889 6.66666667 0.77777778 1.
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+43/240 loss: 12.585265
+[0.11111111 0.11111111 1.         6.66666667 0.77777778 1.
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+44/240 loss: 12.592151
+[0.11111111 0.11111111 1.         6.66666667 0.88888889 1.
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+45/240 loss: 12.511058
+[0.11111111 0.11111111 1.         6.66666667 0.88888889 1.
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+46/240 loss: 12.509596
+[0.11111111 0.11111111 1.         5.55555556 0.88888889 1.
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+47/240 loss: 11.590579
+[0.66666667 0.44444444 0.44444444 4.44444444 0.77777778 0.66666667
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+48/240 loss: 4.519383
+[0.66666667 0.55555556 0.44444444 4.44444444 0.77777778 0.66666667
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+49/240 loss: 1.637186
+[0.66666667 0.55555556 0.44444444 4.44444444 0.88888889 0.66666667
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+50/240 loss: 1.748347
+[0.66666667 0.55555556 0.44444444 3.33333333 0.88888889 0.66666667
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+51/240 loss: 3.504680
+[0.66666667 0.55555556 0.44444444 3.33333333 0.88888889 0.66666667
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+52/240 loss: 3.509555
+[0.66666667 0.55555556 0.44444444 3.33333333 0.88888889 0.77777778
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+53/240 loss: 6.192497
+[0.55555556 0.55555556 0.44444444 3.33333333 0.88888889 0.77777778
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+54/240 loss: 7.116362
+[0.55555556 0.55555556 0.33333333 3.33333333 0.88888889 0.77777778
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+55/240 loss: 7.195869
+[0.88888889 0.44444444 0.55555556 4.44444444 0.88888889 0.88888889
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+56/240 loss: 2.362512
+[0.88888889 0.44444444 0.55555556 4.44444444 0.88888889 0.88888889
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+57/240 loss: 2.360131
+[0.88888889 0.44444444 0.55555556 4.44444444 0.88888889 0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+58/240 loss: 3.561407
+[0.88888889 0.44444444 0.55555556 4.44444444 1.         0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+59/240 loss: 3.430958
+[0.88888889 0.33333333 0.55555556 4.44444444 1.         0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+60/240 loss: 7.359660
+[0.77777778 0.33333333 0.55555556 4.44444444 1.         0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+61/240 loss: 7.261951
+[0.77777778 0.33333333 0.55555556 3.33333333 1.         0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+62/240 loss: 5.429333
+[0.77777778 0.33333333 0.44444444 3.33333333 1.         0.77777778
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+63/240 loss: 5.410885
+[ 1.          0.55555556  0.77777778 10.          0.66666667  0.33333333
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+64/240 loss: 6.764772
+[ 1.          0.55555556  0.77777778 10.          0.66666667  0.44444444
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+65/240 loss: 5.840165
+[ 0.88888889  0.55555556  0.77777778 10.          0.66666667  0.44444444
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+66/240 loss: 5.752349
+[ 0.88888889  0.55555556  0.77777778 10.          0.66666667  0.44444444
+  0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+67/240 loss: 5.754272
+[0.88888889 0.55555556 0.77777778 8.88888889 0.66666667 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+68/240 loss: 5.381699
+[0.88888889 0.55555556 0.77777778 8.88888889 0.77777778 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+69/240 loss: 5.088842
+[0.88888889 0.44444444 0.77777778 8.88888889 0.77777778 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+70/240 loss: 10.045224
+[0.88888889 0.44444444 0.88888889 8.88888889 0.77777778 0.44444444
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+71/240 loss: 10.060436
+[0.33333333 0.55555556 0.22222222 4.44444444 0.33333333 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+72/240 loss: 4.775311
+[0.33333333 0.55555556 0.22222222 4.44444444 0.33333333 0.33333333
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+73/240 loss: 4.070398
+[0.33333333 0.55555556 0.22222222 4.44444444 0.33333333 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+74/240 loss: 4.068328
+[0.33333333 0.55555556 0.22222222 4.44444444 0.22222222 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+75/240 loss: 5.529721
+[0.33333333 0.55555556 0.11111111 4.44444444 0.22222222 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+76/240 loss: 5.504341
+[0.33333333 0.55555556 0.11111111 3.33333333 0.22222222 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+77/240 loss: 3.361918
+[0.33333333 0.66666667 0.11111111 3.33333333 0.22222222 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+78/240 loss: 3.587851
+[0.22222222 0.66666667 0.11111111 3.33333333 0.22222222 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+79/240 loss: 4.732520
+[0.33333333 0.44444444 0.22222222 6.66666667 0.77777778 0.22222222
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+80/240 loss: 10.250996
+[0.33333333 0.44444444 0.33333333 6.66666667 0.77777778 0.22222222
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+81/240 loss: 10.268037
+[0.44444444 0.44444444 0.33333333 6.66666667 0.77777778 0.22222222
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+82/240 loss: 10.383416
+[0.44444444 0.44444444 0.33333333 6.66666667 0.77777778 0.33333333
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+83/240 loss: 9.449510
+[0.44444444 0.44444444 0.33333333 6.66666667 0.66666667 0.33333333
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+84/240 loss: 9.712170
+[0.44444444 0.44444444 0.33333333 6.66666667 0.66666667 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+85/240 loss: 9.710443
+[0.44444444 0.55555556 0.33333333 6.66666667 0.66666667 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+86/240 loss: 4.628643
+[0.44444444 0.55555556 0.33333333 7.77777778 0.66666667 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+87/240 loss: 5.278032
+[0.         0.11111111 0.88888889 5.55555556 0.44444444 0.
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+88/240 loss: 20.289399
+[0.         0.11111111 0.88888889 5.55555556 0.44444444 0.
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+89/240 loss: 20.290019
+[0.11111111 0.11111111 0.88888889 5.55555556 0.44444444 0.
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+90/240 loss: 21.402122
+[0.11111111 0.11111111 0.88888889 5.55555556 0.33333333 0.
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+91/240 loss: 21.557547
+[0.11111111 0.11111111 0.88888889 5.55555556 0.33333333 0.11111111
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+92/240 loss: 21.266078
+[0.11111111 0.11111111 0.88888889 6.66666667 0.33333333 0.11111111
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+93/240 loss: 21.736235
+[0.11111111 0.22222222 0.88888889 6.66666667 0.33333333 0.11111111
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+94/240 loss: 19.620533
+[0.11111111 0.22222222 0.77777778 6.66666667 0.33333333 0.11111111
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+95/240 loss: 19.613757
+[0.22222222 0.44444444 0.22222222 8.88888889 0.22222222 1.
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+96/240 loss: 5.931363
+[ 0.22222222  0.44444444  0.22222222 10.          0.22222222  1.
+  0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+97/240 loss: 6.303333
+[ 0.33333333  0.44444444  0.22222222 10.          0.22222222  1.
+  0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+98/240 loss: 6.510456
+[ 0.33333333  0.44444444  0.22222222 10.          0.22222222  0.88888889
+  0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+99/240 loss: 7.956095
+[ 0.33333333  0.44444444  0.22222222 10.          0.22222222  0.88888889
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+100/240 loss: 7.954387
+[ 0.33333333  0.44444444  0.33333333 10.          0.22222222  0.88888889
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+101/240 loss: 7.969992
+[ 0.33333333  0.44444444  0.33333333 10.          0.11111111  0.88888889
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+102/240 loss: 10.688884
+[ 0.33333333  0.55555556  0.33333333 10.          0.11111111  0.88888889
+  0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+103/240 loss: 7.320638
+[ 0.22222222  0.77777778  0.22222222 10.          0.33333333  0.11111111
+  0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+104/240 loss: 6.720765
+[ 0.22222222  0.77777778  0.22222222 10.          0.33333333  0.
+  0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+105/240 loss: 5.332449
+[ 0.22222222  0.77777778  0.33333333 10.          0.33333333  0.
+  0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+106/240 loss: 5.287133
+[ 0.22222222  0.66666667  0.33333333 10.          0.33333333  0.
+  0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+107/240 loss: 4.766942
+[ 0.33333333  0.66666667  0.33333333 10.          0.33333333  0.
+  0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+108/240 loss: 4.892961
+[ 0.33333333  0.66666667  0.33333333 10.          0.44444444  0.
+  0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+109/240 loss: 3.898095
+[ 0.33333333  0.66666667  0.33333333 10.          0.44444444  0.
+  0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+110/240 loss: 3.899821
+[0.33333333 0.66666667 0.33333333 8.88888889 0.44444444 0.
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+111/240 loss: 3.534288
+[0.55555556 0.22222222 0.77777778 3.33333333 0.33333333 0.11111111
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+112/240 loss: 15.791466
+[0.55555556 0.22222222 0.77777778 3.33333333 0.33333333 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+113/240 loss: 15.174606
+[0.55555556 0.22222222 0.88888889 3.33333333 0.33333333 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+114/240 loss: 15.187010
+[0.55555556 0.22222222 0.88888889 2.22222222 0.33333333 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+115/240 loss: 11.136143
+[0.55555556 0.22222222 0.88888889 2.22222222 0.44444444 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+116/240 loss: 10.664039
+[0.55555556 0.33333333 0.88888889 2.22222222 0.44444444 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+117/240 loss: 7.067332
+[0.44444444 0.33333333 0.88888889 2.22222222 0.44444444 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+118/240 loss: 6.927830
+[0.44444444 0.33333333 0.88888889 2.22222222 0.44444444 0.22222222
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+119/240 loss: 6.930147
+[0.55555556 0.44444444 0.66666667 6.66666667 0.11111111 0.
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+120/240 loss: 17.591497
+[0.55555556 0.44444444 0.66666667 6.66666667 0.11111111 0.
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+121/240 loss: 17.592303
+[0.66666667 0.44444444 0.66666667 6.66666667 0.11111111 0.
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+122/240 loss: 17.612127
+[0.66666667 0.44444444 0.66666667 6.66666667 0.11111111 0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+123/240 loss: 17.034454
+[0.66666667 0.44444444 0.55555556 6.66666667 0.11111111 0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+124/240 loss: 17.023383
+[0.66666667 0.44444444 0.55555556 6.66666667 0.         0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+125/240 loss: 19.424078
+[0.66666667 0.44444444 0.55555556 7.77777778 0.         0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+126/240 loss: 18.902544
+[0.66666667 0.33333333 0.55555556 7.77777778 0.         0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+127/240 loss: 18.686288
+[0.55555556 0.11111111 0.66666667 2.22222222 0.22222222 0.55555556
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+128/240 loss: 12.594671
+[0.55555556 0.11111111 0.66666667 2.22222222 0.11111111 0.55555556
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+129/240 loss: 14.081178
+[0.55555556 0.         0.66666667 2.22222222 0.11111111 0.55555556
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+130/240 loss: 16.398040
+[0.55555556 0.         0.66666667 2.22222222 0.11111111 0.44444444
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+131/240 loss: 17.191948
+[0.55555556 0.         0.66666667 3.33333333 0.11111111 0.44444444
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+132/240 loss: 20.192454
+[0.66666667 0.         0.66666667 3.33333333 0.11111111 0.44444444
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+133/240 loss: 20.204161
+[0.66666667 0.         0.55555556 3.33333333 0.11111111 0.44444444
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+134/240 loss: 20.198075
+[0.66666667 0.         0.55555556 3.33333333 0.11111111 0.44444444
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+135/240 loss: 20.197346
+[0.33333333 0.22222222 0.11111111 3.33333333 0.11111111 0.66666667
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+136/240 loss: 13.959231
+[0.33333333 0.22222222 0.         3.33333333 0.11111111 0.66666667
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+137/240 loss: 13.944887
+[0.33333333 0.22222222 0.         3.33333333 0.11111111 0.66666667
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+138/240 loss: 13.943303
+[0.33333333 0.22222222 0.         3.33333333 0.22222222 0.66666667
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+139/240 loss: 11.973053
+[0.44444444 0.22222222 0.         3.33333333 0.22222222 0.66666667
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+140/240 loss: 12.092143
+[0.44444444 0.22222222 0.         3.33333333 0.22222222 0.77777778
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+141/240 loss: 10.787817
+[0.44444444 0.33333333 0.         3.33333333 0.22222222 0.77777778
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+142/240 loss: 7.626468
+[0.44444444 0.33333333 0.         4.44444444 0.22222222 0.77777778
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+143/240 loss: 9.540733
+[0.77777778 1.         0.         5.55555556 0.         0.77777778
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+144/240 loss: 75.771437
+[0.77777778 1.         0.         5.55555556 0.11111111 0.77777778
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+145/240 loss: 75.771437
+[0.77777778 0.88888889 0.         5.55555556 0.11111111 0.77777778
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+146/240 loss: 25.985659
+[0.77777778 0.88888889 0.11111111 5.55555556 0.11111111 0.77777778
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+147/240 loss: 25.799608
+[0.77777778 0.88888889 0.11111111 4.44444444 0.11111111 0.77777778
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+148/240 loss: 28.857535
+[0.77777778 0.88888889 0.11111111 4.44444444 0.11111111 0.88888889
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+149/240 loss: 32.271622
+[0.88888889 0.88888889 0.11111111 4.44444444 0.11111111 0.88888889
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+150/240 loss: 30.073346
+[0.88888889 0.88888889 0.11111111 4.44444444 0.11111111 0.88888889
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+151/240 loss: 30.086637
+[0.44444444 0.88888889 0.44444444 2.22222222 0.33333333 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+152/240 loss: 61.157180
+[0.44444444 0.88888889 0.44444444 3.33333333 0.33333333 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+153/240 loss: 55.131911
+[0.44444444 1.         0.44444444 3.33333333 0.33333333 0.55555556
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+154/240 loss: 104.101277
+[0.44444444 1.         0.44444444 3.33333333 0.33333333 0.66666667
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+155/240 loss: 104.101277
+[0.44444444 1.         0.44444444 3.33333333 0.44444444 0.66666667
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+156/240 loss: 104.101277
+[0.33333333 1.         0.44444444 3.33333333 0.44444444 0.66666667
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+157/240 loss: 129.870736
+[0.33333333 1.         0.44444444 3.33333333 0.44444444 0.66666667
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+158/240 loss: 129.916261
+[0.33333333 1.         0.55555556 3.33333333 0.44444444 0.66666667
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+159/240 loss: 128.840708
+[0.33333333 0.77777778 0.11111111 3.33333333 0.11111111 0.77777778
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+160/240 loss: 23.859966
+[0.33333333 0.77777778 0.11111111 2.22222222 0.11111111 0.77777778
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+161/240 loss: 33.336467
+[0.44444444 0.77777778 0.11111111 2.22222222 0.11111111 0.77777778
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+162/240 loss: 27.842296
+[0.44444444 0.77777778 0.         2.22222222 0.11111111 0.77777778
+ 1.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+163/240 loss: 28.096352
+[0.44444444 0.77777778 0.         2.22222222 0.11111111 0.77777778
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+164/240 loss: 28.109971
+[0.44444444 0.77777778 0.         2.22222222 0.         0.77777778
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+165/240 loss: 7.844469
+[0.44444444 0.88888889 0.         2.22222222 0.         0.77777778
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+166/240 loss: 36.254932
+[0.44444444 0.88888889 0.         2.22222222 0.         0.88888889
+ 0.88888889]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+167/240 loss: 38.380050
+[0.66666667 1.         0.22222222 2.22222222 0.33333333 0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+168/240 loss: 81.144154
+[0.66666667 1.         0.22222222 3.33333333 0.33333333 0.11111111
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+169/240 loss: 81.144154
+[0.66666667 1.         0.22222222 3.33333333 0.33333333 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+170/240 loss: 81.144154
+[0.55555556 1.         0.22222222 3.33333333 0.33333333 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+171/240 loss: 90.328427
+[0.55555556 1.         0.33333333 3.33333333 0.33333333 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+172/240 loss: 89.769606
+[0.55555556 1.         0.33333333 3.33333333 0.22222222 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+173/240 loss: 89.769606
+[0.55555556 1.         0.33333333 3.33333333 0.22222222 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+174/240 loss: 89.795737
+[0.55555556 0.88888889 0.33333333 3.33333333 0.22222222 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+175/240 loss: 38.127202
+[0.44444444 0.88888889 0.66666667 0.         0.88888889 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+176/240 loss: 38.127202
+[0.44444444 0.88888889 0.66666667 0.         0.77777778 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+177/240 loss: 38.127202
+[0.44444444 1.         0.66666667 0.         0.77777778 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+178/240 loss: 38.127202
+[0.44444444 1.         0.66666667 0.         0.77777778 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+179/240 loss: 38.127202
+[0.55555556 1.         0.66666667 0.         0.77777778 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+180/240 loss: 38.127202
+[0.55555556 1.         0.55555556 0.         0.77777778 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+181/240 loss: 38.127202
+[0.55555556 1.         0.55555556 0.         0.77777778 0.22222222
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+182/240 loss: 38.127202
+[0.55555556 1.         0.55555556 1.11111111 0.77777778 0.22222222
+ 0.77777778]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+183/240 loss: 88.643589
+[0.55555556 0.77777778 0.88888889 2.22222222 0.44444444 0.11111111
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+184/240 loss: 23.323247
+[0.55555556 0.88888889 0.88888889 2.22222222 0.44444444 0.11111111
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+185/240 loss: 49.201392
+[0.66666667 0.88888889 0.88888889 2.22222222 0.44444444 0.11111111
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+186/240 loss: 44.682438
+[0.66666667 0.88888889 0.88888889 2.22222222 0.44444444 0.
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+187/240 loss: 43.653602
+[0.66666667 0.88888889 0.77777778 2.22222222 0.44444444 0.
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+188/240 loss: 43.921435
+[0.66666667 0.88888889 0.77777778 2.22222222 0.55555556 0.
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+189/240 loss: 45.265112
+[0.66666667 0.88888889 0.77777778 2.22222222 0.55555556 0.
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+190/240 loss: 45.248372
+[0.66666667 0.88888889 0.77777778 3.33333333 0.55555556 0.
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+191/240 loss: 39.560134
+[0.66666667 0.77777778 0.33333333 7.77777778 0.88888889 0.22222222
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+192/240 loss: 12.344403
+[0.66666667 0.77777778 0.33333333 7.77777778 0.88888889 0.11111111
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+193/240 loss: 10.462915
+[0.66666667 0.66666667 0.33333333 7.77777778 0.88888889 0.11111111
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+194/240 loss: 2.083452
+[0.66666667 0.66666667 0.33333333 8.88888889 0.88888889 0.11111111
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+195/240 loss: 2.161612
+[0.55555556 0.66666667 0.33333333 8.88888889 0.88888889 0.11111111
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+196/240 loss: 2.276334
+[0.55555556 0.66666667 0.33333333 8.88888889 0.77777778 0.11111111
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+197/240 loss: 2.310591
+[0.55555556 0.66666667 0.33333333 8.88888889 0.77777778 0.11111111
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+198/240 loss: 2.311112
+[0.55555556 0.66666667 0.22222222 8.88888889 0.77777778 0.11111111
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+199/240 loss: 2.303648
+[0.66666667 0.44444444 0.44444444 4.44444444 0.         0.44444444
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+200/240 loss: 20.959013
+[0.66666667 0.44444444 0.44444444 4.44444444 0.11111111 0.44444444
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+201/240 loss: 12.432780
+[0.66666667 0.44444444 0.44444444 4.44444444 0.11111111 0.55555556
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+202/240 loss: 11.383013
+[0.77777778 0.44444444 0.44444444 4.44444444 0.11111111 0.55555556
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+203/240 loss: 11.457241
+[0.77777778 0.44444444 0.44444444 5.55555556 0.11111111 0.55555556
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+204/240 loss: 12.814161
+[0.77777778 0.44444444 0.33333333 5.55555556 0.11111111 0.55555556
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+205/240 loss: 12.797500
+[0.77777778 0.55555556 0.33333333 5.55555556 0.11111111 0.55555556
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+206/240 loss: 9.081405
+[0.77777778 0.55555556 0.33333333 5.55555556 0.11111111 0.55555556
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+207/240 loss: 9.079625
+[0.77777778 0.22222222 1.         8.88888889 0.88888889 0.22222222
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+208/240 loss: 18.953687
+[0.77777778 0.22222222 1.         8.88888889 0.88888889 0.11111111
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+209/240 loss: 19.627098
+[0.77777778 0.11111111 1.         8.88888889 0.88888889 0.11111111
+ 0.22222222]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+210/240 loss: 21.918353
+[0.77777778 0.11111111 1.         8.88888889 0.88888889 0.11111111
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+211/240 loss: 21.918181
+[0.77777778 0.11111111 0.88888889 8.88888889 0.88888889 0.11111111
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+212/240 loss: 21.916658
+[0.88888889 0.11111111 0.88888889 8.88888889 0.88888889 0.11111111
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+213/240 loss: 21.919547
+[ 0.88888889  0.11111111  0.88888889 10.          0.88888889  0.11111111
+  0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+214/240 loss: 22.019390
+[ 0.88888889  0.11111111  0.88888889 10.          1.          0.11111111
+  0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+215/240 loss: 22.015513
+[0.22222222 0.33333333 0.88888889 3.33333333 0.55555556 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+216/240 loss: 10.371655
+[0.22222222 0.33333333 0.88888889 2.22222222 0.55555556 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+217/240 loss: 6.182861
+[0.22222222 0.33333333 0.88888889 2.22222222 0.66666667 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+218/240 loss: 5.917226
+[0.22222222 0.22222222 0.88888889 2.22222222 0.66666667 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+219/240 loss: 9.732594
+[0.22222222 0.22222222 0.77777778 2.22222222 0.66666667 0.22222222
+ 0.55555556]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+220/240 loss: 9.714180
+[0.22222222 0.22222222 0.77777778 2.22222222 0.66666667 0.22222222
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+221/240 loss: 9.716177
+[0.22222222 0.22222222 0.77777778 2.22222222 0.66666667 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+222/240 loss: 9.023889
+[0.33333333 0.22222222 0.77777778 2.22222222 0.66666667 0.33333333
+ 0.66666667]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+223/240 loss: 9.214117
+[0.33333333 0.         0.22222222 8.88888889 0.55555556 0.22222222
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+224/240 loss: 20.986166
+[0.33333333 0.         0.22222222 8.88888889 0.55555556 0.33333333
+ 0.11111111]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+225/240 loss: 21.657190
+[0.33333333 0.         0.22222222 8.88888889 0.55555556 0.33333333
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+226/240 loss: 21.657496
+[0.33333333 0.         0.22222222 7.77777778 0.55555556 0.33333333
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+227/240 loss: 21.927368
+[0.33333333 0.         0.33333333 7.77777778 0.55555556 0.33333333
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+228/240 loss: 21.926374
+[0.33333333 0.11111111 0.33333333 7.77777778 0.55555556 0.33333333
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+229/240 loss: 20.777161
+[0.33333333 0.11111111 0.33333333 7.77777778 0.66666667 0.33333333
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+230/240 loss: 20.664834
+[0.22222222 0.11111111 0.33333333 7.77777778 0.66666667 0.33333333
+ 0.        ]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+231/240 loss: 20.676073
+[0.22222222 0.77777778 0.44444444 7.77777778 0.66666667 0.33333333
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+232/240 loss: 26.624416
+[0.22222222 0.77777778 0.44444444 6.66666667 0.66666667 0.33333333
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+233/240 loss: 28.828484
+[0.22222222 0.77777778 0.44444444 6.66666667 0.66666667 0.22222222
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+234/240 loss: 24.551693
+[0.33333333 0.77777778 0.44444444 6.66666667 0.66666667 0.22222222
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+235/240 loss: 18.556205
+[0.33333333 0.77777778 0.44444444 6.66666667 0.77777778 0.22222222
+ 0.44444444]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+236/240 loss: 20.011401
+[0.33333333 0.77777778 0.44444444 6.66666667 0.77777778 0.22222222
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+237/240 loss: 20.024734
+[0.33333333 0.88888889 0.44444444 6.66666667 0.77777778 0.22222222
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+238/240 loss: 56.719013
+[0.33333333 0.88888889 0.33333333 6.66666667 0.77777778 0.22222222
+ 0.33333333]
+Figure files for each frame will be stored in _plot
+Figure files for each frame will be stored in _plot
+239/240 loss: 57.271056

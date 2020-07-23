@@ -1,8 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
+
 
 # Generate N x D matrix of latin hypercube samples
-def sample(samples, n, criterion=None, iterations=None, plot=True):
+def sample(samples, n, criterion=None, iterations=None, plot=False):
     """
     Generate a latin-hypercube design
     
@@ -95,6 +95,7 @@ def sample(samples, n, criterion=None, iterations=None, plot=True):
             H = _lhscorrelate(n, samples, iterations)
  
     if plot:
+        import matplotlib.pyplot as plt
         plt.figure()
         ax = plt.subplot()
         plt.scatter(H[:,0], H[:,1])

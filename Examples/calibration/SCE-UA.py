@@ -27,7 +27,7 @@ def one_val(params):
     splotter = anuga.SWW_plotter(swwfile, make_dir=False)
     xc= splotter.xc +splotter.xllcorner
     yc= splotter.yc +splotter.yllcorner
-    dr= pd.date_range('20170825', '20170830', freq='120S')
+    dr= pd.date_range('20170825120000', '20170825130000', freq='120S')
     
     rmse= 0
     for gauge in gauges:
@@ -35,20 +35,30 @@ def one_val(params):
         iloc= np.argmin((xc-gauge[1])**2+ (yc-gauge[2])**2)
         obs= pd.read_csv('/home/ZhiLi/CRESTHH/data/streamGauge/%08d.csv'%(int(gauge[0])),converters={'datetime':pd.to_datetime}).set_index('datetime').resample('120S',
                          label='right').interpolate()
+        
         df['sim']= splotter.stage[:,iloc]
         df['obs']= obs['stage']
         rmse+= RMSE(df.sim, df.obs)
 
-    return rmse
+    HWMs= pd.read_csv('/home/ZhiLi/CRESTHH/data/HoustonCase/HWM_cleaned.csv')
+    lons= HWMs.lon.values; lats= HWMs.lat.values
+    ilocs= [np.argmin((xc-lons[i])**2+ (yc-lats[i])**2) for i in range(len(lons))]
+
+    max_depth=np.nanmax(splotter.depth[:, ilocs], axis=0)
+    accuracy= RMSE(HWMs.HWM.values, max_depth)
+
+    return rmse, accuracy
 
 def evaluate(values):
-    Y = np.empty([values.shape[0]])
+    
+    Y = np.empty(values.shape[0])
     min_rmse= np.inf
     for i, row in enumerate(values):
-        rmse= one_val(row)
-        print 'RMSE: %.3f meters'%rmse
+        rmse,acc= one_val(row)
+        print 'params: %.3f %.3f %.3f RMSE: %.3f meters accuracy: %.3f meters'%(row[0], row[1], row[2],rmse, acc)
         Y[i]= rmse
         if rmse< min_rmse:
+            print 'updating result'
             os.system('mv temp.sww best.sww')
             min_rmse=rmse
     return Y

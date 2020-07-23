@@ -21,17 +21,18 @@ warnings.simplefilter("ignore")
 if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('params', nargs='+', type=str)
-    params= parser.parse_args().params[0]
-    params= params.split(' ')
-    params= [float(param) for param in params]
+    parser.add_argument('params', nargs='+', type=float)
+    params= parser.parse_args().params
+    # params= params.split(' ')
+    # params= [float(param) for param in params]
 
     global myid
     start='20170825000000'
     end=  '20170826000000'
     interval= '2M'
     yieldstep= pd.Timedelta(interval).total_seconds()    
-    params= params[0]
+    # params= params[0]
+    # print params
     
     topo_file='/hydros/ZhiLi/DEM_10m_filled.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
@@ -77,13 +78,13 @@ if __name__=='__main__':
     DOMAIN= distribute(DOMAIN)
     DOMAIN.set_name('temp')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-    DOMAIN.quantities['friction'].centroid_values[:]*= params
-    # DOMAIN.set_quantity('SM', params[1], location='centroids')
-    # DOMAIN.quantities['Ksat'].centroid_values[:]*= params[2]
-    # DOMAIN.quantities['WM'].centroid_values[:]*= params[3]
-    # DOMAIN.quantities['B'].centroid_values[:]*= params[4]
-    # DOMAIN.quantities['IM'].centroid_values[:]*= params[5]
-    # DOMAIN.set_quantity('KE', params[6], location='centroids')
+    DOMAIN.quantities['friction'].centroid_values[:]*= params[0]
+    DOMAIN.set_quantity('SM', params[1], location='centroids')
+    DOMAIN.quantities['Ksat'].centroid_values[:]*= params[2]
+    DOMAIN.quantities['WM'].centroid_values[:]*= params[3]
+    DOMAIN.quantities['B'].centroid_values[:]*= params[4]
+    DOMAIN.quantities['IM'].centroid_values[:]*= params[5]
+    DOMAIN.set_quantity('KE', params[6], location='centroids')
 
 
 
@@ -98,7 +99,7 @@ if __name__=='__main__':
     for t in DOMAIN.evolve(yieldstep=yieldstep, duration=total_seconds):
         if myid==0:
             DOMAIN.print_timestepping_statistics()
-            print 'friction:', DOMAIN.get_quantity('friction').centroid_values[50]
+            # print 'friction:', DOMAIN.get_quantity('friction').centroid_values[50]
             pass
 
     DOMAIN.sww_merge(verbose=False)

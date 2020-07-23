@@ -77,17 +77,18 @@ if __name__=='__main__':
     DOMAIN= distribute(DOMAIN)
     DOMAIN.set_name('temp')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-    DOMAIN.quantities['stage'].centroid_values[:]+= params[0]
-    DOMAIN.quantities['friction'].centroid_values[:]*= params[1]
-    DOMAIN.set_quantity('SM', params[2], location='centroids')
+    DOMAIN.quantities['friction'].centroid_values[:]*= params
+    # DOMAIN.set_quantity('SM', params[1], location='centroids')
     # DOMAIN.quantities['Ksat'].centroid_values[:]*= params[2]
     # DOMAIN.quantities['WM'].centroid_values[:]*= params[3]
     # DOMAIN.quantities['B'].centroid_values[:]*= params[4]
     # DOMAIN.quantities['IM'].centroid_values[:]*= params[5]
     # DOMAIN.set_quantity('KE', params[6], location='centroids')
 
+
+
     DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
-    DOMAIN.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
+    DOMAIN.set_precip_dir('/home/ZhiLi/CRESTHH/data/synthetic_rainfall',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
     DOMAIN.set_timestamp(start, format='%Y%m%d%H%M%S')
     DOMAIN.set_time_interval(interval)
     DOMAIN.set_coupled(True)

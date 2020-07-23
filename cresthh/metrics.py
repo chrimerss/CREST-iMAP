@@ -6,6 +6,7 @@ __date__='2020-07-10'
 __version__=0.1
 """
 __all__ =['nse','rmse','me','rb','peak_flow_error','peak_time_error']
+import numpy as np
 
 def nse(obs, sim):
     '''
@@ -27,8 +28,8 @@ def nse(obs, sim):
     >>> sim= np.array([2,3,4,5,6])
     >>> met.nse(obs, sim)
     '''
-    norm= (np.abs(simulated_array - observed_array)) ** 2
-    denorm = (np.abs(observed_array - np.mean(observed_array))) ** 2
+    norm= (np.abs(sim - obs)) ** 2
+    denorm = (np.abs(obs - np.mean(obs))) ** 2
 
     return 1- (np.sum(norm) / np.sum(denorm))
 
@@ -170,6 +171,6 @@ def rb(obs, sim):
     >>> sim= np.array([2,3,4,5,6])
     >>> met.rb(obs, sim)
     '''
-    ind= np.where(obs!=0)
+    ind= np.where(obs!=0)[0]
 
     return ((sim[ind]-obs[ind])/obs[ind]).sum()/len(sim[ind])
