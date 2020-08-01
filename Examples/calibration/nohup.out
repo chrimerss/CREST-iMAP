@@ -1,0 +1,487 @@
+[proxy:0:0@server2017] HYD_pmcd_pmip_control_cmd_cb (pm/pmiserv/pmip_cb.c:887): assert (!closed) failed
+[proxy:0:0@server2017] HYDT_dmxu_poll_wait_for_event (tools/demux/demux_poll.c:76): callback returned error status
+[proxy:0:0@server2017] main (pm/pmiserv/pmip.c:202): demux engine error waiting for event
+[mpiexec@server2017] HYDT_bscu_wait_for_completion (tools/bootstrap/utils/bscu_wait.c:76): one of the processes terminated badly; aborting
+[mpiexec@server2017] HYDT_bsci_wait_for_completion (tools/bootstrap/src/bsci_wait.c:23): launcher returned error waiting for completion
+[mpiexec@server2017] HYD_pmci_wait_for_completion (pm/pmiserv/pmiserv_pmci.c:218): launcher returned error waiting for completion
+[mpiexec@server2017] main (ui/mpich/mpiexec.c:340): process manager error waiting for completion
+Traceback (most recent call last):
+  File "SCE-UA.py", line 126, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 100, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 62, in one_val
+    splotter = anuga.SWW_plotter(swwfile, make_dir=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/utilities/animate.py", line 427, in __init__
+    self.stage = np.array(p.variables['stage_c'])
+  File "netCDF4/_netCDF4.pyx", line 3946, in netCDF4._netCDF4.Variable.__array__
+  File "netCDF4/_netCDF4.pyx", line 4446, in netCDF4._netCDF4.Variable.__getitem__
+  File "netCDF4/_netCDF4.pyx", line 4590, in netCDF4._netCDF4.Variable._toma
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/numpy/core/_methods.py", line 42, in _any
+    def _any(a, axis=None, dtype=None, out=None, keepdims=False):
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "SCE-UA.py", line 126, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 100, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 82, in one_val
+    discharge_err[4],discharge_err[5]))
+TypeError: float argument required, not Timestamp
+[-3164.6412590052028, 6022.911266422126, -6159.6820930252525, Timestamp('2017-08-26 19:40:00', freq='120S'), 140.3111899476418, -0.9355924429978342]
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 101, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 82, in one_val
+    f.write('%f,%f,%f,%f,%f,%f\n'%(discharge_err[0], discharge_err[1],discharge_err[2],discharge_err[3].seconds(),
+AttributeError: 'Timestamp' object has no attribute 'seconds'
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 101, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 78, in one_val
+    np.save('sim_Q.npy', [sim_Q, obs_Q.values])
+AttributeError: 'numpy.ndarray' object has no attribute 'values'
+[-3164.6412590052028, 6022.911266422126, -6159.6820930252525, 545, 140.3111899476418, -0.9355924429978342]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -3164.641 meters
+updating result
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 101, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 62, in one_val
+    splotter = anuga.SWW_plotter(swwfile, make_dir=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/utilities/animate.py", line 407, in __init__
+    p = NetCDFFile(swwfile)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/file/netcdf.py", line 62, in NetCDFFile
+    return Dataset(file_name, netcdf_mode, format='NETCDF3_64BIT')
+  File "netCDF4/_netCDF4.pyx", line 2321, in netCDF4._netCDF4.Dataset.__init__
+  File "netCDF4/_netCDF4.pyx", line 1885, in netCDF4._netCDF4._ensure_nc_success
+IOError: [Errno 2] No such file or directory: 'temp.sww'
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 101, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 76, in one_val
+    sim_Q= splotter.velocity[:,iloc] * np.array(area)
+AttributeError: SWW_plotter instance has no attribute 'velocity'
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-113.73673673010704, 1146.6394062716188, -1247.7059076132969, 660, 28.87128787602948, -0.8733773773723255]
+params: 0.646 0.931 0.630 28.910 1.150 NSE: -113.737 meters
+updating result
+[-109.64837154259762, 1126.025250394187, -1201.4445677936405, 660, 28.373066671734346, -0.8953934944728282]
+params: 0.792 1.105 0.419 27.768 0.213 NSE: -109.648 meters
+[-51.315021509653164, 774.2635602196942, -1140.1235667009817, 195, 7.264307378083386, 0.9293636705418568]
+params: 0.087 0.138 0.591 23.345 2.610 NSE: -51.315 meters
+[-86.29281603200266, 1000.1493753228461, -935.2652569627951, 660, 24.89669767679502, -0.9396027538477765]
+params: 0.979 1.618 0.350 23.416 0.355 NSE: -86.293 meters
+[-123.12996843559408, 1192.6525431114226, -1631.6946970002534, 660, 29.03980081108991, -0.40751124405847156]
+params: 0.640 0.372 0.664 15.655 1.244 NSE: -123.130 meters
+updating result
+[-24.440338497724174, 539.9295028551802, -442.46981068751523, 153, 12.515144173998166, 0.8461276737991981]
+params: 0.265 1.571 0.346 17.053 0.056 NSE: -24.440 meters
+[-91.08519988481387, 1027.2367157390056, -952.7226683539657, 631, 25.440533287998385, -0.9291712704596149]
+params: 0.618 1.263 0.451 28.312 2.045 NSE: -91.085 meters
+[-78.46490507173817, 954.252487126635, -826.2703898154016, 544, 23.325994199056716, -0.8932438821794387]
+params: 0.360 0.930 0.503 1.807 2.000 NSE: -78.465 meters
+[-124.96355110724055, 1201.4288704501691, -1626.311574229915, 660, 30.134613531883524, -0.6240850483927216]
+params: 0.671 0.500 0.134 9.463 1.091 NSE: -124.964 meters
+updating result
+[-106.58630445526533, 1110.3352075693103, -1170.3085201079102, 660, 27.920294891658255, -0.8856763915642529]
+params: 0.570 0.933 0.692 3.061 0.627 NSE: -106.586 meters
+[-10.789410771983933, 367.5544338105279, -315.40302972997875, 54, 8.144295589330104, 0.9329962222269201]
+params: 0.161 1.341 0.215 13.989 0.733 NSE: -10.789 meters
+[-44.19158350305466, 719.6219398900813, -797.7320997356937, 170, 14.89465062833096, 0.8767153945571425]
+params: 0.159 0.310 0.477 4.145 0.590 NSE: -44.192 meters
+[-39.68793742516116, 682.823490889614, -565.6699030799061, 279, 16.21480661815641, 0.4464821554297006]
+params: 0.369 1.660 0.113 25.138 0.288 NSE: -39.688 meters
+[-127.46817090660011, 1213.3144964351823, -1386.9881865017687, 660, 30.597794258772485, -0.8557084978321767]
+params: 0.976 0.990 0.685 18.145 2.218 NSE: -127.468 meters
+updating result
+[0.6683093042374314, 61.65130312901218, -94.72528951369628, 92, -0.43423387381631645, 0.987121970578883]
+params: 0.039 0.637 0.128 8.884 0.356 NSE: 0.668 meters
+[-69.93578628287244, 901.5883880211402, -752.1694889510215, 526, 21.880927122248472, -0.7870268457336373]
+params: 0.318 0.887 0.092 20.774 1.700 NSE: -69.936 meters
+[-44.48579514571572, 721.9606240069527, -619.4111994939819, 189, 16.748736175366737, 0.7169227591429658]
+params: 0.265 1.094 0.111 17.278 2.788 NSE: -44.486 meters
+[-42.5543319930782, 706.4660475699268, -598.2602405042674, 277, 16.689277608434118, 0.43483336276344015]
+params: 0.319 1.368 0.136 21.490 0.868 NSE: -42.554 meters
+[-15.77626505628945, 438.4532116972692, -355.0376256819415, 87, 10.090472024800958, 0.9308908170054199]
+params: 0.183 1.214 0.063 24.868 0.014 NSE: -15.776 meters
+[-126.71316561498875, 1209.7439281616198, -1556.8344554453665, 660, 30.64277705983878, -0.738579372274848]
+params: 0.678 0.613 0.528 28.866 0.746 NSE: -126.713 meters
+[-90.50384924312704, 1023.989015535388, -941.9915931432918, 624, 25.315477876145035, -0.9282060354920222]
+params: 0.576 1.225 0.422 6.692 2.858 NSE: -90.504 meters
+The Initial Loop: 0
+ BESTF:  -127.468171 
+ BESTX:  
+[ 0.97645947  0.99043728  0.68489471 18.14536559  2.21779074]
+ WORSTF:  0.668309 
+ WORSTX: 
+[0.03918779 0.63733323 0.12812776 8.88420593 0.35618316]
+     
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 213, in sceua
+    snew,fnew,icall=cceua(s,sf,bl,bu,icall,iseed,func)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 51, in cceua
+    if not hasattr(func, __call__):
+NameError: global name '__call__' is not defined
+  File "SCE-UA.py", line 80
+    print discharge_err
+                      ^
+SyntaxError: Missing parentheses in call to 'print'. Did you mean print(discharge_err)?
+[proxy:0:0@server2017] HYD_pmcd_pmip_control_cmd_cb (pm/pmiserv/pmip_cb.c:887): assert (!closed) failed
+[proxy:0:0@server2017] HYDT_dmxu_poll_wait_for_event (tools/demux/demux_poll.c:76): callback returned error status
+[proxy:0:0@server2017] main (pm/pmiserv/pmip.c:202): demux engine error waiting for event
+[mpiexec@server2017] HYDT_bscu_wait_for_completion (tools/bootstrap/utils/bscu_wait.c:76): one of the processes terminated badly; aborting
+[mpiexec@server2017] HYDT_bsci_wait_for_completion (tools/bootstrap/src/bsci_wait.c:23): launcher returned error waiting for completion
+[mpiexec@server2017] HYD_pmci_wait_for_completion (pm/pmiserv/pmiserv_pmci.c:218): launcher returned error waiting for completion
+[mpiexec@server2017] main (ui/mpich/mpiexec.c:340): process manager error waiting for completion
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 123, in sceua
+    xf=func(x)
+  File "SCE-UA.py", line 101, in evaluate
+    nsce= one_val(row)
+  File "SCE-UA.py", line 62, in one_val
+    splotter = anuga.SWW_plotter(swwfile, make_dir=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/anuga/utilities/animate.py", line 427, in __init__
+    self.stage = np.array(p.variables['stage_c'])
+  File "netCDF4/_netCDF4.pyx", line 3946, in netCDF4._netCDF4.Variable.__array__
+  File "netCDF4/_netCDF4.pyx", line 4446, in netCDF4._netCDF4.Variable.__getitem__
+  File "netCDF4/_netCDF4.pyx", line 4590, in netCDF4._netCDF4.Variable._toma
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/numpy/core/_methods.py", line 42, in _any
+    def _any(a, axis=None, dtype=None, out=None, keepdims=False):
+KeyboardInterrupt
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-113.73673673010704, 1146.6394062716188, -1247.7059076132969, 660, 28.87128787602948, -0.8733773773723255]
+params: 0.646 0.931 0.630 28.910 1.150 NSE: -113.737 meters
+updating result
+[-109.64837154259762, 1126.025250394187, -1201.4445677936405, 660, 28.373066671734346, -0.8953934944728282]
+params: 0.792 1.105 0.419 27.768 0.213 NSE: -109.648 meters
+[-51.315021509653164, 774.2635602196942, -1140.1235667009817, 195, 7.264307378083386, 0.9293636705418568]
+params: 0.087 0.138 0.591 23.345 2.610 NSE: -51.315 meters
+[-86.29281603200266, 1000.1493753228461, -935.2652569627951, 660, 24.89669767679502, -0.9396027538477765]
+params: 0.979 1.618 0.350 23.416 0.355 NSE: -86.293 meters
+[-123.12996843559408, 1192.6525431114226, -1631.6946970002534, 660, 29.03980081108991, -0.40751124405847156]
+params: 0.640 0.372 0.664 15.655 1.244 NSE: -123.130 meters
+updating result
+[-24.440338497724174, 539.9295028551802, -442.46981068751523, 153, 12.515144173998166, 0.8461276737991981]
+params: 0.265 1.571 0.346 17.053 0.056 NSE: -24.440 meters
+[-91.08519988481387, 1027.2367157390056, -952.7226683539657, 631, 25.440533287998385, -0.9291712704596149]
+params: 0.618 1.263 0.451 28.312 2.045 NSE: -91.085 meters
+[-78.46490507173817, 954.252487126635, -826.2703898154016, 544, 23.325994199056716, -0.8932438821794387]
+params: 0.360 0.930 0.503 1.807 2.000 NSE: -78.465 meters
+[-124.96355110724055, 1201.4288704501691, -1626.311574229915, 660, 30.134613531883524, -0.6240850483927216]
+params: 0.671 0.500 0.134 9.463 1.091 NSE: -124.964 meters
+updating result
+[-106.58630445526533, 1110.3352075693103, -1170.3085201079102, 660, 27.920294891658255, -0.8856763915642529]
+params: 0.570 0.933 0.692 3.061 0.627 NSE: -106.586 meters
+[-10.789410771983933, 367.5544338105279, -315.40302972997875, 54, 8.144295589330104, 0.9329962222269201]
+params: 0.161 1.341 0.215 13.989 0.733 NSE: -10.789 meters
+[-44.19158350305466, 719.6219398900813, -797.7320997356937, 170, 14.89465062833096, 0.8767153945571425]
+params: 0.159 0.310 0.477 4.145 0.590 NSE: -44.192 meters
+[-39.68793742516116, 682.823490889614, -565.6699030799061, 279, 16.21480661815641, 0.4464821554297006]
+params: 0.369 1.660 0.113 25.138 0.288 NSE: -39.688 meters
+[-127.46817090660011, 1213.3144964351823, -1386.9881865017687, 660, 30.597794258772485, -0.8557084978321767]
+params: 0.976 0.990 0.685 18.145 2.218 NSE: -127.468 meters
+updating result
+[0.6683093042374314, 61.65130312901218, -94.72528951369628, 92, -0.43423387381631645, 0.987121970578883]
+params: 0.039 0.637 0.128 8.884 0.356 NSE: 0.668 meters
+[-69.93578628287244, 901.5883880211402, -752.1694889510215, 526, 21.880927122248472, -0.7870268457336373]
+params: 0.318 0.887 0.092 20.774 1.700 NSE: -69.936 meters
+[-44.48579514571572, 721.9606240069527, -619.4111994939819, 189, 16.748736175366737, 0.7169227591429658]
+params: 0.265 1.094 0.111 17.278 2.788 NSE: -44.486 meters
+[-42.5543319930782, 706.4660475699268, -598.2602405042674, 277, 16.689277608434118, 0.43483336276344015]
+params: 0.319 1.368 0.136 21.490 0.868 NSE: -42.554 meters
+[-15.77626505628945, 438.4532116972692, -355.0376256819415, 87, 10.090472024800958, 0.9308908170054199]
+params: 0.183 1.214 0.063 24.868 0.014 NSE: -15.776 meters
+[-126.71316561498875, 1209.7439281616198, -1556.8344554453665, 660, 30.64277705983878, -0.738579372274848]
+params: 0.678 0.613 0.528 28.866 0.746 NSE: -126.713 meters
+[-90.50384924312704, 1023.989015535388, -941.9915931432918, 624, 25.315477876145035, -0.9282060354920222]
+params: 0.576 1.225 0.422 6.692 2.858 NSE: -90.504 meters
+The Initial Loop: 0
+ BESTF:  -0.668309 
+ BESTX:  
+[0.03918779 0.63733323 0.12812776 8.88420593 0.35618316]
+ WORSTF:  127.468171 
+ WORSTX: 
+[ 0.97645947  0.99043728  0.68489471 18.14536559  2.21779074]
+     
+Traceback (most recent call last):
+  File "SCE-UA.py", line 127, in <module>
+    bestx,bestf,BESTX,BESTF,ICALL= SCE.sceua(bl, bu, pf, ngs=2, func=evaluate, plot=False)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 213, in sceua
+    snew,fnew,icall=cceua(s,sf,bl,bu,icall,iseed,func)
+  File "/home/ZhiLi/CRESTHH/cresthh/UQ/optimization/SCE.py", line 51, in cceua
+    if not hasattr(func, __call__):
+NameError: global name '__call__' is not defined
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-113.73673673010704, 1146.6394062716188, -1247.7059076132969, 660, 28.87128787602948, -0.8733773773723255]
+params: 0.646 0.931 0.630 28.910 1.150 NSE: -113.737 meters
+updating result
+[-109.64837154259762, 1126.025250394187, -1201.4445677936405, 660, 28.373066671734346, -0.8953934944728282]
+params: 0.792 1.105 0.419 27.768 0.213 NSE: -109.648 meters
+[-51.315021509653164, 774.2635602196942, -1140.1235667009817, 195, 7.264307378083386, 0.9293636705418568]
+params: 0.087 0.138 0.591 23.345 2.610 NSE: -51.315 meters
+[-86.29281603200266, 1000.1493753228461, -935.2652569627951, 660, 24.89669767679502, -0.9396027538477765]
+params: 0.979 1.618 0.350 23.416 0.355 NSE: -86.293 meters
+[-123.12996843559408, 1192.6525431114226, -1631.6946970002534, 660, 29.03980081108991, -0.40751124405847156]
+params: 0.640 0.372 0.664 15.655 1.244 NSE: -123.130 meters
+updating result
+[-24.440338497724174, 539.9295028551802, -442.46981068751523, 153, 12.515144173998166, 0.8461276737991981]
+params: 0.265 1.571 0.346 17.053 0.056 NSE: -24.440 meters
+[-91.08519988481387, 1027.2367157390056, -952.7226683539657, 631, 25.440533287998385, -0.9291712704596149]
+params: 0.618 1.263 0.451 28.312 2.045 NSE: -91.085 meters
+[-78.46490507173817, 954.252487126635, -826.2703898154016, 544, 23.325994199056716, -0.8932438821794387]
+params: 0.360 0.930 0.503 1.807 2.000 NSE: -78.465 meters
+[-124.96355110724055, 1201.4288704501691, -1626.311574229915, 660, 30.134613531883524, -0.6240850483927216]
+params: 0.671 0.500 0.134 9.463 1.091 NSE: -124.964 meters
+updating result
+[-106.58630445526533, 1110.3352075693103, -1170.3085201079102, 660, 27.920294891658255, -0.8856763915642529]
+params: 0.570 0.933 0.692 3.061 0.627 NSE: -106.586 meters
+[-10.789410771983933, 367.5544338105279, -315.40302972997875, 54, 8.144295589330104, 0.9329962222269201]
+params: 0.161 1.341 0.215 13.989 0.733 NSE: -10.789 meters
+[-44.19158350305466, 719.6219398900813, -797.7320997356937, 170, 14.89465062833096, 0.8767153945571425]
+params: 0.159 0.310 0.477 4.145 0.590 NSE: -44.192 meters
+[-39.68793742516116, 682.823490889614, -565.6699030799061, 279, 16.21480661815641, 0.4464821554297006]
+params: 0.369 1.660 0.113 25.138 0.288 NSE: -39.688 meters
+[-127.46817090660011, 1213.3144964351823, -1386.9881865017687, 660, 30.597794258772485, -0.8557084978321767]
+params: 0.976 0.990 0.685 18.145 2.218 NSE: -127.468 meters
+updating result
+[0.6683093042374314, 61.65130312901218, -94.72528951369628, 92, -0.43423387381631645, 0.987121970578883]
+params: 0.039 0.637 0.128 8.884 0.356 NSE: 0.668 meters
+[-69.93578628287244, 901.5883880211402, -752.1694889510215, 526, 21.880927122248472, -0.7870268457336373]
+params: 0.318 0.887 0.092 20.774 1.700 NSE: -69.936 meters
+[-44.48579514571572, 721.9606240069527, -619.4111994939819, 189, 16.748736175366737, 0.7169227591429658]
+params: 0.265 1.094 0.111 17.278 2.788 NSE: -44.486 meters
+[-42.5543319930782, 706.4660475699268, -598.2602405042674, 277, 16.689277608434118, 0.43483336276344015]
+params: 0.319 1.368 0.136 21.490 0.868 NSE: -42.554 meters
+[-15.77626505628945, 438.4532116972692, -355.0376256819415, 87, 10.090472024800958, 0.9308908170054199]
+params: 0.183 1.214 0.063 24.868 0.014 NSE: -15.776 meters
+[-126.71316561498875, 1209.7439281616198, -1556.8344554453665, 660, 30.64277705983878, -0.738579372274848]
+params: 0.678 0.613 0.528 28.866 0.746 NSE: -126.713 meters
+[-90.50384924312704, 1023.989015535388, -941.9915931432918, 624, 25.315477876145035, -0.9282060354920222]
+params: 0.576 1.225 0.422 6.692 2.858 NSE: -90.504 meters
+The Initial Loop: 0
+ BESTF:  -0.668309 
+ BESTX:  
+[0.03918779 0.63733323 0.12812776 8.88420593 0.35618316]
+ WORSTF:  127.468171 
+ WORSTX: 
+[ 0.97645947  0.99043728  0.68489471 18.14536559  2.21779074]
+     
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-25.586043123236166, 551.9534706634663, -463.3422974858997, 121, 12.73901642632949, 0.9159316007324073]
+params: 0.199 1.032 0.165 16.770 0.402 NSE: -25.586 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-18.84814014492581, 476.9090073166487, -420.53750696372316, 99, 10.627142779648771, 0.9264482536323477]
+params: 0.175 0.982 0.173 18.392 0.103 NSE: -18.848 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+[-31.158187238889994, 607.0457121830434, -507.3745972467047, 188, 14.09471049484011, 0.7419832885062445]
+params: 0.280 1.457 0.313 15.686 0.570 NSE: -31.158 meters
+updating result
+[-72.81204826166908, 919.6852993873207, -777.1888840029037, 546, 22.5444752534566, -0.9350606514892992]
+params: 0.549 1.459 0.442 16.346 1.271 NSE: -72.812 meters
+updating result
+usage: surrogate.py [-h] init
+surrogate.py: error: too few arguments
+Parameter file detected...
+0/200
+1/200
+2/200
+3/200
+4/200
+5/200
+6/200
+7/200
+8/200
+9/200
+10/200
+11/200
+12/200
+13/200
+14/200
+15/200
+16/200
+17/200
+18/200
+19/200
+20/200
+21/200
+22/200
+23/200
+24/200
+25/200
+26/200
+27/200
+28/200
+29/200
+30/200
+31/200
+32/200
+33/200
+34/200
+35/200
+36/200
+37/200
+38/200
+39/200
+40/200
+41/200
+42/200
+43/200
+44/200
+45/200
+46/200
+47/200
+48/200
+49/200
+50/200
+51/200
+52/200
+53/200
+54/200
+55/200
+56/200
+57/200
+58/200
+59/200
+60/200
+61/200
+62/200
+63/200
+64/200
+65/200
+66/200
+67/200
+68/200
+69/200
+70/200
+71/200
+72/200
+73/200
+74/200
+75/200
+76/200
+77/200
+78/200
+79/200
+80/200
+81/200
+82/200
+83/200
+84/200
+85/200
+86/200
+87/200
+88/200
+89/200
+90/200
+91/200
+92/200
+93/200
+94/200
+95/200
+96/200
+97/200
+98/200
+99/200
+100/200
+101/200
+102/200
+103/200
+104/200
+105/200
+106/200
+107/200
+108/200
+109/200
+110/200
+111/200
+112/200
+113/200
+114/200
+115/200
+116/200
+117/200
+118/200
+119/200
+120/200
+121/200
+122/200
+123/200
+124/200

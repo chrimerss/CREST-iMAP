@@ -91,8 +91,8 @@ def sww2dem(name_in, name_out,
     import sys
     import types
 
-    from anuga.geometry.polygon import inside_polygon, outside_polygon
-    from anuga.abstract_2d_finite_volumes.util import \
+    from cresthh.anuga.geometry.polygon import inside_polygon, outside_polygon
+    from cresthh.anuga.abstract_2d_finite_volumes.util import \
          apply_expression_to_dictionary
 
     basename_in, in_ext = os.path.splitext(name_in)
@@ -130,7 +130,7 @@ def sww2dem(name_in, name_out,
         log.critical('Reading from %s' % name_in)
         log.critical('Output directory is %s' % name_out)
 
-    from anuga.file.netcdf import NetCDFFile
+    from cresthh.anuga.file.netcdf import NetCDFFile
     fid = NetCDFFile(name_in)
 
     #Get extent and reference
@@ -193,16 +193,16 @@ def sww2dem(name_in, name_out,
         log.critical('  Quantities [SI units]:')
         
         # Comment out for reduced memory consumption
-        for name in ['stage', 'xmomentum', 'ymomentum']:
-            q = fid.variables[name][:].flatten()
-            if type(reduction) is not types.BuiltinFunctionType:
-                q = q[reduction*len(x):(reduction+1)*len(x)]
-            if verbose: log.critical('    %s in [%f, %f]'
-                                     % (name, min(q), max(q)))
-        for name in ['elevation']:
-            q = fid.variables[name][:].flatten()
-            if verbose: log.critical('    %s in [%f, %f]'
-                                     % (name, min(q), max(q)))
+        # for name in ['stage', 'xmomentum', 'ymomentum']:
+        #     q = fid.variables[name][:].flatten()
+        #     if type(reduction) is not types.BuiltinFunctionType:
+        #         q = q[reduction*len(x):(reduction+1)*len(x)]
+        #     if verbose: log.critical('    %s in [%f, %f]'
+        #                              % (name, min(q), max(q)))
+        # for name in ['elevation']:
+        #     q = fid.variables[name][:].flatten()
+        #     if verbose: log.critical('    %s in [%f, %f]'
+        #                              % (name, min(q), max(q)))
 
     # Get the variables in the supplied expression.
     # This may throw a SyntaxError exception.

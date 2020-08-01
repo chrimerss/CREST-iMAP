@@ -48,7 +48,7 @@ def cceua(s,sf,bl,bu,icall,iseed,func):
     sw=s[-1,:]
     fw=sf[-1]
 
-    if not hasattr(func, __call__):
+    if not hasattr(func, "__call__"):
         raise ValueError('expected object func is a callable.')
 
 
@@ -80,13 +80,13 @@ def cceua(s,sf,bl,bu,icall,iseed,func):
     # Reflection failed; now attempt a contraction point:
     if fnew > fw:
         snew[0] = sw + beta * (ce-sw)
-        fnew = func.evaluate(snew)[0]
+        fnew = func(snew)[0]
         icall += 1
 
     # Both reflection and contraction have failed, attempt a random point;
         if fnew > fw:
             snew = SampleInputMatrix(1,nopt,bu,bl,iseed,distname='randomUniform')
-            fnew = func.evaluate(snew)[0]
+            fnew = func(snew)[0]
             icall += 1
 
     # END OF CCE
@@ -104,7 +104,7 @@ def sceua(bl,bu,pf,ngs,func,plot=True):
     nspl=npg
     npt=npg*ngs
     bound=bu-bl
-    maxn=2000
+    maxn=500
     kstop=10
     pcento=0.1
     peps=0.001

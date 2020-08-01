@@ -27,12 +27,12 @@ if __name__=='__main__':
     # params= [float(param) for param in params]
 
     global myid
-    start='20170825000000'
-    end=  '20170830000000'
+    start='20170825120000'
+    end=  '20170827000000'
     interval= '2M'
     yieldstep= pd.Timedelta(interval).total_seconds()    
     # params= params[0]
-    topo_file='/hydros/ZhiLi/DEM_10m_filled.tif'
+    topo_file='/hydros/ZhiLi/DEM_08076700.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_river_buffer_cliped.shp')
     # base_resolution = 1000000 #1km
@@ -41,7 +41,7 @@ if __name__=='__main__':
         # shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
 
 
-        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/Houston/stream_dem/DEM_10m.mesh')
+        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
         # if os.path.exists('1km.msh'):
         #     DOMAIN= anuga.create_domain_from_file('1km.msh')
         # else:
@@ -81,8 +81,8 @@ if __name__=='__main__':
     DOMAIN.set_quantity('SM', params[2], location='centroids')
     # DOMAIN.quantities['Ksat'].centroid_values[:]*= params[2]
     # DOMAIN.quantities['WM'].centroid_values[:]*= params[3]
-    # DOMAIN.quantities['B'].centroid_values[:]*= params[4]
-    # DOMAIN.quantities['IM'].centroid_values[:]*= params[5]
+    DOMAIN.quantities['B'].centroid_values[:]*= params[3]
+    DOMAIN.quantities['IM'].centroid_values[:]*= params[4]
     # DOMAIN.set_quantity('KE', params[6], location='centroids')
 
     DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')

@@ -1,502 +1,151 @@
-2020-06-29 11:50:07,716 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-06-29 11:50:07,718 CRITICAL            generic_domain:1742|Settting coupled: True
-2020-06-29 11:50:07,719 CRITICAL            generic_domain:1783|evolving elements: 4916
-2020-06-29 12:15:47,176 CRITICAL                       log:178 |
-Traceback (most recent call last):
-  File "parallel_job.py", line 95, in <module>
-    for t in DOMAIN.evolve(yieldstep=120, duration=total_seconds):
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/shallow_water/shallow_water_domain.py", line 2448, in evolve
-    skip_initial_step=skip_initial_step):
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/abstract_2d_finite_volumes/generic_domain.py", line 1861, in _evolve_base
-    self.evolve_one_euler_step(yieldstep, self.finaltime, excessRain)
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/abstract_2d_finite_volumes/generic_domain.py", line 2043, in evolve_one_euler_step
-    self.compute_fluxes()
-  File "/home/ZhiLi/CRESTHH/cresthh/anuga/shallow_water/shallow_water_domain.py", line 1929, in compute_fluxes
-    flux_timestep = compute_fluxes_ext(self, timestep)
-KeyboardInterrupt
-
-/shallow_water/shallow_water_domain.py", line 3157, in manning_friction_implicit
-    ymom_update)
-KeyboardInterrupt
-
-CAL            generic_domain:1188|Time = 2017-08-25 00:14:00, delta t in [0.19679224, 0.19710750], steps=610 (2s)
-2020-06-29 11:50:28,962 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:16:00, delta t in [0.19710752, 0.19711884], steps=609 (2s)
-2020-06-29 11:50:31,704 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:18:00, delta t in [0.19710253, 0.19710997], steps=609 (2s)
-2020-06-29 11:50:34,410 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:20:00, delta t in [0.19708551, 0.19710252], steps=609 (2s)
-2020-06-29 11:50:37,105 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:22:00, delta t in [0.19708120, 0.19708549], steps=609 (2s)
-2020-06-29 11:50:39,670 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:24:00, delta t in [0.19708179, 0.19708643], steps=609 (2s)
-2020-06-29 11:50:42,179 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:26:00, delta t in [0.19708644, 0.19709292], steps=609 (2s)
-2020-06-29 11:50:44,692 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:28:00, delta t in [0.19709294, 0.19710853], steps=609 (2s)
-2020-06-29 11:50:47,248 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:30:00, delta t in [0.19710856, 0.19713586], steps=609 (2s)
-2020-06-29 11:50:49,787 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:32:00, delta t in [0.19713591, 0.19717216], steps=609 (2s)
-2020-06-29 11:50:52,328 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:34:00, delta t in [0.19717220, 0.19721147], steps=609 (2s)
-2020-06-29 11:50:55,108 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:36:00, delta t in [0.19721150, 0.19724930], steps=609 (2s)
-2020-06-29 11:50:57,889 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:38:00, delta t in [0.19724932, 0.19728075], steps=609 (2s)
-2020-06-29 11:51:00,684 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:40:00, delta t in [0.19728077, 0.19730257], steps=609 (2s)
-2020-06-29 11:51:03,473 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:42:00, delta t in [0.19730257, 0.19731584], steps=609 (2s)
-2020-06-29 11:51:06,224 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:44:00, delta t in [0.19731585, 0.19732335], steps=609 (2s)
-2020-06-29 11:51:08,965 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:46:00, delta t in [0.19732336, 0.19732751], steps=609 (2s)
-2020-06-29 11:51:11,711 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:48:00, delta t in [0.19732751, 0.19732984], steps=609 (2s)
-2020-06-29 11:51:14,457 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:50:00, delta t in [0.19732984, 0.19733126], steps=609 (2s)
-2020-06-29 11:51:17,215 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:52:00, delta t in [0.19733126, 0.19733220], steps=609 (2s)
-2020-06-29 11:51:19,978 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:54:00, delta t in [0.19733220, 0.19733285], steps=609 (2s)
-2020-06-29 11:51:22,731 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:56:00, delta t in [0.19733285, 0.19733329], steps=609 (2s)
-2020-06-29 11:51:25,493 CRITICAL            generic_domain:1188|Time = 2017-08-25 00:58:00, delta t in [0.19733329, 0.19733356], steps=609 (2s)
-2020-06-29 11:51:28,258 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:00:00, delta t in [0.19733356, 0.19733372], steps=609 (2s)
-2020-06-29 11:51:31,122 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:02:00, delta t in [0.19733372, 0.19733384], steps=609 (2s)
-2020-06-29 11:51:33,908 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:04:00, delta t in [0.19733384, 0.19733400], steps=609 (2s)
-2020-06-29 11:51:36,692 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:06:00, delta t in [0.19733400, 0.19733420], steps=609 (2s)
-2020-06-29 11:51:39,355 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:08:00, delta t in [0.19733420, 0.19733444], steps=609 (2s)
-2020-06-29 11:51:42,140 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:10:00, delta t in [0.19733444, 0.19733477], steps=609 (2s)
-2020-06-29 11:51:44,932 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:12:00, delta t in [0.19733477, 0.19733540], steps=609 (2s)
-2020-06-29 11:51:47,731 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:14:00, delta t in [0.19733540, 0.19733673], steps=609 (2s)
-2020-06-29 11:51:50,536 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:16:00, delta t in [0.19733673, 0.19733934], steps=609 (2s)
-2020-06-29 11:51:53,384 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:18:00, delta t in [0.19733934, 0.19734378], steps=609 (2s)
-2020-06-29 11:51:55,966 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:20:00, delta t in [0.19734379, 0.19735052], steps=609 (2s)
-2020-06-29 11:51:58,612 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:22:00, delta t in [0.19735052, 0.19736023], steps=609 (2s)
-2020-06-29 11:52:01,285 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:24:00, delta t in [0.19736023, 0.19737348], steps=609 (2s)
-2020-06-29 11:52:04,089 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:26:00, delta t in [0.19737348, 0.19739034], steps=608 (2s)
-2020-06-29 11:52:06,889 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:28:00, delta t in [0.19739037, 0.19741054], steps=608 (2s)
-2020-06-29 11:52:09,698 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:30:00, delta t in [0.19741057, 0.19743350], steps=608 (2s)
-2020-06-29 11:52:12,426 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:32:00, delta t in [0.19743353, 0.19745843], steps=608 (2s)
-2020-06-29 11:52:15,171 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:34:00, delta t in [0.19745846, 0.19748447], steps=608 (2s)
-2020-06-29 11:52:18,008 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:36:00, delta t in [0.19748450, 0.19751068], steps=608 (2s)
-2020-06-29 11:52:20,846 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:38:00, delta t in [0.19751070, 0.19753596], steps=608 (2s)
-2020-06-29 11:52:23,694 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:40:00, delta t in [0.19753598, 0.19755922], steps=608 (2s)
-2020-06-29 11:52:26,505 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:42:00, delta t in [0.19755924, 0.19758018], steps=608 (2s)
-2020-06-29 11:52:29,152 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:44:00, delta t in [0.19758019, 0.19759949], steps=608 (2s)
-2020-06-29 11:52:31,820 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:46:00, delta t in [0.19759950, 0.19761808], steps=608 (2s)
-2020-06-29 11:52:34,453 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:48:00, delta t in [0.19761809, 0.19763620], steps=608 (2s)
-2020-06-29 11:52:37,079 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:50:00, delta t in [0.19763621, 0.19765340], steps=608 (2s)
-2020-06-29 11:52:39,768 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:52:00, delta t in [0.19765341, 0.19766907], steps=608 (2s)
-2020-06-29 11:52:42,442 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:54:00, delta t in [0.19766907, 0.19768294], steps=608 (2s)
-2020-06-29 11:52:45,116 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:56:00, delta t in [0.19768294, 0.19769518], steps=608 (2s)
-2020-06-29 11:52:47,819 CRITICAL            generic_domain:1188|Time = 2017-08-25 01:58:00, delta t in [0.19769518, 0.19770621], steps=607 (2s)
-2020-06-29 11:52:50,487 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:00:00, delta t in [0.19770622, 0.19771637], steps=607 (2s)
-2020-06-29 11:52:53,177 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:02:00, delta t in [0.19771638, 0.19772565], steps=607 (2s)
-2020-06-29 11:52:55,860 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:04:00, delta t in [0.19772567, 0.19773386], steps=607 (2s)
-2020-06-29 11:52:58,561 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:06:00, delta t in [0.19773387, 0.19774085], steps=607 (2s)
-2020-06-29 11:53:01,227 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:08:00, delta t in [0.19774086, 0.19774666], steps=607 (2s)
-2020-06-29 11:53:03,882 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:10:00, delta t in [0.19774667, 0.19775148], steps=607 (2s)
-2020-06-29 11:53:06,503 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:12:00, delta t in [0.19775148, 0.19775554], steps=607 (2s)
-2020-06-29 11:53:09,125 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:14:00, delta t in [0.19775555, 0.19775906], steps=607 (2s)
-2020-06-29 11:53:11,745 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:16:00, delta t in [0.19775906, 0.19776214], steps=607 (2s)
-2020-06-29 11:53:14,442 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:18:00, delta t in [0.19776215, 0.19776487], steps=607 (2s)
-2020-06-29 11:53:16,996 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:20:00, delta t in [0.19776487, 0.19776729], steps=607 (2s)
-2020-06-29 11:53:19,604 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:22:00, delta t in [0.19776729, 0.19776943], steps=607 (2s)
-2020-06-29 11:53:22,127 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:24:00, delta t in [0.19776943, 0.19777133], steps=607 (2s)
-2020-06-29 11:53:24,660 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:26:00, delta t in [0.19777133, 0.19777302], steps=607 (2s)
-2020-06-29 11:53:27,236 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:28:00, delta t in [0.19777302, 0.19777453], steps=607 (2s)
-2020-06-29 11:53:29,853 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:30:00, delta t in [0.19777453, 0.19777587], steps=607 (2s)
-2020-06-29 11:53:32,433 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:32:00, delta t in [0.19777587, 0.19777704], steps=607 (2s)
-2020-06-29 11:53:34,926 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:34:00, delta t in [0.19777705, 0.19777807], steps=607 (2s)
-2020-06-29 11:53:37,431 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:36:00, delta t in [0.19777807, 0.19777896], steps=607 (2s)
-2020-06-29 11:53:39,923 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:38:00, delta t in [0.19777896, 0.19777972], steps=607 (2s)
-2020-06-29 11:53:42,469 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:40:00, delta t in [0.19777972, 0.19778037], steps=607 (2s)
-2020-06-29 11:53:45,149 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:42:00, delta t in [0.19778037, 0.19778092], steps=607 (2s)
-2020-06-29 11:53:47,869 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:44:00, delta t in [0.19778092, 0.19778138], steps=607 (2s)
-2020-06-29 11:53:50,567 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:46:00, delta t in [0.19778138, 0.19778177], steps=607 (2s)
-2020-06-29 11:53:53,338 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:48:00, delta t in [0.19778178, 0.19778210], steps=607 (2s)
-2020-06-29 11:53:56,029 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:50:00, delta t in [0.19778211, 0.19778238], steps=607 (2s)
-2020-06-29 11:53:58,697 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:52:00, delta t in [0.19778238, 0.19778262], steps=607 (2s)
-2020-06-29 11:54:01,341 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:54:00, delta t in [0.19778262, 0.19778282], steps=607 (2s)
-2020-06-29 11:54:04,151 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:56:00, delta t in [0.19778282, 0.19778299], steps=607 (2s)
-2020-06-29 11:54:06,972 CRITICAL            generic_domain:1188|Time = 2017-08-25 02:58:00, delta t in [0.19778299, 0.19778313], steps=607 (2s)
-2020-06-29 11:54:09,824 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:00:00, delta t in [0.19778313, 0.19778326], steps=607 (2s)
-2020-06-29 11:54:12,440 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:02:00, delta t in [0.19778326, 0.19778336], steps=607 (2s)
-2020-06-29 11:54:15,078 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:04:00, delta t in [0.19778336, 0.19778345], steps=607 (2s)
-2020-06-29 11:54:17,730 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:06:00, delta t in [0.19778345, 0.19778353], steps=607 (2s)
-2020-06-29 11:54:20,390 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:08:00, delta t in [0.19778353, 0.19778359], steps=607 (2s)
-2020-06-29 11:54:23,034 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:10:00, delta t in [0.19778359, 0.19778365], steps=607 (2s)
-2020-06-29 11:54:25,539 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:12:00, delta t in [0.19778365, 0.19778370], steps=607 (2s)
-2020-06-29 11:54:28,037 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:14:00, delta t in [0.19778370, 0.19778374], steps=607 (2s)
-2020-06-29 11:54:30,790 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:16:00, delta t in [0.19778374, 0.19778377], steps=607 (2s)
-2020-06-29 11:54:33,506 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:18:00, delta t in [0.19778377, 0.19778380], steps=607 (2s)
-2020-06-29 11:54:36,316 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:20:00, delta t in [0.19778380, 0.19778383], steps=607 (2s)
-2020-06-29 11:54:39,115 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:22:00, delta t in [0.19778383, 0.19778385], steps=607 (2s)
-2020-06-29 11:54:41,712 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:24:00, delta t in [0.19778385, 0.19778387], steps=607 (2s)
-2020-06-29 11:54:44,323 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:26:00, delta t in [0.19778387, 0.19778388], steps=607 (2s)
-2020-06-29 11:54:47,030 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:28:00, delta t in [0.19778388, 0.19778389], steps=607 (2s)
-2020-06-29 11:54:49,783 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:30:00, delta t in [0.19778389, 0.19778390], steps=607 (2s)
-2020-06-29 11:54:52,725 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:32:00, delta t in [0.19778390, 0.19778391], steps=607 (2s)
-2020-06-29 11:54:55,506 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:34:00, delta t in [0.19778391, 0.19778392], steps=607 (2s)
-2020-06-29 11:54:58,203 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:36:00, delta t in [0.19778392, 0.19778393], steps=607 (2s)
-2020-06-29 11:55:00,920 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:38:00, delta t in [0.19778393, 0.19778393], steps=607 (2s)
-2020-06-29 11:55:03,697 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:40:00, delta t in [0.19778393, 0.19778394], steps=607 (2s)
-2020-06-29 11:55:06,500 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:42:00, delta t in [0.19778394, 0.19778394], steps=607 (2s)
-2020-06-29 11:55:09,213 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:44:00, delta t in [0.19778394, 0.19778395], steps=607 (2s)
-2020-06-29 11:55:11,940 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:46:00, delta t in [0.19778395, 0.19778395], steps=607 (2s)
-2020-06-29 11:55:14,555 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:48:00, delta t in [0.19778395, 0.19778395], steps=607 (2s)
-2020-06-29 11:55:17,127 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:50:00, delta t in [0.19778395, 0.19778395], steps=607 (2s)
-2020-06-29 11:55:19,710 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:52:00, delta t in [0.19778395, 0.19778395], steps=607 (2s)
-2020-06-29 11:55:22,300 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:54:00, delta t in [0.19778395, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:24,888 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:27,491 CRITICAL            generic_domain:1188|Time = 2017-08-25 03:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:30,158 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:32,791 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:35,515 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:38,175 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:40,827 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:43,490 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:46,156 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:48,815 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:51,495 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:54,152 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:56,813 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:55:59,511 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:02,196 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:04,842 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:26:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:07,432 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:28:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:10,045 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:30:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:12,678 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:32:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:15,313 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:34:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:17,918 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:36:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:20,524 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:38:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:23,124 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:40:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:25,761 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:42:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:28,372 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:44:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:30,919 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:46:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:33,458 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:48:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:36,078 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:50:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:38,715 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:52:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:41,339 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:54:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:44,004 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:46,638 CRITICAL            generic_domain:1188|Time = 2017-08-25 04:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:49,290 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:51,974 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:54,731 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:56:57,480 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:00,168 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:02,752 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:05,419 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:08,078 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:10,695 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:13,286 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:15,874 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:18,459 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:21,048 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:23,630 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:26:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:26,221 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:28:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:28,813 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:30:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:31,401 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:32:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:34,011 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:34:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:36,712 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:36:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:39,499 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:38:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:42,274 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:40:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:45,056 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:42:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:47,828 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:44:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:50,611 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:46:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:53,401 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:48:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:56,164 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:50:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:57:58,947 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:52:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:01,691 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:54:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:04,325 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:06,893 CRITICAL            generic_domain:1188|Time = 2017-08-25 05:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:09,457 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:12,049 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:14,640 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:17,300 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:19,975 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:22,658 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:25,328 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:27,959 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:30,604 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:33,236 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:35,875 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:38,523 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:41,247 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:43,979 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:26:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:46,715 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:28:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:49,457 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:30:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:52,202 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:32:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:54,943 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:34:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:58:57,670 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:36:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:00,236 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:38:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:02,833 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:40:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:05,419 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:42:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:08,023 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:44:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:10,627 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:46:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:13,347 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:48:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:15,992 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:50:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:18,646 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:52:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:21,397 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:54:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:24,205 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:27,006 CRITICAL            generic_domain:1188|Time = 2017-08-25 06:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:29,633 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:32,287 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:34,806 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:37,573 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:40,267 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:42,959 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:45,639 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:48,390 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:51,225 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:54,081 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:56,925 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 11:59:59,780 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:02,664 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:05,530 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:26:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:08,376 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:28:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:11,217 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:30:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:14,055 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:32:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:16,802 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:34:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:19,544 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:36:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:22,277 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:38:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:25,014 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:40:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:27,756 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:42:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:30,497 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:44:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:33,245 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:46:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:36,004 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:48:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:38,679 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:50:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:41,389 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:52:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:44,071 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:54:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:46,741 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:49,412 CRITICAL            generic_domain:1188|Time = 2017-08-25 07:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:52,101 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:54,831 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:00:57,502 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:00,097 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:02,768 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:05,388 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:08,009 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:10,616 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:13,214 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:15,846 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:18,716 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:21,330 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:23,962 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:26,633 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:26:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:29,305 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:28:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:31,969 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:30:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:34,628 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:32:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:37,282 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:34:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:39,937 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:36:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:42,607 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:38:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:45,255 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:40:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:47,888 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:42:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:50,537 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:44:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:53,229 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:46:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:55,988 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:48:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:01:58,660 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:50:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:01,345 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:52:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:03,994 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:54:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:06,657 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:09,343 CRITICAL            generic_domain:1188|Time = 2017-08-25 08:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:12,030 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:14,845 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:17,704 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:20,400 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:23,190 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:25,929 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:28,679 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:31,294 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:33,953 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:36,796 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:39,338 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:41,895 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:44,489 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:47,078 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:26:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:49,645 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:28:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:52,234 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:30:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:54,820 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:32:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:02:57,416 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:34:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:00,040 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:36:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:02,681 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:38:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:05,314 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:40:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:07,913 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:42:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:10,593 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:44:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:13,321 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:46:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:16,045 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:48:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:18,672 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:50:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:21,272 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:52:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:23,912 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:54:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:26,560 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:56:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:29,127 CRITICAL            generic_domain:1188|Time = 2017-08-25 09:58:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:31,688 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:00:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:34,523 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:02:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:37,313 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:04:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:39,971 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:06:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:42,648 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:08:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:45,355 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:10:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:48,183 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:12:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:50,880 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:14:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:53,468 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:16:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:56,043 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:18:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:03:58,880 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:20:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:04:01,859 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:22:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:04:04,835 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:24:00, delta t in [0.19778396, 0.19778396], steps=607 (2s)
-2020-06-29 12:04:07,884 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:26:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:10,965 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:28:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:14,042 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:30:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:17,153 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:32:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:20,261 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:34:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:23,366 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:36:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:26,590 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:38:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:29,666 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:40:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:32,688 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:42:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:35,943 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:44:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:04:39,345 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:46:00, delta t in [0.19778396, 0.19778397], steps=607 (3s)
-2020-06-29 12:04:42,532 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:48:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:04:46,066 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:50:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:04:49,443 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:52:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:04:52,836 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:54:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:04:56,336 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:56:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:04:59,829 CRITICAL            generic_domain:1188|Time = 2017-08-25 10:58:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:03,361 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:00:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:07,229 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:02:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:10,751 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:04:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:14,322 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:06:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:18,105 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:08:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:22,028 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:10:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:05:26,133 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:12:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:30,216 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:14:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:34,263 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:16:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:38,275 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:18:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:42,307 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:20:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:46,420 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:22:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:50,540 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:24:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:54,674 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:26:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:05:58,723 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:28:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:02,922 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:30:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:07,126 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:32:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:11,269 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:34:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:15,397 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:36:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:19,539 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:38:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:23,715 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:40:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:27,577 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:42:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:06:31,434 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:44:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:06:35,260 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:46:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:06:39,277 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:48:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:43,279 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:50:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:47,277 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:52:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:06:51,175 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:54:00, delta t in [0.19778397, 0.19778397], steps=607 (3s)
-2020-06-29 12:06:55,267 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:56:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:06:59,326 CRITICAL            generic_domain:1188|Time = 2017-08-25 11:58:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:07:03,433 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:00:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:07:07,572 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:02:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:07:11,667 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:04:00, delta t in [0.19778397, 0.19778397], steps=607 (4s)
-2020-06-29 12:07:15,777 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:06:00, delta t in [0.19778396, 0.19778397], steps=607 (4s)
-2020-06-29 12:07:19,879 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:08:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:07:23,970 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:10:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:07:28,070 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:12:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:07:31,858 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:14:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:07:35,425 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:16:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:07:39,356 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:18:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:07:43,160 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:20:00, delta t in [0.19778396, 0.19778396], steps=607 (3s)
-2020-06-29 12:07:47,184 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:22:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:07:51,308 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:24:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:07:55,413 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:26:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:07:59,532 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:28:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:08:03,587 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:30:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:08:07,706 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:32:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:08:11,927 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:34:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:08:16,046 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:36:00, delta t in [0.19778396, 0.19778396], steps=607 (4s)
-2020-06-29 12:08:20,172 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:38:00, delta t in [0.19778396, 0.19778397], steps=607 (4s)
-2020-06-29 12:08:24,225 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:40:00, delta t in [0.19778391, 0.19778399], steps=607 (4s)
-2020-06-29 12:08:28,382 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:42:00, delta t in [0.19778393, 0.19778401], steps=607 (4s)
-2020-06-29 12:08:32,570 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:44:00, delta t in [0.19778395, 0.19778403], steps=607 (4s)
-2020-06-29 12:08:36,757 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:46:00, delta t in [0.19778396, 0.19778405], steps=607 (4s)
-2020-06-29 12:08:40,505 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:48:00, delta t in [0.19778397, 0.19778406], steps=607 (3s)
-2020-06-29 12:08:44,293 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:50:00, delta t in [0.19778398, 0.19778407], steps=607 (3s)
-2020-06-29 12:08:48,546 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:52:00, delta t in [0.19778403, 0.19778405], steps=607 (4s)
-2020-06-29 12:08:52,675 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:54:00, delta t in [0.19778403, 0.19778404], steps=607 (4s)
-2020-06-29 12:08:56,798 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:56:00, delta t in [0.19778402, 0.19778403], steps=607 (4s)
-2020-06-29 12:09:00,931 CRITICAL            generic_domain:1188|Time = 2017-08-25 12:58:00, delta t in [0.19778401, 0.19778402], steps=607 (4s)
-2020-06-29 12:09:05,138 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:00:00, delta t in [0.19778401, 0.19778401], steps=607 (4s)
-2020-06-29 12:09:09,297 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:02:00, delta t in [0.19778401, 0.19778401], steps=607 (4s)
-2020-06-29 12:09:13,469 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:04:00, delta t in [0.19778401, 0.19778401], steps=607 (4s)
-2020-06-29 12:09:17,638 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:06:00, delta t in [0.19778400, 0.19778401], steps=607 (4s)
-2020-06-29 12:09:21,795 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:08:00, delta t in [0.19778400, 0.19778401], steps=607 (4s)
-2020-06-29 12:09:26,011 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:10:00, delta t in [0.19778400, 0.19778400], steps=607 (4s)
-2020-06-29 12:09:30,165 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:12:00, delta t in [0.19778400, 0.19778400], steps=607 (4s)
-2020-06-29 12:09:34,080 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:14:00, delta t in [0.19778400, 0.19778400], steps=607 (3s)
-2020-06-29 12:09:38,148 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:16:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:09:42,334 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:18:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:09:46,596 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:20:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:09:50,869 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:22:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:09:55,069 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:24:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:09:59,296 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:26:00, delta t in [0.19778397, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:03,520 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:28:00, delta t in [0.19778398, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:07,708 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:30:00, delta t in [0.19778398, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:11,935 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:32:00, delta t in [0.19778398, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:16,147 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:34:00, delta t in [0.19778398, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:20,306 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:36:00, delta t in [0.19778398, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:24,467 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:38:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:28,583 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:40:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:32,786 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:42:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:36,897 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:44:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:10:41,009 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:46:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:10:45,113 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:48:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:49,172 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:50:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:53,292 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:52:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:10:57,399 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:54:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:11:01,646 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:56:00, delta t in [0.19778399, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:05,750 CRITICAL            generic_domain:1188|Time = 2017-08-25 13:58:00, delta t in [0.19778400, 0.19778403], steps=607 (4s)
-2020-06-29 12:11:09,848 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:00:00, delta t in [0.19778402, 0.19778403], steps=607 (4s)
-2020-06-29 12:11:13,943 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:02:00, delta t in [0.19778401, 0.19778403], steps=607 (4s)
-2020-06-29 12:11:18,027 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:04:00, delta t in [0.19778401, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:22,119 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:06:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:26,196 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:08:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:30,359 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:10:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:34,479 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:12:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:38,735 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:14:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:42,956 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:16:00, delta t in [0.19778400, 0.19778401], steps=607 (4s)
-2020-06-29 12:11:47,148 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:18:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:51,455 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:20:00, delta t in [0.19778399, 0.19778402], steps=607 (4s)
-2020-06-29 12:11:55,709 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:22:00, delta t in [0.19778399, 0.19778401], steps=607 (4s)
-2020-06-29 12:11:59,924 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:24:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:04,160 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:26:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:08,457 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:28:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:12,718 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:30:00, delta t in [0.19778398, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:16,766 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:32:00, delta t in [0.19778398, 0.19778402], steps=607 (4s)
-2020-06-29 12:12:20,840 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:34:00, delta t in [0.19778399, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:24,690 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:36:00, delta t in [0.19778399, 0.19778402], steps=607 (3s)
-2020-06-29 12:12:28,543 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:38:00, delta t in [0.19778399, 0.19778402], steps=607 (3s)
-2020-06-29 12:12:32,655 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:40:00, delta t in [0.19778399, 0.19778402], steps=607 (4s)
-2020-06-29 12:12:36,762 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:42:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:12:40,779 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:44:00, delta t in [0.19778400, 0.19778402], steps=607 (4s)
-2020-06-29 12:12:44,783 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:46:00, delta t in [0.19778401, 0.19778402], steps=607 (4s)
-2020-06-29 12:12:48,799 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:48:00, delta t in [0.19778401, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:52,808 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:50:00, delta t in [0.19778400, 0.19778401], steps=607 (4s)
-2020-06-29 12:12:56,892 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:52:00, delta t in [0.19778399, 0.19778401], steps=607 (4s)
-2020-06-29 12:13:00,921 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:54:00, delta t in [0.19778399, 0.19778401], steps=607 (4s)
-2020-06-29 12:13:05,087 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:56:00, delta t in [0.19778399, 0.19778401], steps=607 (4s)
-2020-06-29 12:13:09,015 CRITICAL            generic_domain:1188|Time = 2017-08-25 14:58:00, delta t in [0.19778400, 0.19778401], steps=607 (3s)
-2020-06-29 12:13:12,935 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:00:00, delta t in [0.19778400, 0.19778401], steps=607 (3s)
-2020-06-29 12:13:16,877 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:02:00, delta t in [0.19778400, 0.19778401], steps=607 (3s)
-2020-06-29 12:13:20,966 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:04:00, delta t in [0.19778400, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:25,210 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:06:00, delta t in [0.19778400, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:29,414 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:08:00, delta t in [0.19778400, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:33,223 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:10:00, delta t in [0.19778400, 0.19778400], steps=607 (3s)
-2020-06-29 12:13:37,384 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:12:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:41,673 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:14:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:45,901 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:16:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:50,131 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:18:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:54,416 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:20:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:13:58,712 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:22:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:02,984 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:24:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:07,299 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:26:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:11,441 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:28:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:15,582 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:30:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:19,744 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:32:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:23,889 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:34:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:28,036 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:36:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:32,215 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:38:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:36,356 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:40:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:40,516 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:42:00, delta t in [0.19778399, 0.19778399], steps=607 (4s)
-2020-06-29 12:14:44,434 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:44:00, delta t in [0.19778398, 0.19778399], steps=607 (3s)
-2020-06-29 12:14:48,322 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:46:00, delta t in [0.19778398, 0.19778399], steps=607 (3s)
-2020-06-29 12:14:52,202 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:48:00, delta t in [0.19778398, 0.19778399], steps=607 (3s)
-2020-06-29 12:14:56,336 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:50:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:00,457 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:52:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:04,487 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:54:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:08,540 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:56:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:12,611 CRITICAL            generic_domain:1188|Time = 2017-08-25 15:58:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:16,756 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:00:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:20,822 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:02:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:24,861 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:04:00, delta t in [0.19778398, 0.19778399], steps=607 (4s)
-2020-06-29 12:15:28,905 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:06:00, delta t in [0.19778398, 0.19778400], steps=607 (4s)
-2020-06-29 12:15:32,967 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:08:00, delta t in [0.19778399, 0.19778400], steps=607 (4s)
-2020-06-29 12:15:37,026 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:10:00, delta t in [0.19778399, 0.19778401], steps=607 (4s)
-2020-06-29 12:15:41,126 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:12:00, delta t in [0.19778400, 0.19778401], steps=607 (4s)
-2020-06-29 12:15:45,145 CRITICAL            generic_domain:1188|Time = 2017-08-25 16:14:00, delta t in [0.19778400, 0.19778401], steps=607 (4s)
+2020-07-31 22:30:29,044 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-07-31 22:30:29,045 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:31:01,188 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:32:07,851 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:32:24,503 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:32:24,523 CRITICAL                 sww2array:137 |------------------------------------------------
+2020-07-31 22:32:24,525 CRITICAL                 sww2array:138 |Statistics of SWW file:
+2020-07-31 22:32:24,526 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
+2020-07-31 22:32:24,528 CRITICAL                 sww2array:140 |  Reference:
+2020-07-31 22:32:24,530 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:33:09,128 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:33:09,146 CRITICAL                 sww2array:137 |------------------------------------------------
+2020-07-31 22:33:09,148 CRITICAL                 sww2array:138 |Statistics of SWW file:
+2020-07-31 22:33:09,150 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
+2020-07-31 22:33:09,152 CRITICAL                 sww2array:140 |  Reference:
+2020-07-31 22:33:09,153 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:33:40,836 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:33:40,854 CRITICAL                 sww2array:137 |------------------------------------------------
+2020-07-31 22:33:40,857 CRITICAL                 sww2array:138 |Statistics of SWW file:
+2020-07-31 22:33:40,858 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
+2020-07-31 22:33:40,860 CRITICAL                 sww2array:140 |  Reference:
+2020-07-31 22:33:40,862 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:33:58,026 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:33:58,044 CRITICAL                 sww2array:137 |------------------------------------------------
+2020-07-31 22:33:58,046 CRITICAL                 sww2array:138 |Statistics of SWW file:
+2020-07-31 22:33:58,048 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
+2020-07-31 22:33:58,049 CRITICAL                 sww2array:140 |  Reference:
+2020-07-31 22:33:58,051 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:34:10,443 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
+2020-07-31 22:34:10,461 CRITICAL                 sww2array:137 |------------------------------------------------
+2020-07-31 22:34:10,463 CRITICAL                 sww2array:138 |Statistics of SWW file:
+2020-07-31 22:34:10,465 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
+2020-07-31 22:34:10,466 CRITICAL                 sww2array:140 |  Reference:
+2020-07-31 22:34:10,468 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:34:10,470 CRITICAL                 sww2array:145 |    Start time: 0.000000
+2020-07-31 22:34:10,472 CRITICAL                 sww2array:146 |  Extent:
+2020-07-31 22:34:10,473 CRITICAL                 sww2array:148 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 22:34:10,475 CRITICAL                 sww2array:150 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 22:34:10,524 CRITICAL                 sww2array:155 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 22:34:10,526 CRITICAL                 sww2array:156 |  Quantities [SI units]:
+2020-07-31 22:46:57,284 CRITICAL                 sww2array:164 |    stage in [-2.576403, 58.382839]
+2020-07-31 22:55:53,396 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 22:55:53,398 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 22:56:10,279 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 22:56:10,281 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 22:56:22,729 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 22:56:22,732 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 22:56:22,751 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 22:56:22,753 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 22:56:22,755 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 22:56:22,756 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 22:56:22,759 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:56:22,760 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 22:56:22,762 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 22:56:22,764 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 22:56:22,766 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 22:56:22,813 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 22:56:22,816 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 22:59:30,738 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 22:59:30,740 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 22:59:30,758 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 22:59:30,760 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 22:59:30,762 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 22:59:30,764 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 22:59:30,766 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 22:59:30,768 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 22:59:30,770 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 22:59:30,772 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 22:59:30,773 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 22:59:30,822 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 22:59:30,824 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:00:38,638 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 23:00:38,640 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 23:00:38,659 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 23:00:38,661 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 23:00:38,663 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 23:00:38,665 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 23:00:38,667 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 23:00:38,668 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 23:00:38,670 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 23:00:38,672 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 23:00:38,674 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 23:00:38,723 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 23:00:38,725 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:02:31,946 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 23:02:31,948 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 23:02:31,968 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 23:02:31,970 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 23:02:31,971 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 23:02:31,973 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 23:02:31,975 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 23:02:31,977 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 23:02:31,978 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 23:02:31,980 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 23:02:31,982 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 23:02:32,031 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 23:02:32,033 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:02:44,375 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 23:02:44,377 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 23:02:44,395 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 23:02:44,397 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 23:02:44,399 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 23:02:44,400 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 23:02:44,402 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 23:02:44,404 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 23:02:44,406 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 23:02:44,408 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 23:02:44,410 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 23:02:44,458 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 23:02:44,459 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:03:58,302 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 23:03:58,304 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 23:03:58,322 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 23:03:58,323 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 23:03:58,325 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 23:03:58,327 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 23:03:58,329 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 23:03:58,330 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 23:03:58,332 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 23:03:58,334 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 23:03:58,336 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 23:03:58,384 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 23:03:58,386 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:05:55,072 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 23:05:55,075 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 23:05:55,092 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 23:05:55,094 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 23:05:55,095 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 23:05:55,096 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 23:05:55,098 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 23:05:55,099 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 23:05:55,100 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 23:05:55,102 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 23:05:55,103 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 23:05:55,151 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 23:05:55,153 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:05:55,156 CRITICAL               sww2dem_new:224 |Slicing sww file, num points: <type 'netCDF4._netCDF4.Dimension'>: name = 'number_of_points', size = 26526, block size: 10000
+2020-07-31 23:06:14,738 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
+2020-07-31 23:06:14,740 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
+2020-07-31 23:06:14,759 CRITICAL               sww2dem_new:169 |------------------------------------------------
+2020-07-31 23:06:14,761 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
+2020-07-31 23:06:14,763 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
+2020-07-31 23:06:14,765 CRITICAL               sww2dem_new:172 |  Reference:
+2020-07-31 23:06:14,767 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-07-31 23:06:14,769 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
+2020-07-31 23:06:14,770 CRITICAL               sww2dem_new:178 |  Extent:
+2020-07-31 23:06:14,772 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
+2020-07-31 23:06:14,774 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
+2020-07-31 23:06:14,822 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-07-31 23:06:14,824 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
+2020-07-31 23:06:14,828 CRITICAL               sww2dem_new:224 |Slicing sww file, num points: <type 'netCDF4._netCDF4.Dimension'>: name = 'number_of_points', size = 26526, block size: 10000

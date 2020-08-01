@@ -12,7 +12,7 @@ from cresthh.anuga.coordinate_transforms.geo_reference import Geo_reference
 from cresthh.anuga.utilities.system_tools import get_vars_in_expression
 from cresthh.anuga.utilities import log
 from cresthh.anuga.utilities.file_utils import get_all_swwfiles
-from cresthh.anuga.fit_interpolate.interpolate_ext import *
+# from cresthh.anuga.fit_interpolate.interpolate_ext import *
 
 
 ######
@@ -92,8 +92,8 @@ def sww2dem(name_in, name_out,
     import sys
     import types
 
-    from anuga.geometry.polygon import inside_polygon, outside_polygon
-    from anuga.abstract_2d_finite_volumes.util import \
+    from cresthh.anuga.geometry.polygon import inside_polygon, outside_polygon
+    from cresthh.anuga.abstract_2d_finite_volumes.util import \
          apply_expression_to_dictionary
 
     basename_in, in_ext = os.path.splitext(name_in)
@@ -131,13 +131,13 @@ def sww2dem(name_in, name_out,
         log.critical('Reading from %s' % name_in)
         log.critical('Output directory is %s' % name_out)
 
-    from anuga.file.netcdf import NetCDFFile
+    from cresthh.anuga.file.netcdf import NetCDFFile
     fid = NetCDFFile(name_in)
 
     #Get extent and reference
-    x = num.array(fid.variables['x'], num.float)
-    y = num.array(fid.variables['y'], num.float)
-    volumes = num.array(fid.variables['volumes'], num.int)
+    x = num.array(fid.variables['x'][:], num.float)
+    y = num.array(fid.variables['y'][:], num.float)
+    volumes = num.array(fid.variables['volumes'][:], num.int)
     if type(reduction) is not types.BuiltinFunctionType:
         times = fid.variables['time'][reduction]
     else:
@@ -174,7 +174,7 @@ def sww2dem(name_in, name_out,
         if type(reduction) is not types.BuiltinFunctionType:
             log.critical('    Time: %f' % times)
         else:
-            log.critical('    Start time: %f' % fid.starttime[0])
+            log.critical('    Start time: %f' % fid.starttime)
         log.critical('  Extent:')
         log.critical('    x [m] in [%f, %f], len(x) == %d'
                      %(num.min(x), num.max(x), len(x.flat)))
@@ -188,16 +188,16 @@ def sww2dem(name_in, name_out,
         log.critical('  Quantities [SI units]:')
         
         # Comment out for reduced memory consumption
-        for name in ['stage', 'xmomentum', 'ymomentum']:
-            q = fid.variables[name][:].flatten()
-            if type(reduction) is not types.BuiltinFunctionType:
-                q = q[reduction*len(x):(reduction+1)*len(x)]
-            if verbose: log.critical('    %s in [%f, %f]'
-                                     % (name, min(q), max(q)))
-        for name in ['elevation']:
-            q = fid.variables[name][:].flatten()
-            if verbose: log.critical('    %s in [%f, %f]'
-                                     % (name, min(q), max(q)))
+        # for name in ['stage', 'xmomentum', 'ymomentum']:
+        #     q = fid.variables[name][:].flatten()
+        #     if type(reduction) is not types.BuiltinFunctionType:
+        #         q = q[reduction*len(x):(reduction+1)*len(x)]
+        #     if verbose: log.critical('    %s in [%f, %f]'
+        #                              % (name, min(q), max(q)))
+        # for name in ['elevation']:
+        #     q = fid.variables[name][:].flatten()
+        #     if verbose: log.critical('    %s in [%f, %f]'
+        #                              % (name, min(q), max(q)))
 
     # Get the variables in the supplied expression.
     # This may throw a SyntaxError exception.
@@ -214,16 +214,16 @@ def sww2dem(name_in, name_out,
         msg = ("In expression '%s', variables %s are not in the SWW file '%s'"
                % (quantity, str(missing_vars), name_in))
         raise Exception, msg
-
+    print 'number of points:', num.array(number_of_points)
     # Create result array and start filling, block by block.
-    result = num.zeros(number_of_points, num.float)
+    result = num.zeros(number_of_points.size, num.float32)
 
     if verbose:
         msg = 'Slicing sww file, num points: ' + str(number_of_points)
         msg += ', block size: ' + str(block_size)
         log.critical(msg)
 
-    for start_slice in xrange(0, number_of_points, block_size):
+    for start_slice in xrange(0, number_of_points.size, block_size):
         # Limit slice size to array end if at last block
         end_slice = min(start_slice + block_size, number_of_points)
         
@@ -322,7 +322,7 @@ def sww2dem(name_in, name_out,
                 grid_points[k, 1] = yg
 
         # Interpolate
-        from anuga.fit_interpolate.interpolate import Interpolate
+        from cresthh.anuga.fit_interpolate.interpolate import Interpolate
 
         # Remove loners from vertex_points, volumes here
         vertex_points, volumes = remove_lone_verts(vertex_points, volumes)

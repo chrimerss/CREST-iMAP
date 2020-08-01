@@ -64,8 +64,8 @@ def sww2array(name_in,
     import sys
     import types
 
-    from anuga.geometry.polygon import inside_polygon, outside_polygon
-    from anuga.abstract_2d_finite_volumes.util import \
+    from cresthh.anuga.geometry.polygon import inside_polygon, outside_polygon
+    from cresthh.anuga.abstract_2d_finite_volumes.util import \
          apply_expression_to_dictionary
 
     basename_in, in_ext = os.path.splitext(name_in)
@@ -99,13 +99,13 @@ def sww2array(name_in,
         log.critical('Reading from %s' % name_in)
 
 
-    from anuga.file.netcdf import NetCDFFile
+    from cresthh.anuga.file.netcdf import NetCDFFile
     fid = NetCDFFile(name_in)
 
     #Get extent and reference
-    x = num.array(fid.variables['x'], num.float)
-    y = num.array(fid.variables['y'], num.float)
-    volumes = num.array(fid.variables['volumes'], num.int)
+    x = num.array(fid.variables['x'][:], num.float)
+    y = num.array(fid.variables['y'][:], num.float)
+    volumes = num.array(fid.variables['volumes'][:], num.int)
     if type(reduction) is not types.BuiltinFunctionType:
         times = fid.variables['time'][reduction]
     else:
@@ -142,7 +142,7 @@ def sww2array(name_in,
         if type(reduction) is not types.BuiltinFunctionType:
             log.critical('    Time: %f' % times)
         else:
-            log.critical('    Start time: %f' % fid.starttime[0])
+            log.critical('    Start time: %f' % fid.starttime)
         log.critical('  Extent:')
         log.critical('    x [m] in [%f, %f], len(x) == %d'
                      %(num.min(x), num.max(x), len(x.flat)))

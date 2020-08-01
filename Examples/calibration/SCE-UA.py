@@ -5,9 +5,11 @@ import cresthh
 from cresthh import anuga
 from cresthh import UQ
 from cresthh.UQ.optimization import SCE
-
+from cresthh.utils import flowAreaCalc
+from cresthh import metrics as met
 from cresthh.UQ.DoE import morris_oat
 from cresthh.UQ.util import scale_samples_general, read_param_file, discrepancy
+import geopandas as gpd
 import shutil
 import numpy as np
 import model
@@ -18,50 +20,101 @@ def RMSE(obs, sim):
     '''Compute the RMSE of two time series data'''
     return np.nanmean((obs-sim)**2)**.5
 
+def metrics(x,y,obj=['nse']):
+    '''
+    Calculate the metrics with given objective functions
+
+    Inputs:
+    ----------------
+    x - observed values;
+    y - simulated values
+
+    Returns:
+    -----------------
+    results - list; with respect to given metrics
+    '''
+    if isinstance(obj, str):
+        obj= list(obj)
+    
+    mapper= {'nse': met.nse,
+            'rmse':met.rmse,
+            'peak_time_error':met.peak_time_error,
+            'peak_flow_error': met.peak_flow_error,
+            'pearsonr': met.pearsonr,
+            'bias': met.rb}
+
+    results= []
+    for single in obj:
+        try:
+            mask= (~np.isnan(x)) & (~np.isnan(y))
+            results.append(mapper[single](x[mask],y[mask]))
+        except:
+            results.append(np.nan)
+
+    return results
+
 def one_val(params):
     
-    os.system('mpirun -n 36 python model.py %f %f %f > anuga.log'%(params[0],params[1],params[2]))
+    os.system('mpirun -n 36 python model.py %f %f %f %f %f> anuga.log'%(params[0],params[1],params[2], params[3], params[4]))
     swwfile = 'temp.sww'
     gauges= np.loadtxt('gauges.txt')
 
     splotter = anuga.SWW_plotter(swwfile, make_dir=False)
     xc= splotter.xc +splotter.xllcorner
     yc= splotter.yc +splotter.yllcorner
-    dr= pd.date_range('20170825120000', '20170825130000', freq='120S')
+    dr= pd.date_range('20170825120000', '20170827000000', freq='120S')
     
     rmse= 0
     for gauge in gauges:
-        df= pd.DataFrame(index=dr)
-        iloc= np.argmin((xc-gauge[1])**2+ (yc-gauge[2])**2)
-        obs= pd.read_csv('/home/ZhiLi/CRESTHH/data/streamGauge/%08d.csv'%(int(gauge[0])),converters={'datetime':pd.to_datetime}).set_index('datetime').resample('120S',
-                         label='right').interpolate()
-        
-        df['sim']= splotter.stage[:,iloc]
-        df['obs']= obs['stage']
-        rmse+= RMSE(df.sim, df.obs)
+        if gauge[0]==8076700:
+            df= pd.DataFrame(index=dr)
+            iloc= np.argmin((xc-gauge[1])**2+ (yc-gauge[2])**2)
+            obs= pd.read_csv('/home/ZhiLi/CRESTHH/data/streamGauge/%08d.csv'%(int(gauge[0])),converters={'datetime':pd.to_datetime}).set_index('datetime').loc[dr].resample('120S',
+                            label='right').interpolate()
+            crosssection= gpd.read_file('/home/ZhiLi/CRESTHH/data/crosssection/%08d.shp'%(int(gauge[0])))
+            area= [flowAreaCalc(crosssection, splotter.stage[t,iloc]) for t in range(len(splotter.stage))]
+            sim_Q= splotter.speed[:,iloc] * np.array(area)
+            obs_Q= obs['discharge'].values
+            #np.save('sim_Q.npy', [sim_Q, obs_Q.values])
+            discharge_err= metrics(obs_Q, sim_Q, ['nse','rmse','peak_flow_error', 'peak_time_error','bias','pearsonr'])
+            print discharge_err
+            with open('discharge_error.txt','a') as f:
+                f.write('%f,%f,%f,%f,%f,%f\n'%(discharge_err[0], discharge_err[1],discharge_err[2],discharge_err[3],
+                                                discharge_err[4],discharge_err[5]))
+    
+    return discharge_err[0]
+            
+    # HWMs= pd.read_csv('/home/ZhiLi/CRESTHH/data/HoustonCase/HWM_cleaned.csv')
+    # lons= HWMs.lon.values; lats= HWMs.lat.values
+    # ilocs= [np.argmin((xc-lons[i])**2+ (yc-lats[i])**2) for i in range(len(lons))]
 
-    HWMs= pd.read_csv('/home/ZhiLi/CRESTHH/data/HoustonCase/HWM_cleaned.csv')
-    lons= HWMs.lon.values; lats= HWMs.lat.values
-    ilocs= [np.argmin((xc-lons[i])**2+ (yc-lats[i])**2) for i in range(len(lons))]
+    # max_depth=np.nanmax(splotter.depth[:, ilocs], axis=0)
+    # accuracy= RMSE(HWMs.HWM.values, max_depth)
 
-    max_depth=np.nanmax(splotter.depth[:, ilocs], axis=0)
-    accuracy= RMSE(HWMs.HWM.values, max_depth)
-
-    return rmse, accuracy
+    # return rmse, accuracy
 
 def evaluate(values):
     
     Y = np.empty(values.shape[0])
-    min_rmse= np.inf
+    # min_nsce= np.inf
     for i, row in enumerate(values):
-        rmse,acc= one_val(row)
-        print 'params: %.3f %.3f %.3f RMSE: %.3f meters accuracy: %.3f meters'%(row[0], row[1], row[2],rmse, acc)
-        Y[i]= rmse
-        if rmse< min_rmse:
-            print 'updating result'
-            os.system('mv temp.sww best.sww')
-            min_rmse=rmse
+        nsce= one_val(row)
+        print 'params: %.3f %.3f %.3f %.3f %.3f NSE: %.3f meters'%(row[0], row[1], row[2], row[3], row[4], nsce)
+        Y[i]= 1-nsce
+        # if nsce< min_nsce:
+            # print 'updating result'
+            # os.system('mv temp.sww best.sww')
+            # min_nsce=nsce
     return Y
+
+# def evaluate(values):
+#     Y= np.empty(values.shape[0])
+#     min_nsce= np.inf
+#     for i, row in enumerate(values):
+#         nsce= row[0]**2-row[1]**3+row[2]-row[3]+row[4]**4
+#         Y[i]= -nsce
+
+#     return Y
 
 
 # Read in parameter file
