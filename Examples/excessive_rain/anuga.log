@@ -1,151 +1,30 @@
-2020-07-31 22:30:29,044 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-07-31 22:30:29,045 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:31:01,188 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:32:07,851 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:32:24,503 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:32:24,523 CRITICAL                 sww2array:137 |------------------------------------------------
-2020-07-31 22:32:24,525 CRITICAL                 sww2array:138 |Statistics of SWW file:
-2020-07-31 22:32:24,526 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
-2020-07-31 22:32:24,528 CRITICAL                 sww2array:140 |  Reference:
-2020-07-31 22:32:24,530 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:33:09,128 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:33:09,146 CRITICAL                 sww2array:137 |------------------------------------------------
-2020-07-31 22:33:09,148 CRITICAL                 sww2array:138 |Statistics of SWW file:
-2020-07-31 22:33:09,150 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
-2020-07-31 22:33:09,152 CRITICAL                 sww2array:140 |  Reference:
-2020-07-31 22:33:09,153 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:33:40,836 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:33:40,854 CRITICAL                 sww2array:137 |------------------------------------------------
-2020-07-31 22:33:40,857 CRITICAL                 sww2array:138 |Statistics of SWW file:
-2020-07-31 22:33:40,858 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
-2020-07-31 22:33:40,860 CRITICAL                 sww2array:140 |  Reference:
-2020-07-31 22:33:40,862 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:33:58,026 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:33:58,044 CRITICAL                 sww2array:137 |------------------------------------------------
-2020-07-31 22:33:58,046 CRITICAL                 sww2array:138 |Statistics of SWW file:
-2020-07-31 22:33:58,048 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
-2020-07-31 22:33:58,049 CRITICAL                 sww2array:140 |  Reference:
-2020-07-31 22:33:58,051 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:34:10,443 CRITICAL                 sww2array:99  |Reading from opt_Harvey.sww
-2020-07-31 22:34:10,461 CRITICAL                 sww2array:137 |------------------------------------------------
-2020-07-31 22:34:10,463 CRITICAL                 sww2array:138 |Statistics of SWW file:
-2020-07-31 22:34:10,465 CRITICAL                 sww2array:139 |  Name: opt_Harvey.sww
-2020-07-31 22:34:10,466 CRITICAL                 sww2array:140 |  Reference:
-2020-07-31 22:34:10,468 CRITICAL                 sww2array:141 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:34:10,470 CRITICAL                 sww2array:145 |    Start time: 0.000000
-2020-07-31 22:34:10,472 CRITICAL                 sww2array:146 |  Extent:
-2020-07-31 22:34:10,473 CRITICAL                 sww2array:148 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 22:34:10,475 CRITICAL                 sww2array:150 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 22:34:10,524 CRITICAL                 sww2array:155 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 22:34:10,526 CRITICAL                 sww2array:156 |  Quantities [SI units]:
-2020-07-31 22:46:57,284 CRITICAL                 sww2array:164 |    stage in [-2.576403, 58.382839]
-2020-07-31 22:55:53,396 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 22:55:53,398 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 22:56:10,279 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 22:56:10,281 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 22:56:22,729 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 22:56:22,732 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 22:56:22,751 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 22:56:22,753 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 22:56:22,755 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 22:56:22,756 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 22:56:22,759 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:56:22,760 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 22:56:22,762 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 22:56:22,764 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 22:56:22,766 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 22:56:22,813 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 22:56:22,816 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 22:59:30,738 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 22:59:30,740 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 22:59:30,758 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 22:59:30,760 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 22:59:30,762 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 22:59:30,764 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 22:59:30,766 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 22:59:30,768 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 22:59:30,770 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 22:59:30,772 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 22:59:30,773 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 22:59:30,822 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 22:59:30,824 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:00:38,638 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 23:00:38,640 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 23:00:38,659 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 23:00:38,661 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 23:00:38,663 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 23:00:38,665 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 23:00:38,667 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 23:00:38,668 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 23:00:38,670 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 23:00:38,672 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 23:00:38,674 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 23:00:38,723 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 23:00:38,725 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:02:31,946 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 23:02:31,948 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 23:02:31,968 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 23:02:31,970 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 23:02:31,971 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 23:02:31,973 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 23:02:31,975 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 23:02:31,977 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 23:02:31,978 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 23:02:31,980 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 23:02:31,982 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 23:02:32,031 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 23:02:32,033 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:02:44,375 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 23:02:44,377 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 23:02:44,395 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 23:02:44,397 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 23:02:44,399 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 23:02:44,400 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 23:02:44,402 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 23:02:44,404 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 23:02:44,406 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 23:02:44,408 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 23:02:44,410 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 23:02:44,458 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 23:02:44,459 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:03:58,302 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 23:03:58,304 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 23:03:58,322 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 23:03:58,323 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 23:03:58,325 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 23:03:58,327 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 23:03:58,329 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 23:03:58,330 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 23:03:58,332 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 23:03:58,334 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 23:03:58,336 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 23:03:58,384 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 23:03:58,386 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:05:55,072 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 23:05:55,075 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 23:05:55,092 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 23:05:55,094 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 23:05:55,095 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 23:05:55,096 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 23:05:55,098 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 23:05:55,099 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 23:05:55,100 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 23:05:55,102 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 23:05:55,103 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 23:05:55,151 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 23:05:55,153 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:05:55,156 CRITICAL               sww2dem_new:224 |Slicing sww file, num points: <type 'netCDF4._netCDF4.Dimension'>: name = 'number_of_points', size = 26526, block size: 10000
-2020-07-31 23:06:14,738 CRITICAL               sww2dem_new:131 |Reading from opt_Harvey.sww
-2020-07-31 23:06:14,740 CRITICAL               sww2dem_new:132 |Output directory is max_depth.asc
-2020-07-31 23:06:14,759 CRITICAL               sww2dem_new:169 |------------------------------------------------
-2020-07-31 23:06:14,761 CRITICAL               sww2dem_new:170 |Statistics of SWW file:
-2020-07-31 23:06:14,763 CRITICAL               sww2dem_new:171 |  Name: opt_Harvey.sww
-2020-07-31 23:06:14,765 CRITICAL               sww2dem_new:172 |  Reference:
-2020-07-31 23:06:14,767 CRITICAL               sww2dem_new:173 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-07-31 23:06:14,769 CRITICAL               sww2dem_new:177 |    Start time: 0.000000
-2020-07-31 23:06:14,770 CRITICAL               sww2dem_new:178 |  Extent:
-2020-07-31 23:06:14,772 CRITICAL               sww2dem_new:180 |    x [m] in [0.000000, 37293.972656], len(x) == 26526
-2020-07-31 23:06:14,774 CRITICAL               sww2dem_new:182 |    y [m] in [0.000000, 22885.353516], len(y) == 26526
-2020-07-31 23:06:14,822 CRITICAL               sww2dem_new:187 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
-2020-07-31 23:06:14,824 CRITICAL               sww2dem_new:188 |  Quantities [SI units]:
-2020-07-31 23:06:14,828 CRITICAL               sww2dem_new:224 |Slicing sww file, num points: <type 'netCDF4._netCDF4.Dimension'>: name = 'number_of_points', size = 26526, block size: 10000
+2020-08-05 17:26:23,047 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-08-05 17:26:23,048 CRITICAL                   sww2dem:130 |Reading from ../calibration/coupled_opt.sww
+2020-08-05 17:26:23,050 CRITICAL                   sww2dem:131 |Output directory is flow_speed.asc
+2020-08-05 17:26:23,073 CRITICAL                   sww2dem:174 |------------------------------------------------
+2020-08-05 17:26:23,074 CRITICAL                   sww2dem:175 |Statistics of SWW file:
+2020-08-05 17:26:23,076 CRITICAL                   sww2dem:176 |  Name: ../calibration/coupled_opt.sww
+2020-08-05 17:26:23,078 CRITICAL                   sww2dem:177 |  Reference:
+2020-08-05 17:26:23,079 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-08-05 17:26:23,081 CRITICAL                   sww2dem:182 |    Start time: 0.000000
+2020-08-05 17:26:23,083 CRITICAL                   sww2dem:183 |  Extent:
+2020-08-05 17:26:23,084 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
+2020-08-05 17:26:23,086 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
+2020-08-05 17:26:23,123 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 3961
+2020-08-05 17:26:23,124 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
+2020-08-05 17:26:23,132 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
+2020-08-05 18:45:23,942 CRITICAL                   sww2dem:266 |Processed values for (xmomentum**2 + ymomentum**2)**0.5/(stage-elevation+1.e-6/(stage-elevation)) are in [0.000000, 5.011214]
+2020-08-05 18:45:23,962 CRITICAL                   sww2dem:298 |Creating grid
+2020-08-05 18:45:24,363 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
+2020-08-05 18:45:24,365 CRITICAL                   sww2dem:420 |Writing flow_speed.prj
+2020-08-05 18:45:24,366 CRITICAL                   sww2dem:433 |Writing flow_speed.asc
+2020-08-05 18:45:24,368 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
+2020-08-05 18:45:24,729 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
+2020-08-05 18:45:25,090 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
+2020-08-05 18:45:25,459 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
+2020-08-05 18:45:25,832 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
+2020-08-05 18:45:26,199 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
+2020-08-05 18:45:26,565 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
+2020-08-05 18:45:26,928 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
+2020-08-05 18:45:27,297 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
+2020-08-05 18:45:27,659 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289

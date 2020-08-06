@@ -337,7 +337,7 @@ def sww2dem(name_in, name_out,
                 grid_points[k, 1] = yg
 
         # Interpolate
-        from anuga.fit_interpolate.interpolate import Interpolate
+        from cresthh.anuga.fit_interpolate.interpolate import Interpolate
 
         # Remove loners from vertex_points, volumes here
         vertex_points, volumes = remove_lone_verts(vertex_points, volumes)
@@ -404,7 +404,7 @@ def sww2dem(name_in, name_out,
         if verbose:
             log.critical('Writing %s' % name_out)
 
-        import anuga.abstract_2d_finite_volumes.ermapper_grids as ermapper_grids
+        import cresth.anuga.abstract_2d_finite_volumes.ermapper_grids as ermapper_grids
 
         # convert grid_values to ers ordering
         reordered_grid_values = grid_values[::-1,:]

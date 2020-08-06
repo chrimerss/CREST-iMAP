@@ -307,7 +307,7 @@ class Interpolate (FitInterpolate):
         point_coordinates = ensure_numeric(point_coordinates, num.float)
         f = ensure_numeric(f, num.float)
 
-        from anuga.caching import myhash
+        from cresthh.anuga.caching import myhash
         import sys
 
         if use_cache is True:

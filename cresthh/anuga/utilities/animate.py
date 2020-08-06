@@ -429,6 +429,7 @@ class SWW_plotter:
         self.ymom = np.array(p.variables['ymomentum_c'])
         self.exc_rain= np.array(p.variables['excess_rain_c'])
         self.SM= np.array(p.variables['SM_c'])*100 # To %
+        self.volumes= np.array(p.variables['volumes'])
         # self.SI0= np.array(p.variables['SI0_c'])
         # self.SS0= np.array(p.variables['SS0_c'])
 
@@ -886,3 +887,117 @@ class SWW_plotter:
             else:
                 os.system("mkdir %s" % plot_dir)
             print "Figure files for each frame will be stored in " + plot_dir
+
+    def save_asc_file(self, dst, quantity,cellsize=10,zone=0,datum='WGS84',
+                        false_easting=0, false_northing=0,NODATA_value=-9999):
+        '''
+        Added by Allen Li 2020.08.05
+
+        This method is to save designated data to asc file to be imported in other softwares, bypassing sww2dem
+        '''
+        import numpy as np
+
+        if not (hasattr(self, quantity) or isinstance(quantity, np.ndarray)):
+            raise 'expected argument quantity inside the splotter class'
+
+        if hasattr(self, quantity):
+            result= getattr(self, quantity)
+            result= np.nanmax(result, axis=0)
+        else:
+            assert quantity.shape==self.stage.shape[1], 'input quantity has different shape'
+            result= quantity
+        nrows= int((max(self.x)- min(self.x))/cellsize) +1
+        ncols= int((max(self.y)- min(self.y))/cellsize) +1
+        newxllcorner= min(self.x)+ self.xllcorner
+        newyllcorner= min(self.y)+ self.yllcorner
+        x= self.x + self.xllcorner - newxllcorner
+        y= self.y + self.yllcorner - newyllcorner
+
+        grid_values= np.zeros((nrows*ncols,),np.float32)
+        num_tri= len(self.triangles)
+        norms= np.zeros(6*num_tri)
+
+        from cresthh.anuga.file_conversion.calc_grid_values_ext import calc_grid_values
+        calc_grid_values(nrows, ncols, cellsize, NODATA_value,
+            x, y, norms, self.volumes, result, grid_values)
+        basename_out= dst.split('.')[0]
+        # write projection file
+        
+        prjfile= dst + '.prj'
+        prjid= open(prjfile, 'w')
+        prjid.write('Projection    %s\n' %'UTM')
+        prjid.write('Zone          %d\n' %zone)
+        prjid.write('Datum         %s\n' %datum)
+        prjid.write('Zunits        NO\n')
+        prjid.write('Units         METERS\n')
+        prjid.write('Spheroid      %s\n' %datum)
+        prjid.write('Xshift        %d\n' %false_easting)
+        prjid.write('Yshift        %d\n' %false_northing)
+        prjid.write('Parameters\n')
+        prjid.close()
+
+        # write .asc file
+
+        ascid = open(dst, 'w')
+
+        ascid.write('ncols         %d\n' %ncols)
+        ascid.write('nrows         %d\n' %nrows)
+        ascid.write('xllcorner     %d\n' %newxllcorner)
+        ascid.write('yllcorner     %d\n' %newyllcorner)
+        ascid.write('cellsize      %f\n' %cellsize)
+        ascid.write('NODATA_value  %d\n' %NODATA_value)
+
+        for i in range(nrows):
+            if verbose and i % ((nrows+10)/10) == 0:
+                log.critical('Doing row %d of %d' % (i, nrows))
+
+            base_index = (nrows-i-1)*ncols
+
+            slice = grid_values[base_index:base_index+ncols]
+
+            np.savetxt(ascid, slice.reshape(1,ncols), format, ' ' )
+
+        ascid.close()
+
+    def calc_grid_values(self, nrows, ncols, cellsize, NODATA_value,
+                            x,y, norms, volumes, result, grid_values):
+        import numpy as num
+        grid_points = num.zeros ((ncols*nrows, 2), num.float)
+        vertex_points = num.concatenate ((x[:,num.newaxis], y[:,num.newaxis]), axis=1)
+        assert len(vertex_points.shape) == 2
+
+        for i in xrange(nrows):
+            yg = i * cellsize
+    #            if out_ext == '.asc':
+    #                yg = i * cellsize
+    #            else:
+    #                # this will flip the order of the y values for ers
+    #                yg = (nrows-i) * cellsize
+
+            for j in xrange(ncols):
+                xg = j * cellsize
+                k = i*ncols + j
+
+                grid_points[k, 0] = xg
+                grid_points[k, 1] = yg
+
+        # Interpolate
+        from cresthh.anuga.fit_interpolate.interpolate import Interpolate
+        from cresthh.anuga.abstract_2d_finite_volumes.util import remove_lone_verts
+        # Remove loners from vertex_points, volumes here
+        vertex_points, volumes = remove_lone_verts(vertex_points, volumes)
+        # export_mesh_file('monkey.tsh',{'vertices':vertex_points, 'triangles':volumes})
+
+
+        interp = Interpolate(vertex_points, volumes, verbose = False)
+
+        # Interpolate using quantity values
+        # if verbose: log.critical('Interpolating')
+        grid_values[:] = interp.interpolate(result, grid_points,
+                                            NODATA_value= NODATA_value,
+                                            verbose=False).flatten()
+        #print grid_values.shape
+
+        return
+
+

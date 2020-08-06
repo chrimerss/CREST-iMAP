@@ -28,7 +28,7 @@ if __name__=='__main__':
 
     global myid
     start='20170825120000'
-    end=  '20170827000000'
+    end=  '20170831000000'
     interval= '2M'
     yieldstep= pd.Timedelta(interval).total_seconds()    
     # params= params[0]
@@ -41,7 +41,7 @@ if __name__=='__main__':
         # shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
 
 
-        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
+        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700_new/stream_dem/DEM_10m.mesh')
         # if os.path.exists('1km.msh'):
         #     DOMAIN= anuga.create_domain_from_file('1km.msh')
         # else:
@@ -89,7 +89,7 @@ if __name__=='__main__':
     DOMAIN.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
     DOMAIN.set_timestamp(start, format='%Y%m%d%H%M%S')
     DOMAIN.set_time_interval(interval)
-    DOMAIN.set_coupled(True)
+    DOMAIN.set_coupled(False)
     total_seconds= (pd.to_datetime(end) - pd.to_datetime(start)).total_seconds()
 
 
