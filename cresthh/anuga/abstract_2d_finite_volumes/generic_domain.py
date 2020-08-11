@@ -1812,8 +1812,11 @@ class Generic_Domain:
 
         self.external=0
 
-        if self.get_infiltration():
+        if self.set_infiltration():
+        
             self.acc_infiltration= num.zeros(len(self.quantities['stage'].centroid_values))
+        else:
+            self.set_infiltration(False)
 
         while True:
 
@@ -1865,7 +1868,7 @@ class Generic_Domain:
                     cent_ids, excessRain= self.evolve_crest(interval= _time_interval_func(self._time_interval))
                     # excessRain*= self.get_timestep()
                 elif self.get_infiltration():
-                    cent_ids, excessRain= self.simple_infiltration(self._time_interval)
+                    cent_ids, excessRain= self.simple_infiltration(interval= _time_interval_func(self._time_interval))
                 else:
                     cent_ids, excessRain= self.evolve_plain()
                     excessRain= num.array(excessRain)
@@ -2030,20 +2033,28 @@ class Generic_Domain:
         if not hasattr(self,'acc_infiltration'):
             msg= 'accumulated infiltration is required to initialize...'
             raise msg
-        if not hasattr(self.quantities, 'Ksat'):
-            msg= 'distributed hydraulic conductivity is required ...'
-            raise msg
+        # if not hasattr(self.quantities, 'Ksat'):
+        #     msg= 'distributed hydraulic conductivity is required ...'
+        #     raise msg
         ksat= self.quantities['Ksat'].centroid_values/(3600.0*1000.0)
-        depth= self.quantities['WM'].centroid_values[N]/1000.
-        net_rain= P-ET
-        _infil_rate= ksat+5*ksat*(0.8*depth-self.acc_infiltration)**0.65
-        mask= (infil_rate<P)
-        infil_rate[mask]= infil_rate
-        infil_rate[~mask]= P[~mask]
-        self.acc_infiltration+= (infil_rate*self.interval)
-        print 'rain rate: %.2f, evaporation rate: %.2f  infiltration rate: %.2f'%(P[100],ET[100],infil_rate[100])
+        depth= self.quantities['WM'].centroid_values/1000.
+        net_rain= P-ET*ke
+        excess_rain= []
+        cent_id=[]
+        for i in num.arange(len(self.quantities['stage'].centroid_values)):
+            _infil_rate= ksat[i]+5*ksat[i]*(0.8*depth[i]-self.acc_infiltration[i])**0.65
+            _infil_rate= max(0, _infil_rate)
+            if _infil_rate<net_rain[i]:
+                excess_rain.append(net_rain[i]-_infil_rate)
+            else:
+                excess_rain.append(0)
+            cent_id.append(i)
 
-        return num.arange(len(P)), (P-ET*ke-infil_rate)*interval
+            self.acc_infiltration[i]+= (min(_infil_rate, net_rain[i])*interval)
+        
+        print 'rain rate: %f, evaporation rate: %f  infiltration rate: %f'%(P[100]*1000,ET[100]*1000,_infil_rate)
+
+        return cent_id, num.array(excess_rain)
 
         
     
