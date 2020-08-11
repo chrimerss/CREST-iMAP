@@ -41,7 +41,7 @@ if __name__=='__main__':
         # shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
 
 
-        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700_new/stream_dem/DEM_10m.mesh')
+        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
         # if os.path.exists('1km.msh'):
         #     DOMAIN= anuga.create_domain_from_file('1km.msh')
         # else:
@@ -74,7 +74,7 @@ if __name__=='__main__':
         DOMAIN=None
     barrier()
     DOMAIN= distribute(DOMAIN)
-    DOMAIN.set_name('temp')
+    DOMAIN.set_name('coupled_30m')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.quantities['stage'].centroid_values[:]+= params[0]
     DOMAIN.quantities['friction'].centroid_values[:]*= params[1]

@@ -543,6 +543,17 @@ class Generic_Domain:
             raise Exception(msg)
         else:
             self.proj= proj
+
+    def set_infiltration(self, onInfiltration=False):
+        if not isinstance(onInfiltration, bool):
+            msg= 'Excepted argument is bool.'
+            raise Exception(msg)
+        else:
+            self._onInfiltration= onInfiltration
+
+    def get_infiltration(self):
+        
+        return self._onInfiltration
         
 
     def build_tagged_elements_dictionary(self, *args, **kwargs):
@@ -1801,6 +1812,9 @@ class Generic_Domain:
 
         self.external=0
 
+        if self.get_infiltration():
+            self.acc_infiltration= num.zeros(len(self.quantities['stage'].centroid_values))
+
         while True:
 
             initial_time = self.get_time()
@@ -1821,7 +1835,7 @@ class Generic_Domain:
                 if os.path.exists(precip_pth):
                     self.quantities['P'].set_values_from_lat_long_tif_file(precip_pth,
                                 location='centroids' ,proj=self.proj)
-                    self.quantities['P']/=(3600.0*1000.0) #set default precipitation rate mm/h for now
+                    self.quantities['P']/=(3600.0*1000.0) #convert mm/h to m/s
                 else:
                     msg= '%s not found in precipitation, assume 0 everywhere'%precip_pth
                     # log.critical(msg)
@@ -1850,6 +1864,8 @@ class Generic_Domain:
                 if coupled:
                     cent_ids, excessRain= self.evolve_crest(interval= _time_interval_func(self._time_interval))
                     # excessRain*= self.get_timestep()
+                elif self.get_infiltration():
+                    cent_ids, excessRain= self.simple_infiltration(self._time_interval)
                 else:
                     cent_ids, excessRain= self.evolve_plain()
                     excessRain= num.array(excessRain)
@@ -1959,33 +1975,7 @@ class Generic_Domain:
         """
         Core of CREST model, here we import crest simplified model
         """
-        # self.q_rain= self.quantities['P'].centroid_values
-        # self.q_evap= evap.centroid_values
-        # q_RI= self.quantities['RI'].centroid_values
-        # q_RS= self.quantities['RS'].centroid_values
-        # q_SS= self.quantities['SS0'].centroid_values
-        # q_SI= self.quantities['SI0'].centroid_values
-        # q_W= self.quantities['W0'].centroid_values
-        # q_RainFact= self.quantities['RainFact'].centroid_values
-        # q_Ksat= self.quantities['Ksat'].centroid_values
-        # q_WM= self.quantities['WM'].centroid_values
-        # q_B= self.quantities['B'].centroid_values
-        # q_IM= self.quantities['IM'].centroid_values
-        # q_KE= self.quantities['KE'].centroid_values
-        # q_coeM= self.quantities['coeM'].centroid_values
-        # q_expM= self.quantities['expM'].centroid_values
-        # q_coeR= self.quantities['coeR'].centroid_values
-        # q_coeS= self.quantities['coeS'].centroid_values
-        # q_KS= self.quantities['KS'].centroid_values
-        # q_KI= self.quantities['KI'].centroid_values
-        # args= [(q_rain, q_evap, q_RI,q_RS,q_SS,q_SI,
-        #         q_W, q_RainFact, q_Ksat, q_WM, q_B,
-        #         q_IM, q_KE, q_coeM, q_expM, q_coeR, q_coeS,
-        #         q_KS, q_KI) for i in len(q_rain)]
-        # pool= Pool(16)
-        # results= pool.map(self._evolve_crest,
-        #             num.arange(len(self.quantities['W0'].centroid_values)))
-        # pool.close()
+
         excessive_rain= []
         cent_id= []
         # for (N, RI, RS, SI0, SS0, W0) in results:
@@ -2031,6 +2021,31 @@ class Generic_Domain:
         #     print 'SM: %.2f mm, overland: %.3f mm/s actual ET: %.3f mm/s after CREST'%(SM*1000, overland*1000, ET*1000)
 
         return N, SM,overland,interflow,ET
+
+    def simple_infiltration(self, interval):
+        '''Larry G. et al. (1986)'''
+        P= self.quantities['P'].centroid_values
+        ET= self.quantities['ET'].centroid_values
+        ke= self.quantities['KE'].centroid_values
+        if not hasattr(self,'acc_infiltration'):
+            msg= 'accumulated infiltration is required to initialize...'
+            raise msg
+        if not hasattr(self.quantities, 'Ksat'):
+            msg= 'distributed hydraulic conductivity is required ...'
+            raise msg
+        ksat= self.quantities['Ksat'].centroid_values/(3600.0*1000.0)
+        depth= self.quantities['WM'].centroid_values[N]/1000.
+        net_rain= P-ET
+        _infil_rate= ksat+5*ksat*(0.8*depth-self.acc_infiltration)**0.65
+        mask= (infil_rate<P)
+        infil_rate[mask]= infil_rate
+        infil_rate[~mask]= P[~mask]
+        self.acc_infiltration+= (infil_rate*self.interval)
+        print 'rain rate: %.2f, evaporation rate: %.2f  infiltration rate: %.2f'%(P[100],ET[100],infil_rate[100])
+
+        return num.arange(len(P)), (P-ET*ke-infil_rate)*interval
+
+        
     
     def evolve_one_euler_step(self, yieldstep, finaltime,forcing):
         """One Euler Time Step

@@ -1,13 +1,14 @@
+'''A simplified Green-Ampt infiltration model from Wells, Larry G.; Ward, A. D.; Moore, I. D.; and Phillips, R. E., "Comparison of Four Infiltration Models in Characterizing Infiltration
+Through Surface Mine Profiles" (1986). Biosystems and Agricultural Engineering Faculty Publications. 184.
+https://uknowledge.uky.edu/bae_facpub/184'''
+
 import numpy as num
-# from print_stats import print_test_stats, build_full_flag
-# import cresthh.anuga
 import sys
 sys.path.append('/home/ZhiLi/CRESTHH')
 import cresthh.anuga
 from cresthh import anuga
 from cresthh.anuga import Domain
 import pandas as pd
-# from anuga import Transmissive_boundary, Refelective_boundary
 import numpy as np
 import os
 
@@ -28,31 +29,8 @@ if myid==0:
     # topo_file= '/hydros/ZhiLi/demHouston033s_NAm83fel.tif'
     topo_file='/hydros/ZhiLi/demHouston033s_NAm83fel.tif'
     # topo_file= '/home/ZhiLi/mesher/examples/flow_accumulation/flow_accumulation/DEM_10m/DEM_10m_projected.tif'
-    # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
-    # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/data/buffered_mainstream_new/mainstream_buffer.shp')
-    # base_resolution = 1000000 #1km
-    # interior_resolution= 1000 #10 m2    
-    
-    # myProj = Proj("+proj=utm +zone=15, +south +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-    
-    # lons= np.array(study_area.exterior[0].coords)[:,0]; lats=np.array(study_area.exterior[0].coords)[:,1]
-    # utm_coords_ext= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]
-    # lons= np.array(interior_area.exterior[0].coords)[:,0]; lats=np.array(interior_area.exterior[0].coords)[:,1]
-    # utm_coords_int= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]    
-    # if os.path.exists('1km_082500.msh'):
-    DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
-    # DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
-    # DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/flow_accumulation/flow_accumulation/DEM_10m.mesh')
-    # DOMAIN= anuga.create_domain_from_file('1km_Houston_house_removed.msh')
-    # else:
-    #     DOMAIN= anuga.create_domain_from_regions(
-    #         utm_coords_ext,
-    #         boundary_tags={'bottom': [0]},
-    #         maximum_triangle_area=1000000,
-    #         interior_regions=[[utm_coords_int, interior_resolution]],
-    #         mesh_filename='1km_082500.msh')    
-    # domain= anuga.create_domain_from_regions(bounding_polygon, boundary_tags={'bottom':[0],}, maximum_triangle_area=0.001,verbose=True)
-    DOMAIN.set_name('Coupled_10m_no_constraint_mesh')
+    DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700_new/stream_dem/DEM_10m.mesh')
+    DOMAIN.set_name('Coupled_10m_modified_mesh')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
@@ -83,11 +61,8 @@ barrier()
 DOMAIN= distribute(DOMAIN)
 DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
 DOMAIN.set_coupled(True)
+DOMAIN.set_infiltration(True)
 
-#domain.set_evap_dir('/hydros/MengyuChen/pet', pattern='cov_et17%m%d.asc', freq='D')
-#domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='imerg%Y%m%dS%H%M%S.tif', freq='H')
-#domain.set_timestamp('20170825180000', format='%Y%m%d%H%M%S')
-#domain.set_time_interval('1H')
 
 DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
 # domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='nimerg%Y%m%dS%H%M%S.tif', freq='H')
