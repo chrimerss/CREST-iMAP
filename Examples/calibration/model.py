@@ -32,7 +32,7 @@ if __name__=='__main__':
     interval= '2M'
     yieldstep= pd.Timedelta(interval).total_seconds()    
     # params= params[0]
-    topo_file='/hydros/ZhiLi/DEM_08076700.tif'
+    topo_file='/hydros/ZhiLi/demHouston033s_NAm83fel.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_river_buffer_cliped.shp')
     # base_resolution = 1000000 #1km
@@ -41,7 +41,7 @@ if __name__=='__main__':
         # shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
 
 
-        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
+        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700_new/stream_dem/DEM_10m.mesh')
         # if os.path.exists('1km.msh'):
         #     DOMAIN= anuga.create_domain_from_file('1km.msh')
         # else:
@@ -84,16 +84,17 @@ if __name__=='__main__':
     DOMAIN.quantities['B'].centroid_values[:]*= params[3]
     DOMAIN.quantities['IM'].centroid_values[:]*= params[4]
     # DOMAIN.set_quantity('KE', params[6], location='centroids')
-
+    # 0.039 0.637 0.128 8.884 0.356 NSE:0.6
     DOMAIN.set_evap_dir('/home/ZhiLi/CRESTHH/data/evap', pattern='cov_et17%m%d.asc.tif', freq='1D')
     DOMAIN.set_precip_dir('/hydros/MengyuChen/mrmsPrecRate',pattern='PrecipRate_00.00_%Y%m%d-%H%M00.grib2-var0-z0.tif', freq=interval)
     DOMAIN.set_timestamp(start, format='%Y%m%d%H%M%S')
     DOMAIN.set_time_interval(interval)
-    DOMAIN.set_coupled(False)
+    DOMAIN.set_coupled(True)
+    # DOMAIN.set_infiltration(False)
     total_seconds= (pd.to_datetime(end) - pd.to_datetime(start)).total_seconds()
 
 
-    for t in DOMAIN.evolve(yieldstep=yieldstep, duration=total_seconds):
+    for t in DOMAIN.evolve(yieldstep=15*60, duration=total_seconds):
         if myid==0:
             DOMAIN.print_timestepping_statistics()
             # print 'friction:', DOMAIN.get_quantity('friction').centroid_values[50]

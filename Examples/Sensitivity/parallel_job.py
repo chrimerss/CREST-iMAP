@@ -40,7 +40,7 @@ if myid==0:
     # lons= np.array(interior_area.exterior[0].coords)[:,0]; lats=np.array(interior_area.exterior[0].coords)[:,1]
     # utm_coords_int= [myProj(lon,lat) for (lon, lat) in zip(lons, lats)]    
     # if os.path.exists('1km_082500.msh'):
-    DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
+    DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700_new/stream_dem/DEM_10m.mesh')
     # DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700/stream_dem/DEM_10m.mesh')
     # DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/flow_accumulation/flow_accumulation/DEM_10m.mesh')
     # DOMAIN= anuga.create_domain_from_file('1km_Houston_house_removed.msh')
@@ -52,12 +52,12 @@ if myid==0:
     #         interior_regions=[[utm_coords_int, interior_resolution]],
     #         mesh_filename='1km_082500.msh')    
     # domain= anuga.create_domain_from_regions(bounding_polygon, boundary_tags={'bottom':[0],}, maximum_triangle_area=0.001,verbose=True)
-    DOMAIN.set_name('Coupled_10m_no_constraint_mesh')
+    DOMAIN.set_name('Coupled_10m_modified_mesh_infiltration')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
     DOMAIN.set_quantity('stage', expression='elevation', location='centroids')  
-    DOMAIN.set_quantity('SM', 0, location='centroids')
+    DOMAIN.set_quantity('SM', 1, location='centroids')
     DOMAIN.set_quantity('Ksat', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/ksat.tif', location='centroids')
     # DOMAIN.quantities['Ksat'].centroid_values[:]*= 289.0
     DOMAIN.set_quantity('WM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/wm_10m.tif', location='centroids')
@@ -82,7 +82,8 @@ barrier()
 
 DOMAIN= distribute(DOMAIN)
 DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-DOMAIN.set_coupled(True)
+DOMAIN.set_coupled(False)
+DOMAIN.set_infiltration(True)
 
 #domain.set_evap_dir('/hydros/MengyuChen/pet', pattern='cov_et17%m%d.asc', freq='D')
 #domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='imerg%Y%m%dS%H%M%S.tif', freq='H')

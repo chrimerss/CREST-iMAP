@@ -552,6 +552,9 @@ class Generic_Domain:
             self._onInfiltration= onInfiltration
 
     def get_infiltration(self):
+
+        if not hasattr(self, '_onInfiltration'):
+            self.set_infiltration(False)
         
         return self._onInfiltration
         
@@ -1812,11 +1815,10 @@ class Generic_Domain:
 
         self.external=0
 
-        if self.set_infiltration():
+        if self.get_infiltration():
         
             self.acc_infiltration= num.zeros(len(self.quantities['stage'].centroid_values))
-        else:
-            self.set_infiltration(False)
+
 
         while True:
 
@@ -2036,7 +2038,7 @@ class Generic_Domain:
         # if not hasattr(self.quantities, 'Ksat'):
         #     msg= 'distributed hydraulic conductivity is required ...'
         #     raise msg
-        ksat= self.quantities['Ksat'].centroid_values/(3600.0*1000.0)
+        ksat= self.quantities['Ksat'].centroid_values/(3600.0*1000.0)*100
         depth= self.quantities['WM'].centroid_values/1000.
         net_rain= P-ET*ke
         excess_rain= []
@@ -2052,7 +2054,7 @@ class Generic_Domain:
 
             self.acc_infiltration[i]+= (min(_infil_rate, net_rain[i])*interval)
         
-        print 'rain rate: %f, evaporation rate: %f  infiltration rate: %f'%(P[100]*1000,ET[100]*1000,_infil_rate)
+        # print 'rain rate: %f, evaporation rate: %f  infiltration rate: %f'%(P[100]*1000,ET[100]*1000,_infil_rate)
 
         return cent_id, num.array(excess_rain)
 
