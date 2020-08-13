@@ -688,12 +688,6 @@ class SWW_plotter:
 
         plt.title('Soil moisture: Time %s'%(time))
 
-        self.triang.set_mask(depth > md)
-        plt.tripcolor(self.triang,
-                      facecolors=elev,
-                      cmap='Greys_r')
-
-        self.triang.set_mask(depth < md)
         plt.tripcolor(self.triang,
                       facecolors=soil,
                       cmap='viridis',
@@ -800,6 +794,8 @@ class SWW_plotter:
         self._longitudinal_frame(figsize, dpi, frame, pnts)
 
         plt.show()
+
+    def save
 
 
     def make_depth_animation(self, save_gif=False, dst='temp.gif'):
