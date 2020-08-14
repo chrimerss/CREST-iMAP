@@ -86,3 +86,54 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
         #     results['excess rain']= rain[:,iloc]
 
     return results
+
+def sample_points_from_line(line, samples):
+    '''generate point samples from a linestring'''
+    llcorner= np.array(line.geometry.coords)[0]
+    urcorner= np.array(line.geometry.coords)[1]
+    x= np.linspace(llcorner[0], urcorner[0],samples)
+    y= np.linspace(llcorner[1], urcorner[1],samples)
+    values= line.iloc[3:-1].values
+    
+    return x, y, values
+
+
+def interpolateSWW(swwfile, xi, yi):
+    '''
+    using cubic triangular interpolation to populate regular grid cells
+    
+    Input:
+    ------------------------
+    swwfile: str; output .sww file
+    xi: np.ndarray 1D; the longitudes
+    yi: np.ndarray 1D; the latitudes
+
+    Output:
+    ------------------------
+    xi: np.ndarray 2D; the meshgrided longitudes
+    yi: np.ndarray 2D; the meshgrided latitudes
+    zi_lin: np.ndarray 2D; the interpolated field
+
+    Examples:
+    ------------------------
+    xi,yi,MD_benchmark= interpolate('Coupled_10m_modified_mesh.sww', np.arange(0,38000,10), np.arange(0,25000,10))
+    '''
+    from netCDF4 import Dataset
+    import matplotlib.tri as mtri
+    nc= Dataset(swwfile)
+    if isinstance(field, str):
+        if field=='depth':
+            fea= nc['stage'][:].max(axis=0)- nc['elevation'][:]
+    elif isinstance(field, np.ndarray):
+        
+#     interp_lin = mtri.CubicTriInterpolator(triang, z, kind='geom')
+    triangles= nc['volumes'][:]
+    x= nc['x'][:]
+    y=nc['y'][:]
+    triang= mtri.Triangulation(x, y, triangles)
+    interp_lin = mtri.CubicTriInterpolator(triang, fea, kind='geom')
+    xi,yi= np.meshgrid(xi,yi)
+    zi_lin = interp_lin(xi, yi)
+    
+    return xi, yi, zi_lin
+ 

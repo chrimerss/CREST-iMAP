@@ -676,13 +676,7 @@ class SWW_plotter:
         else:
             time= self.time[frame]
         soil = self.SM[frame, :]
-        depth= self.depth[frame, :]
-        md = self.min_depth
-        
-        try:
-            elev = self.elev[frame, :]
-        except:
-            elev = self.elev
+
 
         fig = plt.figure(figsize=figsize, dpi=dpi)
 
@@ -795,8 +789,6 @@ class SWW_plotter:
 
         plt.show()
 
-    def save
-
 
     def make_depth_animation(self, save_gif=False, dst='temp.gif'):
 
@@ -856,8 +848,10 @@ class SWW_plotter:
                                        frames=len(img_files),
                                        interval=200, blit=True)
         if save_gif:
+            print 'saving gif...'
             mywriter = animation.FFMpegWriter(fps=10)
             anim.save(dst)
+            print 'completed...'
         plt.close()
 
         return anim

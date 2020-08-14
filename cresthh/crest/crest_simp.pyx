@@ -110,18 +110,18 @@ def model(double precipIn, double petIn, double SM, double Ksat,
         else:
             Wo= 0.0
             ExcessET= SM
-        
+
         actET = ExcessET + precip
-    
+
     SM= Wo
     #balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
     #assert balanced==1, 'Water balance violated!'
 
     #convert back to m or m/s
-    overland= overland/1000/timestep
-    interflow= interflow/1000/timestep
-    SM= SM/1000
-    actET/=(1000*timestep)
+    overland= overland/1000./timestep
+    interflow= interflow/1000./timestep
+    SM= SM/1000.
+    actET/=(1000.*timestep)
 
     #print 'overland flow:', overland
     #print 'soil moisture: ',SM

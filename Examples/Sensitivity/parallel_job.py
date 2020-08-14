@@ -52,12 +52,12 @@ if myid==0:
     #         interior_regions=[[utm_coords_int, interior_resolution]],
     #         mesh_filename='1km_082500.msh')    
     # domain= anuga.create_domain_from_regions(bounding_polygon, boundary_tags={'bottom':[0],}, maximum_triangle_area=0.001,verbose=True)
-    DOMAIN.set_name('Coupled_10m_modified_mesh_infiltration')
+    DOMAIN.set_name('Coupled_10m_new')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.set_quantity('elevation', filename=topo_file, location='centroids') # Use function for elevation
     DOMAIN.set_quantity('friction',  filename='/home/ZhiLi/CRESTHH/data/Texas_friction/manningn.tif', location='centroids')                        # Constant friction 
     DOMAIN.set_quantity('stage', expression='elevation', location='centroids')  
-    DOMAIN.set_quantity('SM', 1, location='centroids')
+    DOMAIN.set_quantity('SM', 0, location='centroids')
     DOMAIN.set_quantity('Ksat', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/ksat.tif', location='centroids')
     # DOMAIN.quantities['Ksat'].centroid_values[:]*= 289.0
     DOMAIN.set_quantity('WM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/wm_10m.tif', location='centroids')
@@ -66,7 +66,8 @@ if myid==0:
     # DOMAIN.quantities['B'].centroid_values[:]*= 5e-10
     DOMAIN.set_quantity('IM', filename='/hydros/MengyuChen/Summer/New/CREST_parameters/crest_param/im.tif', location='centroids')
     # DOMAIN.quantities['IM'].centroid_values[:]*= 0.06
-    DOMAIN.set_quantity('KE', 0.415853, location='centroids')
+    # KE 0.415853
+    DOMAIN.set_quantity('KE', 3, location='centroids')
     
     Br = anuga.Reflective_boundary(DOMAIN)
     Bt = anuga.Transmissive_boundary(DOMAIN)
@@ -82,8 +83,8 @@ barrier()
 
 DOMAIN= distribute(DOMAIN)
 DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
-DOMAIN.set_coupled(False)
-DOMAIN.set_infiltration(True)
+DOMAIN.set_coupled(True)
+DOMAIN.set_infiltration(False)
 
 #domain.set_evap_dir('/hydros/MengyuChen/pet', pattern='cov_et17%m%d.asc', freq='D')
 #domain.set_precip_dir('/home/ZhiLi/CRESTHH/data/precip',pattern='imerg%Y%m%dS%H%M%S.tif', freq='H')
