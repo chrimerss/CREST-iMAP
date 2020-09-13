@@ -62,25 +62,31 @@ def one_val(params):
     splotter = anuga.SWW_plotter(swwfile, make_dir=False)
     xc= splotter.xc +splotter.xllcorner
     yc= splotter.yc +splotter.yllcorner
-    dr= pd.date_range('20170825120000', '20170827000000', freq='120S')
+    dr= pd.date_range('20170825120000', '20170827000000', freq='0.25H')
     
     rmse= 0
+    i=0
     for gauge in gauges:
-        if gauge[0]==8076700:
-            df= pd.DataFrame(index=dr)
-            iloc= np.argmin((xc-gauge[1])**2+ (yc-gauge[2])**2)
-            obs= pd.read_csv('/home/ZhiLi/CRESTHH/data/streamGauge/%08d.csv'%(int(gauge[0])),converters={'datetime':pd.to_datetime}).set_index('datetime').loc[dr].resample('120S',
-                            label='right').interpolate()
-            crosssection= gpd.read_file('/home/ZhiLi/CRESTHH/data/crosssection/%08d.shp'%(int(gauge[0])))
-            area= [flowAreaCalc(crosssection, splotter.stage[t,iloc]) for t in range(len(splotter.stage))]
-            sim_Q= splotter.speed[:,iloc] * np.array(area)
-            obs_Q= obs['discharge'].values
-            #np.save('sim_Q.npy', [sim_Q, obs_Q.values])
-            discharge_err= metrics(obs_Q, sim_Q, ['nse','rmse','peak_flow_error', 'peak_time_error','bias','pearsonr'])
-            print discharge_err
-            with open('discharge_error.txt','a') as f:
-                f.write('%f,%f,%f,%f,%f,%f\n'%(discharge_err[0], discharge_err[1],discharge_err[2],discharge_err[3],
-                                                discharge_err[4],discharge_err[5]))
+        df= pd.DataFrame(index=dr)
+        iloc= np.argmin((xc-gauge[1])**2+ (yc-gauge[2])**2)
+        obs= pd.read_csv('/home/ZhiLi/CRESTHH/data/streamGauge/%08d.csv'%(int(gauge[0])),converters={'datetime':pd.to_datetime}).set_index('datetime').loc[dr].interpolate()
+        crosssection= gpd.read_file('/home/ZhiLi/CRESTHH/data/crosssection/%08d.shp'%(int(gauge[0])))
+        area= [flowAreaCalc(crosssection, splotter.stage[t,iloc]) for t in range(len(splotter.stage))]
+        sim_Q= splotter.speed[:,iloc] * np.array(area)
+        obs_Q= obs['discharge'].values
+        sim_H= splotter.stage[:,iloc]
+        obs_H= obs['stage'].values
+        #np.save('sim_Q.npy', [sim_Q, obs_Q.values])
+        discharge_err= metrics(obs_Q, sim_Q, ['nse','rmse','peak_flow_error', 'peak_time_error','bias','pearsonr'])
+        stage_error= metrics(obs_H, sim_H, ['nse','rmse','peak_flow_error', 'peak_time_error','bias','pearsonr'])
+        print discharge_err
+        with open('discharge_error.txt','a') as f:
+            f.write('%08d,%d,%f,%f,%f,%f,%f,%f\n'%(gauge[0],i,discharge_err[0], discharge_err[1],discharge_err[2],discharge_err[3],
+                                            discharge_err[4],discharge_err[5]))
+        with open('stage_error.txt','a') as f:
+            f.write('%08d,%d,%f,%f,%f,%f,%f,%f\n'%(gauge[0],i,stage_error[0], stage_error[1],stage_error[2],stage_error[3],
+                                            stage_error[4],stage_error[5]))  
+        i+=1                                          
     
     return discharge_err[0]
             

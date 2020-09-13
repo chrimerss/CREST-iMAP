@@ -169,7 +169,7 @@ def make_Q_grids(splotter,crosssections, samples, loc='vertice'):
     if loc not in ['vertice', 'centroid']:
         msg= "expected arg[2] to be either 'vertice' or 'centroid' "
         raise msg
-    if loc=='centroild':
+    if loc=='centroid':
         xc= splotter.xc + splotter.xllcorner
         yc= splotter.yc + splotter.yllcorner
         Q_grid= np.zeros(splotter.depth.shape)

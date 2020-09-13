@@ -28,11 +28,12 @@ if __name__=='__main__':
 
     global myid
     start='20170825120000'
-    end=  '20170831000000'
-    interval= '2M'
+    end=  '20170827000000'
+    interval= '2M'  #forcing interval
     yieldstep= pd.Timedelta(interval).total_seconds()    
     # params= params[0]
     topo_file='/hydros/ZhiLi/demHouston033s_NAm83fel.tif'
+    # topo_file='/hydros/ZhiLi/DEM_08076700.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_river_buffer_cliped.shp')
     # base_resolution = 1000000 #1km
@@ -74,7 +75,7 @@ if __name__=='__main__':
         DOMAIN=None
     barrier()
     DOMAIN= distribute(DOMAIN)
-    DOMAIN.set_name('coupled_30m')
+    DOMAIN.set_name('temp')
     DOMAIN.set_proj("+proj=utm +zone=15, +north +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
     DOMAIN.quantities['stage'].centroid_values[:]+= params[0]
     DOMAIN.quantities['friction'].centroid_values[:]*= params[1]
@@ -90,7 +91,7 @@ if __name__=='__main__':
     DOMAIN.set_timestamp(start, format='%Y%m%d%H%M%S')
     DOMAIN.set_time_interval(interval)
     DOMAIN.set_coupled(True)
-    # DOMAIN.set_infiltration(False)
+    DOMAIN.set_infiltration(False)
     total_seconds= (pd.to_datetime(end) - pd.to_datetime(start)).total_seconds()
 
 

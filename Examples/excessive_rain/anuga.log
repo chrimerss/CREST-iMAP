@@ -1,30 +1,117 @@
-2020-08-13 10:04:01,881 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-08-13 10:04:01,884 CRITICAL                   sww2dem:130 |Reading from ../calibration/coupled_30m.sww
-2020-08-13 10:04:01,886 CRITICAL                   sww2dem:131 |Output directory is max_depth_updated.asc
-2020-08-13 10:04:01,900 CRITICAL                   sww2dem:174 |------------------------------------------------
-2020-08-13 10:04:01,902 CRITICAL                   sww2dem:175 |Statistics of SWW file:
-2020-08-13 10:04:01,904 CRITICAL                   sww2dem:176 |  Name: ../calibration/coupled_30m.sww
-2020-08-13 10:04:01,906 CRITICAL                   sww2dem:177 |  Reference:
-2020-08-13 10:04:01,907 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-08-13 10:04:01,909 CRITICAL                   sww2dem:182 |    Start time: 0.000000
-2020-08-13 10:04:01,911 CRITICAL                   sww2dem:183 |  Extent:
-2020-08-13 10:04:01,913 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
-2020-08-13 10:04:01,915 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
-2020-08-13 10:04:01,924 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 529
-2020-08-13 10:04:01,926 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
-2020-08-13 10:04:01,941 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
-2020-08-13 10:05:09,807 CRITICAL                   sww2dem:266 |Processed values for stage-elevation are in [0.038998, 11.308809]
-2020-08-13 10:05:09,826 CRITICAL                   sww2dem:298 |Creating grid
-2020-08-13 10:05:10,227 CRITICAL                   sww2dem:373 |Interpolated values are in [-9999.000000, 11.298715]
-2020-08-13 10:05:10,228 CRITICAL                   sww2dem:420 |Writing max_depth_updated.prj
-2020-08-13 10:05:10,230 CRITICAL                   sww2dem:433 |Writing max_depth_updated.asc
-2020-08-13 10:05:10,232 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
-2020-08-13 10:05:10,611 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
-2020-08-13 10:05:10,994 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
-2020-08-13 10:05:11,382 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
-2020-08-13 10:05:11,769 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
-2020-08-13 10:05:12,155 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
-2020-08-13 10:05:12,541 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
-2020-08-13 10:05:12,929 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
-2020-08-13 10:05:13,313 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
-2020-08-13 10:05:13,696 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289
+2020-08-18 14:39:03,521 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2020-08-18 14:39:03,522 CRITICAL                   sww2dem:130 |Reading from ../calibration/infiltration_opt_orig.sww
+2020-08-18 14:39:03,524 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/max_speed_infiltration.asc
+2020-08-18 14:39:03,536 CRITICAL                   sww2dem:174 |------------------------------------------------
+2020-08-18 14:39:03,538 CRITICAL                   sww2dem:175 |Statistics of SWW file:
+2020-08-18 14:39:03,539 CRITICAL                   sww2dem:176 |  Name: ../calibration/infiltration_opt_orig.sww
+2020-08-18 14:39:03,541 CRITICAL                   sww2dem:177 |  Reference:
+2020-08-18 14:39:03,543 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-08-18 14:39:03,545 CRITICAL                   sww2dem:182 |    Start time: 0.000000
+2020-08-18 14:39:03,546 CRITICAL                   sww2dem:183 |  Extent:
+2020-08-18 14:39:03,548 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
+2020-08-18 14:39:03,550 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
+2020-08-18 14:39:03,558 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 529
+2020-08-18 14:39:03,560 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
+2020-08-18 14:39:03,568 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
+2020-08-18 14:52:39,377 CRITICAL                   sww2dem:266 |Processed values for (xmomentum**2 + ymomentum**2)**0.5/(stage-elevation+1.e-6/(stage-elevation)) are in [0.000000, 3.871457]
+2020-08-18 14:52:39,397 CRITICAL                   sww2dem:298 |Creating grid
+2020-08-18 14:52:39,850 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
+2020-08-18 14:52:39,851 CRITICAL                   sww2dem:420 |Writing ../calibration/results/max_speed_infiltration.prj
+2020-08-18 14:52:39,853 CRITICAL                   sww2dem:433 |Writing ../calibration/results/max_speed_infiltration.asc
+2020-08-18 14:52:39,873 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
+2020-08-18 14:52:40,274 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
+2020-08-18 14:52:40,659 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
+2020-08-18 14:52:41,035 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
+2020-08-18 14:52:41,410 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
+2020-08-18 14:52:41,784 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
+2020-08-18 14:52:42,159 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
+2020-08-18 14:52:42,533 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
+2020-08-18 14:52:42,904 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
+2020-08-18 14:52:43,273 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289
+2020-08-18 15:14:56,131 CRITICAL                   sww2dem:130 |Reading from ../calibration/infiltration_opt_orig.sww
+2020-08-18 15:14:56,133 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/max_depth_infiltration.asc
+2020-08-18 15:14:56,145 CRITICAL                   sww2dem:174 |------------------------------------------------
+2020-08-18 15:14:56,147 CRITICAL                   sww2dem:175 |Statistics of SWW file:
+2020-08-18 15:14:56,149 CRITICAL                   sww2dem:176 |  Name: ../calibration/infiltration_opt_orig.sww
+2020-08-18 15:14:56,150 CRITICAL                   sww2dem:177 |  Reference:
+2020-08-18 15:14:56,152 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-08-18 15:14:56,154 CRITICAL                   sww2dem:182 |    Start time: 0.000000
+2020-08-18 15:14:56,156 CRITICAL                   sww2dem:183 |  Extent:
+2020-08-18 15:14:56,157 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
+2020-08-18 15:14:56,159 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
+2020-08-18 15:14:56,166 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 529
+2020-08-18 15:14:56,168 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
+2020-08-18 15:14:56,170 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
+2020-08-18 15:16:02,366 CRITICAL                   sww2dem:266 |Processed values for stage-elevation are in [0.038998, 8.324855]
+2020-08-18 15:16:02,385 CRITICAL                   sww2dem:298 |Creating grid
+2020-08-18 15:16:02,863 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
+2020-08-18 15:16:02,865 CRITICAL                   sww2dem:420 |Writing ../calibration/results/max_depth_infiltration.prj
+2020-08-18 15:16:02,867 CRITICAL                   sww2dem:433 |Writing ../calibration/results/max_depth_infiltration.asc
+2020-08-18 15:16:02,883 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
+2020-08-18 15:16:03,258 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
+2020-08-18 15:16:03,635 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
+2020-08-18 15:16:04,016 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
+2020-08-18 15:16:04,397 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
+2020-08-18 15:16:04,783 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
+2020-08-18 15:16:05,174 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
+2020-08-18 15:16:05,553 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
+2020-08-18 15:16:05,939 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
+2020-08-18 15:16:06,316 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289
+2020-08-18 15:19:20,984 CRITICAL                   sww2dem:130 |Reading from ../calibration/infiltration_opt_orig.sww
+2020-08-18 15:19:20,986 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/depth_infiltration_20170829003000.asc
+2020-08-18 15:19:20,997 CRITICAL                   sww2dem:174 |------------------------------------------------
+2020-08-18 15:19:20,999 CRITICAL                   sww2dem:175 |Statistics of SWW file:
+2020-08-18 15:19:21,000 CRITICAL                   sww2dem:176 |  Name: ../calibration/infiltration_opt_orig.sww
+2020-08-18 15:19:21,003 CRITICAL                   sww2dem:177 |  Reference:
+2020-08-18 15:19:21,004 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-08-18 15:19:21,006 CRITICAL                   sww2dem:180 |    Time: 313200.000000
+2020-08-18 15:19:21,007 CRITICAL                   sww2dem:183 |  Extent:
+2020-08-18 15:19:21,009 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
+2020-08-18 15:19:21,011 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
+2020-08-18 15:19:21,013 CRITICAL                   sww2dem:189 |    t [s] = 313200.000000, len(t) == 1
+2020-08-18 15:19:21,014 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
+2020-08-18 15:19:21,017 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
+2020-08-18 15:19:21,466 CRITICAL                   sww2dem:266 |Processed values for stage-elevation are in [0.000000, 8.253844]
+2020-08-18 15:19:21,484 CRITICAL                   sww2dem:298 |Creating grid
+2020-08-18 15:19:21,969 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
+2020-08-18 15:19:21,971 CRITICAL                   sww2dem:420 |Writing ../calibration/results/depth_infiltration_20170829003000.prj
+2020-08-18 15:19:21,972 CRITICAL                   sww2dem:433 |Writing ../calibration/results/depth_infiltration_20170829003000.asc
+2020-08-18 15:19:21,985 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
+2020-08-18 15:19:22,358 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
+2020-08-18 15:19:22,732 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
+2020-08-18 15:19:23,116 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
+2020-08-18 15:19:23,497 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
+2020-08-18 15:19:23,885 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
+2020-08-18 15:19:24,262 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
+2020-08-18 15:19:24,645 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
+2020-08-18 15:19:25,023 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
+2020-08-18 15:19:25,408 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289
+2020-08-18 20:56:21,134 CRITICAL                   sww2dem:130 |Reading from ../calibration/Harvey_coupled.sww
+2020-08-18 20:56:21,137 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/depth_max_new.asc
+2020-08-18 20:56:21,149 CRITICAL                   sww2dem:174 |------------------------------------------------
+2020-08-18 20:56:21,151 CRITICAL                   sww2dem:175 |Statistics of SWW file:
+2020-08-18 20:56:21,152 CRITICAL                   sww2dem:176 |  Name: ../calibration/Harvey_coupled.sww
+2020-08-18 20:56:21,154 CRITICAL                   sww2dem:177 |  Reference:
+2020-08-18 20:56:21,156 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
+2020-08-18 20:56:21,157 CRITICAL                   sww2dem:182 |    Start time: 0.000000
+2020-08-18 20:56:21,159 CRITICAL                   sww2dem:183 |  Extent:
+2020-08-18 20:56:21,161 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
+2020-08-18 20:56:21,163 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
+2020-08-18 20:56:21,170 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 529
+2020-08-18 20:56:21,171 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
+2020-08-18 20:56:21,174 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
+2020-08-18 20:57:27,081 CRITICAL                   sww2dem:266 |Processed values for stage-elevation are in [0.038998, 8.580938]
+2020-08-18 20:57:27,098 CRITICAL                   sww2dem:298 |Creating grid
+2020-08-18 20:57:27,513 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
+2020-08-18 20:57:27,514 CRITICAL                   sww2dem:420 |Writing ../calibration/results/depth_max_new.prj
+2020-08-18 20:57:27,516 CRITICAL                   sww2dem:433 |Writing ../calibration/results/depth_max_new.asc
+2020-08-18 20:57:27,517 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
+2020-08-18 20:57:27,887 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
+2020-08-18 20:57:28,260 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
+2020-08-18 20:57:28,636 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
+2020-08-18 20:57:29,011 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
+2020-08-18 20:57:29,387 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
+2020-08-18 20:57:29,760 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
+2020-08-18 20:57:30,134 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
+2020-08-18 20:57:30,506 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
+2020-08-18 20:57:30,879 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289
