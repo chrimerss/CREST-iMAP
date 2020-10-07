@@ -1,5 +1,4 @@
 Stage 0 0.1
 friction 0.1 1
 SM 0.05 0.8
-B 0 20
 IM 0 3

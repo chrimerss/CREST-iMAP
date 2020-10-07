@@ -54,8 +54,8 @@ def metrics(x,y,obj=['nse']):
     return results
 
 def one_val(params):
-    
-    os.system('mpirun -n 36 python model.py %f %f %f %f %f> anuga.log'%(params[0],params[1],params[2], params[3], params[4]))
+    ##=======CHANGE HERE IF YOU MODIFY PARAMETERS TO TUNE============##
+    os.system('mpirun -n 36 python model.py %f %f %f %f> anuga.log'%(params[0],params[1],params[2], params[3]))
     swwfile = 'temp.sww'
     gauges= np.loadtxt('gauges.txt')
 
@@ -66,6 +66,7 @@ def one_val(params):
     
     rmse= 0
     i=0
+    multi_obj=0
     for gauge in gauges:
         df= pd.DataFrame(index=dr)
         iloc= np.argmin((xc-gauge[1])**2+ (yc-gauge[2])**2)
@@ -87,7 +88,9 @@ def one_val(params):
             f.write('%08d,%d,%f,%f,%f,%f,%f,%f\n'%(gauge[0],i,stage_error[0], stage_error[1],stage_error[2],stage_error[3],
                                             stage_error[4],stage_error[5]))  
         i+=1                                          
-    
+        multi_obj+= discharge_err[0]
+
+    multi_obj/=len(gauges)
     return discharge_err[0]
             
     # HWMs= pd.read_csv('/home/ZhiLi/CRESTHH/data/HoustonCase/HWM_cleaned.csv')
@@ -105,7 +108,8 @@ def evaluate(values):
     # min_nsce= np.inf
     for i, row in enumerate(values):
         nsce= one_val(row)
-        print 'params: %.3f %.3f %.3f %.3f %.3f NSE: %.3f meters'%(row[0], row[1], row[2], row[3], row[4], nsce)
+        ##=======CHANGE HERE IF YOU MODIFY PARAMETERS TO TUNE============##
+        print 'params: %.3f %.3f %.3f %.3f NSE: %.3f meters'%(row[0], row[1], row[2], row[3], nsce)
         Y[i]= 1-nsce
         # if nsce< min_nsce:
             # print 'updating result'

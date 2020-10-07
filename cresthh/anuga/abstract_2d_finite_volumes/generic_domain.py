@@ -2038,7 +2038,7 @@ class Generic_Domain:
         # if not hasattr(self.quantities, 'Ksat'):
         #     msg= 'distributed hydraulic conductivity is required ...'
         #     raise msg
-        ksat= self.quantities['Ksat'].centroid_values/(3600.0*1000.0)*100
+        ksat= self.quantities['Ksat'].centroid_values/(3600.0*1000.0)*1.0
         depth= self.quantities['WM'].centroid_values/1000.
         net_rain= P-ET*ke
         excess_rain= []
