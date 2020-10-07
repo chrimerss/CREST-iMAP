@@ -3,3 +3,4 @@
 *.asc
 *.msh
 *.shp
+Examples/visualization/*
