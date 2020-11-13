@@ -4,13 +4,13 @@
 
 ## Coupled Routing Excess STorage inundation MApping and Prediction
 
-<img src="img/myanimation.gif">
+<img src="img/model_structure.png">
 
 # Introduction
 
 **Model Framework:**
 
-<img src="img/CRESTHH.png">
+<img src="img/model_framework.png">
 
 The CRESTH/H model framework integrates hydrologic model (CREST) and hydrodynamic model (anuga) to target heavy rainfall-induced flash flood.
 
