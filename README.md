@@ -57,7 +57,7 @@ virtualenv env -p=python2.7
 source env/bin/activate
 cd pypar & python setup.py install
 cd cresthh/crest & python setup.py install
-pip install proj affine matplotlib pandas scipy netCDF4 geopandas
+pip install proj affine matplotlib pandas scipy netCDF4==1.5.3 geopandas
 
 ```
 
