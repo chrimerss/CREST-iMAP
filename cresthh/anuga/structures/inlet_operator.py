@@ -28,7 +28,7 @@ class Inlet_operator(Operator):
                  verbose = False):
 
 
-        anuga.Operator.__init__(self, domain, description, label, logging, verbose)
+        cresthh.anuga.Operator.__init__(self, domain, description, label, logging, verbose)
 
         self.inlet = inlet.Inlet(self.domain, region, verbose= verbose)
 

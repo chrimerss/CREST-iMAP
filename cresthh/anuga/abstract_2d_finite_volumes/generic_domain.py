@@ -1843,7 +1843,7 @@ class Generic_Domain:
                     self.quantities['P']/=(3600.0*1000.0) #convert mm/h to m/s
                 else:
                     msg= '%s not found in precipitation, assume 0 everywhere'%precip_pth
-                    # log.critical(msg)
+                    log.critical(msg)
                     self.quantities['P'].set_values_from_constant(0, 'centroids',None,None)
                     # print '%s not found in precipitation'%precip_pth
             if self.get_time()%_time_interval_func(evap_freq)==0:
@@ -1878,6 +1878,7 @@ class Generic_Domain:
                 
             elif self.get_timestep()==0:
                 excessRain= num.zeros(len(self.quantities['stage'].centroid_values))
+
             self.set_quantity('excess_rain', excessRain,location='centroids')
             #==========================================
             # Apply fluid flow fractional step

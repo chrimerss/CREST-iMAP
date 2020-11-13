@@ -58,7 +58,7 @@ def Inlet_operator(domain,
     # If not parallel domain then allocate serial Inlet operator
     if isinstance(domain, Parallel_domain) is False:
         if verbose: print "Allocating non parallel inlet operator ....."
-        return anuga.structures.inlet_operator.Inlet_operator(domain,
+        return cresthh.anuga.structures.inlet_operator.Inlet_operator(domain,
                                                               poly,
                                                               Q,
                                                               velocity = velocity,

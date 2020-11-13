@@ -50,6 +50,16 @@ This package is not migrated to python 3 yet. We recommend to use virtualenv or 
 ```
 pip install -r requirements.txt
 ```
+## Manual installation
+
+```bash
+virtualenv env -p=python2.7
+source env/bin/activate
+cd pypar & python setup.py install
+cd cresthh/crest & python setup.py install
+pip install proj affine matplotlib pandas scipy netCDF4 geopandas
+
+```
 
 # Updates
 
@@ -62,6 +72,10 @@ pip install -r requirements.txt
 <img src="img/soilmoisture.gif">
 
 - [x] 2020.06.23 Created interface to read .mesh file from mesher. Therefore, it supports creating mesh by considering the heterogeneity of the topography/river networks and so forth.
+
+- [x] 2020.11.12 Pre-simulation for OKC flooding
+
+<img src="img/OKC_flooding.gif">
 
 # TODO
 

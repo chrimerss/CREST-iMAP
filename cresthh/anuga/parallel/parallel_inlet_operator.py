@@ -162,7 +162,7 @@ class Parallel_Inlet_operator(Inlet_operator):
         """
         # Only one processor should call this function unless Q is parallelizable
 
-        from anuga.fit_interpolate.interpolate import Modeltime_too_early, Modeltime_too_late
+        from cresthh.anuga.fit_interpolate.interpolate import Modeltime_too_early, Modeltime_too_late
 
         if callable(self.Q):
             try:
