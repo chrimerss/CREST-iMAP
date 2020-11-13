@@ -1,8 +1,8 @@
 [![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-275/)
 
-# CRESTH/H
+# CREST-iMAP
 
-## Coupled Routing Excess STorage Hydrologic/Hydrodynamic modeling framework
+## Coupled Routing Excess STorage inundation MApping and Prediction
 
 <img src="img/myanimation.gif">
 
