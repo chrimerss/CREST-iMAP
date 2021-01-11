@@ -1,4 +1,5 @@
 [![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-275/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1wTq3vaiQwJeLoqe4YMnyzV4ZQ6pvOez1?usp=sharing)
 
 # CREST-iMAP
 
