@@ -1,0 +1,5 @@
+
+        [console_scripts]
+        xls2html=xlsconv.html:main
+        xls2django=xlsconv.django:main
+    

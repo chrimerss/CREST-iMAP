@@ -1498,7 +1498,7 @@ class Quantity:
         # values = interpolate2d(x, y, Z, points, mode='constant', bounds_error=False)
 
         # ===update date: 2020/06/08 by Allen
-        if filename_ext in ['.tif']:
+        if filename_ext in ['.tif', '.asc']:
                 values = tif2array_lat_long(filename, proj=proj, points=points)
         else:
             msg= 'The file extension is not suportted... Only .tif are supported.'

@@ -1,0 +1,3 @@
+[wq]
+wq.app=wq.app.build
+

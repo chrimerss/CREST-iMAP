@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: FormEncode
+Version: 2.0.0
+Summary: HTML form validation, generation, and conversion package
+Home-page: http://formencode.org
+Author: Ian Bicking
+Author-email: ianb@colorstudy.com
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Dist: six
+Provides-Extra: testing
+Requires-Dist: nose ; extra == 'testing'
+Requires-Dist: dnspython (>=2.0.0) ; extra == 'testing'
+Requires-Dist: pycountry ; extra == 'testing'
+
+FormEncode validates and converts nested structures.
+
+It allows for a declarative form of defining the validation,
+and decoupled processes for filling and generating forms.
+
+The official repo is at GitHub: https://github.com/formencode/formencode
+
+

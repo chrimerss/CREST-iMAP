@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: PyBabeljs
+Version: 0.0.8
+Summary: The python binding for babel compiler
+Home-page: http://github.com/yetone/babeljs-python
+Author: yetone
+Author-email: i@yetone.net
+License: MIT License
+Keywords: babel,babeljs,ES,JavaScript,ES2015,ES2016,ES2017
+Platform: any
+
+UNKNOWN
+
+

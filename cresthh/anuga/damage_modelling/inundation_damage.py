@@ -36,13 +36,13 @@ except ImportError:
     kinds = _kinds()
     
 
-from anuga.utilities.numerical_tools import ensure_numeric
+from cresthh.anuga.utilities.numerical_tools import ensure_numeric
 from exposure import Exposure
-from anuga.abstract_2d_finite_volumes.util import file_function
-from anuga.geospatial_data.geospatial_data import ensure_absolute
-from anuga.utilities.numerical_tools import NAN
-from anuga.config import epsilon
-import anuga.utilities.log as log
+from cresthh.anuga.abstract_2d_finite_volumes.util import file_function
+from cresthh.anuga.geospatial_data.geospatial_data import ensure_absolute
+from cresthh.anuga.utilities.numerical_tools import NAN
+from cresthh.anuga.config import epsilon
+import cresthh.anuga.utilities.log as log
 
 depth_epsilon = epsilon
 

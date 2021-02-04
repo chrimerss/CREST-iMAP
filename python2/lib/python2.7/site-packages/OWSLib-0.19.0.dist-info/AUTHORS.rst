@@ -1,0 +1,13 @@
+ * Sean Gillies <sgillies@frii.com>
+ * Julien Anguenot <ja@nuxeo.com>
+ * Kai Lautaportti <kai.lautaportti@hexagonit.fi>
+ * Dominic Lowe <D.Lowe@rl.ac.uk>
+ * Jo Walsh <jo@frot.org>
+ * Tom Kralidis <tomkralidis@gmail.com>
+ * Jachym Cepicky <jachym.cepicky@gmail.com>
+ * Luca Cinquini <luca.cinquini@jpl.nasa.gov>
+ * Brad Hards <bradh@frogmouth.net>
+ * Christian Ledermann <christian.ledermann@gmail.com>
+ * Sean Cowan <scowan@asascience.com>
+ * Kyle Wilcox <wilcox.kyle@gmail.com>
+ * Angelos Tzotsos <gcpp.kalxas@gmail.com>

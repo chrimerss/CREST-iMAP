@@ -1811,7 +1811,7 @@ class Generic_Domain:
             yield(self.get_time())      # Yield initial values
             
         freq_mapper= {'D':24.0*3600.0,'H':3600.0,'M':60.0,'S':1.0}
-        _time_interval_func= lambda d: int(d[0])*freq_mapper[d[1]]
+        _time_interval_func= lambda d: int(d[:-1])*freq_mapper[d[-1]]
 
         self.external=0
 
