@@ -1,88 +1,30 @@
-2020-09-26 22:52:52,820 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
-2020-09-26 22:52:52,821 CRITICAL                   sww2dem:130 |Reading from ../simple_infiltration/simple_infiltration.sww
-2020-09-26 22:52:52,823 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/mesher_DEM.asc
-2020-09-26 22:52:52,841 CRITICAL                   sww2dem:174 |------------------------------------------------
-2020-09-26 22:52:52,843 CRITICAL                   sww2dem:175 |Statistics of SWW file:
-2020-09-26 22:52:52,844 CRITICAL                   sww2dem:176 |  Name: ../simple_infiltration/simple_infiltration.sww
-2020-09-26 22:52:52,846 CRITICAL                   sww2dem:177 |  Reference:
-2020-09-26 22:52:52,848 CRITICAL                   sww2dem:178 |    Lower left corner: [250757.348812, 3301330.019378]
-2020-09-26 22:52:52,849 CRITICAL                   sww2dem:182 |    Start time: 0.000000
-2020-09-26 22:52:52,851 CRITICAL                   sww2dem:183 |  Extent:
-2020-09-26 22:52:52,853 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.972656], len(x) == 45194
-2020-09-26 22:52:52,855 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22885.353516], len(y) == 45194
-2020-09-26 22:52:52,862 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 529
-2020-09-26 22:52:52,864 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
-2020-09-26 22:52:52,871 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 45194, block size: 10000
-2020-09-26 22:52:52,889 CRITICAL                   sww2dem:266 |Processed values for elevation are in [-7.390007, 57.357834]
-2020-09-26 22:52:52,914 CRITICAL                   sww2dem:298 |Creating grid
-2020-09-26 22:52:53,338 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
-2020-09-26 22:52:53,340 CRITICAL                   sww2dem:420 |Writing ../calibration/results/mesher_DEM.prj
-2020-09-26 22:52:53,342 CRITICAL                   sww2dem:433 |Writing ../calibration/results/mesher_DEM.asc
-2020-09-26 22:52:53,343 CRITICAL                   sww2dem:456 |Doing row 0 of 2289
-2020-09-26 22:52:53,701 CRITICAL                   sww2dem:456 |Doing row 229 of 2289
-2020-09-26 22:52:54,062 CRITICAL                   sww2dem:456 |Doing row 458 of 2289
-2020-09-26 22:52:54,428 CRITICAL                   sww2dem:456 |Doing row 687 of 2289
-2020-09-26 22:52:54,797 CRITICAL                   sww2dem:456 |Doing row 916 of 2289
-2020-09-26 22:52:55,165 CRITICAL                   sww2dem:456 |Doing row 1145 of 2289
-2020-09-26 22:52:55,529 CRITICAL                   sww2dem:456 |Doing row 1374 of 2289
-2020-09-26 22:52:55,892 CRITICAL                   sww2dem:456 |Doing row 1603 of 2289
-2020-09-26 22:52:56,254 CRITICAL                   sww2dem:456 |Doing row 1832 of 2289
-2020-09-26 22:52:56,614 CRITICAL                   sww2dem:456 |Doing row 2061 of 2289
-2020-09-26 22:56:10,195 CRITICAL                   sww2dem:130 |Reading from ../simple_infiltration/simple_infiltration_orig_mesh.sww
-2020-09-26 22:56:10,197 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/orig_DEM.asc
-2020-09-26 22:56:10,215 CRITICAL                   sww2dem:174 |------------------------------------------------
-2020-09-26 22:56:10,216 CRITICAL                   sww2dem:175 |Statistics of SWW file:
-2020-09-26 22:56:10,218 CRITICAL                   sww2dem:176 |  Name: ../simple_infiltration/simple_infiltration_orig_mesh.sww
-2020-09-26 22:56:10,220 CRITICAL                   sww2dem:177 |  Reference:
-2020-09-26 22:56:10,222 CRITICAL                   sww2dem:178 |    Lower left corner: [250759.347925, 3301331.047618]
-2020-09-26 22:56:10,224 CRITICAL                   sww2dem:182 |    Start time: 0.000000
-2020-09-26 22:56:10,225 CRITICAL                   sww2dem:183 |  Extent:
-2020-09-26 22:56:10,227 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.375000], len(x) == 46392
-2020-09-26 22:56:10,229 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22900.857422], len(y) == 46392
-2020-09-26 22:56:10,238 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 475200.000000], len(t) == 529
-2020-09-26 22:56:10,239 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
-2020-09-26 22:56:10,242 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 46392, block size: 10000
-2020-09-26 22:56:10,260 CRITICAL                   sww2dem:266 |Processed values for elevation are in [0.835056, 57.526436]
-2020-09-26 22:56:10,286 CRITICAL                   sww2dem:298 |Creating grid
-2020-09-26 22:56:10,699 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
-2020-09-26 22:56:10,701 CRITICAL                   sww2dem:420 |Writing ../calibration/results/orig_DEM.prj
-2020-09-26 22:56:10,707 CRITICAL                   sww2dem:433 |Writing ../calibration/results/orig_DEM.asc
-2020-09-26 22:56:10,709 CRITICAL                   sww2dem:456 |Doing row 0 of 2291
-2020-09-26 22:56:11,085 CRITICAL                   sww2dem:456 |Doing row 230 of 2291
-2020-09-26 22:56:11,454 CRITICAL                   sww2dem:456 |Doing row 460 of 2291
-2020-09-26 22:56:11,885 CRITICAL                   sww2dem:456 |Doing row 690 of 2291
-2020-09-26 22:56:12,252 CRITICAL                   sww2dem:456 |Doing row 920 of 2291
-2020-09-26 22:56:12,615 CRITICAL                   sww2dem:456 |Doing row 1150 of 2291
-2020-09-26 22:56:12,979 CRITICAL                   sww2dem:456 |Doing row 1380 of 2291
-2020-09-26 22:56:13,396 CRITICAL                   sww2dem:456 |Doing row 1610 of 2291
-2020-09-26 22:56:13,781 CRITICAL                   sww2dem:456 |Doing row 1840 of 2291
-2020-09-26 22:56:14,143 CRITICAL                   sww2dem:456 |Doing row 2070 of 2291
-2020-09-26 22:56:52,192 CRITICAL                   sww2dem:130 |Reading from ../Sensitivity/temp.sww
-2020-09-26 22:56:52,195 CRITICAL                   sww2dem:131 |Output directory is ../calibration/results/orig_uni_DEM.asc
-2020-09-26 22:56:52,203 CRITICAL                   sww2dem:174 |------------------------------------------------
-2020-09-26 22:56:52,204 CRITICAL                   sww2dem:175 |Statistics of SWW file:
-2020-09-26 22:56:52,206 CRITICAL                   sww2dem:176 |  Name: ../Sensitivity/temp.sww
-2020-09-26 22:56:52,208 CRITICAL                   sww2dem:177 |  Reference:
-2020-09-26 22:56:52,209 CRITICAL                   sww2dem:178 |    Lower left corner: [250759.347925, 3301331.047618]
-2020-09-26 22:56:52,211 CRITICAL                   sww2dem:182 |    Start time: 0.000000
-2020-09-26 22:56:52,213 CRITICAL                   sww2dem:183 |  Extent:
-2020-09-26 22:56:52,214 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.375000], len(x) == 3325
-2020-09-26 22:56:52,216 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22900.857422], len(y) == 3325
-2020-09-26 22:56:52,226 CRITICAL                   sww2dem:192 |    t [s] in [0.000000, 86400.000000], len(t) == 721
-2020-09-26 22:56:52,227 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
-2020-09-26 22:56:52,229 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 3325, block size: 10000
-2020-09-26 22:56:52,232 CRITICAL                   sww2dem:266 |Processed values for elevation are in [3.967131, 57.969490]
-2020-09-26 22:56:52,235 CRITICAL                   sww2dem:298 |Creating grid
-2020-09-26 22:56:52,622 CRITICAL                   sww2dem:373 |Interpolated values are in [nan, nan]
-2020-09-26 22:56:52,624 CRITICAL                   sww2dem:420 |Writing ../calibration/results/orig_uni_DEM.prj
-2020-09-26 22:56:52,626 CRITICAL                   sww2dem:433 |Writing ../calibration/results/orig_uni_DEM.asc
-2020-09-26 22:56:52,627 CRITICAL                   sww2dem:456 |Doing row 0 of 2291
-2020-09-26 22:56:52,988 CRITICAL                   sww2dem:456 |Doing row 230 of 2291
-2020-09-26 22:56:53,352 CRITICAL                   sww2dem:456 |Doing row 460 of 2291
-2020-09-26 22:56:53,721 CRITICAL                   sww2dem:456 |Doing row 690 of 2291
-2020-09-26 22:56:54,089 CRITICAL                   sww2dem:456 |Doing row 920 of 2291
-2020-09-26 22:56:54,455 CRITICAL                   sww2dem:456 |Doing row 1150 of 2291
-2020-09-26 22:56:54,823 CRITICAL                   sww2dem:456 |Doing row 1380 of 2291
-2020-09-26 22:56:55,192 CRITICAL                   sww2dem:456 |Doing row 1610 of 2291
-2020-09-26 22:56:55,555 CRITICAL                   sww2dem:456 |Doing row 1840 of 2291
-2020-09-26 22:56:55,918 CRITICAL                   sww2dem:456 |Doing row 2070 of 2291
+2021-02-06 23:49:47,440 INFO     cresthh.anuga.utilities.log:0   |Logfile is './anuga.log' with logging level of INFO, console logging level is CRITICAL
+2021-02-06 23:49:47,443 CRITICAL                   sww2dem:130 |Reading from ../reinfiltration/reinfiltration.sww
+2021-02-06 23:49:47,444 CRITICAL                   sww2dem:131 |Output directory is ../reinfiltration/depth_201708290300.asc
+2021-02-06 23:49:47,456 CRITICAL                   sww2dem:174 |------------------------------------------------
+2021-02-06 23:49:47,457 CRITICAL                   sww2dem:175 |Statistics of SWW file:
+2021-02-06 23:49:47,459 CRITICAL                   sww2dem:176 |  Name: ../reinfiltration/reinfiltration.sww
+2021-02-06 23:49:47,461 CRITICAL                   sww2dem:177 |  Reference:
+2021-02-06 23:49:47,462 CRITICAL                   sww2dem:178 |    Lower left corner: [250759.347925, 3301331.047618]
+2021-02-06 23:49:47,464 CRITICAL                   sww2dem:180 |    Time: 313200.000000
+2021-02-06 23:49:47,466 CRITICAL                   sww2dem:183 |  Extent:
+2021-02-06 23:49:47,467 CRITICAL                   sww2dem:185 |    x [m] in [0.000000, 37293.375000], len(x) == 47272
+2021-02-06 23:49:47,469 CRITICAL                   sww2dem:187 |    y [m] in [0.000000, 22900.857422], len(y) == 47272
+2021-02-06 23:49:47,471 CRITICAL                   sww2dem:189 |    t [s] = 313200.000000, len(t) == 1
+2021-02-06 23:49:47,472 CRITICAL                   sww2dem:193 |  Quantities [SI units]:
+2021-02-06 23:49:47,594 CRITICAL                   sww2dem:231 |Slicing sww file, num points: 47272, block size: 10000
+2021-02-06 23:49:48,106 CRITICAL                   sww2dem:266 |Processed values for stage-elevation are in [0.000000, 12.899592]
+2021-02-06 23:49:48,122 CRITICAL                   sww2dem:298 |Creating grid
+2021-02-06 23:49:48,812 CRITICAL                   sww2dem:373 |Interpolated values are in [0.000000, 12.832754]
+2021-02-06 23:49:48,816 CRITICAL                   sww2dem:420 |Writing ../reinfiltration/depth_201708290300.prj
+2021-02-06 23:49:48,818 CRITICAL                   sww2dem:433 |Writing ../reinfiltration/depth_201708290300.asc
+2021-02-06 23:49:48,819 CRITICAL                   sww2dem:456 |Doing row 0 of 2291
+2021-02-06 23:49:49,193 CRITICAL                   sww2dem:456 |Doing row 230 of 2291
+2021-02-06 23:49:49,569 CRITICAL                   sww2dem:456 |Doing row 460 of 2291
+2021-02-06 23:49:49,944 CRITICAL                   sww2dem:456 |Doing row 690 of 2291
+2021-02-06 23:49:50,316 CRITICAL                   sww2dem:456 |Doing row 920 of 2291
+2021-02-06 23:49:50,692 CRITICAL                   sww2dem:456 |Doing row 1150 of 2291
+2021-02-06 23:49:51,070 CRITICAL                   sww2dem:456 |Doing row 1380 of 2291
+2021-02-06 23:49:51,517 CRITICAL                   sww2dem:456 |Doing row 1610 of 2291
+2021-02-06 23:49:51,895 CRITICAL                   sww2dem:456 |Doing row 1840 of 2291
+2021-02-06 23:49:52,277 CRITICAL                   sww2dem:456 |Doing row 2070 of 2291

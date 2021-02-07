@@ -433,7 +433,7 @@ class SWW_plotter:
             self.SM= np.array(p.variables['SM_c'])*100 # To %
             
         except KeyError:
-            print 'soil moisture and excessive rainfall are not stored!'
+            print 'soil moisture and/or excessive rainfall are not stored!'
         # self.SI0= np.array(p.variables['SI0_c'])
         # self.SS0= np.array(p.variables['SS0_c'])
 

@@ -883,47 +883,6 @@ static const char *__pyx_f[] = {
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
-/* PyThreadStateGet.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
-#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
-#define __Pyx_PyErr_Occurred()  __pyx_tstate->curexc_type
-#else
-#define __Pyx_PyThreadState_declare
-#define __Pyx_PyThreadState_assign
-#define __Pyx_PyErr_Occurred()  PyErr_Occurred()
-#endif
-
-/* PyErrFetchRestore.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
-#if CYTHON_COMPILING_IN_CPYTHON
-#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
-#else
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#endif
-#else
-#define __Pyx_PyErr_Clear() PyErr_Clear()
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
-#endif
-
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -969,6 +928,42 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject
 #define __Pyx_PyObject_GetAttrStr(o,n) PyObject_GetAttr(o,n)
 #endif
 
+/* PyThreadStateGet.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
+#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
+#define __Pyx_PyErr_Occurred()  __pyx_tstate->curexc_type
+#else
+#define __Pyx_PyThreadState_declare
+#define __Pyx_PyThreadState_assign
+#define __Pyx_PyErr_Occurred()  PyErr_Occurred()
+#endif
+
+/* PyErrFetchRestore.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
+#if CYTHON_COMPILING_IN_CPYTHON
+#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
+#else
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#endif
+#else
+#define __Pyx_PyErr_Clear() PyErr_Clear()
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
+#endif
+
 /* CLineInTraceback.proto */
 #ifdef CYTHON_CLINE_IN_TRACEBACK
 #define __Pyx_CLineForTraceback(tstate, c_line)  (((CYTHON_CLINE_IN_TRACEBACK)) ? c_line : 0)
@@ -994,16 +989,6 @@ static void __pyx_insert_code_object(int code_line, PyCodeObject* code_object);
 /* AddTraceback.proto */
 static void __Pyx_AddTraceback(const char *funcname, int c_line,
                                int py_line, const char *filename);
-
-/* Print.proto */
-static int __Pyx_Print(PyObject*, PyObject *, int);
-#if CYTHON_COMPILING_IN_PYPY || PY_MAJOR_VERSION >= 3
-static PyObject* __pyx_print = 0;
-static PyObject* __pyx_print_kwargs = 0;
-#endif
-
-/* PrintOne.proto */
-static int __Pyx_PrintOne(PyObject* stream, PyObject *o);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
@@ -1035,6 +1020,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
 /* Module declarations from 'crest_simp' */
+static int __pyx_f_10crest_simp_checkWaterBalance(double, double, double, double, double); /*proto*/
 #define __Pyx_MODULE_NAME "crest_simp"
 extern int __pyx_module_is_main_crest_simp;
 int __pyx_module_is_main_crest_simp = 0;
@@ -1048,11 +1034,9 @@ static const char __pyx_k_KE[] = "KE";
 static const char __pyx_k_SM[] = "SM";
 static const char __pyx_k_WM[] = "WM";
 static const char __pyx_k_Wo[] = "Wo";
-static const char __pyx_k_end[] = "end";
 static const char __pyx_k_pet[] = "pet";
 static const char __pyx_k_Ksat[] = "Ksat";
 static const char __pyx_k_date[] = "__date__";
-static const char __pyx_k_file[] = "file";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_temX[] = "temX";
@@ -1061,7 +1045,6 @@ static const char __pyx_k_Wmaxm[] = "Wmaxm";
 static const char __pyx_k_actET[] = "actET";
 static const char __pyx_k_model[] = "model";
 static const char __pyx_k_petIn[] = "petIn";
-static const char __pyx_k_print[] = "print";
 static const char __pyx_k_adjPET[] = "adjPET";
 static const char __pyx_k_author[] = "__author__";
 static const char __pyx_k_precip[] = "precip";
@@ -1078,11 +1061,10 @@ static const char __pyx_k_precipSoil[] = "precipSoil";
 static const char __pyx_k_Allen_Zhi_Li[] = "Allen Zhi Li";
 static const char __pyx_k_infiltration[] = "infiltration";
 static const char __pyx_k_precipImperv[] = "precipImperv";
-static const char __pyx_k_Water_balanced[] = "Water balanced !";
 static const char __pyx_k_crest_simp_pyx[] = "crest_simp.pyx";
 static const char __pyx_k_interflowExcess[] = "interflowExcess";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_Water_not_balanced_deficit[] = "Water not balanced! deficit: ";
+static const char __pyx_k_Water_balance_violated[] = "Water balance violated!";
 static const char __pyx_k_Simplified_version_of_CREST_mod[] = "\nSimplified version of CREST model\nThe soil moisture is represented by one layer soils\nSee EF5\n";
 static PyObject *__pyx_kp_s_2020_06_18;
 static PyObject *__pyx_n_s_A;
@@ -1095,8 +1077,7 @@ static PyObject *__pyx_n_s_Ksat;
 static PyObject *__pyx_n_s_R;
 static PyObject *__pyx_n_s_SM;
 static PyObject *__pyx_n_s_WM;
-static PyObject *__pyx_kp_s_Water_balanced;
-static PyObject *__pyx_kp_s_Water_not_balanced_deficit;
+static PyObject *__pyx_kp_s_Water_balance_violated;
 static PyObject *__pyx_n_s_Wmaxm;
 static PyObject *__pyx_n_s_Wo;
 static PyObject *__pyx_n_s_actET;
@@ -1107,8 +1088,6 @@ static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_crest_simp;
 static PyObject *__pyx_kp_s_crest_simp_pyx;
 static PyObject *__pyx_n_s_date;
-static PyObject *__pyx_n_s_end;
-static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_infiltration;
 static PyObject *__pyx_n_s_interflow;
 static PyObject *__pyx_n_s_interflowExcess;
@@ -1122,12 +1101,11 @@ static PyObject *__pyx_n_s_precip;
 static PyObject *__pyx_n_s_precipImperv;
 static PyObject *__pyx_n_s_precipIn;
 static PyObject *__pyx_n_s_precipSoil;
-static PyObject *__pyx_n_s_print;
 static PyObject *__pyx_n_s_stepHour;
 static PyObject *__pyx_n_s_temX;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_timestep;
-static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_precipIn, double __pyx_v_petIn, double __pyx_v_SM, double __pyx_v_Ksat, double __pyx_v_WM, double __pyx_v_B, double __pyx_v_IM, double __pyx_v_KE, double __pyx_v_timestep); /* proto */
+static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_precipIn, double __pyx_v_overland, double __pyx_v_petIn, double __pyx_v_SM, double __pyx_v_Ksat, double __pyx_v_WM, double __pyx_v_B, double __pyx_v_IM, double __pyx_v_KE, double __pyx_v_timestep); /* proto */
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_codeobj__2;
 /* Late includes */
@@ -1145,11 +1123,6 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("checkWaterBalance", 0);
 
   /* "crest_simp.pyx":15
@@ -1157,7 +1130,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  * 
  *     balanced = P-ET-SW-interflow-overland;             # <<<<<<<<<<<<<<
  *     if balanced<1e-10:
- *         print 'Water balanced !'
+ *         #print 'Water balanced !'
  */
   __pyx_v_balanced = ((((__pyx_v_P - __pyx_v_ET) - __pyx_v_SW) - __pyx_v_interflow) - __pyx_v_overland);
 
@@ -1165,27 +1138,18 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  * 
  *     balanced = P-ET-SW-interflow-overland;
  *     if balanced<1e-10:             # <<<<<<<<<<<<<<
- *         print 'Water balanced !'
+ *         #print 'Water balanced !'
  *         return 1;
  */
   __pyx_t_1 = ((__pyx_v_balanced < 1e-10) != 0);
   if (__pyx_t_1) {
 
-    /* "crest_simp.pyx":17
- *     balanced = P-ET-SW-interflow-overland;
- *     if balanced<1e-10:
- *         print 'Water balanced !'             # <<<<<<<<<<<<<<
- *         return 1;
- *     else:
- */
-    if (__Pyx_PrintOne(0, __pyx_kp_s_Water_balanced) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
-
     /* "crest_simp.pyx":18
  *     if balanced<1e-10:
- *         print 'Water balanced !'
+ *         #print 'Water balanced !'
  *         return 1;             # <<<<<<<<<<<<<<
  *     else:
- *         print 'Water not balanced! deficit: ',balanced
+ *         #print 'Water not balanced! deficit: ',balanced
  */
     __pyx_r = 1;
     goto __pyx_L0;
@@ -1194,39 +1158,19 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  * 
  *     balanced = P-ET-SW-interflow-overland;
  *     if balanced<1e-10:             # <<<<<<<<<<<<<<
- *         print 'Water balanced !'
+ *         #print 'Water balanced !'
  *         return 1;
  */
   }
 
-  /* "crest_simp.pyx":20
- *         return 1;
+  /* "crest_simp.pyx":21
  *     else:
- *         print 'Water not balanced! deficit: ',balanced             # <<<<<<<<<<<<<<
- *         return 0;
- * 
- */
-  /*else*/ {
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_balanced); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_INCREF(__pyx_kp_s_Water_not_balanced_deficit);
-    __Pyx_GIVEREF(__pyx_kp_s_Water_not_balanced_deficit);
-    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_kp_s_Water_not_balanced_deficit);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
-    __pyx_t_2 = 0;
-    if (__Pyx_Print(0, __pyx_t_3, 1) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-
-    /* "crest_simp.pyx":21
- *     else:
- *         print 'Water not balanced! deficit: ',balanced
+ *         #print 'Water not balanced! deficit: ',balanced
  *         return 0;             # <<<<<<<<<<<<<<
  * 
- * def model(double precipIn, double petIn, double SM, double Ksat,
+ * def model(double precipIn, double overland, double petIn, double SM, double Ksat,
  */
+  /*else*/ {
     __pyx_r = 0;
     goto __pyx_L0;
   }
@@ -1240,11 +1184,6 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  */
 
   /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("crest_simp.checkWaterBalance", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1253,7 +1192,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
 /* "crest_simp.pyx":23
  *         return 0;
  * 
- * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
+ * def model(double precipIn, double overland, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
  *         double WM, double B, double IM, double KE,
  *         double timestep):
  */
@@ -1263,6 +1202,7 @@ static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__
 static PyMethodDef __pyx_mdef_10crest_simp_1model = {"model", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_10crest_simp_1model, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_precipIn;
+  double __pyx_v_overland;
   double __pyx_v_petIn;
   double __pyx_v_SM;
   double __pyx_v_Ksat;
@@ -1278,12 +1218,14 @@ static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("model (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_precipIn,&__pyx_n_s_petIn,&__pyx_n_s_SM,&__pyx_n_s_Ksat,&__pyx_n_s_WM,&__pyx_n_s_B,&__pyx_n_s_IM,&__pyx_n_s_KE,&__pyx_n_s_timestep,0};
-    PyObject* values[9] = {0,0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_precipIn,&__pyx_n_s_overland,&__pyx_n_s_petIn,&__pyx_n_s_SM,&__pyx_n_s_Ksat,&__pyx_n_s_WM,&__pyx_n_s_B,&__pyx_n_s_IM,&__pyx_n_s_KE,&__pyx_n_s_timestep,0};
+    PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
+        CYTHON_FALLTHROUGH;
         case  9: values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
         CYTHON_FALLTHROUGH;
         case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
@@ -1312,57 +1254,63 @@ static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
-        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_petIn)) != 0)) kw_args--;
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_overland)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 1); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 1); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
-        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_SM)) != 0)) kw_args--;
+        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_petIn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 2); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 2); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
-        if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Ksat)) != 0)) kw_args--;
+        if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_SM)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 3); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 3); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
-        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_WM)) != 0)) kw_args--;
+        if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Ksat)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 4); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 4); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
-        if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_B)) != 0)) kw_args--;
+        if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_WM)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 5); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 5); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
-        if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IM)) != 0)) kw_args--;
+        if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_B)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 6); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 6); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
-        if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_KE)) != 0)) kw_args--;
+        if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IM)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 7); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 7); __PYX_ERR(0, 23, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
-        if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_timestep)) != 0)) kw_args--;
+        if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_KE)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, 8); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 8); __PYX_ERR(0, 23, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  9:
+        if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_timestep)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, 9); __PYX_ERR(0, 23, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "model") < 0)) __PYX_ERR(0, 23, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -1374,33 +1322,35 @@ static PyObject *__pyx_pw_10crest_simp_1model(PyObject *__pyx_self, PyObject *__
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
       values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
+      values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
     }
     __pyx_v_precipIn = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_precipIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
-    __pyx_v_petIn = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_petIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
-    __pyx_v_SM = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_SM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
-    __pyx_v_Ksat = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_Ksat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
-    __pyx_v_WM = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_WM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
-    __pyx_v_B = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
-    __pyx_v_IM = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_IM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
-    __pyx_v_KE = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_KE == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
-    __pyx_v_timestep = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_timestep == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
+    __pyx_v_overland = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_overland == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_petIn = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_petIn == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_SM = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_SM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_Ksat = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_Ksat == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_WM = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_WM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_B = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_B == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_IM = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_IM == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_KE = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_KE == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L3_error)
+    __pyx_v_timestep = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_timestep == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("model", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 23, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("model", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 23, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("crest_simp.model", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10crest_simp_model(__pyx_self, __pyx_v_precipIn, __pyx_v_petIn, __pyx_v_SM, __pyx_v_Ksat, __pyx_v_WM, __pyx_v_B, __pyx_v_IM, __pyx_v_KE, __pyx_v_timestep);
+  __pyx_r = __pyx_pf_10crest_simp_model(__pyx_self, __pyx_v_precipIn, __pyx_v_overland, __pyx_v_petIn, __pyx_v_SM, __pyx_v_Ksat, __pyx_v_WM, __pyx_v_B, __pyx_v_IM, __pyx_v_KE, __pyx_v_timestep);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_precipIn, double __pyx_v_petIn, double __pyx_v_SM, double __pyx_v_Ksat, double __pyx_v_WM, double __pyx_v_B, double __pyx_v_IM, double __pyx_v_KE, double __pyx_v_timestep) {
+static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_precipIn, double __pyx_v_overland, double __pyx_v_petIn, double __pyx_v_SM, double __pyx_v_Ksat, double __pyx_v_WM, double __pyx_v_B, double __pyx_v_IM, double __pyx_v_KE, double __pyx_v_timestep) {
   double __pyx_v_Wo;
   double __pyx_v_stepHour;
   double __pyx_v_precip;
@@ -1408,7 +1358,6 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   double __pyx_v_adjPET;
   double __pyx_v_temX;
   double __pyx_v_interflow;
-  double __pyx_v_overland;
   double __pyx_v_interflowExcess;
   double __pyx_v_precipSoil;
   double __pyx_v_precipImperv;
@@ -1418,6 +1367,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   double __pyx_v_infiltration;
   double __pyx_v_ExcessET;
   double __pyx_v_actET;
+  int __pyx_v_balanced;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -1435,35 +1385,35 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   /* "crest_simp.pyx":28
  * 
  *     cdef double Wo
- *     cdef double stepHour= timestep/3600             # <<<<<<<<<<<<<<
- *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm
- *     cdef double pet= petIn * timestep*1000 #mm
+ *     cdef double stepHour= timestep/3600.             # <<<<<<<<<<<<<<
+ *     cdef double precip= precipIn * timestep*1000.#Input is m/s, convert to mm
+ *     cdef double pet= petIn * timestep*1000. #mm
  */
-  __pyx_v_stepHour = (__pyx_v_timestep / 3600.0);
+  __pyx_v_stepHour = (__pyx_v_timestep / 3600.);
 
   /* "crest_simp.pyx":29
  *     cdef double Wo
- *     cdef double stepHour= timestep/3600
- *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm             # <<<<<<<<<<<<<<
- *     cdef double pet= petIn * timestep*1000 #mm
+ *     cdef double stepHour= timestep/3600.
+ *     cdef double precip= precipIn * timestep*1000.#Input is m/s, convert to mm             # <<<<<<<<<<<<<<
+ *     cdef double pet= petIn * timestep*1000. #mm
  *     cdef double adjPET= pet * KE
  */
-  __pyx_v_precip = ((__pyx_v_precipIn * __pyx_v_timestep) * 1000.0);
+  __pyx_v_precip = ((__pyx_v_precipIn * __pyx_v_timestep) * 1000.);
 
   /* "crest_simp.pyx":30
- *     cdef double stepHour= timestep/3600
- *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm
- *     cdef double pet= petIn * timestep*1000 #mm             # <<<<<<<<<<<<<<
+ *     cdef double stepHour= timestep/3600.
+ *     cdef double precip= precipIn * timestep*1000.#Input is m/s, convert to mm
+ *     cdef double pet= petIn * timestep*1000. #mm             # <<<<<<<<<<<<<<
  *     cdef double adjPET= pet * KE
- *     cdef double temX, interflow, overland, interflowExcess
+ *     cdef double temX, interflow, interflowExcess
  */
-  __pyx_v_pet = ((__pyx_v_petIn * __pyx_v_timestep) * 1000.0);
+  __pyx_v_pet = ((__pyx_v_petIn * __pyx_v_timestep) * 1000.);
 
   /* "crest_simp.pyx":31
- *     cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm
- *     cdef double pet= petIn * timestep*1000 #mm
+ *     cdef double precip= precipIn * timestep*1000.#Input is m/s, convert to mm
+ *     cdef double pet= petIn * timestep*1000. #mm
  *     cdef double adjPET= pet * KE             # <<<<<<<<<<<<<<
- *     cdef double temX, interflow, overland, interflowExcess
+ *     cdef double temX, interflow, interflowExcess
  *     cdef double precipSoil, precipImperv, Wmaxm, A, R, infiltration, ExcessET, actET
  */
   __pyx_v_adjPET = (__pyx_v_pet * __pyx_v_KE);
@@ -1544,7 +1494,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  *     if B<0.0: B=1.0
  *     if Ksat<0.0: Ksat=1.0             # <<<<<<<<<<<<<<
  * 
- *     if precip>adjPET:
+ *     precip+= overland* 1000. # combine precipitation and surface runoff
  */
   __pyx_t_1 = ((__pyx_v_Ksat < 0.0) != 0);
   if (__pyx_t_1) {
@@ -1554,6 +1504,15 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   /* "crest_simp.pyx":50
  *     if Ksat<0.0: Ksat=1.0
  * 
+ *     precip+= overland* 1000. # combine precipitation and surface runoff             # <<<<<<<<<<<<<<
+ * 
+ *     if precip>adjPET:
+ */
+  __pyx_v_precip = (__pyx_v_precip + (__pyx_v_overland * 1000.));
+
+  /* "crest_simp.pyx":52
+ *     precip+= overland* 1000. # combine precipitation and surface runoff
+ * 
  *     if precip>adjPET:             # <<<<<<<<<<<<<<
  *         #available precipitation in soil
  *         precipSoil= (precip-adjPET) * (1-IM)
@@ -1561,7 +1520,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_1 = ((__pyx_v_precip > __pyx_v_adjPET) != 0);
   if (__pyx_t_1) {
 
-    /* "crest_simp.pyx":52
+    /* "crest_simp.pyx":54
  *     if precip>adjPET:
  *         #available precipitation in soil
  *         precipSoil= (precip-adjPET) * (1-IM)             # <<<<<<<<<<<<<<
@@ -1570,7 +1529,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_precipSoil = ((__pyx_v_precip - __pyx_v_adjPET) * (1.0 - __pyx_v_IM));
 
-    /* "crest_simp.pyx":54
+    /* "crest_simp.pyx":56
  *         precipSoil= (precip-adjPET) * (1-IM)
  * 
  *         precipImperv = precip -adjPET - precipSoil             # <<<<<<<<<<<<<<
@@ -1579,7 +1538,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_precipImperv = ((__pyx_v_precip - __pyx_v_adjPET) - __pyx_v_precipSoil);
 
-    /* "crest_simp.pyx":56
+    /* "crest_simp.pyx":58
  *         precipImperv = precip -adjPET - precipSoil
  * 
  *         interflowExcess = SM - WM             # <<<<<<<<<<<<<<
@@ -1588,7 +1547,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflowExcess = (__pyx_v_SM - __pyx_v_WM);
 
-    /* "crest_simp.pyx":58
+    /* "crest_simp.pyx":60
  *         interflowExcess = SM - WM
  * 
  *         if interflowExcess< 0.0:             # <<<<<<<<<<<<<<
@@ -1598,7 +1557,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_interflowExcess < 0.0) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":59
+      /* "crest_simp.pyx":61
  * 
  *         if interflowExcess< 0.0:
  *             interflowExcess= 0.0             # <<<<<<<<<<<<<<
@@ -1607,7 +1566,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_interflowExcess = 0.0;
 
-      /* "crest_simp.pyx":58
+      /* "crest_simp.pyx":60
  *         interflowExcess = SM - WM
  * 
  *         if interflowExcess< 0.0:             # <<<<<<<<<<<<<<
@@ -1616,7 +1575,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     }
 
-    /* "crest_simp.pyx":61
+    /* "crest_simp.pyx":63
  *             interflowExcess= 0.0
  * 
  *         if SM>WM: SM= WM             # <<<<<<<<<<<<<<
@@ -1628,7 +1587,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       __pyx_v_SM = __pyx_v_WM;
     }
 
-    /* "crest_simp.pyx":63
+    /* "crest_simp.pyx":65
  *         if SM>WM: SM= WM
  * 
  *         if SM<WM:             # <<<<<<<<<<<<<<
@@ -1638,7 +1597,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_SM < __pyx_v_WM) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":65
+      /* "crest_simp.pyx":67
  *         if SM<WM:
  * 
  *             Wmaxm=WM*(1+B)             # <<<<<<<<<<<<<<
@@ -1647,7 +1606,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_Wmaxm = (__pyx_v_WM * (1.0 + __pyx_v_B));
 
-      /* "crest_simp.pyx":66
+      /* "crest_simp.pyx":68
  * 
  *             Wmaxm=WM*(1+B)
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))             # <<<<<<<<<<<<<<
@@ -1656,16 +1615,16 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       if (unlikely(__pyx_v_WM == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 66, __pyx_L1_error)
+        __PYX_ERR(0, 68, __pyx_L1_error)
       }
       __pyx_t_2 = (1.0 + __pyx_v_B);
       if (unlikely(__pyx_t_2 == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 66, __pyx_L1_error)
+        __PYX_ERR(0, 68, __pyx_L1_error)
       }
       __pyx_v_A = (__pyx_v_Wmaxm * (1.0 - pow((1.0 - (__pyx_v_SM / __pyx_v_WM)), (1.0 / __pyx_t_2))));
 
-      /* "crest_simp.pyx":68
+      /* "crest_simp.pyx":70
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  * 
  *             if precipSoil + A >=Wmaxm:             # <<<<<<<<<<<<<<
@@ -1675,7 +1634,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       __pyx_t_1 = (((__pyx_v_precipSoil + __pyx_v_A) >= __pyx_v_Wmaxm) != 0);
       if (__pyx_t_1) {
 
-        /* "crest_simp.pyx":69
+        /* "crest_simp.pyx":71
  * 
  *             if precipSoil + A >=Wmaxm:
  *                 R= precipSoil-(WM-SM)             # <<<<<<<<<<<<<<
@@ -1684,7 +1643,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         __pyx_v_R = (__pyx_v_precipSoil - (__pyx_v_WM - __pyx_v_SM));
 
-        /* "crest_simp.pyx":70
+        /* "crest_simp.pyx":72
  *             if precipSoil + A >=Wmaxm:
  *                 R= precipSoil-(WM-SM)
  *                 if R<0: R=0.0             # <<<<<<<<<<<<<<
@@ -1696,7 +1655,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
           __pyx_v_R = 0.0;
         }
 
-        /* "crest_simp.pyx":71
+        /* "crest_simp.pyx":73
  *                 R= precipSoil-(WM-SM)
  *                 if R<0: R=0.0
  *                 Wo=WM             # <<<<<<<<<<<<<<
@@ -1705,7 +1664,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         __pyx_v_Wo = __pyx_v_WM;
 
-        /* "crest_simp.pyx":68
+        /* "crest_simp.pyx":70
  *             A = Wmaxm * (1-(1.0-SM/WM)**(1.0/(1.0+B)))
  * 
  *             if precipSoil + A >=Wmaxm:             # <<<<<<<<<<<<<<
@@ -1715,7 +1674,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
         goto __pyx_L12;
       }
 
-      /* "crest_simp.pyx":73
+      /* "crest_simp.pyx":75
  *                 Wo=WM
  *             else:
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))             # <<<<<<<<<<<<<<
@@ -1725,16 +1684,16 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       /*else*/ {
         if (unlikely(__pyx_v_Wmaxm == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 73, __pyx_L1_error)
+          __PYX_ERR(0, 75, __pyx_L1_error)
         }
         __pyx_t_2 = (__pyx_v_A + __pyx_v_precipSoil);
         if (unlikely(__pyx_v_Wmaxm == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-          __PYX_ERR(0, 73, __pyx_L1_error)
+          __PYX_ERR(0, 75, __pyx_L1_error)
         }
         __pyx_v_infiltration = (__pyx_v_WM * (pow((1.0 - (__pyx_v_A / __pyx_v_Wmaxm)), (1.0 + __pyx_v_B)) - pow((1.0 - (__pyx_t_2 / __pyx_v_Wmaxm)), (1.0 + __pyx_v_B))));
 
-        /* "crest_simp.pyx":74
+        /* "crest_simp.pyx":76
  *             else:
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))
  *                 if infiltration>precipSoil:             # <<<<<<<<<<<<<<
@@ -1744,7 +1703,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
         __pyx_t_1 = ((__pyx_v_infiltration > __pyx_v_precipSoil) != 0);
         if (__pyx_t_1) {
 
-          /* "crest_simp.pyx":75
+          /* "crest_simp.pyx":77
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))
  *                 if infiltration>precipSoil:
  *                     infiltration= precipSoil             # <<<<<<<<<<<<<<
@@ -1753,7 +1712,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
           __pyx_v_infiltration = __pyx_v_precipSoil;
 
-          /* "crest_simp.pyx":74
+          /* "crest_simp.pyx":76
  *             else:
  *                 infiltration=WM*((1-A/Wmaxm)**(1+B)-(1-(A+precipSoil)/Wmaxm)**(1+B))
  *                 if infiltration>precipSoil:             # <<<<<<<<<<<<<<
@@ -1762,7 +1721,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         }
 
-        /* "crest_simp.pyx":76
+        /* "crest_simp.pyx":78
  *                 if infiltration>precipSoil:
  *                     infiltration= precipSoil
  *                 R = precipSoil - infiltration             # <<<<<<<<<<<<<<
@@ -1771,7 +1730,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
         __pyx_v_R = (__pyx_v_precipSoil - __pyx_v_infiltration);
 
-        /* "crest_simp.pyx":77
+        /* "crest_simp.pyx":79
  *                     infiltration= precipSoil
  *                 R = precipSoil - infiltration
  *                 if R<0: R=0.0             # <<<<<<<<<<<<<<
@@ -1783,7 +1742,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
           __pyx_v_R = 0.0;
         }
 
-        /* "crest_simp.pyx":78
+        /* "crest_simp.pyx":80
  *                 R = precipSoil - infiltration
  *                 if R<0: R=0.0
  *                 Wo= SM+infiltration             # <<<<<<<<<<<<<<
@@ -1794,7 +1753,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       }
       __pyx_L12:;
 
-      /* "crest_simp.pyx":63
+      /* "crest_simp.pyx":65
  *         if SM>WM: SM= WM
  * 
  *         if SM<WM:             # <<<<<<<<<<<<<<
@@ -1804,7 +1763,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       goto __pyx_L11;
     }
 
-    /* "crest_simp.pyx":80
+    /* "crest_simp.pyx":82
  *                 Wo= SM+infiltration
  *         else:
  *             R= precipSoil             # <<<<<<<<<<<<<<
@@ -1814,7 +1773,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     /*else*/ {
       __pyx_v_R = __pyx_v_precipSoil;
 
-      /* "crest_simp.pyx":81
+      /* "crest_simp.pyx":83
  *         else:
  *             R= precipSoil
  *             Wo= WM             # <<<<<<<<<<<<<<
@@ -1825,7 +1784,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     }
     __pyx_L11:;
 
-    /* "crest_simp.pyx":84
+    /* "crest_simp.pyx":86
  * 
  * 
  *         temX= (SM+Wo)/WM/2*Ksat*stepHour             # <<<<<<<<<<<<<<
@@ -1835,11 +1794,11 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_2 = (__pyx_v_SM + __pyx_v_Wo);
     if (unlikely(__pyx_v_WM == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 84, __pyx_L1_error)
+      __PYX_ERR(0, 86, __pyx_L1_error)
     }
     __pyx_v_temX = ((((__pyx_t_2 / __pyx_v_WM) / 2.0) * __pyx_v_Ksat) * __pyx_v_stepHour);
 
-    /* "crest_simp.pyx":86
+    /* "crest_simp.pyx":88
  *         temX= (SM+Wo)/WM/2*Ksat*stepHour
  * 
  *         if R<=temX:             # <<<<<<<<<<<<<<
@@ -1849,7 +1808,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_R <= __pyx_v_temX) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":87
+      /* "crest_simp.pyx":89
  * 
  *         if R<=temX:
  *             interflow= R             # <<<<<<<<<<<<<<
@@ -1858,7 +1817,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_interflow = __pyx_v_R;
 
-      /* "crest_simp.pyx":86
+      /* "crest_simp.pyx":88
  *         temX= (SM+Wo)/WM/2*Ksat*stepHour
  * 
  *         if R<=temX:             # <<<<<<<<<<<<<<
@@ -1868,7 +1827,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       goto __pyx_L16;
     }
 
-    /* "crest_simp.pyx":89
+    /* "crest_simp.pyx":91
  *             interflow= R
  *         else:
  *             interflow= temX             # <<<<<<<<<<<<<<
@@ -1880,7 +1839,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     }
     __pyx_L16:;
 
-    /* "crest_simp.pyx":91
+    /* "crest_simp.pyx":93
  *             interflow= temX
  * 
  *         overland= R- interflow + precipImperv             # <<<<<<<<<<<<<<
@@ -1889,7 +1848,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_overland = ((__pyx_v_R - __pyx_v_interflow) + __pyx_v_precipImperv);
 
-    /* "crest_simp.pyx":93
+    /* "crest_simp.pyx":95
  *         overland= R- interflow + precipImperv
  * 
  *         actET= adjPET             # <<<<<<<<<<<<<<
@@ -1898,7 +1857,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_actET = __pyx_v_adjPET;
 
-    /* "crest_simp.pyx":95
+    /* "crest_simp.pyx":97
  *         actET= adjPET
  * 
  *         interflow+= interflowExcess             # <<<<<<<<<<<<<<
@@ -1907,8 +1866,8 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflow = (__pyx_v_interflow + __pyx_v_interflowExcess);
 
-    /* "crest_simp.pyx":50
- *     if Ksat<0.0: Ksat=1.0
+    /* "crest_simp.pyx":52
+ *     precip+= overland* 1000. # combine precipitation and surface runoff
  * 
  *     if precip>adjPET:             # <<<<<<<<<<<<<<
  *         #available precipitation in soil
@@ -1917,7 +1876,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     goto __pyx_L8;
   }
 
-  /* "crest_simp.pyx":97
+  /* "crest_simp.pyx":99
  *         interflow+= interflowExcess
  *     else:
  *         overland=0.0             # <<<<<<<<<<<<<<
@@ -1927,7 +1886,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   /*else*/ {
     __pyx_v_overland = 0.0;
 
-    /* "crest_simp.pyx":98
+    /* "crest_simp.pyx":100
  *     else:
  *         overland=0.0
  *         interflowExcess= SM -WM             # <<<<<<<<<<<<<<
@@ -1936,7 +1895,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflowExcess = (__pyx_v_SM - __pyx_v_WM);
 
-    /* "crest_simp.pyx":100
+    /* "crest_simp.pyx":102
  *         interflowExcess= SM -WM
  * 
  *         if interflowExcess<0.0:             # <<<<<<<<<<<<<<
@@ -1946,7 +1905,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_interflowExcess < 0.0) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":101
+      /* "crest_simp.pyx":103
  * 
  *         if interflowExcess<0.0:
  *             interflowExcess= 0.0             # <<<<<<<<<<<<<<
@@ -1955,7 +1914,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_interflowExcess = 0.0;
 
-      /* "crest_simp.pyx":100
+      /* "crest_simp.pyx":102
  *         interflowExcess= SM -WM
  * 
  *         if interflowExcess<0.0:             # <<<<<<<<<<<<<<
@@ -1964,7 +1923,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     }
 
-    /* "crest_simp.pyx":102
+    /* "crest_simp.pyx":104
  *         if interflowExcess<0.0:
  *             interflowExcess= 0.0
  *         interflow= interflowExcess             # <<<<<<<<<<<<<<
@@ -1973,7 +1932,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_interflow = __pyx_v_interflowExcess;
 
-    /* "crest_simp.pyx":103
+    /* "crest_simp.pyx":105
  *             interflowExcess= 0.0
  *         interflow= interflowExcess
  *         if SM>WM:             # <<<<<<<<<<<<<<
@@ -1983,7 +1942,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_SM > __pyx_v_WM) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":104
+      /* "crest_simp.pyx":106
  *         interflow= interflowExcess
  *         if SM>WM:
  *             SM= WM             # <<<<<<<<<<<<<<
@@ -1992,7 +1951,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_SM = __pyx_v_WM;
 
-      /* "crest_simp.pyx":103
+      /* "crest_simp.pyx":105
  *             interflowExcess= 0.0
  *         interflow= interflowExcess
  *         if SM>WM:             # <<<<<<<<<<<<<<
@@ -2001,7 +1960,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
     }
 
-    /* "crest_simp.pyx":106
+    /* "crest_simp.pyx":108
  *             SM= WM
  * 
  *         ExcessET= (adjPET - precip)*SM/WM             # <<<<<<<<<<<<<<
@@ -2011,11 +1970,11 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_2 = ((__pyx_v_adjPET - __pyx_v_precip) * __pyx_v_SM);
     if (unlikely(__pyx_v_WM == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 106, __pyx_L1_error)
+      __PYX_ERR(0, 108, __pyx_L1_error)
     }
     __pyx_v_ExcessET = (__pyx_t_2 / __pyx_v_WM);
 
-    /* "crest_simp.pyx":108
+    /* "crest_simp.pyx":110
  *         ExcessET= (adjPET - precip)*SM/WM
  * 
  *         if ExcessET<SM:             # <<<<<<<<<<<<<<
@@ -2025,7 +1984,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_1 = ((__pyx_v_ExcessET < __pyx_v_SM) != 0);
     if (__pyx_t_1) {
 
-      /* "crest_simp.pyx":109
+      /* "crest_simp.pyx":111
  * 
  *         if ExcessET<SM:
  *             Wo= SM-ExcessET             # <<<<<<<<<<<<<<
@@ -2034,7 +1993,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_Wo = (__pyx_v_SM - __pyx_v_ExcessET);
 
-      /* "crest_simp.pyx":108
+      /* "crest_simp.pyx":110
  *         ExcessET= (adjPET - precip)*SM/WM
  * 
  *         if ExcessET<SM:             # <<<<<<<<<<<<<<
@@ -2044,7 +2003,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
       goto __pyx_L19;
     }
 
-    /* "crest_simp.pyx":111
+    /* "crest_simp.pyx":113
  *             Wo= SM-ExcessET
  *         else:
  *             Wo= 0.0             # <<<<<<<<<<<<<<
@@ -2054,7 +2013,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     /*else*/ {
       __pyx_v_Wo = 0.0;
 
-      /* "crest_simp.pyx":112
+      /* "crest_simp.pyx":114
  *         else:
  *             Wo= 0.0
  *             ExcessET= SM             # <<<<<<<<<<<<<<
@@ -2065,7 +2024,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
     }
     __pyx_L19:;
 
-    /* "crest_simp.pyx":114
+    /* "crest_simp.pyx":116
  *             ExcessET= SM
  * 
  *         actET = ExcessET + precip             # <<<<<<<<<<<<<<
@@ -2076,81 +2035,91 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   }
   __pyx_L8:;
 
-  /* "crest_simp.pyx":116
+  /* "crest_simp.pyx":118
  *         actET = ExcessET + precip
  * 
  *     SM= Wo             # <<<<<<<<<<<<<<
- *     #balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
- *     #assert balanced==1, 'Water balance violated!'
+ *     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
+ *     assert balanced==1, 'Water balance violated!'
  */
   __pyx_v_SM = __pyx_v_Wo;
 
-  /* "crest_simp.pyx":121
+  /* "crest_simp.pyx":119
+ * 
+ *     SM= Wo
+ *     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)             # <<<<<<<<<<<<<<
+ *     assert balanced==1, 'Water balance violated!'
+ * 
+ */
+  __pyx_v_balanced = __pyx_f_10crest_simp_checkWaterBalance(__pyx_v_precip, __pyx_v_actET, __pyx_v_SM, __pyx_v_overland, __pyx_v_interflow);
+
+  /* "crest_simp.pyx":120
+ *     SM= Wo
+ *     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
+ *     assert balanced==1, 'Water balance violated!'             # <<<<<<<<<<<<<<
  * 
  *     #convert back to m or m/s
- *     overland= overland/1000/timestep             # <<<<<<<<<<<<<<
- *     interflow= interflow/1000/timestep
- *     SM= SM/1000
  */
-  __pyx_t_2 = (__pyx_v_overland / 1000.0);
-  if (unlikely(__pyx_v_timestep == 0)) {
-    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 121, __pyx_L1_error)
+  #ifndef CYTHON_WITHOUT_ASSERTIONS
+  if (unlikely(!Py_OptimizeFlag)) {
+    if (unlikely(!((__pyx_v_balanced == 1) != 0))) {
+      PyErr_SetObject(PyExc_AssertionError, __pyx_kp_s_Water_balance_violated);
+      __PYX_ERR(0, 120, __pyx_L1_error)
+    }
   }
-  __pyx_v_overland = (__pyx_t_2 / __pyx_v_timestep);
-
-  /* "crest_simp.pyx":122
- *     #convert back to m or m/s
- *     overland= overland/1000/timestep
- *     interflow= interflow/1000/timestep             # <<<<<<<<<<<<<<
- *     SM= SM/1000
- *     actET/=(1000*timestep)
- */
-  __pyx_t_2 = (__pyx_v_interflow / 1000.0);
-  if (unlikely(__pyx_v_timestep == 0)) {
-    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 122, __pyx_L1_error)
-  }
-  __pyx_v_interflow = (__pyx_t_2 / __pyx_v_timestep);
+  #endif
 
   /* "crest_simp.pyx":123
- *     overland= overland/1000/timestep
- *     interflow= interflow/1000/timestep
- *     SM= SM/1000             # <<<<<<<<<<<<<<
- *     actET/=(1000*timestep)
  * 
+ *     #convert back to m or m/s
+ *     overland= overland/1000.             # <<<<<<<<<<<<<<
+ *     interflow= interflow/1000.
+ *     SM= SM/1000.
  */
-  __pyx_v_SM = (__pyx_v_SM / 1000.0);
+  __pyx_v_overland = (__pyx_v_overland / 1000.);
 
   /* "crest_simp.pyx":124
- *     interflow= interflow/1000/timestep
- *     SM= SM/1000
- *     actET/=(1000*timestep)             # <<<<<<<<<<<<<<
+ *     #convert back to m or m/s
+ *     overland= overland/1000.
+ *     interflow= interflow/1000.             # <<<<<<<<<<<<<<
+ *     SM= SM/1000.
+ *     actET/=(1000.)
+ */
+  __pyx_v_interflow = (__pyx_v_interflow / 1000.);
+
+  /* "crest_simp.pyx":125
+ *     overland= overland/1000.
+ *     interflow= interflow/1000.
+ *     SM= SM/1000.             # <<<<<<<<<<<<<<
+ *     actET/=(1000.)
+ * 
+ */
+  __pyx_v_SM = (__pyx_v_SM / 1000.);
+
+  /* "crest_simp.pyx":126
+ *     interflow= interflow/1000.
+ *     SM= SM/1000.
+ *     actET/=(1000.)             # <<<<<<<<<<<<<<
  * 
  *     #print 'overland flow:', overland
  */
-  __pyx_t_2 = (1000.0 * __pyx_v_timestep);
-  if (unlikely(__pyx_t_2 == 0)) {
-    PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 124, __pyx_L1_error)
-  }
-  __pyx_v_actET = (__pyx_v_actET / __pyx_t_2);
+  __pyx_v_actET = (__pyx_v_actET / 1000.);
 
-  /* "crest_simp.pyx":129
+  /* "crest_simp.pyx":131
  *     #print 'soil moisture: ',SM
  * 
  *     return SM, overland, interflow,actET             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);
@@ -2171,7 +2140,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   /* "crest_simp.pyx":23
  *         return 0;
  * 
- * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
+ * def model(double precipIn, double overland, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
  *         double WM, double B, double IM, double KE,
  *         double timestep):
  */
@@ -2248,8 +2217,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_R, __pyx_k_R, sizeof(__pyx_k_R), 0, 0, 1, 1},
   {&__pyx_n_s_SM, __pyx_k_SM, sizeof(__pyx_k_SM), 0, 0, 1, 1},
   {&__pyx_n_s_WM, __pyx_k_WM, sizeof(__pyx_k_WM), 0, 0, 1, 1},
-  {&__pyx_kp_s_Water_balanced, __pyx_k_Water_balanced, sizeof(__pyx_k_Water_balanced), 0, 0, 1, 0},
-  {&__pyx_kp_s_Water_not_balanced_deficit, __pyx_k_Water_not_balanced_deficit, sizeof(__pyx_k_Water_not_balanced_deficit), 0, 0, 1, 0},
+  {&__pyx_kp_s_Water_balance_violated, __pyx_k_Water_balance_violated, sizeof(__pyx_k_Water_balance_violated), 0, 0, 1, 0},
   {&__pyx_n_s_Wmaxm, __pyx_k_Wmaxm, sizeof(__pyx_k_Wmaxm), 0, 0, 1, 1},
   {&__pyx_n_s_Wo, __pyx_k_Wo, sizeof(__pyx_k_Wo), 0, 0, 1, 1},
   {&__pyx_n_s_actET, __pyx_k_actET, sizeof(__pyx_k_actET), 0, 0, 1, 1},
@@ -2260,8 +2228,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_crest_simp, __pyx_k_crest_simp, sizeof(__pyx_k_crest_simp), 0, 0, 1, 1},
   {&__pyx_kp_s_crest_simp_pyx, __pyx_k_crest_simp_pyx, sizeof(__pyx_k_crest_simp_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_date, __pyx_k_date, sizeof(__pyx_k_date), 0, 0, 1, 1},
-  {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
-  {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_infiltration, __pyx_k_infiltration, sizeof(__pyx_k_infiltration), 0, 0, 1, 1},
   {&__pyx_n_s_interflow, __pyx_k_interflow, sizeof(__pyx_k_interflow), 0, 0, 1, 1},
   {&__pyx_n_s_interflowExcess, __pyx_k_interflowExcess, sizeof(__pyx_k_interflowExcess), 0, 0, 1, 1},
@@ -2275,7 +2241,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_precipImperv, __pyx_k_precipImperv, sizeof(__pyx_k_precipImperv), 0, 0, 1, 1},
   {&__pyx_n_s_precipIn, __pyx_k_precipIn, sizeof(__pyx_k_precipIn), 0, 0, 1, 1},
   {&__pyx_n_s_precipSoil, __pyx_k_precipSoil, sizeof(__pyx_k_precipSoil), 0, 0, 1, 1},
-  {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
   {&__pyx_n_s_stepHour, __pyx_k_stepHour, sizeof(__pyx_k_stepHour), 0, 0, 1, 1},
   {&__pyx_n_s_temX, __pyx_k_temX, sizeof(__pyx_k_temX), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
@@ -2293,14 +2258,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "crest_simp.pyx":23
  *         return 0;
  * 
- * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
+ * def model(double precipIn, double overland, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
  *         double WM, double B, double IM, double KE,
  *         double timestep):
  */
-  __pyx_tuple_ = PyTuple_Pack(27, __pyx_n_s_precipIn, __pyx_n_s_petIn, __pyx_n_s_SM, __pyx_n_s_Ksat, __pyx_n_s_WM, __pyx_n_s_B, __pyx_n_s_IM, __pyx_n_s_KE, __pyx_n_s_timestep, __pyx_n_s_Wo, __pyx_n_s_stepHour, __pyx_n_s_precip, __pyx_n_s_pet, __pyx_n_s_adjPET, __pyx_n_s_temX, __pyx_n_s_interflow, __pyx_n_s_overland, __pyx_n_s_interflowExcess, __pyx_n_s_precipSoil, __pyx_n_s_precipImperv, __pyx_n_s_Wmaxm, __pyx_n_s_A, __pyx_n_s_R, __pyx_n_s_infiltration, __pyx_n_s_ExcessET, __pyx_n_s_actET, __pyx_n_s_balanced); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(27, __pyx_n_s_precipIn, __pyx_n_s_overland, __pyx_n_s_petIn, __pyx_n_s_SM, __pyx_n_s_Ksat, __pyx_n_s_WM, __pyx_n_s_B, __pyx_n_s_IM, __pyx_n_s_KE, __pyx_n_s_timestep, __pyx_n_s_Wo, __pyx_n_s_stepHour, __pyx_n_s_precip, __pyx_n_s_pet, __pyx_n_s_adjPET, __pyx_n_s_temX, __pyx_n_s_interflow, __pyx_n_s_interflowExcess, __pyx_n_s_precipSoil, __pyx_n_s_precipImperv, __pyx_n_s_Wmaxm, __pyx_n_s_A, __pyx_n_s_R, __pyx_n_s_infiltration, __pyx_n_s_ExcessET, __pyx_n_s_actET, __pyx_n_s_balanced); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(9, 0, 27, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_crest_simp_pyx, __pyx_n_s_model, 23, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(10, 0, 27, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_crest_simp_pyx, __pyx_n_s_model, 23, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2602,7 +2567,7 @@ if (!__Pyx_RefNanny) {
   /* "crest_simp.pyx":23
  *         return 0;
  * 
- * def model(double precipIn, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
+ * def model(double precipIn, double overland, double petIn, double SM, double Ksat,             # <<<<<<<<<<<<<<
  *         double WM, double B, double IM, double KE,
  *         double timestep):
  */
@@ -2662,72 +2627,6 @@ end:
     return (__Pyx_RefNannyAPIStruct *)r;
 }
 #endif
-
-/* PyErrFetchRestore */
-#if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-}
-#endif
-
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
-}
 
 /* RaiseArgTupleInvalid */
 static void __Pyx_RaiseArgtupleInvalid(
@@ -2908,6 +2807,30 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject
         return tp->tp_getattr(obj, PyString_AS_STRING(attr_name));
 #endif
     return PyObject_GetAttr(obj, attr_name);
+}
+#endif
+
+/* PyErrFetchRestore */
+#if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+}
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
 }
 #endif
 
@@ -3117,149 +3040,6 @@ bad:
     Py_XDECREF(py_code);
     Py_XDECREF(py_frame);
 }
-
-/* Print */
-#if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
-static PyObject *__Pyx_GetStdout(void) {
-    PyObject *f = PySys_GetObject((char *)"stdout");
-    if (!f) {
-        PyErr_SetString(PyExc_RuntimeError, "lost sys.stdout");
-    }
-    return f;
-}
-static int __Pyx_Print(PyObject* f, PyObject *arg_tuple, int newline) {
-    int i;
-    if (!f) {
-        if (!(f = __Pyx_GetStdout()))
-            return -1;
-    }
-    Py_INCREF(f);
-    for (i=0; i < PyTuple_GET_SIZE(arg_tuple); i++) {
-        PyObject* v;
-        if (PyFile_SoftSpace(f, 1)) {
-            if (PyFile_WriteString(" ", f) < 0)
-                goto error;
-        }
-        v = PyTuple_GET_ITEM(arg_tuple, i);
-        if (PyFile_WriteObject(v, f, Py_PRINT_RAW) < 0)
-            goto error;
-        if (PyString_Check(v)) {
-            char *s = PyString_AsString(v);
-            Py_ssize_t len = PyString_Size(v);
-            if (len > 0) {
-                switch (s[len-1]) {
-                    case ' ': break;
-                    case '\f': case '\r': case '\n': case '\t': case '\v':
-                        PyFile_SoftSpace(f, 0);
-                        break;
-                    default:  break;
-                }
-            }
-        }
-    }
-    if (newline) {
-        if (PyFile_WriteString("\n", f) < 0)
-            goto error;
-        PyFile_SoftSpace(f, 0);
-    }
-    Py_DECREF(f);
-    return 0;
-error:
-    Py_DECREF(f);
-    return -1;
-}
-#else
-static int __Pyx_Print(PyObject* stream, PyObject *arg_tuple, int newline) {
-    PyObject* kwargs = 0;
-    PyObject* result = 0;
-    PyObject* end_string;
-    if (unlikely(!__pyx_print)) {
-        __pyx_print = PyObject_GetAttr(__pyx_b, __pyx_n_s_print);
-        if (!__pyx_print)
-            return -1;
-    }
-    if (stream) {
-        kwargs = PyDict_New();
-        if (unlikely(!kwargs))
-            return -1;
-        if (unlikely(PyDict_SetItem(kwargs, __pyx_n_s_file, stream) < 0))
-            goto bad;
-        if (!newline) {
-            end_string = PyUnicode_FromStringAndSize(" ", 1);
-            if (unlikely(!end_string))
-                goto bad;
-            if (PyDict_SetItem(kwargs, __pyx_n_s_end, end_string) < 0) {
-                Py_DECREF(end_string);
-                goto bad;
-            }
-            Py_DECREF(end_string);
-        }
-    } else if (!newline) {
-        if (unlikely(!__pyx_print_kwargs)) {
-            __pyx_print_kwargs = PyDict_New();
-            if (unlikely(!__pyx_print_kwargs))
-                return -1;
-            end_string = PyUnicode_FromStringAndSize(" ", 1);
-            if (unlikely(!end_string))
-                return -1;
-            if (PyDict_SetItem(__pyx_print_kwargs, __pyx_n_s_end, end_string) < 0) {
-                Py_DECREF(end_string);
-                return -1;
-            }
-            Py_DECREF(end_string);
-        }
-        kwargs = __pyx_print_kwargs;
-    }
-    result = PyObject_Call(__pyx_print, arg_tuple, kwargs);
-    if (unlikely(kwargs) && (kwargs != __pyx_print_kwargs))
-        Py_DECREF(kwargs);
-    if (!result)
-        return -1;
-    Py_DECREF(result);
-    return 0;
-bad:
-    if (kwargs != __pyx_print_kwargs)
-        Py_XDECREF(kwargs);
-    return -1;
-}
-#endif
-
-/* PrintOne */
-#if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
-static int __Pyx_PrintOne(PyObject* f, PyObject *o) {
-    if (!f) {
-        if (!(f = __Pyx_GetStdout()))
-            return -1;
-    }
-    Py_INCREF(f);
-    if (PyFile_SoftSpace(f, 0)) {
-        if (PyFile_WriteString(" ", f) < 0)
-            goto error;
-    }
-    if (PyFile_WriteObject(o, f, Py_PRINT_RAW) < 0)
-        goto error;
-    if (PyFile_WriteString("\n", f) < 0)
-        goto error;
-    Py_DECREF(f);
-    return 0;
-error:
-    Py_DECREF(f);
-    return -1;
-    /* the line below is just to avoid C compiler
-     * warnings about unused functions */
-    return __Pyx_Print(f, NULL, 0);
-}
-#else
-static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
-    int res;
-    PyObject* arg_tuple = PyTuple_Pack(1, o);
-    if (unlikely(!arg_tuple))
-        return -1;
-    res = __Pyx_Print(stream, arg_tuple, 1);
-    Py_DECREF(arg_tuple);
-    return res;
-}
-#endif
 
 /* CIntToPy */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {

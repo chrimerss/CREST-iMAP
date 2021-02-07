@@ -557,6 +557,20 @@ class Generic_Domain:
             self.set_infiltration(False)
         
         return self._onInfiltration
+
+    def set_reinfiltration(self, onReInfiltration=True):
+        if not isinstance(onReInfiltration, bool):
+            msg= 'Expected argument is boolean'
+            raise Exception(msg)
+        else:
+            self._onReInfiltration= onReInfiltration
+
+    def get_reinfiltration(self):
+
+        if not hasattr(self, '_onReInfiltration'):
+            self.set_reinfiltration(True)
+        
+        return self._onReInfiltration
         
 
     def build_tagged_elements_dictionary(self, *args, **kwargs):
@@ -1812,7 +1826,7 @@ class Generic_Domain:
             
         freq_mapper= {'D':24.0*3600.0,'H':3600.0,'M':60.0,'S':1.0}
         _time_interval_func= lambda d: int(d[:-1])*freq_mapper[d[-1]]
-
+        self.rel_time_interval= _time_interval_func(self._time_interval)
         self.external=0
 
         if self.get_infiltration():
@@ -1836,7 +1850,7 @@ class Generic_Domain:
                             self.precip_pattern.replace('%Y', '%04d'%current_time.year).replace('%m',
                             '%02d'%current_time.month).replace('%d', '%02d'%(current_time.day)).replace('%H',
                             '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
-                                '%02d'%(current_time.second)))
+                            '%02d'%(current_time.second)))
                 if os.path.exists(precip_pth):
                     self.quantities['P'].set_values_from_lat_long_tif_file(precip_pth,
                                 location='centroids' ,proj=self.proj)
@@ -1865,16 +1879,26 @@ class Generic_Domain:
                 # excessRain= excessRain * self.timestep
                 # print "excessive rainfall computed, assign to stage."
 
-            if self.get_time()%_time_interval_func(self._time_interval)==0 and self.get_timestep()>0:
-                if coupled:
-                    cent_ids, excessRain= self.evolve_crest(interval= _time_interval_func(self._time_interval))
-                    # excessRain*= self.get_timestep()
-                elif self.get_infiltration():
-                    cent_ids, excessRain= self.simple_infiltration(interval= _time_interval_func(self._time_interval))
+            if self.get_time()%self.rel_time_interval==0 and self.get_timestep()>0:
+                if self._onReInfiltration:
+                    # convert to 
+                    surfR= (self.quantities['stage'].centroid_values[:] - \
+                            self.quantities['elevation'].centroid_values[:])
                 else:
+                    surfR= num.zeros(len(self.quantities['stage'].centroid_values))
+                if coupled: #switch to H&H coupled mode
+                    cent_ids, excessRain= self.evolve_crest(surfR= surfR,
+                    interval= self.rel_time_interval)
+                    # excessRain*= self.get_timestep()
+                elif self.get_infiltration(): #switch to simple infiltration mode
+                    cent_ids, excessRain= self.simple_infiltration(interval= self.rel_time_interval)
+                else: # switch to no-infiltration mode
                     cent_ids, excessRain= self.evolve_plain()
                     excessRain= num.array(excessRain)
                     # excessRain*= self.get_timestep()
+                if self._onReInfiltration:
+                    excessRain-= surfR
+                excessRain/= self.rel_time_interval
                 
             elif self.get_timestep()==0:
                 excessRain= num.zeros(len(self.quantities['stage'].centroid_values))
@@ -1898,7 +1922,6 @@ class Generic_Domain:
             self.apply_fractional_steps()
 
             
-
             #==========================================
             # Centroid Values of variables should be ok,
             #==========================================
@@ -1961,13 +1984,13 @@ class Generic_Domain:
 
     def evolve_plain(self):
         """
-        Here we evolve only use Rain - Evaporation as excessive rainfall
+        Here we evolve only use Rain - Evaporation as excess rainfall
         """
         excess_rain= []
         cent_ids= []
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
             val= self.quantities['P'].centroid_values[i] - \
-                             self.quantities['ET'].centroid_values[i]*self.quantities['KE'].centroid_values[i]
+                self.quantities['ET'].centroid_values[i]*self.quantities['KE'].centroid_values[i]
             if self.isInvalidValues(val):
                 excess_rain.append(0)
             else:
@@ -1977,7 +2000,7 @@ class Generic_Domain:
         return cent_ids, excess_rain
 
 
-    def evolve_crest(self, interval):
+    def evolve_crest(self, surfR, interval):
         """
         Core of CREST model, here we import crest simplified model
         """
@@ -1991,11 +2014,12 @@ class Generic_Domain:
         #     self.quantities['SS0'].centroid_values[N]= SS0
 
         for i in num.arange(len(self.quantities['stage'].centroid_values)):
-            N, SM,overland,interflow,ET= self._evolve_crest(i, interval)
+            N, SM,overland,interflow,ET= self._evolve_crest(surfR, i, interval)
+            # print overland
             if self.isInvalidValues(overland):
                 excessive_rain.append(0)
             else:
-                
+
                 excessive_rain.append((overland))
                 self.quantities['SM'].centroid_values[N]= SM*1000/\
                         (self.quantities['WM'].centroid_values[N]+1e-5) #percentage
@@ -2005,8 +2029,12 @@ class Generic_Domain:
         return cent_id, num.array(excessive_rain)
 
     
-    def _evolve_crest(self, N, interval):
+    def _evolve_crest(self, surfR, N, interval):
+        '''
+        Here we define whether it is applied to rainfall or surface water
+        '''
         P= self.quantities['P'].centroid_values[N]
+
         ET= self.quantities['ET'].centroid_values[N]
         SM= self.quantities['SM'].centroid_values[N] *\
             (self.quantities['WM'].centroid_values[N]+1e-5)/1000. #in m
@@ -2021,7 +2049,7 @@ class Generic_Domain:
         #     print 'SM: %.2f mm, rain: %.2f mm/s, ET: %.3f mm/s before CREST'%(SM*1000, P*1000, ET*1000)
         #     print 'soil maximum holding capacity: %.2f mm'%WM
 
-        (SM,overland,interflow,ET)= model(P,ET,SM,Ksat,WM,B,IM,KE,interval)
+        (SM,overland,interflow,ET)= model(P,surfR[N],ET,SM,Ksat,WM,B,IM,KE,interval)
 
         # if N==100:
         #     print 'SM: %.2f mm, overland: %.3f mm/s actual ET: %.3f mm/s after CREST'%(SM*1000, overland*1000, ET*1000)
@@ -2061,12 +2089,20 @@ class Generic_Domain:
 
         
     
-    def evolve_one_euler_step(self, yieldstep, finaltime,forcing):
+    def evolve_one_euler_step(self, yieldstep,
+                             finaltime, forcing):
         """One Euler Time Step
         Q^{n+1} = E(h) Q^n
 
         Does not assume that centroid values have been extrapolated to vertices and edges
         """
+        # if self._onReInfiltration:# if reinfiltration is on, excessRain= Rain + surface water
+        #     self.quantities['stage'].centroid_values[:]= forcing + self.quantities['elevation'].centroid_values[:]
+        # else:
+        #     self.quantities['stage'].explicit_update[:]+=(forcing)
+        # print(self.quantities['stage'].centroid_values[:] - self.quantities['elevation'].centroid_values[:])
+        # if self._onReInfiltration:
+        #     self.quantities['stage'].centroid_values[:]= forcing
 
         # From centroid values calculate edge and vertex values
         self.distribute_to_vertices_and_edges()
@@ -2079,11 +2115,17 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.external += forcing[100]
+        # self.external += forcing[100]
         # if self.get_time() >= self.yieldtime:
             # print self.external
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        # if self._onReInfiltration:
+        #     self.quantities['stage'].explicit_update[:]= (forcing)
+        #     # print forcing* self.timestep
+        # else:
+        self.quantities['stage'].explicit_update[:]+= (forcing)
         
+        # print(forcing)
+        # print(self.quantities['stage'].centroid_values[:] - self.quantities['elevation'].centroid_values[:])
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
@@ -2126,7 +2168,10 @@ class Generic_Domain:
         # Compute forcing terms
         self.compute_forcing_terms()
 
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        if self._onReInfiltration:# if reinfiltration is on, excessRain= Rain + surface water
+            self.quantities['stage'].explicit_update[:]+= forcing* self.timestep
+        else:
+            self.quantities['stage'].explicit_update[:]+=(forcing * self.timestep)
 
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
@@ -2212,7 +2257,10 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+        if self.onReInfiltration:# if reinfiltration is on, excessRain= Rain + surface water
+            self.quantities['stage'].explicit_update[:]= forcing
+        else:
+            self.quantities['stage'].explicit_update[:]+=(forcing)
         # Update timestep to fit yieldstep and finaltime
         self.update_timestep(yieldstep, finaltime)
 
@@ -2282,7 +2330,11 @@ class Generic_Domain:
 
         # Compute forcing terms
         self.compute_forcing_terms()
-        self.quantities['stage'].explicit_update[:]+=(forcing)
+
+        if self._onReInfiltration:
+            self.quantities['stage'].explicit_update[:]= forcing
+        else:
+            self.quantities['stage'].explicit_update[:]+=(forcing)
         # Update conserved quantities
         self.update_conserved_quantities()
 

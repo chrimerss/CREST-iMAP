@@ -78,8 +78,19 @@ pip install proj affine matplotlib pandas scipy netCDF4==1.5.3 geopandas
 
 <img src="img/OKC_flooding.gif">
 
+- [x] 2021.02.07 CREST-iMAP V1.1: support reinfiltration
+e.g.  
+```python
+DOMAIN.set_reinfiltratin(True)
+```
+
+The difference between turn on reinfiltration (left) and turn off reinfiltration (right) is obvious:
+
+<img src="img/on_reinfiltration.png" width="50%"><img src="img/off_reinfiltration.png" width="50%">
+
 # TODO
 
+- [ ] Add support for canopy interception
 - [ ] Create Docker file to better minimize the installation process
 - [ ] Option to provide land cover data and infer friction
 - [ ] Complete examples for each feature

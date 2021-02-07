@@ -14,22 +14,22 @@ cdef int checkWaterBalance(double P, double ET,
 
     balanced = P-ET-SW-interflow-overland;
     if balanced<1e-10:
-        print 'Water balanced !'
+        #print 'Water balanced !'
         return 1;
     else:
-        print 'Water not balanced! deficit: ',balanced
+        #print 'Water not balanced! deficit: ',balanced
         return 0;
 
-def model(double precipIn, double petIn, double SM, double Ksat,
+def model(double precipIn, double overland, double petIn, double SM, double Ksat,
         double WM, double B, double IM, double KE,
         double timestep):
     
     cdef double Wo
-    cdef double stepHour= timestep/3600
-    cdef double precip= precipIn * timestep*1000 #Input is m/s, convert to mm
-    cdef double pet= petIn * timestep*1000 #mm
+    cdef double stepHour= timestep/3600.
+    cdef double precip= precipIn * timestep*1000.#Input is m/s, convert to mm
+    cdef double pet= petIn * timestep*1000. #mm
     cdef double adjPET= pet * KE
-    cdef double temX, interflow, overland, interflowExcess
+    cdef double temX, interflow, interflowExcess
     cdef double precipSoil, precipImperv, Wmaxm, A, R, infiltration, ExcessET, actET
     cdef int balanced
     SM*=1000 # mm
@@ -46,6 +46,8 @@ def model(double precipIn, double petIn, double SM, double Ksat,
     elif IM>1.0: IM=1.0
     if B<0.0: B=1.0
     if Ksat<0.0: Ksat=1.0
+
+    precip+= overland* 1000. # combine precipitation and surface runoff
 
     if precip>adjPET:
         #available precipitation in soil
@@ -114,14 +116,14 @@ def model(double precipIn, double petIn, double SM, double Ksat,
         actET = ExcessET + precip
 
     SM= Wo
-    #balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
-    #assert balanced==1, 'Water balance violated!'
+    balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
+    assert balanced==1, 'Water balance violated!'
 
     #convert back to m or m/s
-    overland= overland/1000./timestep
-    interflow= interflow/1000./timestep
+    overland= overland/1000.
+    interflow= interflow/1000.
     SM= SM/1000.
-    actET/=(1000.*timestep)
+    actET/=(1000.)
 
     #print 'overland flow:', overland
     #print 'soil moisture: ',SM
