@@ -1,7 +1,7 @@
-friction 0 1
-SM 0 1
-Ksat 0 1
-WM 0 10
-B 0 1
-IM 0 1
-KE 0 1
+friction 0.1 1
+SM 0.001 1
+Ksat 0.001 1
+WM 0.001 10
+B 0.001 1
+IM 0.001 1
+KE 0.001 1

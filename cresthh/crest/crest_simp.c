@@ -1064,8 +1064,8 @@ static const char __pyx_k_precipImperv[] = "precipImperv";
 static const char __pyx_k_crest_simp_pyx[] = "crest_simp.pyx";
 static const char __pyx_k_interflowExcess[] = "interflowExcess";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_Water_balance_violated[] = "Water balance violated!";
 static const char __pyx_k_Simplified_version_of_CREST_mod[] = "\nSimplified version of CREST model\nThe soil moisture is represented by one layer soils\nSee EF5\n";
+static const char __pyx_k_overland_1f_precip_1f_evapo_1f_W[] = "overland: %.1f precip: %.1f evapo: %.1f Water balance violated!";
 static PyObject *__pyx_kp_s_2020_06_18;
 static PyObject *__pyx_n_s_A;
 static PyObject *__pyx_kp_s_Allen_Zhi_Li;
@@ -1077,7 +1077,6 @@ static PyObject *__pyx_n_s_Ksat;
 static PyObject *__pyx_n_s_R;
 static PyObject *__pyx_n_s_SM;
 static PyObject *__pyx_n_s_WM;
-static PyObject *__pyx_kp_s_Water_balance_violated;
 static PyObject *__pyx_n_s_Wmaxm;
 static PyObject *__pyx_n_s_Wo;
 static PyObject *__pyx_n_s_actET;
@@ -1095,6 +1094,7 @@ static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_model;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_n_s_overland;
+static PyObject *__pyx_kp_s_overland_1f_precip_1f_evapo_1f_W;
 static PyObject *__pyx_n_s_pet;
 static PyObject *__pyx_n_s_petIn;
 static PyObject *__pyx_n_s_precip;
@@ -1129,7 +1129,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
  *     cdef double balanced
  * 
  *     balanced = P-ET-SW-interflow-overland;             # <<<<<<<<<<<<<<
- *     if balanced<1e-10:
+ *     if balanced<1e-8:
  *         #print 'Water balanced !'
  */
   __pyx_v_balanced = ((((__pyx_v_P - __pyx_v_ET) - __pyx_v_SW) - __pyx_v_interflow) - __pyx_v_overland);
@@ -1137,15 +1137,15 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
   /* "crest_simp.pyx":16
  * 
  *     balanced = P-ET-SW-interflow-overland;
- *     if balanced<1e-10:             # <<<<<<<<<<<<<<
+ *     if balanced<1e-8:             # <<<<<<<<<<<<<<
  *         #print 'Water balanced !'
  *         return 1;
  */
-  __pyx_t_1 = ((__pyx_v_balanced < 1e-10) != 0);
+  __pyx_t_1 = ((__pyx_v_balanced < 1e-8) != 0);
   if (__pyx_t_1) {
 
     /* "crest_simp.pyx":18
- *     if balanced<1e-10:
+ *     if balanced<1e-8:
  *         #print 'Water balanced !'
  *         return 1;             # <<<<<<<<<<<<<<
  *     else:
@@ -1157,7 +1157,7 @@ static int __pyx_f_10crest_simp_checkWaterBalance(double __pyx_v_P, double __pyx
     /* "crest_simp.pyx":16
  * 
  *     balanced = P-ET-SW-interflow-overland;
- *     if balanced<1e-10:             # <<<<<<<<<<<<<<
+ *     if balanced<1e-8:             # <<<<<<<<<<<<<<
  *         #print 'Water balanced !'
  *         return 1;
  */
@@ -2040,7 +2040,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  * 
  *     SM= Wo             # <<<<<<<<<<<<<<
  *     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
- *     assert balanced==1, 'Water balance violated!'
+ *     assert balanced==1, 'overland: %.1f precip: %.1f evapo: %.1f Water balance violated!'%(overland, precip, actET)
  */
   __pyx_v_SM = __pyx_v_Wo;
 
@@ -2048,7 +2048,7 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  * 
  *     SM= Wo
  *     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)             # <<<<<<<<<<<<<<
- *     assert balanced==1, 'Water balance violated!'
+ *     assert balanced==1, 'overland: %.1f precip: %.1f evapo: %.1f Water balance violated!'%(overland, precip, actET)
  * 
  */
   __pyx_v_balanced = __pyx_f_10crest_simp_checkWaterBalance(__pyx_v_precip, __pyx_v_actET, __pyx_v_SM, __pyx_v_overland, __pyx_v_interflow);
@@ -2056,14 +2056,35 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
   /* "crest_simp.pyx":120
  *     SM= Wo
  *     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
- *     assert balanced==1, 'Water balance violated!'             # <<<<<<<<<<<<<<
+ *     assert balanced==1, 'overland: %.1f precip: %.1f evapo: %.1f Water balance violated!'%(overland, precip, actET)             # <<<<<<<<<<<<<<
  * 
  *     #convert back to m or m/s
  */
   #ifndef CYTHON_WITHOUT_ASSERTIONS
   if (unlikely(!Py_OptimizeFlag)) {
     if (unlikely(!((__pyx_v_balanced == 1) != 0))) {
-      PyErr_SetObject(PyExc_AssertionError, __pyx_kp_s_Water_balance_violated);
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_4 = PyFloat_FromDouble(__pyx_v_precip); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_6 = PyTuple_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_GIVEREF(__pyx_t_3);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
+      __Pyx_GIVEREF(__pyx_t_4);
+      PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_t_5);
+      __pyx_t_3 = 0;
+      __pyx_t_4 = 0;
+      __pyx_t_5 = 0;
+      __pyx_t_5 = __Pyx_PyString_Format(__pyx_kp_s_overland_1f_precip_1f_evapo_1f_W, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      PyErr_SetObject(PyExc_AssertionError, __pyx_t_5);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __PYX_ERR(0, 120, __pyx_L1_error)
     }
   }
@@ -2111,28 +2132,28 @@ static PyObject *__pyx_pf_10crest_simp_model(CYTHON_UNUSED PyObject *__pyx_self,
  *     return SM, overland, interflow,actET             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_SM); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_overland); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_interflow); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_actET); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_7 = PyTuple_New(4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_6);
-  PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_6);
-  __pyx_t_3 = 0;
-  __pyx_t_4 = 0;
+  PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_6);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_7, 2, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_7, 3, __pyx_t_3);
   __pyx_t_5 = 0;
   __pyx_t_6 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_3 = 0;
   __pyx_r = __pyx_t_7;
   __pyx_t_7 = 0;
   goto __pyx_L0;
@@ -2217,7 +2238,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_R, __pyx_k_R, sizeof(__pyx_k_R), 0, 0, 1, 1},
   {&__pyx_n_s_SM, __pyx_k_SM, sizeof(__pyx_k_SM), 0, 0, 1, 1},
   {&__pyx_n_s_WM, __pyx_k_WM, sizeof(__pyx_k_WM), 0, 0, 1, 1},
-  {&__pyx_kp_s_Water_balance_violated, __pyx_k_Water_balance_violated, sizeof(__pyx_k_Water_balance_violated), 0, 0, 1, 0},
   {&__pyx_n_s_Wmaxm, __pyx_k_Wmaxm, sizeof(__pyx_k_Wmaxm), 0, 0, 1, 1},
   {&__pyx_n_s_Wo, __pyx_k_Wo, sizeof(__pyx_k_Wo), 0, 0, 1, 1},
   {&__pyx_n_s_actET, __pyx_k_actET, sizeof(__pyx_k_actET), 0, 0, 1, 1},
@@ -2235,6 +2255,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_model, __pyx_k_model, sizeof(__pyx_k_model), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_n_s_overland, __pyx_k_overland, sizeof(__pyx_k_overland), 0, 0, 1, 1},
+  {&__pyx_kp_s_overland_1f_precip_1f_evapo_1f_W, __pyx_k_overland_1f_precip_1f_evapo_1f_W, sizeof(__pyx_k_overland_1f_precip_1f_evapo_1f_W), 0, 0, 1, 0},
   {&__pyx_n_s_pet, __pyx_k_pet, sizeof(__pyx_k_pet), 0, 0, 1, 1},
   {&__pyx_n_s_petIn, __pyx_k_petIn, sizeof(__pyx_k_petIn), 0, 0, 1, 1},
   {&__pyx_n_s_precip, __pyx_k_precip, sizeof(__pyx_k_precip), 0, 0, 1, 1},

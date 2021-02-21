@@ -641,7 +641,7 @@ def _write_msh_file(file_name, mesh):
         raise Exception, msg
 
     #Create new file
-    outfile.institution = 'Geoscience Australia'
+    outfile.institution = 'HyDROS, University of Oklahoma'
     outfile.description = 'NetCDF format for compact and portable storage ' + \
                           'of spatial point data'
 

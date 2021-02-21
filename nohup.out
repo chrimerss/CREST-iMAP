@@ -1,0 +1,625 @@
+JupyterLab - An extensible computational environment for Jupyter.
+
+This launches a Tornado based HTML Server that serves up an HTML5/Javascript
+JupyterLab client.
+
+JupyterLab has three different modes of running:
+
+* Core mode (`--core-mode`): in this mode JupyterLab will run using the JavaScript
+  assets contained in the installed `jupyterlab` Python package. In core mode, no
+  extensions are enabled. This is the default in a stable JupyterLab release if you
+  have no extensions installed.
+* Dev mode (`--dev-mode`): uses the unpublished local JavaScript packages in the
+  `dev_mode` folder.  In this case JupyterLab will show a red stripe at the top of
+  the page.  It can only be used if JupyterLab is installed as `pip install -e .`.
+* App mode: JupyterLab allows multiple JupyterLab "applications" to be
+  created by the user with different combinations of extensions. The `--app-dir` can
+  be used to set a directory for different applications. The default application
+  path can be found using `jupyter lab path`.
+
+Subcommands
+-----------
+
+Subcommands are launched as `jupyter-notebook cmd [args]`. For information on
+using subcommand 'cmd', do: `jupyter-notebook cmd -h`.
+
+paths
+build
+clean
+path
+
+Options
+-------
+
+Arguments that take values are actually convenience aliases to full
+Configurables, whose aliases are listed on the help line. For more information
+on full configurables, see '--help-all'.
+
+--dev-mode
+    Start the app in dev mode for running from source.
+--core-mode
+    Start the app in core mode.
+--script
+    DEPRECATED, IGNORED
+--pylab
+    DISABLED: use %pylab or %matplotlib in the notebook to enable matplotlib.
+--watch
+    Start the app in watch mode.
+--debug
+    set log level to logging.DEBUG (maximize logging output)
+--no-browser
+    Don't open the notebook in a browser after startup.
+--allow-root
+    Allow the notebook to be run from root user.
+-y
+    Answer yes to any questions instead of prompting.
+--no-mathjax
+    Disable MathJax
+    
+    MathJax is the javascript library Jupyter uses to render math/LaTeX. It is
+    very large, so you may want to disable it if you have a slow internet
+    connection, or for offline use of the notebook.
+    
+    When disabled, equations etc. will appear as their untransformed TeX source.
+--no-script
+    DEPRECATED, IGNORED
+--generate-config
+    generate default config file
+--certfile=<Unicode> (NotebookApp.certfile)
+    Default: u''
+    The full path to an SSL/TLS certificate file.
+--ip=<Unicode> (NotebookApp.ip)
+    Default: 'localhost'
+    The IP address the notebook server will listen on.
+--pylab=<Unicode> (NotebookApp.pylab)
+    Default: 'disabled'
+    DISABLED: use %pylab or %matplotlib in the notebook to enable matplotlib.
+--log-level=<Enum> (Application.log_level)
+    Default: 30
+    Choices: (0, 10, 20, 30, 40, 50, 'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL')
+    Set the log level by value or name.
+--port-retries=<Integer> (NotebookApp.port_retries)
+    Default: 50
+    The number of additional ports to try if the specified port is not
+    available.
+--notebook-dir=<Unicode> (NotebookApp.notebook_dir)
+    Default: u''
+    The directory to use for notebooks and kernels.
+--keyfile=<Unicode> (NotebookApp.keyfile)
+    Default: u''
+    The full path to a private key file for usage with SSL/TLS.
+--client-ca=<Unicode> (NotebookApp.client_ca)
+    Default: u''
+    The full path to a certificate authority certificate for SSL/TLS client
+    authentication.
+--app-dir=<Unicode> (LabApp.app_dir)
+    Default: '/home/ZhiLi/CRESTHH/python2/share/jupyter/lab'
+    The app directory to launch JupyterLab from.
+--config=<Unicode> (JupyterApp.config_file)
+    Default: u''
+    Full path of a config file.
+--port=<Integer> (NotebookApp.port)
+    Default: 8888
+    The port the notebook server will listen on.
+--transport=<CaselessStrEnum> (KernelManager.transport)
+    Default: 'tcp'
+    Choices: [u'tcp', u'ipc']
+--browser=<Unicode> (NotebookApp.browser)
+    Default: u''
+    Specify what command to use to invoke a web browser when opening the
+    notebook. If not specified, the default browser will[C 11:54:25.605 LabApp] Bad config encountered during initialization:
+[C 11:54:25.605 LabApp] Unrecognized flag: '--no-brwoser'
+ be determined by the
+    `webbrowser` standard library module, which allows setting of the BROWSER
+    environment variable to override it.
+
+To see all available configurables, use `--help-all`
+
+Examples
+--------
+
+    jupyter lab                       # start JupyterLab
+    jupyter lab --dev-mode            # start JupyterLab in development mode, with no extensions
+    jupyter lab --core-mode           # start JupyterLab in core mode, with no extensions
+    jupyter lab --app-dir=~/myjupyterlabapp # start JupyterLab with a particular set of extensions
+    jupyter lab --certfile=mycert.pem # use SSL/TLS certificate
+
+[I 11:54:47.089 LabApp] JupyterLab extension loaded from /home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/jupyterlab
+[I 11:54:47.089 LabApp] JupyterLab application directory is /home/ZhiLi/CRESTHH/python2/share/jupyter/lab
+[W 11:54:47.095 LabApp] JupyterLab server extension not enabled, manually loading...
+[I 11:54:47.096 LabApp] JupyterLab extension loaded from /home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/jupyterlab
+[I 11:54:47.096 LabApp] JupyterLab application directory is /home/ZhiLi/CRESTHH/python2/share/jupyter/lab
+[I 11:54:47.106 LabApp] Serving notebooks from local directory: /home/ZhiLi/CRESTHH
+[I 11:54:47.106 LabApp] The Jupyter Notebook is running at:
+[I 11:54:47.106 LabApp] http://localhost:8000/?token=cfe645f7f1ee4f4027948814ad76c8f6b8696b124b00bc23
+[I 11:54:47.106 LabApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 11:54:47.113 LabApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/ZhiLi/.local/share/jupyter/runtime/nbserver-108887-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8000/?token=cfe645f7f1ee4f4027948814ad76c8f6b8696b124b00bc23
+[I 11:54:56.033 LabApp] 302 GET / (::1) 0.85ms
+[W 11:54:56.866 LabApp] Failed validating settings (@jupyterlab/apputils-extension:themes): Additional properties are not allowed (u'theme-scrollbars' was unexpected)
+    
+    Failed validating u'additionalProperties' in schema:
+        {u'additionalProperties': False,
+         u'description': u'Theme manager settings.',
+         u'properties': {u'theme': {u'default': u'JupyterLab Light',
+                                    u'title': u'Selected Theme',
+                                    u'type': u'string'}},
+         u'title': u'Theme',
+         u'type': u'object'}
+    
+    On instance:
+        {u'theme': u'JupyterLab Light', u'theme-scrollbars': True}
+[W 11:54:57.138 LabApp] Failed loading settings (@jupyterlab/notebook-extension:tracker): Expecting property name: line 1 column 20 (char 19)
+[W 11:54:57.142 LabApp] Failed validating settings (@jupyterlab/extensionmanager-extension:plugin): Additional properties are not allowed (u'disclaimed' was unexpected)
+    
+    Failed validating u'additionalProperties' in schema:
+        {u'additionalProperties': False,
+         u'description': u'Extension manager settings.',
+         u'jupyter.lab.setting-icon-class': u'jp-SettingsIcon',
+         u'jupyter.lab.setting-icon-label': u'Extension Manager',
+         u'properties': {u'enabled': {u'default': False,
+                                      u'description': u'Enables the extension manager (requires Node.js/npm, so disabled by default). WARNING: installing untrusted extensions can introduce security issues.',
+                                      u'title': u'Enabled Status',
+                                      u'type': u'boolean'}},
+         u'title': u'Extension Manager',
+         u'type': u'object'}
+    
+    On instance:
+        {u'disclaimed': True}
+[W 11:54:57.231 LabApp] 404 GET /api/contents/reinfiltration?1613755711436 (::1): No such file or directory: reinfiltration
+[W 11:54:57.231 LabApp] No such file or directory: reinfiltration
+[W 11:54:57.232 LabApp] 404 GET /api/contents/reinfiltration?1613755711436 (::1) 3.16ms referer=http://localhost:8000/lab?
+[W 11:54:57.234 LabApp] 404 GET /api/contents/reinfiltration/mesh.ipynb?content=0&1613755711436 (::1): No such file or directory: reinfiltration/mesh.ipynb
+[W 11:54:57.235 LabApp] No such file or directory: reinfiltration/mesh.ipynb
+[W 11:54:57.235 LabApp] 404 GET /api/contents/reinfiltration/mesh.ipynb?content=0&1613755711436 (::1) 2.19ms referer=http://localhost:8000/lab?
+[W 11:54:57.237 LabApp] 404 GET /api/contents/reinfiltration/results_interpretation.ipynb?content=0&1613755711437 (::1): No such file or directory: reinfiltration/results_interpretation.ipynb
+[W 11:54:57.238 LabApp] No such file or directory: reinfiltration/results_interpretation.ipynb
+[W 11:54:57.238 LabApp] 404 GET /api/contents/reinfiltration/results_interpretation.ipynb?content=0&1613755711437 (::1) 2.32ms referer=http://localhost:8000/lab?
+[W 11:54:57.240 LabApp] 404 GET /api/contents/reinfiltration/results.ipynb?content=0&1613755711437 (::1): No such file or directory: reinfiltration/results.ipynb
+[W 11:54:57.241 LabApp] No such file or directory: reinfiltration/results.ipynb
+[W 11:54:57.241 LabApp] 404 GET /api/contents/reinfiltration/results.ipynb?content=0&1613755711437 (::1) 2.31ms referer=http://localhost:8000/lab?
+[W 11:54:57.244 LabApp] 404 GET /api/contents/reinfiltration/Input_params.txt?content=0&1613755711438 (::1): No such file or directory: reinfiltration/Input_params.txt
+[W 11:54:57.244 LabApp] No such file or directory: reinfiltration/Input_params.txt
+[W 11:54:57.244 LabApp] 404 GET /api/contents/reinfiltration/Input_params.txt?content=0&1613755711438 (::1) 2.26ms referer=http://localhost:8000/lab?
+[W 11:54:57.247 LabApp] 404 GET /api/contents/reinfiltration/Sensitivity_analysis.ipynb?content=0&1613755711437 (::1): No such file or directory: reinfiltration/Sensitivity_analysis.ipynb
+[W 11:54:57.247 LabApp] No such file or directory: reinfiltration/Sensitivity_analysis.ipynb
+[W 11:54:57.247 LabApp] 404 GET /api/contents/reinfiltration/Sensitivity_analysis.ipynb?content=0&1613755711437 (::1) 2.12ms referer=http://localhost:8000/lab?
+[W 11:54:57.250 LabApp] 404 GET /api/contents/reinfiltration/Output_Sobol.txt?content=0&1613755711438 (::1): No such file or directory: reinfiltration/Output_Sobol.txt
+[W 11:54:57.250 LabApp] No such file or directory: reinfiltration/Output_Sobol.txt
+[W 11:54:57.251 LabApp] 404 GET /api/contents/reinfiltration/Output_Sobol.txt?content=0&1613755711438 (::1) 2.15ms referer=http://localhost:8000/lab?
+[I 11:54:58.126 LabApp] Build is up to date
+[I 11:55:14.606 LabApp] Kernel started: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 11:55:16.001 LabApp] Adapting to protocol v5.1 for kernel 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 11:55:16.002 LabApp] Adapting to protocol v5.1 for kernel 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 11:57:14.379 LabApp] Saving file at /Examples/reinfiltration/mesh.ipynb
+[I 12:01:14.641 LabApp] Saving file at /Examples/reinfiltration/mesh.ipynb
+[IPKernelApp] ERROR | Exception in message handler:
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 233, in dispatch_shell
+    handler(stream, idents, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 399, in execute_request
+    user_expressions, allow_stdin)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/ipkernel.py", line 208, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/zmqshell.py", line 537, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 2714, in run_cell
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 2843, in run_ast_nodes
+    self.showtraceback()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 1828, in showtraceback
+    self._showtraceback(etype, value, stb)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/zmqshell.py", line 541, in _showtraceback
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in ZMQStream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in zmqstream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.application:Exception in callback (<zmq.sugar.socket.Socket object at 0x7f5d07952830>, <function null_wrapper at 0x7f5d07963500>)
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/ioloop.py", line 1073, in start
+    handler_func(fd_obj, events)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+[I 12:05:14.884 LabApp] Saving file at /Examples/reinfiltration/mesh.ipynb
+[I 12:05:21.705 LabApp] Kernel interrupted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 12:05:24.954 LabApp] Kernel interrupted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 12:05:53.779 LabApp] Starting buffering for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+ERROR:tornado.general:Uncaught exception in ZMQStream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in zmqstream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.application:Exception in callback (<zmq.sugar.socket.Socket object at 0x7f5d07952910>, <function null_wrapper at 0x7f5d07963578>)
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/ioloop.py", line 1073, in start
+    handler_func(fd_obj, events)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+[I 12:05:54.190 LabApp] Kernel restarted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 12:05:55.553 LabApp] Adapting to protocol v5.1 for kernel 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 12:05:55.555 LabApp] Restoring connection for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+[I 12:05:55.555 LabApp] Replaying 8 buffered messages
+[IPKernelApp] ERROR | Exception in message handler:
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 233, in dispatch_shell
+    handler(stream, idents, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 399, in execute_request
+    user_expressions, allow_stdin)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/ipkernel.py", line 208, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/zmqshell.py", line 537, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 2714, in run_cell
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 2843, in run_ast_nodes
+    self.showtraceback()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 1828, in showtraceback
+    self._showtraceback(etype, value, stb)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/zmqshell.py", line 541, in _showtraceback
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in ZMQStream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in zmqstream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.application:Exception in callback (<zmq.sugar.socket.Socket object at 0x7f06d273b830>, <function null_wrapper at 0x7f06d274c500>)
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/ioloop.py", line 1073, in start
+    handler_func(fd_obj, events)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+[I 12:07:15.372 LabApp] Saving file at /Examples/reinfiltration/mesh.ipynb
+[W 12:07:36.688 LabApp] delete /Examples/reinfiltration/elevation_xyz.csv
+[I 12:21:23.494 LabApp] Kernel interrupted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 12:21:26.559 LabApp] Starting buffering for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+ERROR:tornado.general:Uncaught exception in ZMQStream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in zmqstream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.application:Exception in callback (<zmq.sugar.socket.Socket object at 0x7f06d273b910>, <function null_wrapper at 0x7f06d274c578>)
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/ioloop.py", line 1073, in start
+    handler_func(fd_obj, events)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+[I 12:21:26.971 LabApp] Kernel restarted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 12:21:28.286 LabApp] Adapting to protocol v5.1 for kernel 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 12:21:28.287 LabApp] Restoring connection for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+[I 12:21:28.287 LabApp] Replaying 8 buffered messages
+[IPKernelApp] ERROR | Exception in message handler:
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 233, in dispatch_shell
+    handler(stream, idents, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 399, in execute_request
+    user_expressions, allow_stdin)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/ipkernel.py", line 208, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/zmqshell.py", line 537, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 2714, in run_cell
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 2843, in run_ast_nodes
+    self.showtraceback()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/IPython/core/interactiveshell.py", line 1828, in showtraceback
+    self._showtraceback(etype, value, stb)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/zmqshell.py", line 541, in _showtraceback
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in ZMQStream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in zmqstream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.application:Exception in callback (<zmq.sugar.socket.Socket object at 0x7f1cd8ef7830>, <function null_wrapper at 0x7f1cd8f08500>)
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/ioloop.py", line 1073, in start
+    handler_func(fd_obj, events)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+[I 12:23:15.660 LabApp] Saving file at /Examples/reinfiltration/mesh.ipynb
+[I 16:03:43.383 LabApp] Kernel started: a3eb58e8-e3cf-46e8-9600-3be2054e9823
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 16:03:44.779 LabApp] Adapting to protocol v5.1 for kernel a3eb58e8-e3cf-46e8-9600-3be2054e9823
+[I 16:03:54.578 LabApp] Kernel started: 515242e3-15e8-43c7-9d07-3da7872e8cb2
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 16:03:55.772 LabApp] Adapting to protocol v5.1 for kernel 515242e3-15e8-43c7-9d07-3da7872e8cb2
+[I 17:39:10.015 LabApp] Kernel interrupted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 17:39:13.146 LabApp] Starting buffering for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+ERROR:tornado.general:Uncaught exception in ZMQStream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.general:Uncaught exception in zmqstream callback
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+ERROR:tornado.application:Exception in callback (<zmq.sugar.socket.Socket object at 0x7f1cd8ef7910>, <function null_wrapper at 0x7f1cd8f08578>)
+Traceback (most recent call last):
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/ioloop.py", line 1073, in start
+    handler_func(fd_obj, events)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 456, in _handle_events
+    self._handle_recv()
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 486, in _handle_recv
+    self._run_callback(callback, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/zmq/eventloop/zmqstream.py", line 438, in _run_callback
+    callback(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/tornado/stack_context.py", line 300, in null_wrapper
+    return fn(*args, **kwargs)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 283, in dispatcher
+    return self.dispatch_shell(stream, msg)
+  File "/home/ZhiLi/CRESTHH/python2/lib/python2.7/site-packages/ipykernel/kernelbase.py", line 239, in dispatch_shell
+    sys.stdout.flush()
+AttributeError: 'NoneType' object has no attribute 'flush'
+[I 17:39:13.459 LabApp] Kernel restarted: 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 17:39:14.475 LabApp] Adapting to protocol v5.1 for kernel 894fa38a-b671-4ce5-b24c-e5f8f4afddca
+[I 17:39:14.477 LabApp] Restoring connection for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+[I 17:39:14.477 LabApp] Replaying 8 buffered messages
+[I 17:39:30.458 LabApp] Kernel started: db6bcc62-5114-4f1b-9dae-3727713d9aad
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 17:39:31.371 LabApp] Adapting to protocol v5.1 for kernel db6bcc62-5114-4f1b-9dae-3727713d9aad
+[I 17:41:34.337 LabApp] Saving file at /Examples/reinfiltration/results.ipynb
+rm: cannot remove ‘_plot/*’: No such file or directory
+[I 17:43:42.836 LabApp] Saving file at /Examples/reinfiltration/results.ipynb
+[W 17:43:46.318 LabApp] Notebook Examples/excessive_rain/results_interpretation.ipynb is not trusted
+[I 17:43:47.810 LabApp] Kernel started: bd57bb12-3a25-4c76-88e9-5a05a9683c85
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 17:43:48.669 LabApp] Adapting to protocol v5.1 for kernel bd57bb12-3a25-4c76-88e9-5a05a9683c85
+[I 17:44:03.312 LabApp] Kernel started: 43f53e00-aaf2-420b-86da-15d2fa9e7fcd
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 17:44:04.253 LabApp] Adapting to protocol v5.1 for kernel 43f53e00-aaf2-420b-86da-15d2fa9e7fcd
+[I 17:44:29.612 LabApp] Kernel started: 89ef31cb-953d-4a15-9530-5ced1f98b6e4
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 17:44:30.557 LabApp] Adapting to protocol v5.1 for kernel 89ef31cb-953d-4a15-9530-5ced1f98b6e4
+[I 17:44:32.449 LabApp] Kernel started: 27359d79-e7f4-4c18-a619-296e2a6edc7e
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 17:44:33.394 LabApp] Adapting to protocol v5.1 for kernel 27359d79-e7f4-4c18-a619-296e2a6edc7e
+[I 17:45:51.249 LabApp] Saving file at /Examples/reinfiltration/results.ipynb
+[I 17:48:00.143 LabApp] Saving file at /Examples/reinfiltration/results.ipynb
+rm: cannot remove ‘_plot/*’: No such file or directory
+/home/ZhiLi/CRESTHH/cresthh/anuga/utilities/animate.py:449: RuntimeWarning: invalid value encountered in divide
+  self.xmom / self.depth, 0.0)
+/home/ZhiLi/CRESTHH/cresthh/anuga/utilities/animate.py:451: RuntimeWarning: invalid value encountered in divide
+  self.ymom / self.depth, 0.0)
+[I 17:50:08.492 LabApp] Saving file at /Examples/reinfiltration/results.ipynb
+[I 17:52:16.774 LabApp] Saving file at /Examples/reinfiltration/results.ipynb
+[I 20:59:25.612 LabApp] Starting buffering for 89ef31cb-953d-4a15-9530-5ced1f98b6e4:5ceea5bc-5d89-469e-b0b5-64b17e3cd133
+[I 20:59:25.613 LabApp] Starting buffering for 27359d79-e7f4-4c18-a619-296e2a6edc7e:da14dd1d-576f-47ff-8e85-ec2169d5c853
+[I 20:59:25.615 LabApp] Starting buffering for 43f53e00-aaf2-420b-86da-15d2fa9e7fcd:707dd489-37d5-4309-b0d9-1336ed3ff643
+[I 20:59:25.615 LabApp] Starting buffering for db6bcc62-5114-4f1b-9dae-3727713d9aad:0cca6cde-aadc-44c1-9eaf-0b6fd6b74477
+[I 20:59:25.616 LabApp] Starting buffering for a3eb58e8-e3cf-46e8-9600-3be2054e9823:7184de68-6e05-49e3-81cf-c3d80bd6266c
+[I 20:59:25.616 LabApp] Starting buffering for 515242e3-15e8-43c7-9d07-3da7872e8cb2:35986ebf-8730-4b1f-b285-906c30b69df1
+[I 20:59:25.616 LabApp] Starting buffering for bd57bb12-3a25-4c76-88e9-5a05a9683c85:ad4c3a4a-7b29-4e57-bb9f-7861c5a9fc88
+[I 20:59:25.617 LabApp] Starting buffering for 894fa38a-b671-4ce5-b24c-e5f8f4afddca:3dddfd17-7da6-4455-b16f-a06917085710
+[I 10:48:07.459 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:09.455 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:11.806 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:18.309 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:31.471 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:33.468 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:38.819 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:42.321 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:47.609 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[I 10:48:53.446 LabApp] KernelRestarter: restarting kernel (1/5), keep random ports
+[IPKernelApp] WARNING | Unknown error in handling startup files:
+[C 10:49:25.453 LabApp] received signal 15, stopping
+[I 10:49:25.454 LabApp] Shutting down 8 kernels
+[I 10:49:25.758 LabApp] Kernel shutdown: db6bcc62-5114-4f1b-9dae-3727713d9aad
+[I 10:49:25.758 LabApp] Kernel shutdown: bd57bb12-3a25-4c76-88e9-5a05a9683c85
+[I 10:49:25.859 LabApp] Kernel shutdown: 515242e3-15e8-43c7-9d07-3da7872e8cb2
+[I 10:49:25.860 LabApp] Kernel shutdown: a3eb58e8-e3cf-46e8-9600-3be2054e9823
+[I 10:49:25.860 LabApp] Kernel shutdown: 43f53e00-aaf2-420b-86da-15d2fa9e7fcd
+[I 10:49:25.861 LabApp] Kernel shutdown: 89ef31cb-953d-4a15-9530-5ced1f98b6e4
+[I 10:49:25.861 LabApp] Kernel shutdown: 27359d79-e7f4-4c18-a619-296e2a6edc7e
+[I 10:49:25.861 LabApp] Kernel shutdown: 894fa38a-b671-4ce5-b24c-e5f8f4afddca

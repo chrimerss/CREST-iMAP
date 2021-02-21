@@ -23,12 +23,14 @@ def tif2array_lat_long(filename, variable_name='elevation',
     # x_origin, x_res, _, y_origin, _, y_res= raster.GetGeoTransform()
     NODATA_value= raster.GetRasterBand(1).GetNoDataValue()
     Z= raster.ReadAsArray()
-    Z= np.where(Z==NODATA_value, np.nan, Z)
+    # treat nan with 0 for now
+    Z= np.where(Z==NODATA_value, 0, Z)
     maxRows, maxCols= Z.shape
     try:
         src_georeference= CRS(raster.GetProjection())
     except:
         src_georeference= CRS('EPSG:4326')
+    # print src_georeference
     UTM= CRS(proj)
     # print points
     utm_to_84_lons, utm_to_84_lats= transform(UTM,src_georeference,points[:,0], points[:,1])

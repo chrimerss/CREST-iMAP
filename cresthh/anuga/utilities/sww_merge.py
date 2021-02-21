@@ -235,7 +235,7 @@ def _sww_merge_parallel_smooth(swwfiles, output,  verbose=False, delete_old=Fals
             n_steps = len(times)
             #number_of_timesteps = fid.dimensions['number_of_timesteps']
             #print n_steps, number_of_timesteps
-            starttime = int(fid.starttime)
+            starttime = fid.starttime
             
             out_s_quantities = {}
             out_d_quantities = {}

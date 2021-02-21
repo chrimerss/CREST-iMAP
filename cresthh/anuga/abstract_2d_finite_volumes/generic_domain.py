@@ -1833,7 +1833,8 @@ class Generic_Domain:
         
             self.acc_infiltration= num.zeros(len(self.quantities['stage'].centroid_values))
 
-
+        precip_count= []
+        evap_count= []
         while True:
 
             initial_time = self.get_time()
@@ -1843,7 +1844,24 @@ class Generic_Domain:
             # ==========================================
             # To get excessive rainfall step
             # ==========================================
-            if self.get_time()%_time_interval_func(precip_freq)==0:
+            if self.get_time()//_time_interval_func(evap_freq) not in evap_count:
+                try:
+                    evap_pth= os.path.join(self.evap_dir, self.evap_pattern.replace('%Y', '%04d'%(current_time.year)).replace('%m',
+                                '%02d'%(current_time.month)).replace('%d', '%02d'%(current_time.day)).replace('%H',
+                                '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
+                                '%02d'%(current_time.second)))
+                    self.quantities['ET'].set_values_from_lat_long_tif_file(evap_pth,
+                                location='centroids', proj=self.proj)
+                    self.quantities['ET']/=(_time_interval_func(evap_freq)*1000.0*100.0)
+                except:
+                    msg= '%s not found in evaporation, assume 1.5mm/d everywhere'%evap_pth
+                    # log.critical(msg)
+                    self.quantities['ET'].set_values_from_constant(1.5/3600./24., 'centroids',None,None)
+
+                finally:
+                    evap_count.append(self.get_time()//_time_interval_func(evap_freq))
+
+            if self.get_time()//_time_interval_func(precip_freq) not in precip_count:
                 # print self.get_time()
                 
                 precip_pth= os.path.join(self.precip_dir,
@@ -1860,26 +1878,16 @@ class Generic_Domain:
                     log.critical(msg)
                     self.quantities['P'].set_values_from_constant(0, 'centroids',None,None)
                     # print '%s not found in precipitation'%precip_pth
-            if self.get_time()%_time_interval_func(evap_freq)==0:
-                try:
-                    evap_pth= os.path.join(self.evap_dir, self.evap_pattern.replace('%Y', '%04d'%(current_time.year)).replace('%m',
-                                '%02d'%(current_time.month)).replace('%d', '%02d'%(current_time.day)).replace('%H',
-                                '%02d'%(current_time.hour)).replace('%M', '%02d'%(current_time.minute)).replace('%S',
-                                '%02d'%(current_time.second)))
-                    self.quantities['ET'].set_values_from_lat_long_tif_file(evap_pth,
-                                location='centroids', proj=self.proj)
-                    self.quantities['ET']/=(_time_interval_func(evap_freq)*1000.0*100.0)
-                except:
-                    msg= '%s not found in evaporation, assume 0 everywhere'%evap_pth
-                    # log.critical(msg)
-                    self.quantities['ET'].set_values_from_constant(0, 'centroids',None,None)
+                precip_count.append(self.get_time()//_time_interval_func(precip_freq))
+
+
             
             # print "initialize completed!  Start excessive rainfall calculation"       
 
                 # excessRain= excessRain * self.timestep
                 # print "excessive rainfall computed, assign to stage."
 
-            if self.get_time()%self.rel_time_interval==0 and self.get_timestep()>0:
+
                 if self._onReInfiltration:
                     # convert to 
                     surfR= (self.quantities['stage'].centroid_values[:] - \
@@ -1887,23 +1895,22 @@ class Generic_Domain:
                 else:
                     surfR= num.zeros(len(self.quantities['stage'].centroid_values))
                 if coupled: #switch to H&H coupled mode
-                    cent_ids, excessRain= self.evolve_crest(surfR= surfR,
-                    interval= self.rel_time_interval)
+                    excessRain= self.evolve_crest(surfR= surfR,
+                    interval= _time_interval_func(precip_freq))
                     # excessRain*= self.get_timestep()
                 elif self.get_infiltration(): #switch to simple infiltration mode
-                    cent_ids, excessRain= self.simple_infiltration(interval= self.rel_time_interval)
+                    cent_ids, excessRain= self.simple_infiltration(interval= _time_interval_func(precip_freq))
                 else: # switch to no-infiltration mode
                     cent_ids, excessRain= self.evolve_plain()
                     excessRain= num.array(excessRain)
                     # excessRain*= self.get_timestep()
                 if self._onReInfiltration:
                     excessRain-= surfR
-                excessRain/= self.rel_time_interval
+                excessRain/= _time_interval_func(precip_freq)
                 
-            elif self.get_timestep()==0:
-                excessRain= num.zeros(len(self.quantities['stage'].centroid_values))
+                
 
-            self.set_quantity('excess_rain', excessRain,location='centroids')
+                self.set_quantity('excess_rain', excessRain,location='centroids')
             #==========================================
             # Apply fluid flow fractional step
             #==========================================
@@ -2012,49 +2019,43 @@ class Generic_Domain:
         #     self.quantities['W0'].centroid_values[N]= W0
         #     self.quantities['SI0'].centroid_values[N]= SI0
         #     self.quantities['SS0'].centroid_values[N]= SS0
+        P= self.quantities['P'].centroid_values
 
-        for i in num.arange(len(self.quantities['stage'].centroid_values)):
-            N, SM,overland,interflow,ET= self._evolve_crest(surfR, i, interval)
-            # print overland
-            if self.isInvalidValues(overland):
-                excessive_rain.append(0)
-            else:
+        ET= self.quantities['ET'].centroid_values
+        SM= self.quantities['SM'].centroid_values *\
+            (self.quantities['WM'].centroid_values+1e-5)/1000. #in m
 
-                excessive_rain.append((overland))
-                self.quantities['SM'].centroid_values[N]= SM*1000/\
-                        (self.quantities['WM'].centroid_values[N]+1e-5) #percentage
+        Ksat= self.quantities['Ksat'].centroid_values
+        WM= self.quantities['WM'].centroid_values
+        B= self.quantities['B'].centroid_values
+        IM= self.quantities['IM'].centroid_values/100.
+        KE= self.quantities['KE'].centroid_values
 
-            # self.quantities['ET'].centroid_values[N]=ET
-            # print 'RI: %.2f, RS: %.2f, W0: %.2f, SI0: %.2f, SS0: %.2f'%(RI, RS, W0, SI0, SS0)
-        return cent_id, num.array(excessive_rain)
+        array_in= num.stack([P, surfR, ET, SM, Ksat, WM, B, IM, KE, num.ones(len(P))*interval])
+        array_out= num.apply_along_axis(self._evolve_crest, 0, array_in)
+        excess_rain= array_out[1]
+        SM= array_out[0]
+        self.quantities['SM'].centroid_values= SM *1000/(self.quantities['WM'].centroid_values+1e-5)
+
+        return excess_rain
+
 
     
-    def _evolve_crest(self, surfR, N, interval):
+    def _evolve_crest(self, args):
         '''
         Here we define whether it is applied to rainfall or surface water
         '''
-        P= self.quantities['P'].centroid_values[N]
 
-        ET= self.quantities['ET'].centroid_values[N]
-        SM= self.quantities['SM'].centroid_values[N] *\
-            (self.quantities['WM'].centroid_values[N]+1e-5)/1000. #in m
-
-        Ksat= self.quantities['Ksat'].centroid_values[N]
-        WM= self.quantities['WM'].centroid_values[N]
-        B= self.quantities['B'].centroid_values[N]
-        IM= self.quantities['IM'].centroid_values[N]/100.
-        KE= self.quantities['KE'].centroid_values[N]
 
         # if N==100:
         #     print 'SM: %.2f mm, rain: %.2f mm/s, ET: %.3f mm/s before CREST'%(SM*1000, P*1000, ET*1000)
         #     print 'soil maximum holding capacity: %.2f mm'%WM
 
-        (SM,overland,interflow,ET)= model(P,surfR[N],ET,SM,Ksat,WM,B,IM,KE,interval)
-
         # if N==100:
         #     print 'SM: %.2f mm, overland: %.3f mm/s actual ET: %.3f mm/s after CREST'%(SM*1000, overland*1000, ET*1000)
 
-        return N, SM,overland,interflow,ET
+        return model(args[0],args[1],args[2],args[3],args[4],args[5],args[6],
+                                            args[7],args[8],args[9])
 
     def simple_infiltration(self, interval):
         '''Larry G. et al. (1986)'''

@@ -13,7 +13,7 @@ cdef int checkWaterBalance(double P, double ET,
     cdef double balanced
 
     balanced = P-ET-SW-interflow-overland;
-    if balanced<1e-10:
+    if balanced<1e-8:
         #print 'Water balanced !'
         return 1;
     else:
@@ -117,7 +117,7 @@ def model(double precipIn, double overland, double petIn, double SM, double Ksat
 
     SM= Wo
     balanced= checkWaterBalance(precip, actET, SM, overland, interflow)
-    assert balanced==1, 'Water balance violated!'
+    assert balanced==1, 'overland: %.1f precip: %.1f evapo: %.1f Water balance violated!'%(overland, precip, actET)
 
     #convert back to m or m/s
     overland= overland/1000.

@@ -27,13 +27,13 @@ if __name__=='__main__':
     # params= [float(param) for param in params]
 
     global myid
-    start='20170825120000'
-    end=  '20170827000000'
+    start='20170825000000'
+    end=  '20170826000000'
     interval= '2M'  #forcing interval
     yieldstep= pd.Timedelta(interval).total_seconds()    
     # params= params[0]
-    # topo_file='/hydros/ZhiLi/demHouston033s_NAm83fel.tif'
-    topo_file='/hydros/ZhiLi/DEM_08076700.tif'
+    topo_file='/hydros/ZhiLi/demHouston033s_NAm83.tif'
+    # topo_file='/hydros/ZhiLi/DEM_08076700.tif'
     # study_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_basin.shp')
     # interior_area= gpd.read_file('/home/ZhiLi/CRESTHH/Examples/excessive_rain/68500_sub/68500_river_buffer_cliped.shp')
     # base_resolution = 1000000 #1km
@@ -42,7 +42,7 @@ if __name__=='__main__':
         # shp= gpd.read_file('/home/ZhiLi/CRESTHH/data/Example-cali/watershed_shp/watershed.shp')
 
 
-        DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/mesher/examples/08076700_new/stream_dem/DEM_10m.mesh')
+        DOMAIN= anuga.create_domain_from_file('mesh.msh')
         # DOMAIN= anuga.create_domain_from_file('/home/ZhiLi/CRESTHH/Examples/Sensitivity/original_08076700.msh')
         # if os.path.exists('1km.msh'):
         #     DOMAIN= anuga.create_domain_from_file('1km.msh')

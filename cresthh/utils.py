@@ -55,7 +55,7 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
         speed= splotter.speed
         stage= splotter.stage
         time= splotter.time
-        soil= splotter.SM
+        # soil= splotter.SM
         xc= splotter.xc+ splotter.xllcorner
         yc= splotter.yc+ splotter.yllcorner
     else:
@@ -64,7 +64,7 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
         speed= splotter['speed'][:]
         # stage= splotter['stage'][:]
         time= splotter['time'][:]
-        soil= splotter['SM'][:]
+        # soil= splotter['SM'][:]
         xc= splotter['x']+splotter.xllcorner
         yc= splotter['y']+splotter.yllcorner
     
@@ -80,8 +80,8 @@ def processSWW(swwfile, fields, obs_loc, start_time=None):
             results['speed']= speed[:,iloc]
         if field=='stage':
             results['stage']= stage[:,iloc]
-        if field=='soil moisture':
-            results['soil moisture']= soil[:,iloc]
+        # if field=='soil moisture':
+        #     results['soil moisture']= soil[:,iloc]
         # if field=='excess rain':
         #     results['excess rain']= rain[:,iloc]
 

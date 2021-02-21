@@ -20,7 +20,7 @@ def rectangular_old(m, n, len1=1.0, len2=1.0, origin = (0.0, 0.0)):
     FVMesh object, e.g. Mesh(points, elements)
     """
 
-    from anuga.config import epsilon
+    from cresthh.anuga.config import epsilon
 
     deltax = float(len1)/m
     deltay = float(len2)/n
@@ -74,7 +74,7 @@ def rectangular(m, n, len1=1.0, len2=1.0, origin = (0.0, 0.0)):
     FVMesh object, e.g. Mesh(points, elements)
     """
 
-    from anuga.config import epsilon
+    from cresthh.anuga.config import epsilon
 
     delta1 = float(len1)/m
     delta2 = float(len2)/n
@@ -590,7 +590,7 @@ def from_polyfile(name):
     listing first vertex coordinates and then connectivity
     """
 
-    from anuga.utilities.numerical_tools import anglediff
+    from cresthh.anuga.utilities.numerical_tools import anglediff
     from math import pi
     import os.path
     root, ext = os.path.splitext(name)

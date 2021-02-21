@@ -394,7 +394,7 @@ class SWW_plotter:
         self.plot_dir = plot_dir
         if make_dir:
             self.make_plot_dir()
-        
+        self.sww_file= swwfile
         self.min_depth = min_depth
 
         import matplotlib.tri as tri
@@ -405,6 +405,7 @@ class SWW_plotter:
 
         from cresthh.anuga.file.netcdf import NetCDFFile
         p = NetCDFFile(swwfile)
+        # self.domain= cresthh.anuga.create_domain_from_file()
 
         self.x = np.array(p.variables['x'])
         self.y = np.array(p.variables['y'])
@@ -463,6 +464,38 @@ class SWW_plotter:
         else:
             self.time = np.array(p.variables['time'])
             self._abs_time=False
+    
+    def interpolate(self, feature='depth', res=10, reduction=max):
+        '''
+        Interpolate tri object to regular grid with desired resolution
+        '''
+        import matplotlib.tri as mtri
+        from cresthh.anuga.file.netcdf import NetCDFFile
+        p = NetCDFFile(self.sww_file)
+        if feature=='depth':
+            z= np.array(p.variables['stage'])-\
+             np.array(p.variables['elevation'])
+        elif feature=='velocity':
+            z= self.speed
+        elif feature=='SM':
+            z= np.array(p.variables['SM'])
+        elif feature=='exc_rain':
+            z= np.array(p.variables['exc_rain'])
+        elif feature=='stage':
+            z= np.array(p.variables['stage'])
+        xi, yi= np.meshgrid(np.arange(0, self.x.max()+res, res),
+                            np.arange(0, self.y.max()+res, res))
+        if isinstance(reduction,int):
+            _z= z[reduction]
+        else:
+            _z= z.max(axis=0)
+        interp= mtri.CubicTriInterpolator(self.triang, _z, kind='geom')
+        zi_interp= interp(xi,yi)
+        xi += self.xllcorner
+        yi+= self.yllcorner
+        
+        return xi, yi, zi_interp
+
 
     def _depth_frame(self, figsize, dpi, frame, vmin, vmax, cmap='viridis'):
 
