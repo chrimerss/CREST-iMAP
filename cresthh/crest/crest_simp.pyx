@@ -40,10 +40,10 @@ def model(double precipIn, double overland, double petIn, double SM, double Ksat
     #SS0+= RS*timestep
     #SI0+= RI*timestep
     # zero division protection
-    if WM<0: WM=100
+    if WM<=0: WM=100
     if SM<0: SM=0
     if IM<0: IM=0
-    elif IM>1.0: IM=1.0
+    elif IM>1.0: IM=0.999999
     if B<0.0: B=1.0
     if Ksat<0.0: Ksat=1.0
 

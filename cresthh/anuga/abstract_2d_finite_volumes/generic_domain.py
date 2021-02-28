@@ -1854,9 +1854,10 @@ class Generic_Domain:
                                 location='centroids', proj=self.proj)
                     self.quantities['ET']/=(_time_interval_func(evap_freq)*1000.0*100.0)
                 except:
-                    msg= '%s not found in evaporation, assume 1.5mm/d everywhere'%evap_pth
+                    if self.processor==0:
+                        msg= '%s not found in evaporation, assume 1.5mm/d everywhere'%evap_pth
                     # log.critical(msg)
-                    self.quantities['ET'].set_values_from_constant(1.5/3600./24., 'centroids',None,None)
+                    self.quantities['ET'].set_values_from_constant(1.5/3600./24./1000., 'centroids',None,None)
 
                 finally:
                     evap_count.append(self.get_time()//_time_interval_func(evap_freq))
@@ -1874,18 +1875,12 @@ class Generic_Domain:
                                 location='centroids' ,proj=self.proj)
                     self.quantities['P']/=(3600.0*1000.0) #convert mm/h to m/s
                 else:
-                    msg= '%s not found in precipitation, assume 0 everywhere'%precip_pth
-                    log.critical(msg)
+                    if self.processor==0:
+                        msg= '%s not found in precipitation, assume 0 everywhere'%precip_pth
+                        log.critical(msg)
                     self.quantities['P'].set_values_from_constant(0, 'centroids',None,None)
                     # print '%s not found in precipitation'%precip_pth
                 precip_count.append(self.get_time()//_time_interval_func(precip_freq))
-
-
-            
-            # print "initialize completed!  Start excessive rainfall calculation"       
-
-                # excessRain= excessRain * self.timestep
-                # print "excessive rainfall computed, assign to stage."
 
 
                 if self._onReInfiltration:

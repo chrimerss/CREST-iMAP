@@ -709,7 +709,7 @@ class Domain(Generic_Domain):
 
         self._set_config_defaults()
 
-        self.set_CFL(0.9)
+        self.set_CFL(1.0)
         self.set_use_kinematic_viscosity(False)
         #self.timestepping_method='rk2'#'rk3'#'euler'#'rk2'
         self.set_timestepping_method('euler')
