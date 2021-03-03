@@ -34,7 +34,7 @@ def export_tif(dst, lons, lats, arr, sample):
     band=None
     ds=None
 
-parser= argparse.ArgumentParser(description='Quick retrieval of flood depth')
+parser= argparse.ArgumentParser(description='Quick retrieval of flood depth\nAuthor: Allen Zhi Li\nDate: 2021/02/07')
 parser.add_argument('--sww', type=str, metavar='sww file', required=True,
                     help='SWW file to be retrieved from')
 parser.add_argument('--dst', type=str, metavar='destination', required=True,
@@ -72,7 +72,7 @@ if __name__=='__main__':
     interp= args.interp
     dsm= args.DSM
     ifFloodFill= args.flood_fill
-    base_name=dst.split('.')[0]
+    base_name=dst.split('.')[:-1]
     if quantity not in ['depth', 'xmomentum', 'elevation', 'ymomentum', 'excRain']:
         raise ValueError('expected quantity in ["depth", "xmomentum", "elevation", "ymomentum", "excRain"]')
 
