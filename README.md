@@ -94,3 +94,7 @@ The difference between turn on reinfiltration (left) and turn off reinfiltration
 - [ ] Create Docker file to better minimize the installation process
 - [ ] Option to provide land cover data and infer friction
 - [ ] Complete examples for each feature
+
+# Citation
+
+Li, Z., Chen, M., Gao, S., Luo, X., Gourley, J., Kirstetter, P., Yang, T., Kolar, R., McGovern, A., Wen, Y., Rao, B., Yami, T., Hong, Y., 2021. CREST-iMAP v1.0: A fully coupled hydrologic-hydraulic modeling framework dedicated to flood inundation mapping and prediction, Environmental Modelling and Software, 141, 105051.
