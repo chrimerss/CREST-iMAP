@@ -63,6 +63,10 @@ pip install proj affine matplotlib pandas scipy netCDF4==1.5.3 geopandas
 
 ```
 
+## Cloud simulation
+
+Please click "Open in Google Colab" badge on top to utlize Google Colab online computing system (only at single core).
+
 # Updates
 
 - [x] 2020.06.17 Add options to create longitudinal profile and animation
