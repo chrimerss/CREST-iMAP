@@ -63,6 +63,12 @@ pip install proj affine matplotlib pandas scipy netCDF4==1.5.3 geopandas
 
 ```
 
+Using mamba and conda (recommended)
+```
+mamba create -n python2 python=2.7
+mamba env update -n python2 -f environment.yml
+```
+
 ## Cloud simulation
 
 Please click "Open in Google Colab" badge on top to utlize Google Colab online computing system (only at single core).
