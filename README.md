@@ -1,8 +1,7 @@
-[![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-275/)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1wTq3vaiQwJeLoqe4YMnyzV4ZQ6pvOez1?usp=sharing)
-(deprecated)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrimerss/python2-binder/HEAD) (recommended)
-[![Paper](https://img.shields.io/badge/-10.1016%2Fj.envsoft.2021.105051-blue)](https://www.sciencedirect.com/science/article/pii/S1364815221000943)
+[![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-275/)  
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1wTq3vaiQwJeLoqe4YMnyzV4ZQ6pvOez1?usp=sharing)  (deprecated)  
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrimerss/python2-binder/HEAD) (recommended)  
+[![Paper](https://img.shields.io/badge/-10.1016%2Fj.envsoft.2021.105051-blue)](https://www.sciencedirect.com/science/article/pii/S1364815221000943)  
 
 # CREST-iMAP
 
