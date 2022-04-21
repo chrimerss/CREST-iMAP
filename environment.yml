@@ -1,0 +1,25 @@
+name: python2
+channels:
+  - conda-forge
+  - default
+dependencies:
+  - python=2.7
+  - libgdal
+  - numpy  
+  - pyproj
+  - proj4
+  - gdal
+  - psutil
+  - toolz
+  - matplotlib
+  - dill
+  - pandas
+  - geopandas
+  - fiona
+  - mpi4py
+  - folium
+  - Cython
+  - netCDF4
+  - scipy
+  - affine
+
