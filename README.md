@@ -6,7 +6,9 @@
 # CREST-iMAP
 
 ## Coupled Routing Excess STorage inundation MApping and Prediction
-
+<p align="center">
+<img src="img/Harvey_d01.gif">
+</p>
 <img src="img/model_structure.png">
 
 # Introduction
