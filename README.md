@@ -1,3 +1,16 @@
+# CREST-iMAP v2 (this fork - in development)
+
+**Python 3 + PyTorch rewrite on branch `v2`.** The hydrodynamic core is a
+differentiable, well-balanced finite-volume shallow-water solver (Audusse
+et al. 2004 hydrostatic reconstruction + HLL, MUSCL 2nd order) replacing
+the vendored ANUGA; the CREST water balance is stripped in favor of
+initial conditions and runoff forcing supplied by CREST/EF5 (CREST-AI).
+See [`crestimap/`](crestimap) and [`docs/DESIGN_V2.md`](docs/DESIGN_V2.md).
+Validated: exact C-property, Stoker dam break, mass balance, autograd-vs-FD
+gradients (`crestimap/tests`). v1.x documentation follows below.
+
+---
+
 [![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-275/)  
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1wTq3vaiQwJeLoqe4YMnyzV4ZQ6pvOez1?usp=sharing)  (deprecated)  
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrimerss/python2-binder/HEAD) (recommended)  
