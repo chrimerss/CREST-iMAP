@@ -53,8 +53,9 @@ def run_event(cfg: EventConfig) -> dict:
     import torch
     from . import dem as demmod
     from . import io as iomod
-    from .forcing import (SolverGrid, ef5_forcing, initial_state_from_ef5,
-                          parse_ef5_dir, regrid_to_solver)
+    from .forcing import (EF5ChannelStage, SolverGrid, ef5_forcing,
+                          initial_state_from_ef5, parse_ef5_dir,
+                          regrid_to_solver)
     from .solver import SWESolver
 
     say = cfg.progress or (lambda s: None)
@@ -102,6 +103,21 @@ def run_event(cfg: EventConfig) -> dict:
         say(f"channel pre-wet from q grid @ {t_near:%Y-%m-%d %H:%M} "
             f"({int((qg >= cfg.q_channel_min).sum())} channel cells)")
 
+    # routed-flood coupling: EF5's hourly discharge grids drive the channel
+    # stage all through the run (recession events carry their water in the
+    # routed network, not the local runoff grids — without this, an event
+    # triggered days after the rain simulates dry)
+    nudge = None
+    try:
+        nudge = EF5ChannelStage(cfg.ef5_output_dir, grid, sim_start,
+                                model=cfg.model, q_min=cfg.q_channel_min,
+                                dtype=dtype, device=cfg.device)
+        st = nudge.stats(0.0)
+        say(f"channel coupling: {st['channel_cells']} channel cells, "
+            f"max stage {st['max_stage_m']:.2f} m at sim start")
+    except Exception as e:
+        say(f"channel coupling unavailable ({type(e).__name__}: {e})")
+
     # ---- integrate ------------------------------------------------------ #
     solver = SWESolver(grid.z, dx=grid.dx, dy=grid.dy, n_manning=cfg.n_manning,
                        order=2, bc="open")
@@ -125,7 +141,10 @@ def run_event(cfg: EventConfig) -> dict:
 
     say(f"integrating {t_total / 3600:.1f} h "
         f"({sim_start:%m-%d %H:%M} -> {cfg.t_end:%m-%d %H:%M} UTC)")
-    solver.run(h0, qx0, qy0, t_end=t_total, rain_fn=rain, callback=cb)
+    if nudge is not None:
+        h0 = nudge(0.0, h0)               # channel water present from t=0
+    solver.run(h0, qx0, qy0, t_end=t_total, rain_fn=rain, callback=cb,
+               nudge_fn=nudge)
 
     iomod.write_depth(os.path.join(cfg.out_dir, "maxdepth.tif"),
                       maxdepth.detach().cpu().numpy(), grid.transform, grid.crs)

@@ -251,6 +251,75 @@ def ef5_forcing(output_dir, grid: SolverGrid, t0, kinds=("runoff", "subrunoff"),
     return sum_forcings(*fns) if len(fns) > 1 else fns[0]
 
 
+def rating_depth(q, n_ch=0.035, slope=1e-3, width_fn=None):
+    """Manning-rating water depth [m] for channel discharge q [m3/s]:
+    h ~ (n Q / (w sqrt(S)))^(3/5) with a Leopold-Maddock-style width."""
+    q = torch.clamp(torch.as_tensor(q), min=0.0)
+    if width_fn is None:
+        width_fn = lambda qq: torch.clamp(7.2 * qq ** 0.5, min=1.0)
+    w = width_fn(q)
+    return (n_ch * q / (w * slope ** 0.5)) ** 0.6
+
+
+class EF5ChannelStage:
+    """Routed-flood coupling: EF5's hourly 2-D discharge grids -> target
+    water depth along channel cells on the solver grid.
+
+    Recession floods carry their water in the routed channel network, not in
+    the local runoff grids — without this, an event triggered days after the
+    rain simulates bone-dry. `SWESolver.run(nudge_fn=...)` applies the target
+    as a one-way floor (h := max(h, stage)), and the 2-D solver spreads the
+    overbank water. Piecewise-constant per EF5 grid hour; channel mask is
+    q >= q_min.
+    """
+
+    def __init__(self, output_dir, grid, t0, model=None, q_min=5.0,
+                 cap_m=8.0, method="containing", dtype=None, device=None):
+        self.series = parse_ef5_dir(output_dir, "q", model)
+        if not self.series:
+            raise FileNotFoundError(f"no 'q.*.tif' grids in {output_dir}")
+        self.grid = grid
+        self.t0 = t0
+        self.q_min = q_min
+        self.cap_m = cap_m
+        self.method = method
+        self.dtype = dtype or torch.get_default_dtype()
+        self.device = device
+        self._cache = {}
+
+    def stats(self, t_seconds=0.0):
+        s = self._stage(self._index(t_seconds))
+        n = int((s > 0).sum())
+        return {"channel_cells": n, "max_stage_m": float(s.max())}
+
+    def _index(self, t_seconds):
+        when = self.t0 + _dt.timedelta(seconds=float(t_seconds))
+        i = bisect.bisect_right([t for t, _ in self.series], when) - 1
+        return max(0, min(i, len(self.series) - 1))
+
+    def _stage(self, i):
+        if i not in self._cache:
+            import rasterio
+            _, path = self.series[i]
+            with rasterio.open(path) as ds:
+                src = ds.read(1).astype(float)
+                if ds.nodata is not None:
+                    src = np.where(src == ds.nodata, 0.0, src)
+                q = regrid_to_solver(np.clip(src, 0, None), ds.transform,
+                                     tuple(self.grid.z.shape),
+                                     self.grid.transform, ds.crs,
+                                     self.grid.crs, method=self.method)
+            qt = torch.as_tensor(q, dtype=self.dtype, device=self.device)
+            stage = torch.clamp(rating_depth(qt), max=self.cap_m)
+            stage = torch.where(qt >= self.q_min, stage,
+                                torch.zeros_like(stage))
+            self._cache = {i: stage}          # keep only the latest hour
+        return self._cache[i]
+
+    def __call__(self, t_seconds, h):
+        return torch.maximum(h, self._stage(self._index(t_seconds)))
+
+
 def initial_state_from_ef5(q_grid, sm_grid, dem, dx, dy,
                            bankfull_width_fn=None):
     """Build (h, qx, qy) initial conditions from EF5 2-D Q and SM grids.

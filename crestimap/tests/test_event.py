@@ -95,6 +95,11 @@ def test_run_event_end_to_end():
         # water actually accumulated in the valley
         md, _, _ = read_depth(str(out / "maxdepth.tif"))
         assert md.max() > 0.01, f"max depth only {md.max():.4f} m"
+        # routed-channel coupling: the q=40 m3/s channel (coarse row NYC//2)
+        # must hold rating-depth water (~1 m) through the run
+        ch = md[NYC // 2 * 3 - 1: NYC // 2 * 3 + 4, :]
+        assert ch.max() > 0.5, f"channel depth only {ch.max():.3f} m"
+        assert any("channel coupling" in s for s in log)
         # frames are compact (storage budget: uint16+deflate)
         biggest = max((out / fr["file"]).stat().st_size for fr in man["frames"])
         assert biggest < 200_000, f"frame unexpectedly large: {biggest} B"

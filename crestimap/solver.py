@@ -286,7 +286,7 @@ class SWESolver:
         return hn, qxn, qyn, dt
 
     def run(self, h, qx, qy, t_end, rain_fn=None, t0=0.0, callback=None,
-            checkpoint_every=0):
+            checkpoint_every=0, nudge_fn=None):
         """Integrate to t_end.
 
         rain_fn : callable t -> (ny, nx) tensor of lateral inflow [m/s]
@@ -295,6 +295,8 @@ class SWESolver:
         checkpoint_every : if > 0, wrap every N steps in
                   torch.utils.checkpoint to trade compute for memory when
                   backpropagating through long simulations.
+        nudge_fn : callable (t, h) -> h applied after each step — e.g. the
+                  EF5ChannelStage floor that couples routed channel flow in.
         """
         t = t0
         nstep = 0
@@ -317,6 +319,8 @@ class SWESolver:
                 h, qx, qy, _ = self.step(h, qx, qy, dt=dt, rain=rain)
             t += dt
             nstep += 1
+            if nudge_fn is not None:
+                h = nudge_fn(t, h)
             if callback is not None:
                 callback(t, h, qx, qy)
         return h, qx, qy
