@@ -45,7 +45,10 @@ def _write_ef5_outputs(d):
             arr = (scale * rng.random((NYC, NXC))).astype(np.float32)
             arr[0, 0] = -9999.0  # nodata cell
             t = T0 + datetime.timedelta(hours=hh)
-            p = str(d / f"{kind}.{t:%Y%m%d%H%M}.crest.tif")
+            # EF5's real filename format (YYYYMMDD_HHUU); hour 0 uses the
+            # underscore-less variant so both spellings stay covered
+            ts = f"{t:%Y%m%d%H%M}" if hh == 0 else f"{t:%Y%m%d_%H%M}"
+            p = str(d / f"{kind}.{ts}.crest.tif")
             with rasterio.open(p, "w", driver="GTiff", height=NYC, width=NXC,
                                count=1, dtype="float32", crs="EPSG:4326",
                                transform=tr, nodata=-9999.0) as ds:

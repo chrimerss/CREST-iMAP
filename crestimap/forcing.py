@@ -192,13 +192,15 @@ class SolverGrid:
 def parse_ef5_dir(output_dir, kind, model=None):
     """List EF5 gridded outputs of one kind, sorted by time.
 
-    Returns [(datetime, path)] for files named <kind>.<YYYYMMDDHHMM>.<model>.tif.
+    Accepts <kind>.<YYYYMMDD_HHUU>.<model>.tif (EF5's actual
+    currentTimeTextOutput format, Simulator.cpp SetNameStr) and the
+    underscore-less <YYYYMMDDHHMM> variant. Returns [(datetime, path)].
     """
     import glob
     import os
     import re
     pat = os.path.join(str(output_dir), f"{kind}.*.tif")
-    rx = re.compile(rf"{re.escape(kind)}\.(\d{{12}})\.([^.]+)\.tif$")
+    rx = re.compile(rf"{re.escape(kind)}\.(\d{{8}}_?\d{{4}})\.([^.]+)\.tif$")
     out = []
     for p in glob.glob(pat):
         m = rx.search(os.path.basename(p))
@@ -206,7 +208,8 @@ def parse_ef5_dir(output_dir, kind, model=None):
             continue
         if model and m.group(2).lower() != model.lower():
             continue
-        out.append((_dt.datetime.strptime(m.group(1), "%Y%m%d%H%M"), p))
+        ts = m.group(1).replace("_", "")
+        out.append((_dt.datetime.strptime(ts, "%Y%m%d%H%M"), p))
     out.sort()
     return out
 
