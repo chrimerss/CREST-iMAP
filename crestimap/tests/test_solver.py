@@ -84,14 +84,16 @@ def test_mass_conservation_with_inflow():
     h = torch.clamp(0.5 - z, min=0.0)
     dx = dy = 5.0
     s = SWESolver(z, dx=dx, dy=dy, order=2, bc="wall")
-    rate = 1e-4  # m/s lateral inflow everywhere
-    rain = lambda t: torch.full_like(h, rate)
+    # spatially VARYING inflow: drives real dynamics + boundary-adjacent
+    # gradients, which is what exposes any wall-face mass leak
+    rate = 1e-4 * (1.0 + torch.rand(20, 20))
+    rain = lambda t: rate
     v0 = h.sum().item() * dx * dy
     t_end = 20.0
     h2, _, _ = s.run(h, torch.zeros_like(h), torch.zeros_like(h),
                      t_end=t_end, rain_fn=rain)
     v1 = h2.sum().item() * dx * dy
-    v_in = rate * t_end * dx * dy * h.numel()
+    v_in = rate.sum().item() * t_end * dx * dy
     assert abs((v1 - v0) - v_in) / v_in < 1e-10, \
         f"mass error {(v1 - v0) - v_in:.3e} of {v_in:.3e}"
 

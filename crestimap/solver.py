@@ -26,7 +26,6 @@ conditions, and forcing.
 from __future__ import annotations
 
 import torch
-import torch.nn.functional as F
 
 G_DEFAULT = 9.80665
 
@@ -76,17 +75,41 @@ class SWESolver:
     # ------------------------------------------------------------------ #
     # boundary handling
     # ------------------------------------------------------------------ #
+    @staticmethod
+    def _sympad(t, axis, sign=1.0):
+        """Two-ring symmetric (mirror-about-wall) padding along axis:
+        [b, a | a, b, ..., y, z | z, y], optionally sign-flipped (normal
+        momentum at a wall). Exact mirror symmetry makes the reconstructed
+        states at wall faces symmetric, so the wall mass flux is exactly
+        zero even with MUSCL slopes."""
+        if axis == 1:
+            left = sign * torch.flip(t[:, :2], dims=(1,))
+            right = sign * torch.flip(t[:, -2:], dims=(1,))
+            return torch.cat([left, t, right], dim=1)
+        left = sign * torch.flip(t[:2, :], dims=(0,))
+        right = sign * torch.flip(t[-2:, :], dims=(0,))
+        return torch.cat([left, t, right], dim=0)
+
+    @staticmethod
+    def _reppad(t, axis):
+        """Two-ring replicate (zero-gradient) padding along axis."""
+        if axis == 1:
+            return torch.cat([t[:, :1], t[:, :1], t, t[:, -1:], t[:, -1:]], dim=1)
+        return torch.cat([t[:1, :], t[:1, :], t, t[-1:, :], t[-1:, :]], dim=0)
+
     def _pad(self, h, qx, qy):
-        """One ghost ring. wall: replicate h/z, reflect normal momentum;
-        open: replicate everything (zero-gradient)."""
-        rep = lambda t: F.pad(t[None, None], (1, 1, 1, 1), mode="replicate")[0, 0]
-        hp, qxp, qyp = rep(h), rep(qx), rep(qy)
-        zp = rep(self.z)
+        """Two ghost rings. wall: mirror h/z and tangential momentum,
+        anti-mirror normal momentum; open: replicate (zero-gradient)."""
         if self.bc == "wall":
-            qxp[:, 0] = -qxp[:, 1]
-            qxp[:, -1] = -qxp[:, -2]
-            qyp[0, :] = -qyp[1, :]
-            qyp[-1, :] = -qyp[-2, :]
+            pad_x = lambda t, s=1.0: self._sympad(t, 1, s)
+            pad_y = lambda t, s=1.0: self._sympad(t, 0, s)
+        else:
+            pad_x = lambda t, s=1.0: self._reppad(t, 1)
+            pad_y = lambda t, s=1.0: self._reppad(t, 0)
+        hp = pad_y(pad_x(h))
+        zp = pad_y(pad_x(self.z))
+        qxp = pad_y(pad_x(qx, -1.0))          # normal to x-walls -> flip there
+        qyp = pad_y(pad_x(qy), -1.0)          # normal to y-walls -> flip there
         return hp, qxp, qyp, zp
 
     # ------------------------------------------------------------------ #
@@ -94,23 +117,25 @@ class SWESolver:
     # ------------------------------------------------------------------ #
     @staticmethod
     def _sides(f, axis, order):
-        """Return (left_side, right_side) values of f inside each cell of the
-        padded grid, along `axis`. Slopes use minmod of one-sided differences;
-        the outermost padded ring keeps zero slope (first order there)."""
-        if order == 1:
-            return f, f
-        pad = [0, 0, 0, 0]  # (left, right, top, bottom) for F.pad on last two dims
+        """Side values of f inside each slope-cell along `axis`.
+
+        Input is the 2-ring padded array; slopes (minmod) are computed for
+        every cell that has both neighbors, i.e. the interior plus one ghost
+        ring — with mirror padding the ghost slopes are exact mirrors of the
+        interior ones, which keeps wall faces perfectly symmetric.
+        Returns arrays trimmed to interior+1 ring along `axis` (full extent
+        in the cross direction)."""
         if axis == 1:
-            a = f[:, 1:-1] - f[:, :-2]
-            b = f[:, 2:] - f[:, 1:-1]
-            s = minmod(a, b)
-            s = F.pad(s[None, None], (1, 1, 0, 0))[0, 0]  # zero slope in ghost ring
+            fc = f[:, 1:-1]
+            if order == 1:
+                return fc, fc
+            s = minmod(f[:, 1:-1] - f[:, :-2], f[:, 2:] - f[:, 1:-1])
         else:
-            a = f[1:-1, :] - f[:-2, :]
-            b = f[2:, :] - f[1:-1, :]
-            s = minmod(a, b)
-            s = F.pad(s[None, None], (0, 0, 1, 1))[0, 0]
-        return f - 0.5 * s, f + 0.5 * s
+            fc = f[1:-1, :]
+            if order == 1:
+                return fc, fc
+            s = minmod(f[1:-1, :] - f[:-2, :], f[2:, :] - f[1:-1, :])
+        return fc - 0.5 * s, fc + 0.5 * s
 
     # ------------------------------------------------------------------ #
     # directional flux divergence with hydrostatic reconstruction
@@ -189,7 +214,7 @@ class SWESolver:
             div_qn = (fn_m[:, 1:] - fn_p[:, :-1]) / d
             div_qt = (flux[2][:, 1:] - flux[2][:, :-1]) / d
             src_c = src[:, 1:-1]
-            sl = lambda t: t[1:-1, :]
+            sl = lambda t: t[2:-2, :]      # cross direction: drop both ghost rings
             div_h, div_qn, div_qt, src_c = map(sl, (div_h, div_qn, div_qt, src_c))
         else:
             src = -g * hbar * (zR - zL) / d
@@ -197,7 +222,7 @@ class SWESolver:
             div_qn = (fn_m[1:, :] - fn_p[:-1, :]) / d
             div_qt = (flux[2][1:, :] - flux[2][:-1, :]) / d
             src_c = src[1:-1, :]
-            sl = lambda t: t[:, 1:-1]
+            sl = lambda t: t[:, 2:-2]
             div_h, div_qn, div_qt, src_c = map(sl, (div_h, div_qn, div_qt, src_c))
 
         rhs_h = -div_h
@@ -273,11 +298,16 @@ class SWESolver:
         """
         t = t0
         nstep = 0
+        next_change = getattr(rain_fn, "next_change", None)
         while t < t_end - 1e-12:
             rain = rain_fn(t) if rain_fn is not None else None
             dt = self.compute_dt(h, qx, qy)
             if t + dt > t_end:
                 dt = t_end - t
+            if next_change is not None:
+                nc = next_change(t)
+                if 1e-9 < nc < dt:
+                    dt = nc  # land exactly on the forcing switch
             if checkpoint_every > 0 and h.requires_grad:
                 h, qx, qy, _ = torch.utils.checkpoint.checkpoint(
                     lambda a, b, c: self.step(a, b, c, dt=dt, rain=rain),

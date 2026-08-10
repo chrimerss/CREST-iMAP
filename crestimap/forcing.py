@@ -69,6 +69,16 @@ class GriddedSeriesForcing:
         w = ((when - self.times[i]).total_seconds() / span) if span > 0 else 0.0
         return (1 - w) * self._grid(i) + w * self._grid(i + 1)
 
+    def next_change(self, t_seconds: float) -> float:
+        """Seconds from t until the forcing next switches grids (inf if never).
+        SWESolver.run clips dt to this so piecewise-constant forcing is
+        integrated exactly (no smearing across hour boundaries)."""
+        when = self.t0 + _dt.timedelta(seconds=float(t_seconds))
+        i = bisect.bisect_right(self.times, when)
+        if i >= len(self.times):
+            return float("inf")
+        return (self.times[i] - when).total_seconds()
+
 
 def sum_forcings(*fns):
     """Combine surface-runoff and subsurface-runoff forcings."""
@@ -77,34 +87,151 @@ def sum_forcings(*fns):
         for f in fns[1:]:
             out = out + f(t)
         return torch.clamp(out, min=0.0)
+
+    def next_change(t):
+        return min((f.next_change(t) for f in fns if hasattr(f, "next_change")),
+                   default=float("inf"))
+    combined.next_change = next_change
     return combined
 
 
 def regrid_to_solver(src: np.ndarray, src_transform, dst_shape, dst_transform,
-                     src_crs=None, dst_crs=None):
-    """Regrid an EF5 output grid onto the solver raster (bilinear).
+                     src_crs=None, dst_crs=None, method="containing"):
+    """Regrid an EF5 output grid onto the (finer) solver raster.
 
-    Uses rasterio.warp when available; falls back to nearest-neighbor
-    index mapping for identical CRS.
+    method:
+      "containing" (default) — every solver cell takes the value of the EF5
+        cell that contains it. Runoff rate (mm/h) is intensive, so this
+        partitions each coarse cell's water exactly over its footprint:
+        mass-conserving by construction for coarse -> fine.
+      "bilinear" — smooth field (NOT exactly mass-conserving; for SM/Q
+        diagnostics, not for runoff forcing).
+    Uses rasterio.warp when CRSs differ; direct index mapping otherwise.
     """
-    try:
-        from rasterio.warp import reproject, Resampling
-        dst = np.zeros(dst_shape, dtype=float)
-        reproject(source=src.astype(float), destination=dst,
-                  src_transform=src_transform, dst_transform=dst_transform,
-                  src_crs=src_crs or "EPSG:4326", dst_crs=dst_crs or "EPSG:4326",
-                  resampling=Resampling.bilinear)
-        return dst
-    except ImportError:
-        # nearest-neighbor fallback, same CRS only
+    same_crs = (src_crs is None and dst_crs is None) or (src_crs == dst_crs)
+    if method == "containing" and same_crs:
         ny, nx = dst_shape
         rows, cols = np.mgrid[0:ny, 0:nx]
         xs, ys = dst_transform * (cols + 0.5, rows + 0.5)
         inv = ~src_transform
         sc, sr = inv * (xs, ys)
-        sr = np.clip(sr.astype(int), 0, src.shape[0] - 1)
-        sc = np.clip(sc.astype(int), 0, src.shape[1] - 1)
+        sr = np.clip(np.floor(sr).astype(int), 0, src.shape[0] - 1)
+        sc = np.clip(np.floor(sc).astype(int), 0, src.shape[1] - 1)
         return src[sr, sc].astype(float)
+    from rasterio.warp import reproject, Resampling
+    dst = np.zeros(dst_shape, dtype=float)
+    reproject(source=src.astype(float), destination=dst,
+              src_transform=src_transform, dst_transform=dst_transform,
+              src_crs=src_crs or "EPSG:4326", dst_crs=dst_crs or "EPSG:4326",
+              resampling=(Resampling.nearest if method == "containing"
+                          else Resampling.bilinear))
+    return dst
+
+
+# --------------------------------------------------------------------------- #
+# EF5 output plumbing (filename convention: <kind>.<YYYYMMDDHHMM>.<model>.tif)
+# --------------------------------------------------------------------------- #
+
+_M_PER_DEG_LAT = 111132.0
+
+
+class SolverGrid:
+    """Solver raster derived from a DEM GeoTIFF.
+
+    Holds z (torch tensor), the affine transform + CRS, and metric cell
+    sizes. For geographic CRS the cell size is converted to meters at the
+    domain's mean latitude (adequate at basin scale); projected DEMs use
+    native units.
+    """
+
+    def __init__(self, z, transform, crs, dx, dy):
+        self.z = z
+        self.transform = transform
+        self.crs = crs
+        self.dx = dx
+        self.dy = dy
+
+    @classmethod
+    def from_dem(cls, dem_path, dtype=None, device=None, nodata_fill=None):
+        import math
+        import rasterio
+        with rasterio.open(dem_path) as ds:
+            arr = ds.read(1).astype(float)
+            if ds.nodata is not None:
+                fill = nodata_fill if nodata_fill is not None else np.nanmax(
+                    np.where(arr == ds.nodata, -np.inf, arr))
+                arr = np.where(arr == ds.nodata, fill, arr)
+            tr = ds.transform
+            crs = ds.crs
+            geographic = crs is None or crs.is_geographic
+            if geographic:
+                lat = tr.f + tr.e * ds.height / 2.0  # center latitude
+                dy = abs(tr.e) * _M_PER_DEG_LAT
+                dx = abs(tr.a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
+            else:
+                dx, dy = abs(tr.a), abs(tr.e)
+        z = torch.as_tensor(arr, dtype=dtype or torch.get_default_dtype(),
+                            device=device)
+        return cls(z, tr, crs, dx, dy)
+
+
+def parse_ef5_dir(output_dir, kind, model=None):
+    """List EF5 gridded outputs of one kind, sorted by time.
+
+    Returns [(datetime, path)] for files named <kind>.<YYYYMMDDHHMM>.<model>.tif.
+    """
+    import glob
+    import os
+    import re
+    pat = os.path.join(str(output_dir), f"{kind}.*.tif")
+    rx = re.compile(rf"{re.escape(kind)}\.(\d{{12}})\.([^.]+)\.tif$")
+    out = []
+    for p in glob.glob(pat):
+        m = rx.search(os.path.basename(p))
+        if not m:
+            continue
+        if model and m.group(2).lower() != model.lower():
+            continue
+        out.append((_dt.datetime.strptime(m.group(1), "%Y%m%d%H%M"), p))
+    out.sort()
+    return out
+
+
+def ef5_forcing(output_dir, grid: SolverGrid, t0, kinds=("runoff", "subrunoff"),
+                model=None, method="containing", hold=True,
+                device=None, dtype=None):
+    """Total lateral-inflow forcing from EF5 gridded runoff output.
+
+    Sums the listed kinds (surface `runoff` + interflow `subrunoff`),
+    regrids each hourly mm/h grid onto the solver raster (containing-cell:
+    mass-conserving coarse->fine), converts to m/s, and returns a
+    callable(t_seconds) for SWESolver.run. EF5 grids and nodata are
+    clamped to >= 0.
+    """
+    import rasterio
+    dst_shape = tuple(grid.z.shape)
+    fns = []
+    for kind in kinds:
+        series = parse_ef5_dir(output_dir, kind, model)
+        if not series:
+            raise FileNotFoundError(
+                f"no '{kind}.*.tif' grids in {output_dir} — did the EF5 run "
+                f"use output_grids=...|{kind}|... ?")
+        times = [t for t, _ in series]
+        paths = [p for _, p in series]
+
+        def loader(i, _paths=paths):
+            with rasterio.open(_paths[i]) as ds:
+                src = ds.read(1).astype(float)
+                if ds.nodata is not None:
+                    src = np.where(src == ds.nodata, 0.0, src)
+                src = np.clip(src, 0.0, None)
+                return regrid_to_solver(src, ds.transform, dst_shape,
+                                        grid.transform, ds.crs, grid.crs,
+                                        method=method)
+        fns.append(GriddedSeriesForcing(times, loader, t0, hold=hold,
+                                        device=device, dtype=dtype))
+    return sum_forcings(*fns) if len(fns) > 1 else fns[0]
 
 
 def initial_state_from_ef5(q_grid, sm_grid, dem, dx, dy,
