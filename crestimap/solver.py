@@ -309,7 +309,8 @@ class SWESolver:
                 if 1e-9 < nc < dt:
                     dt = nc  # land exactly on the forcing switch
             if checkpoint_every > 0 and h.requires_grad:
-                h, qx, qy, _ = torch.utils.checkpoint.checkpoint(
+                from torch.utils.checkpoint import checkpoint as _ckpt
+                h, qx, qy, _ = _ckpt(
                     lambda a, b, c: self.step(a, b, c, dt=dt, rain=rain),
                     h, qx, qy, use_reentrant=False)
             else:

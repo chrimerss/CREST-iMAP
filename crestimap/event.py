@@ -1,46 +1,159 @@
-"""Event-triggered simulation configuration for the CREST-AI coupling.
+"""Event-triggered 2-D inundation simulation for the CREST-AI coupling.
 
-Trigger flow (implemented on the CREST-AI dashboard side):
+Trigger flow (CREST-AI side, hf_data/eventsim.py):
 
- 1. The hourly nowcast heatmap flags points at "flood" warning level.
- 2. Flagged points are grouped by basin (HydroBASINS / EF5 facc walk);
-    the simulation domain is the basin polygon's bbox at DEM resolution
-    (<= 10 m 3DEP where staged), the simulation window runs from
-    `spinup_hours` before t0 through the nowcast horizon.
- 3. CREST-AI runs EF5/CREST for that window and exports
-      - 2-D Q and SM grids at window start  -> initial conditions
-      - surface + subsurface runoff grids   -> lateral-inflow forcing
- 4. `run_event` integrates the shallow-water solver and writes depth /
-    max-depth rasters back to the dashboard (same frame pipeline as the
-    2-D hindcast maps).
+ 1. The hourly nowcast risk layer flags gauges at tier 3 ("flood": next-6-h
+    AI peak >= Q5); hotspot clusters pick the trigger gauges.
+ 2. The event domain is the triggered basin's bbox; EF5 runs the window
+    [t0 - hindcast, t0 + horizon] in nowcast mode (upstream obs + DI-LSTM
+    injection) with output_grids=streamflow|runoff|subrunoff.
+ 3. run_event() below: 3DEP DEM (fetched on demand, no HF archive),
+    EF5 runoff grids as lateral inflow, channel pre-wetting from the 2-D Q
+    grid, well-balanced solver integration, compact depth frames out.
+ 4. The caller publishes cfg.out_dir as ONE batched commit (eventstore).
 """
 from __future__ import annotations
 
 import dataclasses
 import datetime
+import json
+import os
 
 
 @dataclasses.dataclass
 class EventConfig:
-    basin_id: str                       # HydroBASINS id or gauge/vp id that triggered
+    event_id: str                       # e.g. "2026081018_07332500"
     bbox: tuple                         # (w, s, e, n) lon/lat
-    t_start: datetime.datetime          # includes spin-up
-    t_end: datetime.datetime            # nowcast horizon
-    dem_path: str                       # >=10 m DEM COG clipped to bbox
-    runoff_surface: object = None       # GriddedSeriesForcing
-    runoff_subsurface: object = None    # GriddedSeriesForcing
-    q_init_grid: object = None          # EF5 2-D Q at t_start
-    sm_init_grid: object = None         # EF5 2-D SM at t_start
-    manning_path: str = None            # roughness raster (landcover-derived)
-    trigger_level: str = "flood"        # nowcast warning level that fired
-    output_every_s: float = 900.0       # depth-raster cadence
-    device: str = "cpu"                 # "cuda" on the GPU Space
+    t0: datetime.datetime               # nowcast issue time (UTC)
+    t_end: datetime.datetime            # nowcast horizon end
+    ef5_output_dir: str                 # q./runoff./subrunoff. GeoTIFF stacks
+    out_dir: str                        # local results dir (published as one commit)
+    model: str = "crest"                # EF5 output-file naming
+    sim_start: datetime.datetime = None # default t0 - 6 h (channel fill-in)
+    dem_path: str = None                # pre-clipped DEM; if None fetch 3DEP
+    dem_res: str = "1"                  # "1"=1" (~30 m, CPU), "13"=1/3" (~10 m, GPU)
+    dem_cache: str = "dem_cache"
+    max_cells: int = 400_000            # CPU-feasible ceiling; raise on GPU
+    n_manning: float = 0.05
+    q_channel_min: float = 5.0          # m3/s: EF5 cells >= this pre-wet as channel
+    output_every_s: float = 900.0       # depth-frame cadence
+    trigger: dict = None                # provenance: gauge id / tier / hotspot
+    device: str = "cpu"
+    progress: object = None             # optional callable(str)
 
 
-def run_event(cfg: EventConfig):
-    """Placeholder for the CREST-AI wiring milestone: load DEM + Manning,
-    build forcing via crestimap.forcing, integrate SWESolver, emit depth
-    and max-depth rasters at cfg.output_every_s cadence."""
-    raise NotImplementedError(
-        "run_event lands with the CREST-AI integration milestone; "
-        "see docs/DESIGN_V2.md")
+def run_event(cfg: EventConfig) -> dict:
+    """Run the hydrodynamic event simulation; returns the manifest dict.
+
+    Writes to cfg.out_dir: depth_<YYYYMMDDHHMM>.tif frames (uint16 cm,
+    deflate), maxdepth.tif, dem.tif (clipped, for reproducibility) and
+    manifest.json.
+    """
+    import numpy as np
+    import torch
+    from . import dem as demmod
+    from . import io as iomod
+    from .forcing import (SolverGrid, ef5_forcing, initial_state_from_ef5,
+                          parse_ef5_dir, regrid_to_solver)
+    from .solver import SWESolver
+
+    say = cfg.progress or (lambda s: None)
+    os.makedirs(cfg.out_dir, exist_ok=True)
+    dtype = torch.float32
+
+    # ---- terrain -------------------------------------------------------- #
+    if cfg.dem_path:
+        grid = SolverGrid.from_dem(cfg.dem_path, dtype=dtype, device=cfg.device)
+    else:
+        say(f"fetching 3DEP DEM (res {cfg.dem_res}) for {cfg.bbox}")
+        z, tr, crs = demmod.load_dem(cfg.bbox, cfg.dem_res, cfg.dem_cache,
+                                     cfg.max_cells)
+        grid = SolverGrid.from_array(z, tr, crs, dtype=dtype, device=cfg.device)
+    ny, nx = grid.z.shape
+    say(f"solver grid {ny}x{nx} ({ny * nx / 1e3:.0f}k cells, "
+        f"dx~{grid.dx:.0f} m)")
+    iomod_dem = os.path.join(cfg.out_dir, "dem.tif")
+    _write_dem(iomod_dem, grid)
+
+    # ---- forcing + initial conditions ----------------------------------- #
+    sim_start = cfg.sim_start or (cfg.t0 - datetime.timedelta(hours=6))
+    rain = ef5_forcing(cfg.ef5_output_dir, grid, sim_start, model=cfg.model,
+                       dtype=dtype, device=cfg.device)
+    h0 = torch.zeros_like(grid.z)
+    qx0 = torch.zeros_like(grid.z)
+    qy0 = torch.zeros_like(grid.z)
+    qs = parse_ef5_dir(cfg.ef5_output_dir, "q", cfg.model)
+    if qs:
+        import rasterio
+        t_near, path = min(qs, key=lambda tp: abs((tp[0] - sim_start)
+                                                  .total_seconds()))
+        with rasterio.open(path) as ds:
+            src = ds.read(1).astype(float)
+            if ds.nodata is not None:
+                src = np.where(src == ds.nodata, 0.0, src)
+            qg = regrid_to_solver(np.clip(src, 0, None), ds.transform,
+                                  (ny, nx), grid.transform, ds.crs, grid.crs)
+        h0, qx0, qy0 = initial_state_from_ef5(qg, None, grid.z, grid.dx, grid.dy)
+        h0 = h0.to(dtype=dtype, device=cfg.device)
+        h0 = torch.where(torch.as_tensor(qg, device=cfg.device) >=
+                         cfg.q_channel_min, h0, torch.zeros_like(h0))
+        qx0 = torch.zeros_like(h0)
+        qy0 = torch.zeros_like(h0)
+        say(f"channel pre-wet from q grid @ {t_near:%Y-%m-%d %H:%M} "
+            f"({int((qg >= cfg.q_channel_min).sum())} channel cells)")
+
+    # ---- integrate ------------------------------------------------------ #
+    solver = SWESolver(grid.z, dx=grid.dx, dy=grid.dy, n_manning=cfg.n_manning,
+                       order=2, bc="open")
+    t_total = (cfg.t_end - sim_start).total_seconds()
+    maxdepth = h0.clone()
+    frames = []
+    state = {"next": cfg.output_every_s}
+
+    def cb(t, h, qx, qy):
+        nonlocal maxdepth
+        maxdepth = torch.maximum(maxdepth, h)
+        if t + 1e-6 >= state["next"] or t >= t_total - 1e-6:
+            when = sim_start + datetime.timedelta(seconds=round(t))
+            fname = f"depth_{when:%Y%m%d%H%M}.tif"
+            iomod.write_depth(os.path.join(cfg.out_dir, fname),
+                              h.detach().cpu().numpy(), grid.transform, grid.crs)
+            frames.append({"t": when.strftime("%Y-%m-%dT%H:%MZ"), "file": fname})
+            say(f"frame {fname} (sim t={t / 3600:.2f} h)")
+            while state["next"] <= t + 1e-6:
+                state["next"] += cfg.output_every_s
+
+    say(f"integrating {t_total / 3600:.1f} h "
+        f"({sim_start:%m-%d %H:%M} -> {cfg.t_end:%m-%d %H:%M} UTC)")
+    solver.run(h0, qx0, qy0, t_end=t_total, rain_fn=rain, callback=cb)
+
+    iomod.write_depth(os.path.join(cfg.out_dir, "maxdepth.tif"),
+                      maxdepth.detach().cpu().numpy(), grid.transform, grid.crs)
+    manifest = {
+        "event_id": cfg.event_id, "bbox": list(cfg.bbox),
+        "t0": cfg.t0.strftime("%Y-%m-%dT%H:%MZ"),
+        "sim_start": sim_start.strftime("%Y-%m-%dT%H:%MZ"),
+        "t_end": cfg.t_end.strftime("%Y-%m-%dT%H:%MZ"),
+        "model": cfg.model, "trigger": cfg.trigger,
+        "grid": {"ny": ny, "nx": nx, "dx_m": round(grid.dx, 2),
+                 "dy_m": round(grid.dy, 2),
+                 "transform": list(grid.transform)[:6],
+                 "crs": str(grid.crs) if grid.crs else None},
+        "n_manning": cfg.n_manning, "frames": frames,
+        "maxdepth": "maxdepth.tif", "dem": "dem.tif",
+        "generated": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+    }
+    with open(os.path.join(cfg.out_dir, "manifest.json"), "w") as fp:
+        json.dump(manifest, fp)
+    say("event simulation complete")
+    return manifest
+
+
+def _write_dem(path, grid):
+    import rasterio
+    z = grid.z.detach().cpu().numpy().astype("float32")
+    with rasterio.open(path, "w", driver="GTiff", height=z.shape[0],
+                       width=z.shape[1], count=1, dtype="float32",
+                       crs=grid.crs, transform=grid.transform,
+                       compress="deflate", predictor=3, tiled=True) as ds:
+        ds.write(z, 1)

@@ -14,6 +14,8 @@ differentiable (autograd calibration of Manning n, bathymetry, forcing).
 """
 from .solver import SWESolver, desing_velocity, minmod
 from .analytic import stoker_dambreak
+from .event import EventConfig, run_event
 
 __version__ = "2.0.0.dev0"
-__all__ = ["SWESolver", "desing_velocity", "minmod", "stoker_dambreak"]
+__all__ = ["SWESolver", "desing_velocity", "minmod", "stoker_dambreak",
+           "EventConfig", "run_event"]

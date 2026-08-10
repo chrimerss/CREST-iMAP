@@ -152,6 +152,20 @@ class SolverGrid:
         self.dy = dy
 
     @classmethod
+    def from_array(cls, z_np, transform, crs, dtype=None, device=None):
+        import math
+        geographic = crs is None or getattr(crs, "is_geographic", True)
+        if geographic:
+            lat = transform.f + transform.e * z_np.shape[0] / 2.0
+            dy = abs(transform.e) * _M_PER_DEG_LAT
+            dx = abs(transform.a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
+        else:
+            dx, dy = abs(transform.a), abs(transform.e)
+        z = torch.as_tensor(np.asarray(z_np, dtype=float),
+                            dtype=dtype or torch.get_default_dtype(), device=device)
+        return cls(z, transform, crs, dx, dy)
+
+    @classmethod
     def from_dem(cls, dem_path, dtype=None, device=None, nodata_fill=None):
         import math
         import rasterio
