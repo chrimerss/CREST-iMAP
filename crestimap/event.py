@@ -112,9 +112,19 @@ def run_event(cfg: EventConfig) -> dict:
         nudge = EF5ChannelStage(cfg.ef5_output_dir, grid, sim_start,
                                 model=cfg.model, q_min=cfg.q_channel_min,
                                 dtype=dtype, device=cfg.device)
+        # diagnose the raw EF5 q grid before trusting the coupling
+        import rasterio as _rio
+        _, qp = nudge.series[nudge._index(0.0)]
+        with _rio.open(qp) as ds:
+            qsrc = ds.read(1).astype(float)
+            if ds.nodata is not None:
+                qsrc = np.where(qsrc == ds.nodata, np.nan, qsrc)
+        say(f"q grid {os.path.basename(qp)}: src max {np.nanmax(qsrc):.2f} m3/s, "
+            f"src cells>= {cfg.q_channel_min}: {int(np.nansum(qsrc >= cfg.q_channel_min))}, "
+            f"shape {qsrc.shape}")
         st = nudge.stats(0.0)
-        say(f"channel coupling: {st['channel_cells']} channel cells, "
-            f"max stage {st['max_stage_m']:.2f} m at sim start")
+        say(f"channel coupling: {st['channel_cells']} channel cells on solver "
+            f"grid, max stage {st['max_stage_m']:.2f} m at sim start")
     except Exception as e:
         say(f"channel coupling unavailable ({type(e).__name__}: {e})")
 
