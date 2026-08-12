@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = ["torch>=2.0", "numpy"]
 
 [project.optional-dependencies]
-geo = ["rasterio"]
+geo = ["rasterio", "requests"]
 test = ["pytest"]
 
 [tool.setuptools]

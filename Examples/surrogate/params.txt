@@ -1,5 +1,0 @@
-stage 0 0.1
-friction 0 1
-SM 0 0.5
-B 0 1.5
-IM 0 1

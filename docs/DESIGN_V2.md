@@ -62,5 +62,5 @@ Next validation tier: UK EA benchmark cases, then Hurricane Harvey
 ## Repository layout
 
 - `crestimap/` — v2 package (Python 3, PyTorch).
-- `cresthh/` — v1.x legacy (Python 2 + vendored ANUGA), kept for
-  reference; not imported by v2.
+- v1.x legacy (Python 2 + vendored ANUGA, `cresthh/` etc.) was removed
+  from this branch 2026-08-12; it remains unchanged on `master`.

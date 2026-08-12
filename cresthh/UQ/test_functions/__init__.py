@@ -1,1 +1,0 @@
-__all__ = ["Sobol_G", "Ishigami", "SAC", "XinAnJiang", "functn"]

@@ -1,8 +1,5 @@
+__pycache__/
+*.pyc
+*.egg-info/
 *.tif
-*.sww
-*.asc
-*.msh
-*.shp
-Examples/visualization/*
-*.zip
-Examples/*
+dem_cache/

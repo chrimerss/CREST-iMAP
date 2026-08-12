@@ -1,129 +1,107 @@
-# CREST-iMAP v2 (this fork - in development)
+# CREST-iMAP v2
 
-**Python 3 + PyTorch rewrite on branch `v2`.** The hydrodynamic core is a
-differentiable, well-balanced finite-volume shallow-water solver (Audusse
-et al. 2004 hydrostatic reconstruction + HLL, MUSCL 2nd order) replacing
-the vendored ANUGA; the CREST water balance is stripped in favor of
-initial conditions and runoff forcing supplied by CREST/EF5 (CREST-AI).
-See [`crestimap/`](crestimap) and [`docs/DESIGN_V2.md`](docs/DESIGN_V2.md).
-Validated: exact C-property, Stoker dam break, mass balance, autograd-vs-FD
-gradients (`crestimap/tests`). v1.x documentation follows below.
+**Coupled Routing Excess STorage inundation MApping and Prediction —
+version 2.** A differentiable, well-balanced 2-D shallow-water flood model
+written in PyTorch, the hydrodynamic engine of the
+[CREST-AI](https://github.com/mchen15ouedu/CREST_AI) real-time flood
+dashboard.
 
----
+v2 is a ground-up rewrite of the hydrodynamic core. The vendored ANUGA
+solver of v1.x is replaced by a modern finite-volume scheme, and the CREST
+water balance is intentionally not included: in deployment the CREST/EF5
+hydrologic model runs upstream and supplies initial conditions (2-D
+discharge and soil-moisture grids) and forcing (surface + subsurface
+runoff grids) to this module. CREST-iMAP v1.x (Python 2.7 + ANUGA) is
+preserved unchanged on the `master` branch.
 
-[![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)](https://www.python.org/downloads/release/python-275/)  
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1wTq3vaiQwJeLoqe4YMnyzV4ZQ6pvOez1?usp=sharing)  (deprecated)  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrimerss/python2-binder/HEAD) (recommended)  
-[![Paper](https://img.shields.io/badge/-10.1016%2Fj.envsoft.2021.105051-blue)](https://www.sciencedirect.com/science/article/pii/S1364815221000943)  
+## Numerical scheme
 
-# CREST-iMAP
+- Regular DEM-aligned raster grid, cell-centered states (h, hu, hv).
+- Hydrostatic reconstruction of Audusse et al. (2004): well-balanced
+  (exact lake-at-rest C-property, machine precision) and
+  positivity-preserving, at first and second order.
+- HLL flux; second order via MUSCL/minmod reconstruction in
+  (h, eta, u, v).
+- SSP-RK2 time stepping with adaptive CFL timestep.
+- Point-implicit Manning friction (closed form, differentiable).
+- Desingularized wet/dry velocities (Kurganov & Petrova 2007) — stable
+  fronts, no NaN gradients.
+- Everything is torch tensor ops: the entire simulation is
+  **differentiable end to end** w.r.t. Manning n, bed elevation, initial
+  conditions, and forcing (autograd calibration), and runs unchanged on
+  CPU or GPU.
 
-## Coupled Routing Excess STorage inundation MApping and Prediction
-<p align="center">
-<img src="img/Harvey_d01.gif">
-</p>
-<img src="img/model_structure.png">
+Validated in `crestimap/tests`: exact C-property (wet and dry, both
+orders), Stoker dam-break analytic solution, mass conservation to 1e-9,
+autograd gradients vs finite differences, and an end-to-end
+EF5-grids-to-solver volume balance.
 
-# Introduction
+## Installation
 
-**Model Framework:**
-
-<img src="img/model_framework.png">
-
-The CRESTH/H model framework integrates hydrologic model (CREST) and hydrodynamic model (anuga) to target heavy rainfall-induced flash flood.
-
-Taking advantage of two models, CRESTHH is capable of simulating hydrologic streamflows, flood extend, flood depth, pushing the territory of traditional 1D streamflow simulation to 2D (extent) and 3D (depth).
-
-## Powerful features
-
-1. __Flash flood inundation__
-
-2. __Hydrologic simulation__
-
-3. __Coastal flooding (Tsunami, wave dynamics)
-Impact of hydraulic structures (e.g., dam breaks)__
-
-4. __A set of uncertainty/sensitivity analysis__
-
-5. __Easy to use (can setup in Jupyter notebook)__
-
-6. __Parallel computing__
-
-7. __Efficiency (bottlenecks in C)__
-
-8. __Flexible/Optimal mesh design__
-
-# Installation
-
-## Prerequisites
-
-1. Python 2.7
-2. pypar
-3. GDAL>=2.2.3
-4. mesher
-5. Cython>=0.25
-
-This package is not migrated to python 3 yet. We recommend to use virtualenv or conda environment to create a standalone environment to install this package.
-
-```
-pip install -r requirements.txt
-```
-## Manual installation
+Python >= 3.10, torch >= 2.0.
 
 ```bash
-virtualenv env -p=python2.7
-source env/bin/activate
-cd pypar & python setup.py install
-cd cresthh/crest & python setup.py install
-pip install proj affine matplotlib pandas scipy netCDF4==1.5.3 geopandas
-
+pip install -e ".[geo]"      # rasterio + requests for DEM/forcing I/O
+pip install -e ".[geo,test]" # + pytest
 ```
 
-Using mamba and conda (recommended)
-```
-mamba create -n python2 python=2.7
-mamba env update -n python2 -f environment.yml
-```
+## Quick start
 
-## Cloud simulation
-
-Please click "Open in Google Colab" badge on top to utlize Google Colab online computing system (only at single core).
-
-# Updates
-
-- [x] 2020.06.17 Add options to create longitudinal profile and animation
-
-<img src="img/channel.gif">
-
-- [x] 2020.06.17 Add options to create soil moisture animation
-
-<img src="img/soilmoisture.gif">
-
-- [x] 2020.06.23 Created interface to read .mesh file from mesher. Therefore, it supports creating mesh by considering the heterogeneity of the topography/river networks and so forth.
-
-- [x] 2020.11.12 Pre-simulation for OKC flooding
-
-<img src="img/OKC_flooding.gif">
-
-- [x] 2021.02.07 CREST-iMAP V1.1: support reinfiltration
-e.g.  
 ```python
-DOMAIN.set_reinfiltratin(True)
+import torch
+from crestimap import SWESolver
+
+ny, nx = 200, 200
+z = torch.zeros(ny, nx)                        # bed elevation [m]
+h = torch.zeros(ny, nx); h[:, :nx // 2] = 1.0  # dam break
+solver = SWESolver(z, dx=10.0, dy=10.0, n_manning=0.03, order=2, bc="wall")
+h, qx, qy = solver.run(h, torch.zeros_like(h), torch.zeros_like(h),
+                       t_end=300.0)
 ```
 
-The difference between turn on reinfiltration (left) and turn off reinfiltration (right) is obvious:
+Make `z` or `n_manning` require grad and backpropagate through `run()` to
+calibrate them against observed depths.
 
-<img src="img/on_reinfiltration.png" width="50%"><img src="img/off_reinfiltration.png" width="50%">
+## Package layout
 
-# TODO
+| Module | Purpose |
+|---|---|
+| `crestimap/solver.py` | the well-balanced SWE solver (`SWESolver`) |
+| `crestimap/forcing.py` | EF5/CREST coupling: runoff-grid forcing, initial state from routed discharge, channel-stage coupling |
+| `crestimap/dem.py` | on-demand USGS 3DEP DEM tiles (1" ~30 m, 1/3" ~10 m), local cache |
+| `crestimap/event.py` | `EventConfig` / `run_event`: one flood event end to end (DEM, forcing, solve, depth frames, manifest) |
+| `crestimap/io.py` | compact uint16-centimeter GeoTIFF depth frames |
+| `crestimap/analytic.py` | analytic references (Stoker dam break) |
+| `crestimap/tests/` | validation suite (`pytest crestimap/tests`) |
 
-- [ ] Add support for canopy interception
-- [ ] Create Docker file to better minimize the installation process
-- [ ] Option to provide land cover data and infer friction
-- [ ] Complete examples for each feature
+## Deployment in CREST-AI
 
-# Citation
+The CREST-AI dashboard triggers an event when its AI nowcast flags a
+flood at a USGS gauge that observations confirm: EF5 runs the basin in
+nowcast mode with gridded runoff output, then `run_event` simulates 2-D
+inundation at the DEM's native resolution and publishes depth frames.
+Design and operations documents in [`docs/`](docs):
 
-Li, Z., Chen, M., Gao, S., Luo, X., Gourley, J., Kirstetter, P., Yang, T., Kolar, R., McGovern, A., Wen, Y., Rao, B., Yami, T., Hong, Y., 2021. CREST-iMAP v1.0: A fully coupled hydrologic-hydraulic modeling framework dedicated to flood inundation mapping and prediction, Environmental Modelling and Software, 141, 105051.
+| Document | Contents |
+|---|---|
+| [`DESIGN_V2.md`](docs/DESIGN_V2.md) | solver design and v1 -> v2 rationale |
+| [`DESIGN_V27_PARALLEL.md`](docs/DESIGN_V27_PARALLEL.md) | full-basin GPU/parallel architecture: job queue, single-GPU worker, multi-GPU subbasin decomposition with ghost-cell halo exchange, degradation ladder |
+| [`P1_WORKER_BRIEF.md`](docs/P1_WORKER_BRIEF.md) | executable contract for the HPC GPU event worker |
 
-Li, Z., Chen, M., Gao, S., Wen, Y., Gourley, J. J., Yang, T., Kolar, R., & Hong, Y. (2022). Can re-infiltration process be ignored for flood inundation mapping and prediction during extreme storms? A case study in Texas Gulf Coast region. Environmental Modelling & Software, 155, 105450. https://doi.org/10.1016/j.envsoft.2022.105450
+## Citation
+
+CREST-iMAP v2 (this branch) has no dedicated paper yet; please cite the
+original CREST-iMAP papers:
+
+> Li, Z., Chen, M., Gao, S., Luo, X., Gourley, J., Kirstetter, P., Yang,
+> T., Kolar, R., McGovern, A., Wen, Y., Rao, B., Yami, T., Hong, Y., 2021.
+> CREST-iMAP v1.0: A fully coupled hydrologic-hydraulic modeling framework
+> dedicated to flood inundation mapping and prediction. Environmental
+> Modelling and Software, 141, 105051.
+> https://doi.org/10.1016/j.envsoft.2021.105051
+
+> Li, Z., Chen, M., Gao, S., Wen, Y., Gourley, J. J., Yang, T., Kolar, R.,
+> & Hong, Y., 2022. Can re-infiltration process be ignored for flood
+> inundation mapping and prediction during extreme storms? A case study in
+> Texas Gulf Coast region. Environmental Modelling & Software, 155,
+> 105450. https://doi.org/10.1016/j.envsoft.2022.105450
