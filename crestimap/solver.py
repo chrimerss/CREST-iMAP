@@ -286,7 +286,7 @@ class SWESolver:
         return hn, qxn, qyn, dt
 
     def run(self, h, qx, qy, t_end, rain_fn=None, t0=0.0, callback=None,
-            checkpoint_every=0, nudge_fn=None):
+            checkpoint_every=0, nudge_fn=None, dt_every=1):
         """Integrate to t_end.
 
         rain_fn : callable t -> (ny, nx) tensor of lateral inflow [m/s]
@@ -297,13 +297,24 @@ class SWESolver:
                   backpropagating through long simulations.
         nudge_fn : callable (t, h) -> h applied after each step — e.g. the
                   EF5ChannelStage floor that couples routed channel flow in.
+        dt_every : recompute the CFL dt only every `dt_every` steps and hold
+                  0.9x the last computed value in between. compute_dt ends
+                  in a device->host sync (`.item()`); at GPU throughput that
+                  sync dominates the step, so holding the dt between
+                  recomputes trades <=10% step size for the sync. 1 (default)
+                  = exact per-step CFL, bit-identical to the old behavior.
         """
         t = t0
         nstep = 0
+        held_dt = None
         next_change = getattr(rain_fn, "next_change", None)
         while t < t_end - 1e-12:
             rain = rain_fn(t) if rain_fn is not None else None
-            dt = self.compute_dt(h, qx, qy)
+            if dt_every <= 1 or held_dt is None or nstep % dt_every == 0:
+                dt = self.compute_dt(h, qx, qy)
+                held_dt = 0.9 * dt
+            else:
+                dt = held_dt
             if t + dt > t_end:
                 dt = t_end - t
             if next_change is not None:

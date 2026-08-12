@@ -39,6 +39,7 @@ class EventConfig:
     output_every_s: float = 900.0       # depth-frame cadence
     trigger: dict = None                # provenance: gauge id / tier / hotspot
     device: str = "cpu"
+    dt_every: int = 1                   # CFL recompute cadence (GPU: ~10)
     progress: object = None             # optional callable(str)
 
 
@@ -154,7 +155,7 @@ def run_event(cfg: EventConfig) -> dict:
     if nudge is not None:
         h0 = nudge(0.0, h0)               # channel water present from t=0
     solver.run(h0, qx0, qy0, t_end=t_total, rain_fn=rain, callback=cb,
-               nudge_fn=nudge)
+               nudge_fn=nudge, dt_every=cfg.dt_every)
 
     iomod.write_depth(os.path.join(cfg.out_dir, "maxdepth.tif"),
                       maxdepth.detach().cpu().numpy(), grid.transform, grid.crs)
