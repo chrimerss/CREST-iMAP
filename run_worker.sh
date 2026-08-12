@@ -19,9 +19,11 @@ export WORKER_WORK_ROOT=${WORKER_WORK_ROOT:-$SCRATCH/crest_worker/jobs}
 # ladder). RTX 4500 Ada 24 GB: ~50 M cells leaves solver headroom; raise on
 # an 80 GB A100 to the brief's 100 M default.
 export EVENT_MAX_CELLS_GPU=${EVENT_MAX_CELLS_GPU:-50000000}
-# CFL recompute cadence: hold 0.9x dt between recomputes to avoid the
-# per-step device->host sync (validated: gates 1-4 pass at 10).
-export EVENT_DT_EVERY=${EVENT_DT_EVERY:-10}
+# CFL recompute cadence: dt_every>1 holds 0.9x dt between recomputes to skip
+# the per-step device->host sync, but at the window replay k=10 drifted
+# ~2.5 cm mean depth from k=1 (above the 2 cm equivalence bar) for only ~7%
+# wall-clock gain, so the validated default is 1.
+export EVENT_DT_EVERY=${EVENT_DT_EVERY:-1}
 
 nohup python -u -m crestimap.worker "$@" > worker.log 2>&1 &
 echo "worker started, PID $!  —  watch with:  tail -f worker.log"
