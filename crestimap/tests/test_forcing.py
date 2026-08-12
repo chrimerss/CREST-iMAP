@@ -6,6 +6,7 @@ the solver runs on the 1/3 arc-second (~10 m) DEM grid — a 9x9 nesting.
 """
 import datetime
 import math
+import os
 import pathlib
 import sys
 import tempfile
@@ -19,6 +20,10 @@ from crestimap.forcing import (GriddedSeriesForcing, SolverGrid, ef5_forcing,
                                parse_ef5_dir, regrid_to_solver)
 
 torch.set_default_dtype(torch.float64)
+# CRESTIMAP_TEST_DEVICE=cuda runs the whole suite on the GPU (P1 gate 1)
+DEVICE = os.environ.get("CRESTIMAP_TEST_DEVICE", "cpu")
+if DEVICE != "cpu":
+    torch.set_default_device(DEVICE)
 
 rasterio = None
 try:
@@ -90,7 +95,7 @@ def test_containing_cell_mass_conservation():
                    math.cos(math.radians(N - SEC3 * NYC / 2))) / (grid.dx * 9) < 1e-3
         fn = ef5_forcing(d, grid, T0, model="crest")
         for hh in range(3):
-            fine = fn(hh * 3600.0 + 1800.0).numpy()  # mid-hour -> that hour's grid
+            fine = fn(hh * 3600.0 + 1800.0).cpu().numpy()  # mid-hour -> that hour's grid
             coarse = sum(np.clip(np.where(g[hh] == -9999.0, 0.0, g[hh]),
                                  0, None).astype(np.float64)
                          for g in grids.values())

@@ -11,6 +11,7 @@ Run:  python -m pytest crestimap/tests -q     (or run this file directly)
    match central finite differences.
 """
 import math
+import os
 import sys
 import pathlib
 
@@ -21,6 +22,10 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
 from crestimap import SWESolver, stoker_dambreak
 
 torch.set_default_dtype(torch.float64)
+# CRESTIMAP_TEST_DEVICE=cuda runs the whole suite on the GPU (P1 gate 1)
+DEVICE = os.environ.get("CRESTIMAP_TEST_DEVICE", "cpu")
+if DEVICE != "cpu":
+    torch.set_default_device(DEVICE)
 
 
 def _bumpy_bed(ny, nx, amp=0.3):
@@ -70,7 +75,7 @@ def test_stoker_dambreak():
     t_end = 1.5
     h2, qx2, _ = s.run(h, torch.zeros_like(h), torch.zeros_like(h), t_end=t_end)
     href, uref = stoker_dambreak(x, t_end, hl, hr)
-    hsim = h2[ny // 2].numpy()
+    hsim = h2[ny // 2].cpu().numpy()
     rel_l1 = np.abs(hsim - href).mean() / href.mean()
     # middle-state depth (sample well inside the plateau)
     plateau = (x > 1.0) & (x < 3.0)

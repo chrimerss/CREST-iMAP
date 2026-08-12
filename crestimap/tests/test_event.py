@@ -3,6 +3,7 @@ valley DEM + hourly EF5-format q/runoff/subrunoff grids -> run_event ->
 depth frames, maxdepth, manifest. Also unit-checks 3DEP tile naming."""
 import datetime
 import json
+import os
 import pathlib
 import sys
 import tempfile
@@ -14,6 +15,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
 from crestimap import EventConfig, run_event
 from crestimap.dem import tile_name, tiles_for_bbox
 from crestimap.io import read_depth
+
+# CRESTIMAP_TEST_DEVICE=cuda exercises run_event's production device path
+DEVICE = os.environ.get("CRESTIMAP_TEST_DEVICE", "cpu")
 
 rasterio = None
 try:
@@ -81,7 +85,7 @@ def test_run_event_end_to_end():
             t0=T0, t_end=T0 + datetime.timedelta(hours=1),
             ef5_output_dir=str(d), out_dir=str(out), model="crest",
             sim_start=T0 - datetime.timedelta(hours=1),
-            dem_path=dem_path, output_every_s=900.0)
+            dem_path=dem_path, output_every_s=900.0, device=DEVICE)
         log = []
         cfg.progress = log.append
         man = run_event(cfg)
