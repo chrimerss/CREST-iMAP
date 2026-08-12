@@ -116,19 +116,62 @@ before any compute. Therefore:
 - The T1 fallback keeps the system autonomous when the HPC is down,
   drained, or in maintenance — no operational dependency on the worker.
 
-## 7. Build phases
+## 7. Latency risk & the degradation ladder (safeguards)
+
+The HPC is a shared, single-node resource that WILL be down sometimes
+(maintenance, scratch purges, preemption, the GPU busy with DI-LSTM
+training, token expiry). The system is designed so no HPC failure mode can
+delay an event by more than minutes, and none can lose an event:
+
+- **The Space never blocks on any worker.** `EVENT_QUEUE_MODE` is
+  `off` / `shadow` (enqueue + still solve locally) / `on` (queue-first with
+  bounded waits). All waits are capped: `EVENT_CLAIM_WAIT_S` (default
+  300 s) for a claim, `EVENT_RESULT_WAIT_S` (default 2700 s) for the
+  result — and the result wait ABORTS EARLY if the worker's claim
+  heartbeat goes stale, so a worker that dies mid-run costs roughly one
+  heartbeat-staleness window (~10 min), not the full timeout.
+- **Worst-case timelines vs today** (mode `on`): HPC completely absent →
+  event map arrives 5 min later than today via the CPU window; worker
+  crashes mid-run → ~10-15 min later; worker healthy → full-basin native
+  result typically FASTER than the CPU window finishes.
+- **The ladder of claimants** (the protocol in Sec. 6 is worker-agnostic —
+  a claimant is anything that commits a `.claim` and publishes results):
+  1. **HPC single GPU** (primary): full-basin 30 m in minutes, 10 m in
+     1-3 h.
+  2. **ZeroGPU worker Space** (P1.5 backup): same worker code on an HF
+     ZeroGPU Space, integration chunked into `@spaces.GPU` slices
+     (~60-120 s each) with (h, qx, qy) held in Space RAM between slices.
+     Covers full-basin 30 m in ~10-30 wall-clock min (slice queuing under
+     load); 10 m runs exceed ZeroGPU quotas and remain HPC-only. It only
+     claims jobs the HPC has left unclaimed for a grace period, so the
+     two never race.
+  3. **CPU window (T1)** — the unconditional floor: today's V25 product,
+     windowed native-resolution, needs nothing but the Space itself.
+- **Capacity honesty**: a worker must NOT claim a job whose native-res
+  cell count exceeds what it can hold (resolution is never coarsened —
+  standing directive). An oversized/unclaimable job simply falls through
+  the ladder to the CPU window; nothing hangs, nothing degrades silently.
+- **Queue hygiene**: every enqueue sweeps bundles older than 48 h, and
+  failed jobs are converted to `<id>.failed.json` so the queue never
+  wedges on a poison job.
+
+## 8. Build phases
 
 - **P1 — HPC single-GPU worker** (biggest ROI, no decomposition):
   queue protocol + worker daemon (systemd/cron on the login-adjacent
   node, same HF-token pattern as the DI-LSTM training) + forcing-bundle
   loader in `crestimap`. Full-basin 30 m for every event; 10 m on demand.
+  Executable contract: `docs/P1_WORKER_BRIEF.md`.
+- **P1.5 — ZeroGPU backup worker**: the same worker loop deployed to a
+  ZeroGPU Space with chunked GPU slices (ladder rung 2 above). Built on
+  the Space side once P1's worker code exists to reuse.
 - **P2 — multi-GPU halo** (only if the node has >1 GPU): partition
   module + `exchange_or_pad()` + allreduce dt; validate C-property, mass,
   and bit-consistency against single-GPU runs.
 - **P3 — runner-Space fleet**: dispatcher assigns queued events to N
   duplicate runner Spaces for concurrent-event bursts.
 
-## 8. Validation gates
+## 9. Validation gates
 
 1. P1 worker reproduces a V25 windowed event (same window/res) within
    float tolerance.
