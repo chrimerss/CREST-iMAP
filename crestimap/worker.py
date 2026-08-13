@@ -87,6 +87,13 @@ class Worker:
         self.ident = f"{socket.gethostname()}:{os.getpid()}"
         self.max_cells = args.max_cells
         self.publish = args.publish
+        # (event_id, queued) pairs already processed this session. With
+        # --no-publish the queue entry is never consumed (the Space owns it),
+        # so without this the same spec would be re-claimed every poll. An
+        # episode re-sim REPLACES the spec with a new `queued` stamp, so
+        # replacements still run. In-memory only: a restart re-runs at most
+        # the latest episode of each queued event, which shadow mode can eat.
+        self.done = set()
         self._hb_stop = None
         sys.path.insert(0, os.path.abspath(args.crest_ai))
         os.makedirs(args.work_root, exist_ok=True)
@@ -163,6 +170,8 @@ class Worker:
             spec = self._read_json(f"{QPREFIX}/{ev}.json")
             if not spec:
                 continue
+            if (ev, spec.get("queued", "")) in self.done:
+                continue                       # this episode already ran
             cells = expected_cells(spec)
             if cells > self.max_cells:
                 _log(f"skip {ev}: {cells / 1e6:.1f} M cells at native "
@@ -268,6 +277,7 @@ class Worker:
             else:
                 _log(f"{ev}: --no-publish — results kept in {cfg.out_dir}")
             self._cleanup_queue(ev, queued, success=True)
+            self.done.add((ev, queued))
             shutil.rmtree(forcing_dir, ignore_errors=True)
             return True
         except Exception as e:
@@ -275,6 +285,7 @@ class Worker:
                 traceback.format_exc().strip().splitlines()[-8:])
             _log(f"{ev}: FAILED — {type(e).__name__}: {e}\n{tb_tail}")
             self._report_failure(ev, queued, e, tb_tail)
+            self.done.add((ev, queued))        # don't retry a poison episode
             return False
         finally:
             hb.set()

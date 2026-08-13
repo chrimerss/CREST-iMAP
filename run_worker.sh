@@ -25,5 +25,9 @@ export EVENT_MAX_CELLS_GPU=${EVENT_MAX_CELLS_GPU:-50000000}
 # wall-clock gain, so the validated default is 1.
 export EVENT_DT_EVERY=${EVENT_DT_EVERY:-1}
 
-nohup python -u -m crestimap.worker "$@" > worker.log 2>&1 &
+# Interpreter with torch/rasterio/huggingface_hub (bare `python` may resolve
+# to a bare base env); override with PYTHON=... if the env moves.
+PYTHON=${PYTHON:-/media/scratch/MengyuChen/conda_envs/nowcast/bin/python}
+
+nohup "$PYTHON" -u -m crestimap.worker "$@" > worker.log 2>&1 &
 echo "worker started, PID $!  —  watch with:  tail -f worker.log"
