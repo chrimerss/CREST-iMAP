@@ -104,6 +104,39 @@ def run_event(cfg: EventConfig) -> dict:
         say(f"channel pre-wet from q grid @ {t_near:%Y-%m-%d %H:%M} "
             f"({int((qg >= cfg.q_channel_min).sum())} channel cells)")
 
+    # warm continuation: the caller may drop the episode's previous depth
+    # field into the forcing dir as `init_depth_<YYYYMMDDHHMM>.tif` (uint16
+    # cm, any grid — regridded here). It is applied ONLY when its valid time
+    # matches this run's sim_start (±90 min): the same bundle serves both a
+    # fresh-slice continuation (times match -> inherit the water) and an
+    # anchored full-window re-solve (times differ -> ignore it; injecting a
+    # later state at the window start would plant future water in the past).
+    # h0 = max(channel pre-wet, previous depth); momentum restarts at rest.
+    import glob as _glob
+    for init_path in _glob.glob(os.path.join(cfg.ef5_output_dir,
+                                             "init_depth_*.tif")):
+        try:
+            ts = os.path.basename(init_path)[11:-4]
+            t_init = datetime.datetime.strptime(ts, "%Y%m%d%H%M")
+        except ValueError:
+            continue
+        if abs((t_init - sim_start).total_seconds()) > 5400:
+            say(f"init_depth @{t_init:%m-%d %H:%M} != sim_start "
+                f"{sim_start:%m-%d %H:%M} — ignored (anchored re-solve)")
+            continue
+        import rasterio
+        with rasterio.open(init_path) as ds:
+            prev = ds.read(1).astype(float) / 100.0          # cm -> m
+            if ds.nodata is not None:
+                prev = np.where(prev == ds.nodata / 100.0, 0.0, prev)
+            prev = regrid_to_solver(np.clip(prev, 0, None), ds.transform,
+                                    (ny, nx), grid.transform, ds.crs,
+                                    grid.crs)
+        prev_t = torch.as_tensor(prev, dtype=dtype, device=cfg.device)
+        h0 = torch.maximum(h0, prev_t)
+        say(f"warm continuation from {os.path.basename(init_path)} "
+            f"({int((prev_t > 0.02).sum())} wet cells carried over)")
+
     # routed-flood coupling: EF5's hourly discharge grids drive the channel
     # stage all through the run (recession events carry their water in the
     # routed network, not the local runoff grids — without this, an event
