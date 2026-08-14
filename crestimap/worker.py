@@ -85,6 +85,8 @@ class Worker:
         self.token = _load_token()
         self.api = HfApi(token=self.token)
         self.ident = f"{socket.gethostname()}:{os.getpid()}"
+        # V30 provenance: publish_event stamps the manifest with this
+        os.environ.setdefault("EVENT_ENGINE_IDENT", f"hpc:{self.ident}")
         self.max_cells = args.max_cells
         self.publish = args.publish
         # (event_id, queued) pairs already processed this session. With
