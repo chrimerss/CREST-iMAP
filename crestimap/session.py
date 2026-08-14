@@ -122,8 +122,13 @@ class EventSession:
                                       grid.crs)
             h0, _, _ = initial_state_from_ef5(qg, None, grid.z, grid.dx,
                                               grid.dy)
-            h0 = torch.where(torch.as_tensor(qg) >= cfg.q_channel_min,
-                             h0.to(torch.float32), torch.zeros_like(grid.z))
+            # pin to the grid's device: an ambient torch default device (e.g.
+            # torch.set_default_device("cuda") in a host app) must not split
+            # this CPU-side setup across devices
+            qg_t = torch.as_tensor(qg).to(grid.z.device)
+            h0 = torch.where(qg_t >= cfg.q_channel_min,
+                             h0.to(torch.float32).to(grid.z.device),
+                             torch.zeros_like(grid.z))
             self.log(f"channel pre-wet from q grid @ {t_near:%Y-%m-%d %H:%M} "
                      f"({int((qg >= cfg.q_channel_min).sum())} channel cells)")
 
@@ -137,7 +142,8 @@ class EventSession:
                 prev = regrid_to_solver(np.clip(prev, 0, None), ds.transform,
                                         (ny, nx), grid.transform, ds.crs,
                                         grid.crs)
-            prev_t = torch.as_tensor(prev, dtype=torch.float32)
+            prev_t = torch.as_tensor(prev,
+                                     dtype=torch.float32).to(grid.z.device)
             h0 = torch.maximum(h0, prev_t)
             self.log(f"session resumed at {t_i:%m-%d %H:%M} from "
                      f"{os.path.basename(p)} "

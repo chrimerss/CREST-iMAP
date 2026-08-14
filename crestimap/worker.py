@@ -278,10 +278,17 @@ class Worker:
                  f"solve+render wall-clock {time.time() - t_wall:.0f} s")
 
             if self.publish:
-                ok = eventstore.publish_event(cfg.out_dir, manifest)
-                _log(f"{ev}: publish {'OK' if ok else 'FAILED'}")
-                if not ok:
-                    raise RuntimeError("publish_event returned False")
+                # standing rule: re-check the spec immediately BEFORE
+                # publishing, not just before consuming — an hourly episode
+                # re-sim may have replaced it while we solved
+                if not self._spec_unchanged(ev, queued):
+                    _log(f"{ev}: spec replaced during solve — NOT "
+                         f"publishing (the fresh bundle re-runs this span)")
+                else:
+                    ok = eventstore.publish_event(cfg.out_dir, manifest)
+                    _log(f"{ev}: publish {'OK' if ok else 'FAILED'}")
+                    if not ok:
+                        raise RuntimeError("publish_event returned False")
             else:
                 _log(f"{ev}: --no-publish — results kept in {cfg.out_dir}")
             self._cleanup_queue(ev, queued, success=True)
@@ -411,10 +418,19 @@ class Worker:
                  f"wall {time.time() - t_wall:.0f} s")
 
             if self.publish:
-                ok = eventstore.publish_event(out_dir, manifest)
-                _log(f"{ev}: publish {'OK' if ok else 'FAILED'}")
-                if not ok:
-                    raise RuntimeError("publish_event returned False")
+                # standing rule: re-check the spec immediately BEFORE
+                # publishing, not just before consuming — an hourly episode
+                # re-sim may have replaced it while we solved (the session
+                # keeps its junction state either way; the fresh bundle is a
+                # normal catch-up next scan)
+                if not self._spec_unchanged(ev, queued):
+                    _log(f"{ev}: spec replaced during visit — NOT "
+                         f"publishing (the fresh bundle re-runs this span)")
+                else:
+                    ok = eventstore.publish_event(out_dir, manifest)
+                    _log(f"{ev}: publish {'OK' if ok else 'FAILED'}")
+                    if not ok:
+                        raise RuntimeError("publish_event returned False")
             else:
                 _log(f"{ev}: --no-publish — results kept in {out_dir}")
             self._cleanup_queue(ev, queued, success=True)
