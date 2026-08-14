@@ -94,6 +94,10 @@ class Worker:
         # replacements still run. In-memory only: a restart re-runs at most
         # the latest episode of each queued event, which shadow mode can eat.
         self.done = set()
+        # P1.6: ev_id -> {"session": EventSession, "root": episode workdir,
+        # "bbox": spec bbox, "visits": int, "last": wall time}. RAM-only —
+        # a restart recovers via the bundle's init_depth (hierarchy level 2).
+        self.sessions = {}
         self._hb_stop = None
         sys.path.insert(0, os.path.abspath(args.crest_ai))
         os.makedirs(args.work_root, exist_ok=True)
@@ -151,14 +155,15 @@ class Worker:
                                 io.BytesIO(body.encode()))],
             f"claim {ev} [{self.ident}]")
 
-    def scan(self) -> dict | None:
-        """Oldest claimable job spec, or None. Applies the capacity check
-        BEFORE claiming (never coarsen — standing directive)."""
+    def scan_candidates(self) -> list[dict]:
+        """ALL claimable job specs, oldest queued first. Applies the
+        capacity check BEFORE claiming (never coarsen — standing
+        directive)."""
         try:
             files = self.api.list_repo_files(self.repo, repo_type="dataset")
         except Exception as e:
             _log(f"list_repo_files failed: {type(e).__name__}: {e}")
-            return None
+            return []
         qf = [f for f in files if f.startswith(QPREFIX + "/")]
         ids = sorted({os.path.basename(f)[:-5] for f in qf
                       if f.endswith(".json")
@@ -184,11 +189,12 @@ class Worker:
                         claim.get("worker") != self.ident:
                     continue                   # someone else is on it
             cands.append((spec.get("queued", ""), ev, spec))
-        if not cands:
-            return None
         cands.sort()
-        _, ev, spec = cands[0]
-        return {"id": ev, "spec": spec}
+        return [{"id": ev, "spec": spec} for _, ev, spec in cands]
+
+    def scan(self) -> dict | None:
+        cands = self.scan_candidates()
+        return cands[0] if cands else None
 
     def claim(self, job: dict) -> bool:
         ev, queued = job["id"], job["spec"].get("queued", "")
@@ -329,6 +335,170 @@ class Worker:
         self._commit(ops, f"worker failed {ev}")
 
     # ---------------------------------------------------------------- #
+    # P1.6 resident sessions + cooperative scheduling (--sessions)
+    # ---------------------------------------------------------------- #
+    def process_visit(self, job: dict) -> bool:
+        """One bundle -> one session visit. Known episode: catch up from the
+        held junction state (minutes). New episode: cold/resumed anchored
+        solve, then the session stays resident for the next bundle."""
+        from crestimap import EventConfig
+        from crestimap.session import EventSession
+        from hf_data import eventsim, eventstore   # CREST_AI reuse
+
+        ev = job["id"]
+        spec = job["spec"]
+        queued = spec.get("queued", "")
+        rec = self.sessions.get(ev)
+        if rec and rec["bbox"] != spec["bbox_basin"]:
+            _log(f"{ev}: bbox changed — dropping resident session")
+            shutil.rmtree(rec["root"], ignore_errors=True)
+            self.sessions.pop(ev, None)
+            rec = None
+
+        if rec is None:
+            root = tempfile.mkdtemp(prefix=f"sess_{ev}_",
+                                    dir=self.args.work_root)
+            rec = {"session": None, "root": root,
+                   "bbox": spec["bbox_basin"], "visits": 0,
+                   "last": time.time()}
+        n = rec["visits"] + 1
+        forcing_dir = os.path.join(rec["root"], f"forcing_{n}")
+        out_dir = os.path.join(rec["root"], f"out_{n}")
+        os.makedirs(forcing_dir, exist_ok=True)
+        hb = self._start_heartbeat(ev, queued)
+        t_wall = time.time()
+        try:
+            tar = self._dl(f"{QPREFIX}/{ev}.forcing.tar.gz")
+            if tar is None:
+                raise FileNotFoundError(f"{ev}.forcing.tar.gz gone from queue")
+            with tarfile.open(tar) as tf:
+                tf.extractall(forcing_dir)
+            t0 = datetime.datetime.strptime(spec["t0"], TMIN)
+            t_end = datetime.datetime.strptime(spec["t_end"], TMIN)
+
+            if rec["session"] is None:
+                cfg = EventConfig(
+                    event_id=ev, bbox=tuple(spec["bbox_basin"]),
+                    t0=t0, t_end=t_end,
+                    sim_start=datetime.datetime.strptime(spec["sim_start"],
+                                                         TMIN),
+                    ef5_output_dir=forcing_dir, out_dir=out_dir,
+                    model=spec.get("model", "crest"),
+                    dem_res=str(spec.get("dem_res", "1")),
+                    dem_cache=os.environ["EVENT_DEM_CACHE"],
+                    max_cells=self.max_cells,
+                    trigger=spec.get("trigger"), device=self.args.device,
+                    dt_every=self.args.dt_every,
+                    progress=lambda s: _log(f"{ev}: {s}"))
+                rec["session"] = EventSession(cfg, resume=True)
+            manifest = rec["session"].advance(forcing_dir, out_dir, t0, t_end,
+                                              device=self.args.device)
+
+            # exactly the tail of eventsim.run_one
+            manifest["gauge"] = spec["gauge"]["id"]
+            manifest["hydro"] = spec.get("hydro") or []
+            manifest["status"] = "active"
+            manifest["basin"] = spec.get("basin")
+            eventsim._update_archive(out_dir, manifest,
+                                     lambda s: _log(f"{ev}: {s}"))
+            if not manifest.get("archive_frames"):
+                manifest["status"] = "ended"
+                manifest["dry"] = True
+            eventsim._make_pngs(out_dir, manifest)
+            _log(f"{ev}: visit {n} — {len(manifest['frames'])} frames, "
+                 f"wall {time.time() - t_wall:.0f} s")
+
+            if self.publish:
+                ok = eventstore.publish_event(out_dir, manifest)
+                _log(f"{ev}: publish {'OK' if ok else 'FAILED'}")
+                if not ok:
+                    raise RuntimeError("publish_event returned False")
+            else:
+                _log(f"{ev}: --no-publish — results kept in {out_dir}")
+            self._cleanup_queue(ev, queued, success=True)
+            self.done.add((ev, queued))
+            rec["visits"] = n
+            rec["last"] = time.time()
+            self.sessions[ev] = rec
+            # bound disk: only the just-published visit's dirs remain
+            for stale in os.listdir(rec["root"]):
+                if stale not in (f"forcing_{n}", f"out_{n}"):
+                    shutil.rmtree(os.path.join(rec["root"], stale),
+                                  ignore_errors=True)
+            return True
+        except Exception as e:
+            tb_tail = "\n".join(
+                traceback.format_exc().strip().splitlines()[-8:])
+            _log(f"{ev}: visit FAILED — {type(e).__name__}: {e}\n{tb_tail}")
+            self._report_failure(ev, queued, e, tb_tail)
+            self.done.add((ev, queued))        # don't retry a poison episode
+            # mid-visit state is not trustworthy — drop; the next bundle
+            # rebuilds via init_depth
+            if ev in self.sessions:
+                shutil.rmtree(self.sessions[ev]["root"], ignore_errors=True)
+                del self.sessions[ev]
+            elif rec is not None:
+                shutil.rmtree(rec["root"], ignore_errors=True)
+            return False
+        finally:
+            hb.set()
+
+    def _evict_sessions(self):
+        """Drop sessions for ended episodes (events/index.json), for
+        episodes idle past --evict-idle-h, and LRU beyond --max-sessions."""
+        if not self.sessions:
+            return
+        # events/index.json is flat {event_id: summary} (eventstore.load_index)
+        idx = self._read_json("events/index.json") or {}
+        ended = {eid for eid, meta in idx.items()
+                 if isinstance(meta, dict) and meta.get("status") == "ended"}
+        now = time.time()
+        for ev in list(self.sessions):
+            idle_h = (now - self.sessions[ev]["last"]) / 3600.0
+            if ev in ended or idle_h > self.args.evict_idle_h:
+                why = "episode ended" if ev in ended else \
+                    f"idle {idle_h:.0f} h"
+                _log(f"evicting session {ev} ({why})")
+                shutil.rmtree(self.sessions[ev]["root"], ignore_errors=True)
+                del self.sessions[ev]
+        while len(self.sessions) > self.args.max_sessions:
+            ev = min(self.sessions, key=lambda e: self.sessions[e]["last"])
+            _log(f"evicting session {ev} (LRU, cap "
+                 f"{self.args.max_sessions})")
+            shutil.rmtree(self.sessions[ev]["root"], ignore_errors=True)
+            del self.sessions[ev]
+
+    def run_sessions(self):
+        """P1.6 scheduler: bundles for resident sessions first (a catch-up
+        visit is minutes), then new events; claims are held only while a
+        visit is actively advancing — while every session waits for forcing
+        this worker is free for B, C, D, ..."""
+        _log(f"worker {self.ident} up (P1.6 sessions): repo={self.repo} "
+             f"device={self.args.device} "
+             f"max_cells={self.max_cells / 1e6:.0f}M "
+             f"max_sessions={self.args.max_sessions} "
+             f"publish={'ON' if self.publish else 'OFF (shadow validation)'}")
+        while True:
+            try:
+                cands = self.scan_candidates()
+                known = [j for j in cands if j["id"] in self.sessions]
+                new = [j for j in cands if j["id"] not in self.sessions]
+                for job in known + new:
+                    ev = job["id"]
+                    kind = "catch-up" if ev in self.sessions else "new"
+                    _log(f"claiming {ev} ({kind}, "
+                         f"{expected_cells(job['spec']) / 1e6:.1f} M cells)")
+                    if self.claim(job):
+                        self.process_visit(job)
+                        break                  # re-scan: freshest queue view
+                self._evict_sessions()
+                if self.args.once:
+                    return
+            except Exception as e:
+                _log(f"session loop error: {type(e).__name__}: {e}")
+            time.sleep(self.args.poll_s)
+
+    # ---------------------------------------------------------------- #
     def run_forever(self):
         _log(f"worker {self.ident} up: repo={self.repo} "
              f"device={self.args.device} max_cells={self.max_cells / 1e6:.0f}M "
@@ -376,6 +546,20 @@ def main(argv=None):
                          "carries a 0.9 safety factor); 1 = every step")
     ap.add_argument("--once", action="store_true",
                     help="process at most one job, then exit (validation)")
+    ap.add_argument("--sessions", action="store_true",
+                    default=os.environ.get("EVENT_SESSIONS", "") == "1",
+                    help="P1.6 resident-session scheduler: hold per-event "
+                         "solver state (incl. momentum) between bundles and "
+                         "interleave events while episodes wait for forcing. "
+                         "OFF by default until docs/P1_6_VALIDATION.md is GO.")
+    ap.add_argument("--max-sessions", type=int,
+                    default=int(os.environ.get("EVENT_MAX_SESSIONS", "6")),
+                    help="LRU cap on resident sessions (~75 MB RAM each at "
+                         "4.7 M cells)")
+    ap.add_argument("--evict-idle-h", type=float,
+                    default=float(os.environ.get("EVENT_EVICT_IDLE_H", "12")),
+                    help="drop a session when its episode has sent no new "
+                         "bundle for this many hours")
     g = ap.add_mutually_exclusive_group()
     g.add_argument("--publish", dest="publish", action="store_true",
                    help="publish results + consume queue entries — ONLY "
@@ -384,7 +568,11 @@ def main(argv=None):
                    help="shadow validation (default): keep results local")
     ap.set_defaults(publish=False)
     args = ap.parse_args(argv)
-    Worker(args).run_forever()
+    w = Worker(args)
+    if args.sessions:
+        w.run_sessions()
+    else:
+        w.run_forever()
 
 
 if __name__ == "__main__":

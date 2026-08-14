@@ -24,6 +24,13 @@ export EVENT_MAX_CELLS_GPU=${EVENT_MAX_CELLS_GPU:-50000000}
 # ~2.5 cm mean depth from k=1 (above the 2 cm equivalence bar) for only ~7%
 # wall-clock gain, so the validated default is 1.
 export EVENT_DT_EVERY=${EVENT_DT_EVERY:-1}
+# P1.6 resident-session scheduler (crestimap/session.py): hold per-event
+# solver state incl. momentum between bundles and interleave events while
+# episodes wait for forcing. Flip AFTER the CUDA gates in
+# crestimap/tests/test_session.py pass and gate 3 (GPU-min per catch-up
+# visit) is recorded in docs/P1_6_VALIDATION.md:
+#   EVENT_SESSIONS=1 ./run_worker.sh --publish     (or pass --sessions)
+export EVENT_SESSIONS=${EVENT_SESSIONS:-0}
 
 # Interpreter with torch/rasterio/huggingface_hub (bare `python` may resolve
 # to a bare base env); override with PYTHON=... if the env moves.
