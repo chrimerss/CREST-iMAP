@@ -3,3 +3,6 @@ __pycache__/
 *.egg-info/
 *.tif
 dem_cache/
+build/
+dist/
+*.whl
