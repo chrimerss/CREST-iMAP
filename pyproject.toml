@@ -4,14 +4,42 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "crestimap"
-version = "2.0.0.dev0"
-description = "CREST-iMAP v2: differentiable well-balanced 2-D shallow-water flood model (PyTorch)"
+version = "2.0.0"
+description = "CREST-iMAP v2: differentiable coupled hydrologic-hydraulic flood model (PyTorch)"
+readme = "README.md"
 requires-python = ">=3.10"
+# NOTE: this repository carries no LICENSE file and GitHub reports no license for
+# it, so no license is declared here. Without one the default is "all rights
+# reserved", which is at odds with a citable research tool -- add a LICENSE and
+# then set this field.
+keywords = ["flood", "inundation", "hydrology", "hydrodynamics",
+            "shallow-water", "differentiable", "pytorch", "CREST"]
+authors = [
+    { name = "Zhi Li" },
+    { name = "M. Chen" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Hydrology",
+    "Topic :: Scientific/Engineering :: Physics",
+]
 dependencies = ["torch>=2.0", "numpy"]
 
 [project.optional-dependencies]
-geo = ["rasterio", "requests"]
+# rasterio/pyproj for DEM, forcing and parameter-grid I/O; requests for 3DEP tiles
+geo = ["rasterio", "requests", "pyproj"]
 test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/chrimerss/CREST-iMAP"
+Repository = "https://github.com/chrimerss/CREST-iMAP"
+Changelog = "https://github.com/chrimerss/CREST-iMAP/blob/master/CHANGELOG.md"
+Benchmark = "https://github.com/chrimerss/CREST-iMAP/blob/master/docs/BENCHMARK_HARVEY.md"
 
 [tool.setuptools]
 packages = ["crestimap"]

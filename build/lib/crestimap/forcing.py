@@ -1,0 +1,345 @@
+"""Forcing and initial-condition interface to CREST-AI (EF5/CREST).
+
+In the coupled deployment the CREST water balance is NOT run inside this
+package (that was v1.x). Instead the CREST-AI pipeline runs EF5/CREST for
+the event window and hands over:
+
+  initial conditions : 2-D discharge (Q) and soil-moisture (SM) grids at
+                       event start (channel pre-wetting / antecedent state)
+  forcing            : gridded surface runoff (fast flow) + subsurface
+                       runoff (interflow/baseflow) per timestep, which enter
+                       the shallow-water equations as the lateral-inflow
+                       source term [m/s]
+
+EF5 writes GeoTIFF output grids; this module regrids them onto the solver
+raster and exposes a `rain_fn(t)`-style callable for `SWESolver.run`.
+
+Status: interface is stable, EF5-file plumbing is experimental until wired
+to real CREST-AI event output.
+"""
+from __future__ import annotations
+
+import bisect
+import datetime as _dt
+
+import numpy as np
+import torch
+
+
+class GriddedSeriesForcing:
+    """Time series of lateral-inflow grids -> callable(t_seconds) -> tensor.
+
+    Parameters
+    ----------
+    times : sorted list of datetimes (grid validity times).
+    loader : callable(index) -> 2-D numpy array in mm/h on the solver grid.
+             (Keep loading lazy: events are long, grids are big.)
+    t0 : datetime that corresponds to simulation time t = 0 s.
+    hold : if True (default) use the most recent grid at or before t
+           (piecewise-constant, mass-consistent with EF5 accumulation);
+           if False, linearly interpolate between bracketing grids.
+    """
+
+    MM_PER_HOUR_TO_M_PER_S = 1.0 / 3600.0 / 1000.0
+
+    def __init__(self, times, loader, t0, hold=True, device=None, dtype=None):
+        self.times = list(times)
+        self.loader = loader
+        self.t0 = t0
+        self.hold = hold
+        self.device = device
+        self.dtype = dtype or torch.get_default_dtype()
+        self._cache = {}
+
+    def _grid(self, i):
+        if i not in self._cache:
+            arr = np.asarray(self.loader(i), dtype=float)
+            self._cache = {i: torch.as_tensor(
+                arr * self.MM_PER_HOUR_TO_M_PER_S,
+                dtype=self.dtype, device=self.device)}  # keep only latest
+        return self._cache[i]
+
+    def __call__(self, t_seconds: float) -> torch.Tensor:
+        when = self.t0 + _dt.timedelta(seconds=float(t_seconds))
+        i = bisect.bisect_right(self.times, when) - 1
+        i = max(0, min(i, len(self.times) - 1))
+        if self.hold or i == len(self.times) - 1:
+            return self._grid(i)
+        span = (self.times[i + 1] - self.times[i]).total_seconds()
+        w = ((when - self.times[i]).total_seconds() / span) if span > 0 else 0.0
+        return (1 - w) * self._grid(i) + w * self._grid(i + 1)
+
+    def next_change(self, t_seconds: float) -> float:
+        """Seconds from t until the forcing next switches grids (inf if never).
+        SWESolver.run clips dt to this so piecewise-constant forcing is
+        integrated exactly (no smearing across hour boundaries)."""
+        when = self.t0 + _dt.timedelta(seconds=float(t_seconds))
+        i = bisect.bisect_right(self.times, when)
+        if i >= len(self.times):
+            return float("inf")
+        return (self.times[i] - when).total_seconds()
+
+
+def sum_forcings(*fns):
+    """Combine surface-runoff and subsurface-runoff forcings."""
+    def combined(t):
+        out = fns[0](t)
+        for f in fns[1:]:
+            out = out + f(t)
+        return torch.clamp(out, min=0.0)
+
+    def next_change(t):
+        return min((f.next_change(t) for f in fns if hasattr(f, "next_change")),
+                   default=float("inf"))
+    combined.next_change = next_change
+    return combined
+
+
+def regrid_to_solver(src: np.ndarray, src_transform, dst_shape, dst_transform,
+                     src_crs=None, dst_crs=None, method="containing"):
+    """Regrid an EF5 output grid onto the (finer) solver raster.
+
+    method:
+      "containing" (default) — every solver cell takes the value of the EF5
+        cell that contains it. Runoff rate (mm/h) is intensive, so this
+        partitions each coarse cell's water exactly over its footprint:
+        mass-conserving by construction for coarse -> fine.
+      "bilinear" — smooth field (NOT exactly mass-conserving; for SM/Q
+        diagnostics, not for runoff forcing).
+    Uses rasterio.warp when CRSs differ; direct index mapping otherwise.
+    """
+    same_crs = (src_crs is None and dst_crs is None) or (src_crs == dst_crs)
+    if method == "containing" and same_crs:
+        ny, nx = dst_shape
+        rows, cols = np.mgrid[0:ny, 0:nx]
+        xs, ys = dst_transform * (cols + 0.5, rows + 0.5)
+        inv = ~src_transform
+        sc, sr = inv * (xs, ys)
+        sr = np.clip(np.floor(sr).astype(int), 0, src.shape[0] - 1)
+        sc = np.clip(np.floor(sc).astype(int), 0, src.shape[1] - 1)
+        return src[sr, sc].astype(float)
+    from rasterio.warp import reproject, Resampling
+    dst = np.zeros(dst_shape, dtype=float)
+    reproject(source=src.astype(float), destination=dst,
+              src_transform=src_transform, dst_transform=dst_transform,
+              src_crs=src_crs or "EPSG:4326", dst_crs=dst_crs or "EPSG:4326",
+              resampling=(Resampling.nearest if method == "containing"
+                          else Resampling.bilinear))
+    return dst
+
+
+# --------------------------------------------------------------------------- #
+# EF5 output plumbing (filename convention: <kind>.<YYYYMMDDHHMM>.<model>.tif)
+# --------------------------------------------------------------------------- #
+
+_M_PER_DEG_LAT = 111132.0
+
+
+class SolverGrid:
+    """Solver raster derived from a DEM GeoTIFF.
+
+    Holds z (torch tensor), the affine transform + CRS, and metric cell
+    sizes. For geographic CRS the cell size is converted to meters at the
+    domain's mean latitude (adequate at basin scale); projected DEMs use
+    native units.
+    """
+
+    def __init__(self, z, transform, crs, dx, dy):
+        self.z = z
+        self.transform = transform
+        self.crs = crs
+        self.dx = dx
+        self.dy = dy
+
+    @classmethod
+    def from_array(cls, z_np, transform, crs, dtype=None, device=None):
+        import math
+        geographic = crs is None or getattr(crs, "is_geographic", True)
+        if geographic:
+            lat = transform.f + transform.e * z_np.shape[0] / 2.0
+            dy = abs(transform.e) * _M_PER_DEG_LAT
+            dx = abs(transform.a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
+        else:
+            dx, dy = abs(transform.a), abs(transform.e)
+        z = torch.as_tensor(np.asarray(z_np, dtype=float),
+                            dtype=dtype or torch.get_default_dtype(), device=device)
+        return cls(z, transform, crs, dx, dy)
+
+    @classmethod
+    def from_dem(cls, dem_path, dtype=None, device=None, nodata_fill=None):
+        import math
+        import rasterio
+        with rasterio.open(dem_path) as ds:
+            arr = ds.read(1).astype(float)
+            if ds.nodata is not None:
+                fill = nodata_fill if nodata_fill is not None else np.nanmax(
+                    np.where(arr == ds.nodata, -np.inf, arr))
+                arr = np.where(arr == ds.nodata, fill, arr)
+            tr = ds.transform
+            crs = ds.crs
+            geographic = crs is None or crs.is_geographic
+            if geographic:
+                lat = tr.f + tr.e * ds.height / 2.0  # center latitude
+                dy = abs(tr.e) * _M_PER_DEG_LAT
+                dx = abs(tr.a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
+            else:
+                dx, dy = abs(tr.a), abs(tr.e)
+        z = torch.as_tensor(arr, dtype=dtype or torch.get_default_dtype(),
+                            device=device)
+        return cls(z, tr, crs, dx, dy)
+
+
+def parse_ef5_dir(output_dir, kind, model=None):
+    """List EF5 gridded outputs of one kind, sorted by time.
+
+    Accepts <kind>.<YYYYMMDD_HHUU>.<model>.tif (EF5's actual
+    currentTimeTextOutput format, Simulator.cpp SetNameStr) and the
+    underscore-less <YYYYMMDDHHMM> variant. Returns [(datetime, path)].
+    """
+    import glob
+    import os
+    import re
+    pat = os.path.join(str(output_dir), f"{kind}.*.tif")
+    rx = re.compile(rf"{re.escape(kind)}\.(\d{{8}}_?\d{{4}})\.([^.]+)\.tif$")
+    out = []
+    for p in glob.glob(pat):
+        m = rx.search(os.path.basename(p))
+        if not m:
+            continue
+        if model and m.group(2).lower() != model.lower():
+            continue
+        ts = m.group(1).replace("_", "")
+        out.append((_dt.datetime.strptime(ts, "%Y%m%d%H%M"), p))
+    out.sort()
+    return out
+
+
+def ef5_forcing(output_dir, grid: SolverGrid, t0, kinds=("runoff", "subrunoff"),
+                model=None, method="containing", hold=True,
+                device=None, dtype=None):
+    """Total lateral-inflow forcing from EF5 gridded runoff output.
+
+    Sums the listed kinds (surface `runoff` + interflow `subrunoff`),
+    regrids each hourly mm/h grid onto the solver raster (containing-cell:
+    mass-conserving coarse->fine), converts to m/s, and returns a
+    callable(t_seconds) for SWESolver.run. EF5 grids and nodata are
+    clamped to >= 0.
+    """
+    import rasterio
+    dst_shape = tuple(grid.z.shape)
+    fns = []
+    for kind in kinds:
+        series = parse_ef5_dir(output_dir, kind, model)
+        if not series:
+            raise FileNotFoundError(
+                f"no '{kind}.*.tif' grids in {output_dir} — did the EF5 run "
+                f"use output_grids=...|{kind}|... ?")
+        times = [t for t, _ in series]
+        paths = [p for _, p in series]
+
+        def loader(i, _paths=paths):
+            with rasterio.open(_paths[i]) as ds:
+                src = ds.read(1).astype(float)
+                if ds.nodata is not None:
+                    src = np.where(src == ds.nodata, 0.0, src)
+                src = np.clip(src, 0.0, None)
+                return regrid_to_solver(src, ds.transform, dst_shape,
+                                        grid.transform, ds.crs, grid.crs,
+                                        method=method)
+        fns.append(GriddedSeriesForcing(times, loader, t0, hold=hold,
+                                        device=device, dtype=dtype))
+    return sum_forcings(*fns) if len(fns) > 1 else fns[0]
+
+
+def rating_depth(q, n_ch=0.035, slope=1e-3, width_fn=None):
+    """Manning-rating water depth [m] for channel discharge q [m3/s]:
+    h ~ (n Q / (w sqrt(S)))^(3/5) with a Leopold-Maddock-style width."""
+    q = torch.clamp(torch.as_tensor(q), min=0.0)
+    if width_fn is None:
+        width_fn = lambda qq: torch.clamp(7.2 * qq ** 0.5, min=1.0)
+    w = width_fn(q)
+    return (n_ch * q / (w * slope ** 0.5)) ** 0.6
+
+
+class EF5ChannelStage:
+    """Routed-flood coupling: EF5's hourly 2-D discharge grids -> target
+    water depth along channel cells on the solver grid.
+
+    Recession floods carry their water in the routed channel network, not in
+    the local runoff grids — without this, an event triggered days after the
+    rain simulates bone-dry. `SWESolver.run(nudge_fn=...)` applies the target
+    as a one-way floor (h := max(h, stage)), and the 2-D solver spreads the
+    overbank water. Piecewise-constant per EF5 grid hour; channel mask is
+    q >= q_min.
+    """
+
+    def __init__(self, output_dir, grid, t0, model=None, q_min=5.0,
+                 cap_m=8.0, method="containing", dtype=None, device=None):
+        self.series = parse_ef5_dir(output_dir, "q", model)
+        if not self.series:
+            raise FileNotFoundError(f"no 'q.*.tif' grids in {output_dir}")
+        self.grid = grid
+        self.t0 = t0
+        self.q_min = q_min
+        self.cap_m = cap_m
+        self.method = method
+        self.dtype = dtype or torch.get_default_dtype()
+        self.device = device
+        self._cache = {}
+
+    def stats(self, t_seconds=0.0):
+        s = self._stage(self._index(t_seconds))
+        n = int((s > 0).sum())
+        return {"channel_cells": n, "max_stage_m": float(s.max())}
+
+    def _index(self, t_seconds):
+        when = self.t0 + _dt.timedelta(seconds=float(t_seconds))
+        i = bisect.bisect_right([t for t, _ in self.series], when) - 1
+        return max(0, min(i, len(self.series) - 1))
+
+    def _stage(self, i):
+        if i not in self._cache:
+            import rasterio
+            _, path = self.series[i]
+            with rasterio.open(path) as ds:
+                src = ds.read(1).astype(float)
+                if ds.nodata is not None:
+                    src = np.where(src == ds.nodata, 0.0, src)
+                q = regrid_to_solver(np.clip(src, 0, None), ds.transform,
+                                     tuple(self.grid.z.shape),
+                                     self.grid.transform, ds.crs,
+                                     self.grid.crs, method=self.method)
+            qt = torch.as_tensor(q, dtype=self.dtype, device=self.device)
+            stage = torch.clamp(rating_depth(qt), max=self.cap_m)
+            stage = torch.where(qt >= self.q_min, stage,
+                                torch.zeros_like(stage))
+            self._cache = {i: stage}          # keep only the latest hour
+        return self._cache[i]
+
+    def __call__(self, t_seconds, h):
+        return torch.maximum(h, self._stage(self._index(t_seconds)))
+
+
+def initial_state_from_ef5(q_grid, sm_grid, dem, dx, dy,
+                           bankfull_width_fn=None):
+    """Build (h, qx, qy) initial conditions from EF5 2-D Q and SM grids.
+
+    Channel pre-wetting: EF5 discharge Q [m3/s] on the routed network is
+    converted to an initial water depth along channel cells via a rating
+    approximation h ~ (n Q / (w sqrt(S)))^(3/5); off-channel cells start
+    dry. SM enters the CREST-AI side (it conditions the runoff EF5 sends
+    us) — kept here for provenance/diagnostics.
+
+    Experimental: exact rating and width model to be calibrated against
+    the differentiable solver itself once wired end-to-end.
+    """
+    q = torch.as_tensor(np.asarray(q_grid, dtype=float))
+    h0 = torch.zeros_like(q)
+    if bankfull_width_fn is None:
+        bankfull_width_fn = lambda qq: torch.clamp(7.2 * qq ** 0.5, min=1.0)  # Leopold-Maddock-ish
+    chan = q > 1.0  # m3/s threshold for "channel" cells
+    w = bankfull_width_fn(torch.clamp(q, min=0.0))
+    n_ch, slope = 0.035, 1e-3
+    h_ch = (n_ch * torch.clamp(q, min=0.0) / (w * slope ** 0.5)) ** 0.6
+    h0 = torch.where(chan, torch.minimum(h_ch, torch.as_tensor(5.0)), h0)
+    return h0, torch.zeros_like(h0), torch.zeros_like(h0)
