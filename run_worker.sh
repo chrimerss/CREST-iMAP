@@ -13,7 +13,10 @@ export HF_TOKEN=$(tr -d ' \r\n' < ~/huggingface.txt)
 export SCRATCH=${SCRATCH:-/media/scratch/$USER}
 export HF_HOME=${HF_HOME:-$SCRATCH/hf_cache}
 export EVENT_DEM_CACHE=${EVENT_DEM_CACHE:-$SCRATCH/dem_cache}   # 10 m tiles ~400 MB each
-export CREST_AI_DIR=${CREST_AI_DIR:-$SCRATCH/crest_worker/CREST_AI}
+# hf_data reuse source: the DEPLOYED Space's copy (synced by
+# sync_space_ref.py) — its publish_event has the P1.6 frame carry-forward
+# and V30 provenance stamps; the GitHub CREST_AI clone predates both.
+export CREST_AI_DIR=${CREST_AI_DIR:-$SCRATCH/crest_worker/space_ref}
 export WORKER_WORK_ROOT=${WORKER_WORK_ROOT:-$SCRATCH/crest_worker/jobs}
 # Cell budget for THIS card (never coarsen — oversized jobs are left to the
 # ladder). RTX 4500 Ada 24 GB: ~50 M cells leaves solver headroom; raise on
