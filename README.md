@@ -6,6 +6,15 @@ written in PyTorch, and the hydrodynamic engine of the
 [CREST-AI](https://github.com/mchen15ouedu/CREST_AI) real-time flood
 dashboard.
 
+<p align="center">
+<img src="img/harvey_inundation.gif" width="90%">
+</p>
+<p align="center">
+<em>Hurricane Harvey (2017) inundation over Harris County, Texas — CREST-iMAP v1.
+v2 is benchmarked against the same event and the same 813 USGS high-water marks
+in <a href="docs/BENCHMARK_HARVEY.md">docs/BENCHMARK_HARVEY.md</a>.</em>
+</p>
+
 v2 is a ground-up rewrite of the dynamic core: the vendored ANUGA solver of
 v1.x is replaced by a modern well-balanced finite-volume scheme, in ~2,000
 lines of PyTorch rather than ~200,000 lines of Python 2 and C. The CREST
@@ -23,6 +32,26 @@ as-is; see the `v1-final` tag annotation for how to run or port it.
 
 Validated on Hurricane Harvey against 813 USGS high-water marks —
 [`docs/BENCHMARK_HARVEY.md`](docs/BENCHMARK_HARVEY.md).
+
+## Model structure
+
+The coupled water balance CREST-iMAP solves, carried over from v1 and implemented
+in [`crestimap/lsm.py`](crestimap/lsm.py): the VIC curve partitions rainfall into
+infiltration-excess surface runoff and soil storage, with interflow, run-on
+re-infiltration and evapotranspiration, and the surface runoff drives the 2-D
+shallow-water solver.
+
+<img src="img/model_structure.png" width="100%">
+
+<img src="img/model_framework.png" width="100%">
+
+Both diagrams are from the v1 papers and describe physics v2 keeps. Two details are
+v1's and no longer hold: the **triangular mesh** element — v2 solves on a regular
+DEM-aligned raster grid, not an unstructured ANUGA mesh — and **"flexible mesh
+design"** in the framework figure. The calibration path also differs: v1 reached
+its parameters through SCE-UA / GA / MCMC / particle-swarm search, whereas v2 is
+differentiable end to end, so Manning n, bed elevation and the CREST parameters can
+be fit by gradient descent through the simulation itself.
 
 ## Numerical scheme
 
@@ -84,6 +113,15 @@ calibrate them against observed depths.
 | `crestimap/io.py` | compact uint16-centimeter GeoTIFF depth frames |
 | `crestimap/analytic.py` | analytic references (Stoker dam break) |
 | `crestimap/tests/` | validation suite (`pytest crestimap/tests`) |
+| `benchmarks/harvey/` | Hurricane Harvey benchmark: driver, peak-depth reducer, HWM scorer |
+
+## Gallery
+
+Urban pluvial flooding, Oklahoma City — an earlier CREST-iMAP case, kept from v1:
+
+<p align="center">
+<img src="img/okc_flooding.gif" width="70%">
+</p>
 
 ## Deployment in CREST-AI
 
