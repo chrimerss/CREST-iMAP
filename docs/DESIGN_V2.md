@@ -13,11 +13,15 @@ al. 2021, JHM). Goals, in order:
    the entire simulation (verified against finite differences). Gradient
    targets: Manning n fields, bathymetry corrections, forcing. Long events
    backprop via gradient checkpointing (`checkpoint_every`).
-3. **Separation of concerns**: the CREST water balance is stripped. In the
-   CREST-AI deployment, EF5/CREST runs upstream and supplies initial
-   conditions (2-D Q, SM) and lateral-inflow forcing (surface + subsurface
-   runoff grids). v1's in-loop cell-wise CREST (`crest_simp.model` inside
-   `generic_domain.evolve`) is retired with the vendored ANUGA.
+3. **Separation of concerns**: the CREST water balance is a module
+   (`crestimap/lsm.py`), not a branch inside the solver loop. v1 called the
+   scalar Cython `crest_simp.model` once per centroid from
+   `generic_domain.evolve`, through `numpy.apply_along_axis`; v2 runs the
+   same water balance over the whole grid as tensor ops — vectorised, GPU
+   resident, and differentiable alongside the solver. Either half can be
+   driven on its own. In the CREST-AI deployment EF5/CREST instead runs
+   upstream and supplies initial conditions (2-D Q, SM) and lateral-inflow
+   forcing (surface + subsurface runoff grids) through `forcing.py`.
 
 ## Numerical scheme
 
@@ -63,4 +67,5 @@ Next validation tier: UK EA benchmark cases, then Hurricane Harvey
 
 - `crestimap/` — v2 package (Python 3, PyTorch).
 - v1.x legacy (Python 2 + vendored ANUGA, `cresthh/` etc.) was removed
-  from this branch 2026-08-12; it remains unchanged on `master`.
+  from this branch 2026-08-12. It is archived unchanged at the `v1-legacy`
+  branch and the `v1-final` tag (it is no longer on `master`).

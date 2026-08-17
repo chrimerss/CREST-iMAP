@@ -1,18 +1,28 @@
 # CREST-iMAP v2
 
 **Coupled Routing Excess STorage inundation MApping and Prediction —
-version 2.** A differentiable, well-balanced 2-D shallow-water flood model
-written in PyTorch, the hydrodynamic engine of the
+version 2.** A differentiable, coupled hydrologic–hydraulic flood model
+written in PyTorch, and the hydrodynamic engine of the
 [CREST-AI](https://github.com/mchen15ouedu/CREST_AI) real-time flood
 dashboard.
 
-v2 is a ground-up rewrite of the hydrodynamic core. The vendored ANUGA
-solver of v1.x is replaced by a modern finite-volume scheme, and the CREST
-water balance is intentionally not included: in deployment the CREST/EF5
-hydrologic model runs upstream and supplies initial conditions (2-D
-discharge and soil-moisture grids) and forcing (surface + subsurface
-runoff grids) to this module. CREST-iMAP v1.x (Python 2.7 + ANUGA) is
-preserved unchanged on the `master` branch.
+v2 is a ground-up rewrite of the dynamic core: the vendored ANUGA solver of
+v1.x is replaced by a modern well-balanced finite-volume scheme, in ~2,000
+lines of PyTorch rather than ~200,000 lines of Python 2 and C. The CREST
+water balance is kept — [`crestimap/lsm.py`](crestimap/lsm.py) is a torch
+port of v1's cell water balance, verified bit-identical to v1's Cython
+`crest_simp.pyx` — so v2 is still the coupled model the CREST-iMAP papers
+describe, now differentiable end to end. Where EF5/CREST already runs
+upstream (the CREST-AI deployment), [`crestimap/forcing.py`](crestimap/forcing.py)
+ingests its runoff and discharge grids instead.
+
+**CREST-iMAP v1.x** (Python 2.7 + vendored ANUGA, CPU-only) is archived at
+the **`v1-legacy`** branch and the **`v1-final`** tag. It is not on `master`
+any more. Its bundled `python2` virtualenv and prebuilt extensions still run
+as-is; see the `v1-final` tag annotation for how to run or port it.
+
+Validated on Hurricane Harvey against 813 USGS high-water marks —
+[`docs/BENCHMARK_HARVEY.md`](docs/BENCHMARK_HARVEY.md).
 
 ## Numerical scheme
 
@@ -67,6 +77,7 @@ calibrate them against observed depths.
 | Module | Purpose |
 |---|---|
 | `crestimap/solver.py` | the well-balanced SWE solver (`SWESolver`) |
+| `crestimap/lsm.py` | CREST water balance (`CrestLSM`): rainfall → runoff, soil moisture, run-on re-infiltration, baseflow |
 | `crestimap/forcing.py` | EF5/CREST coupling: runoff-grid forcing, initial state from routed discharge, channel-stage coupling |
 | `crestimap/dem.py` | on-demand USGS 3DEP DEM tiles (1" ~30 m, 1/3" ~10 m), local cache |
 | `crestimap/event.py` | `EventConfig` / `run_event`: one flood event end to end (DEM, forcing, solve, depth frames, manifest) |
