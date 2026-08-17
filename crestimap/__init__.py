@@ -1,21 +1,29 @@
-"""CREST-iMAP v2 — differentiable well-balanced hydrodynamic module.
+"""CREST-iMAP v2 — differentiable coupled hydrologic–hydraulic flood model.
 
-Python-3 successor to the ANUGA-based CREST-iMAP v1.x. The CREST water
-balance is intentionally NOT included: in the CREST-AI deployment the
-CREST/EF5 hydrologic model runs upstream and supplies
+Python-3 successor to the ANUGA-based CREST-iMAP v1.x, carrying both halves of the
+coupled model:
 
-  * initial conditions  — 2-D discharge (Q) and soil moisture (SM) grids
-  * forcing             — surface + subsurface runoff grids per timestep
+  * :mod:`crestimap.lsm`    — the CREST water balance (VIC-curve rainfall→runoff
+    partition with soil-moisture state, run-on re-infiltration and optional
+    baseflow); a torch port of v1's `crest_simp.pyx`, verified bit-identical to it.
+  * :mod:`crestimap.solver` — the 2-D shallow-water dynamic core: full momentum,
+    well-balanced and positivity-preserving (Audusse et al. 2004 hydrostatic
+    reconstruction + HLL, MUSCL/minmod, SSP-RK2).
 
-to this module, which solves the full 2-D shallow-water equations with a
-well-balanced positivity-preserving scheme (Audusse et al. 2004 hydrostatic
-reconstruction + HLL), implemented in PyTorch so every simulation is
-differentiable (autograd calibration of Manning n, bathymetry, forcing).
+Both are pure PyTorch, so a simulation runs unchanged on CPU or GPU and is
+differentiable end to end — Manning n, bathymetry, CREST parameters and forcing are
+all autograd-calibratable. That is the substantive gain over v1, whose in-loop CREST
+called a scalar Cython routine once per mesh centroid.
+
+The upstream coupling is still supported and remains the CREST-AI deployment path:
+where EF5/CREST runs ahead of the model, :mod:`crestimap.forcing` ingests its runoff
+and discharge grids directly instead of running the water balance here.
 """
 from .solver import SWESolver, desing_velocity, minmod
+from .lsm import CrestLSM, crest_core
 from .analytic import stoker_dambreak
 from .event import EventConfig, run_event
 
 __version__ = "2.0.0.dev0"
-__all__ = ["SWESolver", "desing_velocity", "minmod", "stoker_dambreak",
-           "EventConfig", "run_event"]
+__all__ = ["SWESolver", "desing_velocity", "minmod", "CrestLSM", "crest_core",
+           "stoker_dambreak", "EventConfig", "run_event"]
