@@ -10,8 +10,9 @@ Scheme
 - HLL numerical flux, first order or second order (MUSCL, minmod limiter,
   reconstruction in (h, eta=h+z, u, v) so the C-property is preserved at
   second order per Audusse et al. Sec. 4).
-- SSP-RK2 (Heun) time stepping, adaptive CFL timestep (detached from the
-  autograd graph so gradients stay well defined).
+- SSP-RK2 (Heun) time stepping, adaptive rain-aware CFL timestep with a
+  clip-measuring retry (both detached from the autograd graph so gradients
+  stay well defined).
 - Point-implicit Manning friction (closed form, differentiable).
 - Desingularized velocities u = sqrt(2) h q / sqrt(h^4 + max(h,eps)^4)
   (Kurganov & Petrova 2007) so wet/dry fronts neither blow up nor produce
@@ -25,9 +26,22 @@ conditions, and forcing.
 """
 from __future__ import annotations
 
+import warnings
+
 import torch
 
 G_DEFAULT = 9.80665
+
+# Largest usable CFL. compute_dt limits each direction separately (max(sx, sy))
+# while the x and y fluxes apply together, so above this a cell can drain through
+# both axes in one step and the scheme leaves its stable range.
+MAX_CFL = 0.5
+# An adaptive step whose clipped negative depth adds more than this fraction of
+# the water on the grid is retried with a smaller dt. Fluxes conserve water
+# exactly, so clipping is the only way a step can create any: this bounds the
+# mass error directly rather than guarding stability by heuristic.
+CLIP_TOL = 1e-13
+MAX_DT_HALVINGS = 30   # retries before step_limited gives up (dt_limit * 2^-30)
 
 
 def desing_velocity(h: torch.Tensor, q: torch.Tensor, eps: float) -> torch.Tensor:
@@ -39,6 +53,22 @@ def desing_velocity(h: torch.Tensor, q: torch.Tensor, eps: float) -> torch.Tenso
 
 def minmod(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
     return 0.5 * (torch.sign(a) + torch.sign(b)) * torch.minimum(a.abs(), b.abs())
+
+
+def _cfl_dt(cfl: float, s: float, k: float) -> float:
+    """Solve dt (s + k sqrt(dt)) = cfl for dt, by Newton in x = sqrt(dt).
+
+    x^2 (s + k x) is convex and increasing in x, so starting from an upper
+    bound the iteration descends to the root. Returns inf if nothing limits dt.
+    """
+    if k <= 0.0:
+        return float("inf") if s < 1e-12 else cfl / s
+    x = (cfl / k) ** (1.0 / 3.0)
+    if s >= 1e-12:
+        x = min(x, (cfl / s) ** 0.5)
+    for _ in range(8):
+        x -= (x * x * (s + k * x) - cfl) / (x * (2.0 * s + 3.0 * k * x))
+    return x * x
 
 
 class SWESolver:
@@ -65,7 +95,11 @@ class SWESolver:
             n_manning, dtype=self.dtype, device=self.device)
         self.g = g
         self.eps = eps
-        self.cfl = cfl
+        assert cfl > 0.0
+        if cfl > MAX_CFL:
+            warnings.warn(f"cfl={cfl} is unsafe; capped at {MAX_CFL}", stacklevel=2)
+        self.cfl = min(cfl, MAX_CFL)
+        self.n_retries = 0   # adaptive steps redone at a smaller dt, for cost reports
         assert order in (1, 2)
         self.order = order
         assert bc in ("wall", "open")
@@ -245,8 +279,16 @@ class SWESolver:
         return rh, rx_qx + ry_qx, rx_qy + ry_qy
 
     # ------------------------------------------------------------------ #
-    def compute_dt(self, h, qx, qy):
-        """CFL timestep — detached from the graph."""
+    def compute_dt(self, h, qx, qy, rain=None):
+        """CFL timestep, accounting for the depth `rain` adds during the step —
+        detached from the graph.
+
+        A dry cell has no wave speed, yet rain wets it within the step and the
+        second RK stage then moves water at c = sqrt(g (h + r dt)). Using
+        sqrt(a + b) <= sqrt(a) + sqrt(b), the limit becomes
+        dt (s + k sqrt(dt)) = cfl with s the plain CFL speed and
+        k = sqrt(g r_max) / min(dx, dy). Without rain this is the plain CFL dt.
+        """
         with torch.no_grad():
             u = desing_velocity(h, qx, self.eps)
             v = desing_velocity(h, qy, self.eps)
@@ -254,9 +296,13 @@ class SWESolver:
             sx = ((u.abs() + c) / self.dx).max()
             sy = ((v.abs() + c) / self.dy).max()
             s = torch.maximum(sx, sy)
-            if s < 1e-12:
-                return self.dt_max
-            return min(self.dt_max, (self.cfl / s).item())
+            if rain is None:
+                s, r_max = s.item(), 0.0
+            else:   # one host sync for both, see dt_every in run()
+                r_max = torch.as_tensor(rain).to(s).max()
+                s, r_max = torch.stack((s, r_max)).tolist()
+            k = (self.g * max(r_max, 0.0)) ** 0.5 / min(self.dx, self.dy)
+            return min(self.dt_max, _cfl_dt(self.cfl, s, k))
 
     def _friction(self, h, qx, qy, dt):
         u = desing_velocity(h, qx, self.eps)
@@ -267,15 +313,45 @@ class SWESolver:
         return qx / fac, qy / fac
 
     def step(self, h, qx, qy, dt=None, rain=None):
-        """One SSP-RK2 step. Returns (h, qx, qy, dt_used)."""
+        """One SSP-RK2 step. Returns (h, qx, qy, dt_used).
+
+        An explicit dt is taken exactly. With dt=None the step is adaptive:
+        compute_dt, then the step_limited backstop, so dt_used may be smaller.
+        """
         if dt is None:
-            dt = self.compute_dt(h, qx, qy)
+            return self.step_limited(h, qx, qy, self.compute_dt(h, qx, qy, rain), rain)
+        return (*self._try_step(h, qx, qy, dt, rain)[:3], dt)
+
+    def step_limited(self, h, qx, qy, dt_limit, rain=None):
+        """One SSP-RK2 step of at most dt_limit, halved until clipping creates
+        no meaningful water. Returns (h, qx, qy, dt_used); callers must advance
+        time by dt_used. dt stays a detached float, and rejected attempts just
+        drop their graphs, so accepted steps differentiate as a fixed-dt step."""
+        dt = dt_limit
+        for _ in range(MAX_DT_HALVINGS + 1):
+            hn, qxn, qyn, clip = self._try_step(h, qx, qy, dt, rain)
+            clip, water = torch.stack((clip, hn.detach().sum())).tolist()
+            if clip <= CLIP_TOL * water:
+                return hn, qxn, qyn, dt
+            dt *= 0.5
+            self.n_retries += 1
+        raise RuntimeError(f"depths stay negative after halving dt_limit={dt_limit} s "
+                           f"{MAX_DT_HALVINGS} times (clipped {clip:.3e} m, water {water:.3e} m)")
+
+    def _try_step(self, h, qx, qy, dt, rain):
+        """SSP-RK2 at exactly dt. Returns (h, qx, qy, clip), where clip is the
+        detached depth [m, summed over cells] that clamping negative depths
+        added to the grid."""
         r1 = self._rhs(h, qx, qy, rain)
-        h1 = torch.clamp(h + dt * r1[0], min=0.0)
+        h1 = h + dt * r1[0]
+        clip = 0.5 * torch.clamp(-h1.detach(), min=0.0).sum()
+        h1 = torch.clamp(h1, min=0.0)
         qx1 = qx + dt * r1[1]
         qy1 = qy + dt * r1[2]
         r2 = self._rhs(h1, qx1, qy1, rain)
-        hn = torch.clamp(0.5 * h + 0.5 * (h1 + dt * r2[0]), min=0.0)
+        hn = 0.5 * h + 0.5 * (h1 + dt * r2[0])
+        clip = clip + torch.clamp(-hn.detach(), min=0.0).sum()
+        hn = torch.clamp(hn, min=0.0)
         qxn = 0.5 * qx + 0.5 * (qx1 + dt * r2[1])
         qyn = 0.5 * qy + 0.5 * (qy1 + dt * r2[2])
         qxn, qyn = self._friction(hn, qxn, qyn, dt)
@@ -283,14 +359,16 @@ class SWESolver:
         dry = hn <= self.eps
         qxn = torch.where(dry, torch.zeros_like(qxn), qxn)
         qyn = torch.where(dry, torch.zeros_like(qyn), qyn)
-        return hn, qxn, qyn, dt
+        return hn, qxn, qyn, clip
 
     def run(self, h, qx, qy, t_end, rain_fn=None, t0=0.0, callback=None,
             checkpoint_every=0, nudge_fn=None, dt_every=1):
         """Integrate to t_end.
 
         rain_fn : callable t -> (ny, nx) tensor of lateral inflow [m/s]
-                  (rainfall excess / EF5 runoff), or None.
+                  (rainfall excess / EF5 runoff), or None. Must be >= 0: a
+                  sink over a dry cell can only be met by clipping, which the
+                  step_limited backstop refuses.
         callback : callable (t, h, qx, qy) after each step.
         checkpoint_every : if > 0, wrap every N steps in
                   torch.utils.checkpoint to trade compute for memory when
@@ -298,11 +376,13 @@ class SWESolver:
         nudge_fn : callable (t, h) -> h applied after each step — e.g. the
                   EF5ChannelStage floor that couples routed channel flow in.
         dt_every : recompute the CFL dt only every `dt_every` steps and hold
-                  0.9x the last computed value in between. compute_dt ends
-                  in a device->host sync (`.item()`); at GPU throughput that
-                  sync dominates the step, so holding the dt between
-                  recomputes trades <=10% step size for the sync. 1 (default)
-                  = exact per-step CFL, bit-identical to the old behavior.
+                  0.9x the last computed value in between, trading <=10% step
+                  size for compute_dt's passes and device->host sync. Every
+                  step, held or not, still syncs once for the step_limited
+                  backstop. 1 (default) = exact per-step CFL.
+
+        Time advances by the dt each step actually took, which the backstop
+        can make smaller than the CFL dt while rain first wets dry ground.
         """
         t = t0
         nstep = 0
@@ -311,7 +391,7 @@ class SWESolver:
         while t < t_end - 1e-12:
             rain = rain_fn(t) if rain_fn is not None else None
             if dt_every <= 1 or held_dt is None or nstep % dt_every == 0:
-                dt = self.compute_dt(h, qx, qy)
+                dt = self.compute_dt(h, qx, qy, rain)
                 held_dt = 0.9 * dt
             else:
                 dt = held_dt
@@ -323,11 +403,13 @@ class SWESolver:
                     dt = nc  # land exactly on the forcing switch
             if checkpoint_every > 0 and h.requires_grad:
                 from torch.utils.checkpoint import checkpoint as _ckpt
-                h, qx, qy, _ = _ckpt(
-                    lambda a, b, c: self.step(a, b, c, dt=dt, rain=rain),
-                    h, qx, qy, use_reentrant=False)
+                # pick dt outside the checkpoint: its replay during backward
+                # must retake exactly this dt, not repeat the search
+                with torch.no_grad():
+                    dt = self.step_limited(h, qx, qy, dt, rain)[3]
+                h, qx, qy, _ = _ckpt(self.step, h, qx, qy, dt, rain, use_reentrant=False)
             else:
-                h, qx, qy, _ = self.step(h, qx, qy, dt=dt, rain=rain)
+                h, qx, qy, dt = self.step_limited(h, qx, qy, dt, rain)
             t += dt
             nstep += 1
             if nudge_fn is not None:
