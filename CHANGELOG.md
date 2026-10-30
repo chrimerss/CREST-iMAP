@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- **Rain on a dry domain created water.** `compute_dt` saw no wave speed on dry
+  cells and took `dt_max`, so rain wet them within the step, the second RK stage
+  drove depths negative, and clamping those to zero added water: 5.42x the rain
+  supplied on a 16x16 grid with one raining cell, 2x on a 40x40 plane at
+  `dt_max=3600`. `compute_dt` now accounts for the depth rain adds, and adaptive
+  steps (`step` with no `dt`, and `run`) measure the depth they clip and halve `dt`
+  until it is under 1e-13 of the water on the grid. Mass error on those cases is now
+  about 1e-15. An explicit `dt` is still taken exactly. Expect more attempts per
+  step while rain first wets dry rough ground (see `SWESolver.n_retries`).
+- **`cfl` above 0.5 is capped with a warning**, and `cfl <= 0` is refused.
+- **`run(checkpoint_every=...)` gave wrong gradients.** Checkpoint replays during
+  backward picked up the last step's `dt` and rain instead of their own.
+
 ## 2.0.0 — 2026-08-17
 
 First release of the rewritten CREST-iMAP. The model is still the coupled
