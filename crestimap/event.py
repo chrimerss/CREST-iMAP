@@ -42,6 +42,11 @@ class EventConfig:
     dt_every: int = 1                   # CFL recompute cadence (GPU: ~10)
     progress: object = None             # optional callable(str)
 
+    def __post_init__(self):
+        if not self.output_every_s > 0:
+            raise ValueError(f"output_every_s must be positive, got "
+                             f"{self.output_every_s}")
+
 
 def run_event(cfg: EventConfig) -> dict:
     """Run the hydrodynamic event simulation; returns the manifest dict.

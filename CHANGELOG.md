@@ -16,6 +16,24 @@
 - **`cfl` above 0.5 is capped with a warning**, and `cfl <= 0` is refused.
 - **`run(checkpoint_every=...)` gave wrong gradients.** Checkpoint replays during
   backward picked up the last step's `dt` and rain instead of their own.
+- **DEMs the model cannot use now fail instead of producing numbers.** An
+  undeclared fill value such as -9999 acted as a pit, a file with no geotransform
+  ran with 111 km cells, metric coordinates with no CRS were read as degrees, a
+  rotated transform was ignored, and an all-nodata DEM became `-inf`. `SolverGrid`
+  refuses all of these, plus elevations outside (-9990, 9000] m, and
+  `regrid_to_solver` refuses a forcing grid with no geotransform. Declared nodata
+  cells are still filled.
+- **NaN cells in a DEM reached the solver.** `from_dem` missed them when the nodata
+  tag was absent or NaN, because NaN never compares equal. They are now filled
+  like other nodata cells. Cells a GDAL mask band marks invalid are filled too;
+  they used to be read as elevations.
+- **`output_every_s <= 0` hung the run.** `EventConfig` now refuses it.
+
+### Changed
+
+- **Depth rasters label their own scale.** `write_depth` still stores uint16
+  centimeters but now sets a GDAL scale of 0.01 and units of `m`, so other tools can
+  read meters. `read_depth` and the pixel values are unchanged.
 
 ## 2.0.0 — 2026-08-17
 
