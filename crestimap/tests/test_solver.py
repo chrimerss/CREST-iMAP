@@ -8,7 +8,7 @@ Run:  python -m pytest crestimap/tests -q     (or run this file directly)
 3. Mass conservation: closed basin + lateral inflow gains exactly the
    injected volume.
 4. Gradients: d(loss)/d(Manning n) and d(loss)/d(bed scale) from autograd
-   match central finite differences.
+   match central finite differences, on wet and on partly dry domains.
 5. Water budget from a dry start: rain on dry ground creates no water at any
    dt_max, rain-aware dt, cfl cap, step_limited retries stay differentiable.
 """
@@ -23,6 +23,7 @@ import torch
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2]))
 from crestimap import SWESolver, stoker_dambreak
+from crestimap.solver import safe_sqrt
 
 torch.set_default_dtype(torch.float64)
 # CRESTIMAP_TEST_DEVICE=cuda runs the whole suite on the GPU (P1 gate 1)
@@ -349,8 +350,7 @@ def test_step_limited_raises_when_it_cannot_recover():
 
 def _thin_film_step(n_manning, dt_limit=None, dt=None):
     """Thin wet film on a rough bed, with a dt_limit far above CFL so the first
-    attempts clip. Stays wet everywhere: the HLL wave speeds have an infinite
-    derivative at h=0, so gradients need wet cells whichever dt is taken."""
+    attempts clip."""
     z = _rough_bed(16, 0.02)
     s = SWESolver(z, dx=5.0, dy=5.0, n_manning=n_manning)
     h = 0.02 + 0.01 * torch.linspace(0, 1, 16).expand(16, 16)
@@ -405,6 +405,134 @@ def test_checkpointed_run_matches_plain_gradient():
     assert abs(grads[0] - grads[1]) <= 1e-12 * abs(grads[0]), f"{grads}"
 
 
+def _partly_dry_case(name, ny=10, nx=14):
+    """(bed, h0, rain) that leaves some cells dry at the end of the run."""
+    y, x = torch.meshgrid(torch.linspace(0, 1, ny), torch.linspace(0, 1, nx),
+                          indexing="ij")
+    z = _bumpy_bed(ny, nx, amp=0.3) + 0.5 * x
+    rain = torch.zeros_like(z)
+    if name == "pond":        # moving pond below a dry slope, some rain on the water
+        # Curved along both axes: a surface flat along one sits on a minmod kink,
+        # wet or dry, where FD stops converging to any one derivative.
+        eta = 0.25 + 0.1 * (1.0 - 2.0 * x) + 0.03 * torch.sin(2.3 * x + 4.1 * y) * torch.cos(3.7 * y)
+        h = torch.clamp(eta - z, min=0.0)
+        rain[:3, :4] = 1e-3
+    elif name == "dam break":  # onto a dry bed
+        h = torch.zeros_like(z)
+        h[:, :5] = 0.5 + 0.03 * torch.arange(ny)[:, None]
+    else:                      # dry start, rain on one patch
+        h = torch.zeros_like(z)
+        rain[3:6, 4:8] = 5e-2
+    return z, h, rain
+
+
+def _partly_dry_loss(z, h, rain, n, order, nsteps=20, dt=0.02):
+    s = SWESolver(z, dx=1.0, dy=1.0, n_manning=n, order=order)
+    qx = torch.zeros_like(h)
+    qy = torch.zeros_like(h)
+    for _ in range(nsteps):
+        h, qx, qy, _ = s.step(h, qx, qy, dt=dt, rain=rain)
+    w = torch.linspace(0.5, 1.5, h.shape[1]).expand_as(h)
+    return ((h ** 2 + qx ** 2 + qy ** 2) * w).sum(), h
+
+
+def test_gradients_match_fd_partly_dry():
+    """Autograd vs finite differences at frozen dt, with dry cells in the domain,
+    along random directions over the cells that end up dry and those that end up
+    wet, so the larger gradients of wet cells cannot hide errors at dry ones."""
+    torch.manual_seed(0)
+    d = 1e-6
+    for case in ("pond", "dam break", "rain patch"):
+        z0, h0, rain = _partly_dry_case(case)
+        n0 = 0.05 * (1.0 + 0.2 * torch.rand(z0.shape))
+        for order in (1, 2):
+            n = n0.clone().requires_grad_(True)
+            z = z0.clone().requires_grad_(True)
+            loss, hn = _partly_dry_loss(z, h0, rain, n, order)
+            dry = hn.detach() == 0.0
+            assert dry.any() and not dry.all(), f"{case}: no longer partly dry"
+            loss.backward()
+            assert n.grad.abs().max() > 0.0 and z.grad.abs().max() > 0.0
+            for param, grad in (("n", n.grad), ("z", z.grad)):
+                for cells, mask in (("wet", ~dry), ("dry", dry)):
+                    v = torch.randn(z0.shape) * mask
+                    dn, dz = (d * v, 0.0) if param == "n" else (0.0, d * v)
+                    lp = _partly_dry_loss(z0 + dz, h0, rain, n0 + dn, order)[0].item()
+                    lm = _partly_dry_loss(z0 - dz, h0, rain, n0 - dn, order)[0].item()
+                    g_fd = (lp - lm) / (2 * d)
+                    g_auto = (grad * v).sum().item()
+                    assert math.isfinite(g_auto), f"{case} order {order} d{param}: NaN"
+                    # 1e-15 |loss| / d is the rounding noise of the difference. Where
+                    # +d and -d take the same limiter branches they agree to 1e-8;
+                    # a pair straddling a minmod tie can differ by a few 1e-4.
+                    tol = 1e-3 * (grad * v).abs().sum().item() + 1e-15 * abs(lp) / d
+                    assert abs(g_auto - g_fd) <= tol, \
+                        (f"{case} order {order} d{param} over {cells} cells: "
+                         f"autograd {g_auto:.6e} vs FD {g_fd:.6e}, tol {tol:.1e}")
+
+
+def test_gradients_finite_from_dry_start():
+    """Still and dry cells have no velocity, so friction's sqrt(u^2 + v^2) sits at 0
+    and 0/0 would poison every gradient behind it: rain on a flat dry grid gave 100%
+    NaN. There is no flow here, so n has no effect at all. On an exactly flat bed
+    z is at a kink, so this checks z for being finite but not against FD."""
+    z = torch.zeros(16, 16, requires_grad=True)
+    n = torch.tensor(0.05, requires_grad=True)
+    s = SWESolver(z, dx=2.0, dy=2.0, n_manning=n)
+    h = torch.zeros(16, 16)
+    qx = qy = torch.zeros_like(h)
+    rain = torch.full_like(h, 1e-4)
+    with torch.autograd.detect_anomaly(check_nan=True):
+        for _ in range(20):
+            h, qx, qy, _ = s.step(h, qx, qy, dt=0.05, rain=rain)
+        (h ** 2).sum().backward()
+    assert n.grad.item() == 0.0
+    assert z.grad.isfinite().all()
+
+
+def test_gradients_finite_lake_at_rest_with_dry_hills():
+    z = _bumpy_bed(24, 31, amp=1.4).requires_grad_(True)
+    n = torch.tensor(0.05, requires_grad=True)
+    s = SWESolver(z, dx=2.0, dy=2.0, n_manning=n)
+    h = torch.clamp(1.0 - z.detach(), min=0.0)
+    qx = qy = torch.zeros_like(h)
+    for _ in range(20):
+        h, qx, qy, _ = s.step(h, qx, qy, dt=0.05)
+    assert (h == 0.0).any()
+    (h ** 2).sum().backward()
+    assert n.grad.isfinite() and z.grad.isfinite().all()
+
+
+def test_adaptive_run_differentiates_from_dry_start():
+    """The real calibration path: rough dry ground, rain, retries and checkpoints."""
+    z = _rough_bed(16, 0.2)
+    grads = []
+    for every in (0, 1):
+        n = torch.tensor(0.05, requires_grad=True)
+        s = SWESolver(z, dx=30.0, dy=30.0, n_manning=n, dt_max=600.0)
+        h0 = torch.zeros_like(z).requires_grad_(every > 0)   # checkpoint needs it
+        rain = torch.full_like(z, RAIN_50MM_H)
+        hn, _, _ = s.run(h0, torch.zeros_like(z), torch.zeros_like(z), t_end=600.0,
+                         rain_fn=lambda t: rain, checkpoint_every=every)
+        (hn ** 2).sum().backward()
+        assert s.n_retries > 0, "case no longer exercises the backstop"
+        assert h0.grad is None or h0.grad.isfinite().all()
+        grads.append(n.grad.item())
+    assert math.isfinite(grads[0]) and grads[0] != 0.0
+    assert abs(grads[0] - grads[1]) <= 1e-12 * abs(grads[0]), f"{grads}"
+
+
+def test_safe_sqrt():
+    """torch.sqrt's values bit for bit, its gradient except at 0, where it is 0."""
+    x = torch.tensor([0.0, -0.0, 1e-300, 2.0, float("inf"), -1.0, float("nan")])
+    for y in (x, x.clone().requires_grad_(True)):
+        assert safe_sqrt(y).detach().numpy().tobytes() == torch.sqrt(x).numpy().tobytes()
+    t = torch.tensor([0.0, 1e-300, 2.0], requires_grad=True)
+    safe_sqrt(t).sum().backward()
+    assert t.grad[0] == 0.0
+    assert t.grad[1:].tolist() == [0.5 / math.sqrt(v) for v in (1e-300, 2.0)]
+
+
 if __name__ == "__main__":
     for fn in (test_well_balanced_wet, test_well_balanced_dry_hills,
                test_stoker_dambreak, test_mass_conservation_with_inflow,
@@ -418,7 +546,11 @@ if __name__ == "__main__":
                test_run_takes_the_rain_limited_dt,
                test_step_limited_raises_when_it_cannot_recover,
                test_retried_step_is_differentiable,
-               test_checkpointed_run_matches_plain_gradient):
+               test_checkpointed_run_matches_plain_gradient,
+               test_gradients_match_fd_partly_dry,
+               test_gradients_finite_from_dry_start,
+               test_gradients_finite_lake_at_rest_with_dry_hills,
+               test_adaptive_run_differentiates_from_dry_start, test_safe_sqrt):
         fn()
         print(f"PASS  {fn.__name__}")
     print("all tests passed")
