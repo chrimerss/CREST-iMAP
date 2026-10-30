@@ -3,7 +3,8 @@
 Flood-depth fields are mostly dry, so uint16 centimeters + DEFLATE
 compresses to a few percent of float32 — an event's whole frame stack
 lands in the tens of MB instead of GB. Depth precision 1 cm, range
-0–655.35 m.
+0–655.35 m. Files carry a GDAL scale of 0.01 and units of "m", so a reader that
+applies band scale gets meters; raw pixel values are centimeters.
 """
 from __future__ import annotations
 
@@ -20,6 +21,8 @@ def write_depth(path, depth_m, transform, crs):
                        compress="deflate", predictor=2, tiled=True,
                        blockxsize=256, blockysize=256) as ds:
         ds.write(q, 1)
+        ds.scales = (0.01,)
+        ds.units = ("m",)
     return path
 
 

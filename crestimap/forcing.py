@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import bisect
 import datetime as _dt
+import math
 
 import numpy as np
 import torch
@@ -108,6 +109,10 @@ def regrid_to_solver(src: np.ndarray, src_transform, dst_shape, dst_transform,
         diagnostics, not for runoff forcing).
     Uses rasterio.warp when CRSs differ; direct index mapping otherwise.
     """
+    if src_transform.is_identity:
+        # rasterio's answer for a file with no geotransform; regridding it would
+        # silently repeat one edge cell over the whole domain
+        raise ValueError("source grid is not georeferenced (identity transform)")
     same_crs = (src_crs is None and dst_crs is None) or (src_crs == dst_crs)
     if method == "containing" and same_crs:
         ny, nx = dst_shape
@@ -133,6 +138,43 @@ def regrid_to_solver(src: np.ndarray, src_transform, dst_shape, dst_transform,
 # --------------------------------------------------------------------------- #
 
 _M_PER_DEG_LAT = 111132.0
+# Elevations outside (MIN, MAX] meters are fill values, not terrain: they would
+# act as deep pits or towers in the solver.
+_DEM_MIN_M = -9990.0
+_DEM_MAX_M = 9000.0
+
+
+def _cell_size_m(transform, crs, ny):
+    """Metric (dx, dy) of a north-up raster. A transform the solver cannot use
+    is refused here: rasterio returns identity for a file with no geotransform,
+    which would otherwise become 111 km cells."""
+    a, b, c, d, e, f = list(transform)[:6]
+    if transform.is_identity:
+        raise ValueError("DEM is not georeferenced (identity transform)")
+    if not (np.isfinite([a, e, c, f]).all() and a != 0 and e != 0):
+        raise ValueError(f"DEM pixel size ({a}, {e}) and origin ({c}, {f}) "
+                         f"must be finite and non-zero")
+    if b != 0 or d != 0:
+        raise ValueError(f"rotated DEM transform is not supported (b={b}, d={d})")
+    if crs is None or getattr(crs, "is_geographic", True):
+        if not (abs(f) <= 90 and abs(c) <= 360 and abs(a) <= 1 and abs(e) <= 1):
+            raise ValueError(f"DEM CRS ({crs}) reads as lon/lat, but its coordinates "
+                             f"(origin {c}, {f}; pixel {a}, {e}) are not degrees")
+        lat = f + e * ny / 2.0  # center latitude
+        dy = abs(e) * _M_PER_DEG_LAT
+        dx = abs(a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
+        return dx, dy
+    return abs(a), abs(e)
+
+
+def _check_elevations(z, ignore=None):
+    bad = ~((z > _DEM_MIN_M) & (z <= _DEM_MAX_M))  # NaN compares False: bad
+    if ignore is not None:
+        bad &= ~ignore
+    if bad.any():
+        r, c = np.unravel_index(bad.argmax(), bad.shape)
+        raise ValueError(f"DEM has a nodata or out-of-range cell at row {r}, "
+                         f"col {c}: {z[r, c]}; declare it as nodata or fill it")
 
 
 class SolverGrid:
@@ -153,40 +195,29 @@ class SolverGrid:
 
     @classmethod
     def from_array(cls, z_np, transform, crs, dtype=None, device=None):
-        import math
-        geographic = crs is None or getattr(crs, "is_geographic", True)
-        if geographic:
-            lat = transform.f + transform.e * z_np.shape[0] / 2.0
-            dy = abs(transform.e) * _M_PER_DEG_LAT
-            dx = abs(transform.a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
-        else:
-            dx, dy = abs(transform.a), abs(transform.e)
-        z = torch.as_tensor(np.asarray(z_np, dtype=float),
-                            dtype=dtype or torch.get_default_dtype(), device=device)
+        z_np = np.asarray(z_np, dtype=float)
+        dx, dy = _cell_size_m(transform, crs, z_np.shape[0])
+        _check_elevations(z_np)
+        z = torch.as_tensor(z_np, dtype=dtype or torch.get_default_dtype(),
+                            device=device)
         return cls(z, transform, crs, dx, dy)
 
     @classmethod
     def from_dem(cls, dem_path, dtype=None, device=None, nodata_fill=None):
-        import math
+        """Declared nodata, mask-band and NaN cells take `nodata_fill` (default:
+        the highest valid elevation); anything else that is not terrain is
+        refused."""
         import rasterio
         with rasterio.open(dem_path) as ds:
-            arr = ds.read(1).astype(float)
-            if ds.nodata is not None:
-                fill = nodata_fill if nodata_fill is not None else np.nanmax(
-                    np.where(arr == ds.nodata, -np.inf, arr))
-                arr = np.where(arr == ds.nodata, fill, arr)
+            arr = ds.read(1, masked=True).astype(float).filled(np.nan)
             tr = ds.transform
             crs = ds.crs
-            geographic = crs is None or crs.is_geographic
-            if geographic:
-                lat = tr.f + tr.e * ds.height / 2.0  # center latitude
-                dy = abs(tr.e) * _M_PER_DEG_LAT
-                dx = abs(tr.a) * _M_PER_DEG_LAT * math.cos(math.radians(lat))
-            else:
-                dx, dy = abs(tr.a), abs(tr.e)
-        z = torch.as_tensor(arr, dtype=dtype or torch.get_default_dtype(),
-                            device=device)
-        return cls(z, tr, crs, dx, dy)
+        missing = np.isnan(arr)
+        if missing.all():
+            raise ValueError(f"DEM {dem_path} has no valid cells")
+        _check_elevations(arr, ignore=missing)
+        fill = nodata_fill if nodata_fill is not None else np.nanmax(arr)
+        return cls.from_array(np.where(missing, fill, arr), tr, crs, dtype, device)
 
 
 def parse_ef5_dir(output_dir, kind, model=None):
