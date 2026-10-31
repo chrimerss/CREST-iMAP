@@ -3,7 +3,7 @@
 **Machine:** Apple M4 Max (12 performance + 4 efficiency cores), 64 GB, PyTorch 2.15.0.
 **Case:** `benchmarks/metal/bench_devices.py`: 50 mm/h rain on a partly flooded rough
 bed, 30 m cells, float32, second order, adaptive `SWESolver.step`. MCUPS is million
-cell-steps per second. Load average was 4–10 during the runs, with nothing else heavy
+cell-steps per second. Load average was 4–11 during the runs, with nothing else heavy
 running, and repeats agreed within about 4%.
 
 | Grid | Metal steps/s | Metal MCUPS | CPU 12 threads MCUPS | CPU 1 thread MCUPS | Metal vs best CPU |
@@ -33,8 +33,9 @@ running, and repeats agreed within about 4%.
   about 9.4e-6 m RMSE (4.3e-5 and 4.5e-5 m at worst), and both lose 1.7e-6 of the
   water, where float64 shows no measurable loss.
 - **Gradients:** 20 steps forward and backward on 512² took 0.37 s on Metal and 3.2 s
-  on CPU with 12 threads. This measures time only; `tests/test_metal.py` checks that
-  Metal and CPU gradients agree.
+  on CPU with 12 threads, one cold call each, so Metal's first-run setup is included.
+  This measures time only; `tests/test_metal.py` checks that Metal and CPU gradients
+  agree.
 
 **Not measured:** energy (`powermetrics` needs root), the Harvey case (its data is not
 on this machine), and `dt_every` or dry-start retries on Metal. This case had no
