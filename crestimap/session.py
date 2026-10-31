@@ -224,8 +224,9 @@ class EventSession:
         import torch
         from . import io as iomod
         from .forcing import EF5ChannelStage, ef5_forcing
-        from .solver import SWESolver
+        from .solver import SWESolver, resolve_device
 
+        device = resolve_device(device)
         v = self.visit
         assert v is not None, "no open visit"
         cfg, grid = self.cfg, self.grid

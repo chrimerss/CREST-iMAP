@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Added
+
+- **Apple Metal backend.** `device="mps"` now runs `run_event` and `EventSession` on
+  a Mac GPU, in float32 as those paths already do. `device="auto"` picks CUDA, then
+  Metal, then CPU. Metal has no float64, so `test_solver` and `test_forcing` still
+  need CPU or CUDA. See [`docs/BENCHMARK_METAL.md`](docs/BENCHMARK_METAL.md).
+
 ### Fixed
 
 - **Rain on a dry domain created water.** `compute_dt` saw no wave speed on dry

@@ -68,7 +68,8 @@ be fit by gradient descent through the simulation itself.
 - Everything is torch tensor ops: the entire simulation is
   **differentiable end to end** w.r.t. Manning n, bed elevation, initial
   conditions, and forcing (autograd calibration), and runs unchanged on
-  CPU or GPU.
+  CPU, CUDA, or Apple Metal (`device="mps"`, float32 only; see
+  [`BENCHMARK_METAL.md`](docs/BENCHMARK_METAL.md)).
 
 Validated in `crestimap/tests`: exact C-property (wet and dry, both
 orders), Stoker dam-break analytic solution, mass conservation to 1e-9,
