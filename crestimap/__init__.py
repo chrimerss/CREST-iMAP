@@ -19,11 +19,12 @@ The upstream coupling is still supported and remains the CREST-AI deployment pat
 where EF5/CREST runs ahead of the model, :mod:`crestimap.forcing` ingests its runoff
 and discharge grids directly instead of running the water balance here.
 """
-from .solver import SWESolver, desing_velocity, minmod
+from .solver import SWESolver, desing_velocity, minmod, resolve_device
 from .lsm import CrestLSM, crest_core
 from .analytic import stoker_dambreak
 from .event import EventConfig, run_event
 
 __version__ = "2.0.0"
-__all__ = ["SWESolver", "desing_velocity", "minmod", "CrestLSM", "crest_core",
+__all__ = ["SWESolver", "desing_velocity", "minmod", "resolve_device",
+           "CrestLSM", "crest_core",
            "stoker_dambreak", "EventConfig", "run_event"]

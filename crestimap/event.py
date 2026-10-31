@@ -62,9 +62,10 @@ def run_event(cfg: EventConfig) -> dict:
     from .forcing import (EF5ChannelStage, SolverGrid, ef5_forcing,
                           initial_state_from_ef5, parse_ef5_dir,
                           regrid_to_solver)
-    from .solver import SWESolver
+    from .solver import SWESolver, resolve_device
 
     say = cfg.progress or (lambda s: None)
+    cfg = dataclasses.replace(cfg, device=resolve_device(cfg.device))
     os.makedirs(cfg.out_dir, exist_ok=True)
     dtype = torch.float32
 
@@ -102,8 +103,10 @@ def run_event(cfg: EventConfig) -> dict:
                                   (ny, nx), grid.transform, ds.crs, grid.crs)
         h0, qx0, qy0 = initial_state_from_ef5(qg, None, grid.z, grid.dx, grid.dy)
         h0 = h0.to(dtype=dtype, device=cfg.device)
-        h0 = torch.where(torch.as_tensor(qg, device=cfg.device) >=
-                         cfg.q_channel_min, h0, torch.zeros_like(h0))
+        # compare in numpy: qg is float64, which Apple's Metal (mps) cannot hold
+        h0 = torch.where(torch.as_tensor(qg >= cfg.q_channel_min,
+                                         device=cfg.device),
+                         h0, torch.zeros_like(h0))
         qx0 = torch.zeros_like(h0)
         qy0 = torch.zeros_like(h0)
         say(f"channel pre-wet from q grid @ {t_near:%Y-%m-%d %H:%M} "

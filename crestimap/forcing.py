@@ -364,7 +364,8 @@ def initial_state_from_ef5(q_grid, sm_grid, dem, dx, dy,
     Experimental: exact rating and width model to be calibrated against
     the differentiable solver itself once wired end-to-end.
     """
-    q = torch.as_tensor(np.asarray(q_grid, dtype=float))
+    # on CPU: q_grid is float64, which an ambient Metal default device cannot hold
+    q = torch.as_tensor(np.asarray(q_grid, dtype=float), device="cpu")
     h0 = torch.zeros_like(q)
     if bankfull_width_fn is None:
         bankfull_width_fn = lambda qq: torch.clamp(7.2 * qq ** 0.5, min=1.0)  # Leopold-Maddock-ish
@@ -372,5 +373,5 @@ def initial_state_from_ef5(q_grid, sm_grid, dem, dx, dy,
     w = bankfull_width_fn(torch.clamp(q, min=0.0))
     n_ch, slope = 0.035, 1e-3
     h_ch = (n_ch * torch.clamp(q, min=0.0) / (w * slope ** 0.5)) ** 0.6
-    h0 = torch.where(chan, torch.minimum(h_ch, torch.as_tensor(5.0)), h0)
+    h0 = torch.where(chan, h_ch.clamp(max=5.0), h0)
     return h0, torch.zeros_like(h0), torch.zeros_like(h0)

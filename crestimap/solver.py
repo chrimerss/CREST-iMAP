@@ -44,6 +44,17 @@ CLIP_TOL = 1e-13
 MAX_DT_HALVINGS = 30   # retries before step_limited gives up (dt_limit * 2^-30)
 
 
+def resolve_device(device: str = "auto") -> str:
+    """"auto" picks cuda, then Apple Metal (mps), then cpu; anything else passes
+    through. Metal has no float64, so run it in float32 as run_event and
+    EventSession do."""
+    if device != "auto":
+        return device
+    if torch.cuda.is_available():
+        return "cuda"
+    return "mps" if torch.backends.mps.is_available() else "cpu"
+
+
 def desing_velocity(h: torch.Tensor, q: torch.Tensor, eps: float) -> torch.Tensor:
     """Desingularized velocity u = sqrt(2) h q / sqrt(h^4 + max(h,eps)^4)."""
     h4 = h ** 4
