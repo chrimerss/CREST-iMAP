@@ -125,8 +125,8 @@ class EventSession:
             # pin to the grid's device: an ambient torch default device (e.g.
             # torch.set_default_device("cuda") in a host app) must not split
             # this CPU-side setup across devices
-            qg_t = torch.as_tensor(qg).to(grid.z.device)
-            h0 = torch.where(qg_t >= cfg.q_channel_min,
+            wet = torch.as_tensor(qg >= cfg.q_channel_min, device=grid.z.device)
+            h0 = torch.where(wet,
                              h0.to(torch.float32).to(grid.z.device),
                              torch.zeros_like(grid.z))
             self.log(f"channel pre-wet from q grid @ {t_near:%Y-%m-%d %H:%M} "

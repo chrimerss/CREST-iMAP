@@ -5,8 +5,10 @@
 ### Added
 
 - **Apple Metal backend.** `device="mps"` now runs `run_event` and `EventSession` on
-  a Mac GPU, in float32 as those paths already do. `device="auto"` picks CUDA, then
-  Metal, then CPU. Metal has no float64, so `test_solver` and `test_forcing` still
+  a Mac GPU, in float32 as those paths already do: 5.7–14x the best CPU rate from
+  512² up, but no faster at 128² and slower at 64². On those same two paths,
+  `device="auto"` picks CUDA, then Metal, then CPU; elsewhere, resolve it first with
+  `resolve_device`. Metal has no float64, so `test_solver` and `test_forcing` still
   need CPU or CUDA. See [`docs/BENCHMARK_METAL.md`](docs/BENCHMARK_METAL.md).
 
 ### Fixed

@@ -4,8 +4,9 @@ Synthetic rain on a partly flooded rough bed, on the production path: float32,
 second order, adaptive `SWESolver.step`. Each device and grid size runs in its own
 process so peak memory is that run's alone. No data is needed:
 
-    python benchmarks/metal/bench_devices.py --sizes 256 512 1024 2048 \
-        --out metal.json
+    python benchmarks/metal/bench_devices.py --out metal.json
+    python benchmarks/metal/bench_devices.py --devices cpu --threads 1 \
+        --throughput-only --out cpu_1thread.json
 
 Other load on the machine moves the CPU numbers far more than the GPU ones, so the
 load average is recorded with every result. Check it before quoting a ratio.
@@ -30,6 +31,7 @@ from crestimap.solver import SWESolver                   # noqa: E402
 DX = 30.0
 RAIN_M_S = 50.0 / 1000.0 / 3600.0   # 50 mm/h
 POOL_M = 15.0
+RSS_PER_GIB = 2**30 if sys.platform == "darwin" else 2**20   # ru_maxrss: bytes or KiB
 
 
 def bed(n):
@@ -57,7 +59,7 @@ def wait(device):
 
 def throughput(n, device, budget_s, repeats):
     """Steps per second, after warm-up steps that are not counted. Each repeat
-    starts from the same state, and the same number of steps on every device."""
+    starts from the same state and takes the same number of steps."""
     solver, h0, qx0, qy0, rain = setup(n, device, torch.float32)
     h, qx, qy = h0, qx0, qy0
     t = time.perf_counter()
@@ -79,13 +81,13 @@ def throughput(n, device, budget_s, repeats):
         wait(device)
         rates.append(steps / (time.perf_counter() - t))
         cpu_rates.append(steps / (time.process_time() - c))
-    # per CPU-second, on one thread, is the figure that survives a loaded machine
+    # per CPU-second, with --threads 1, is the figure that survives a loaded machine
     out = {"steps": steps, "rates": rates, "retries": solver.n_retries,
            "threads": torch.get_num_threads(),
            "best_mcups_per_cpu_s": max(cpu_rates) * n * n / 1e6,
            "steps_per_s": statistics.median(rates),
            "mcups": statistics.median(rates) * n * n / 1e6,
-           "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 2**30}
+           "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / RSS_PER_GIB}
     if device == "mps":
         out["gpu_alloc_gib"] = torch.mps.driver_allocated_memory() / 2**30
     return out
@@ -98,7 +100,8 @@ def gradient(n, device, nsteps=20):
     t = time.perf_counter()
     for _ in range(nsteps):
         h, qx, qy, _ = solver.step(h, qx, qy, dt=0.5, rain=rain)
-    h.sum().backward()
+    # squared depth: total water does not depend on roughness
+    (h ** 2).sum().backward()
     g = solver.n.grad.item()
     wait(device)
     return {"nsteps": nsteps, "seconds": time.perf_counter() - t, "grad": g}
