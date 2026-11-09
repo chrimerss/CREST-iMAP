@@ -15,8 +15,8 @@ Scheme
   stay well defined).
 - Point-implicit Manning friction (closed form, differentiable).
 - Desingularized velocities u = sqrt(2) h q / sqrt(h^4 + max(h,eps)^4)
-  (Kurganov & Petrova 2007) so wet/dry fronts neither blow up nor produce
-  NaN gradients.
+  (Kurganov & Petrova 2007) so wet/dry fronts do not blow up, and safe_sqrt for
+  wave and flow speeds so dry and still cells do not produce NaN gradients.
 - Lateral inflow source term `rain` (m/s): rainfall excess or, in the
   CREST-AI coupling, EF5/CREST surface + subsurface runoff grids.
 
@@ -60,6 +60,19 @@ def desing_velocity(h: torch.Tensor, q: torch.Tensor, eps: float) -> torch.Tenso
     h4 = h ** 4
     e4 = torch.clamp(h, min=eps) ** 4
     return (2.0 ** 0.5) * h * q / torch.sqrt(h4 + e4)
+
+
+def safe_sqrt(x: torch.Tensor) -> torch.Tensor:
+    """torch.sqrt with zero gradient at x = 0, where backward's 0/0 would give NaN.
+
+    Forward values are torch.sqrt's bit for bit. Zero is the right slope here:
+    every use is a speed that a depth or momentum multiplies, so the product's
+    derivative at x = 0 is finite and its sqrt term vanishes.
+    """
+    if not x.requires_grad:   # forward-only runs skip the two wheres
+        return torch.sqrt(x)
+    zero = x == 0
+    return torch.where(zero, x.detach(), torch.sqrt(torch.where(zero, torch.ones_like(x), x)))
 
 
 def minmod(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
@@ -223,8 +236,8 @@ class SWESolver:
         else:
             unm, utm, unp, utp = vm, um, vpl, upl
 
-        cm = torch.sqrt(g * hms)
-        cp = torch.sqrt(g * hps)
+        cm = safe_sqrt(g * hms)
+        cp = safe_sqrt(g * hps)
         sL = torch.clamp(torch.minimum(unm - cm, unp - cp), max=0.0)
         sR = torch.clamp(torch.maximum(unm + cm, unp + cp), min=0.0)
 
@@ -318,7 +331,7 @@ class SWESolver:
     def _friction(self, h, qx, qy, dt):
         u = desing_velocity(h, qx, self.eps)
         v = desing_velocity(h, qy, self.eps)
-        sp = torch.sqrt(u ** 2 + v ** 2)
+        sp = safe_sqrt(u ** 2 + v ** 2)   # zero in still water and on dry cells
         h43 = torch.clamp(h, min=self.eps) ** (4.0 / 3.0)
         fac = 1.0 + dt * self.g * self.n ** 2 * sp / h43
         return qx / fac, qy / fac

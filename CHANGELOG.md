@@ -22,6 +22,14 @@
   until it is under 1e-13 of the water on the grid. Mass error on those cases is now
   about 1e-15. An explicit `dt` is still taken exactly. Expect more attempts per
   step while rain first wets dry rough ground (see `SWESolver.n_retries`).
+- **Autograd returned NaN when any cell had no velocity.** Friction's
+  `sqrt(u^2 + v^2)` differentiates to 0/0 in still water and on dry cells, which
+  turned every gradient behind it NaN: rain on a flat dry grid, or a partly dry
+  domain without rain over the dry cells, gave 100% NaN in `n` and `z`. It and the
+  HLL wave speeds, where the same 0/0 only tripped `detect_anomaly`, now use a sqrt
+  with zero gradient at 0. Forward results are bit-identical. Gradients match finite
+  differences on partly dry domains, except that on an exactly flat bed or surface
+  they are one valid subgradient of a kink.
 - **`cfl` above 0.5 is capped with a warning**, and `cfl <= 0` is refused.
 - **`run(checkpoint_every=...)` gave wrong gradients.** Checkpoint replays during
   backward picked up the last step's `dt` and rain instead of their own.
