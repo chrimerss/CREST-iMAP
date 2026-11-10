@@ -9,7 +9,9 @@
   512² up, but no faster at 128² and slower at 64². On those same two paths,
   `device="auto"` picks CUDA, then Metal, then CPU; elsewhere, resolve it first with
   `resolve_device`. Metal has no float64, so `test_solver` and `test_forcing` still
-  need CPU or CUDA. See [`docs/BENCHMARK_METAL.md`](docs/BENCHMARK_METAL.md).
+  need CPU or CUDA. See [`docs/BENCHMARK_METAL.md`](docs/BENCHMARK_METAL.md), which
+  also has the same case on an A100: 2.8–3.2x Metal from 2048² up, but slower than
+  Metal up to 512², where each step's fixed cost dominates.
 
 ### Fixed
 

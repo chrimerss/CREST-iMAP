@@ -526,7 +526,8 @@ def test_safe_sqrt():
     """torch.sqrt's values bit for bit, its gradient except at 0, where it is 0."""
     x = torch.tensor([0.0, -0.0, 1e-300, 2.0, float("inf"), -1.0, float("nan")])
     for y in (x, x.clone().requires_grad_(True)):
-        assert safe_sqrt(y).detach().numpy().tobytes() == torch.sqrt(x).numpy().tobytes()
+        assert (safe_sqrt(y).detach().cpu().numpy().tobytes()
+                == torch.sqrt(x).cpu().numpy().tobytes())
     t = torch.tensor([0.0, 1e-300, 2.0], requires_grad=True)
     safe_sqrt(t).sum().backward()
     assert t.grad[0] == 0.0

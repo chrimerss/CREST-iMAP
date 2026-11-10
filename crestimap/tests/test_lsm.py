@@ -24,6 +24,13 @@ from crestimap.lsm import CrestLSM, crest_core
 torch.manual_seed(0)
 
 
+def _here():
+    """The default device, where the inputs below are built. CRESTIMAP_TEST_DEVICE=cuda
+    makes that cuda for the whole run, through test_solver and test_forcing, and
+    CrestLSM puts its state on cpu unless told."""
+    return torch.get_default_device()
+
+
 def _v1_module():
     path = os.environ.get("CRESTIMAP_V1_CREST")
     if path and path not in sys.path:
@@ -81,7 +88,7 @@ def test_mass_balance():
 def test_no_runoff_without_rain_and_dry_state_is_stable():
     lsm = CrestLSM(WM=torch.full((8, 8), 150.0), B=torch.full((8, 8), 1.0),
                    IM=torch.zeros(8, 8), Ksat=torch.full((8, 8), 5.0),
-                   init_saturation=0.3, dtype=torch.float64)
+                   init_saturation=0.3, dtype=torch.float64, device=_here())
     sm_before = lsm.SM.clone()
     runoff = lsm.step(torch.zeros(8, 8, dtype=torch.float64), 3600.0)
     assert torch.all(runoff == 0)
@@ -92,7 +99,7 @@ def test_saturated_soil_runs_off_everything():
     """At capacity with no impervious fraction and no Ksat, all rain becomes runoff."""
     lsm = CrestLSM(WM=torch.full((4, 4), 100.0), B=torch.full((4, 4), 1.0),
                    IM=torch.zeros(4, 4), Ksat=torch.zeros(4, 4),
-                   init_saturation=1.0, dtype=torch.float64)
+                   init_saturation=1.0, dtype=torch.float64, device=_here())
     rate = 20.0 / 1000.0 / 3600.0                 # 20 mm/h
     runoff = lsm.step(torch.full((4, 4), rate, dtype=torch.float64), 3600.0)
     assert torch.allclose(runoff, torch.full((4, 4), rate, dtype=torch.float64),
@@ -102,7 +109,7 @@ def test_saturated_soil_runs_off_everything():
 def test_runon_absorb_is_bounded_by_storage():
     lsm = CrestLSM(WM=torch.full((4, 4), 100.0), B=torch.full((4, 4), 1.0),
                    IM=torch.zeros(4, 4), Ksat=torch.full((4, 4), 1e6),
-                   init_saturation=0.5, dtype=torch.float64)
+                   init_saturation=0.5, dtype=torch.float64, device=_here())
     take = lsm.runon_rate(3600.0) * 3600.0
     assert torch.all(take <= lsm.WM / 1000.0 - lsm.SM + 1e-12)
     lsm.absorb(take)
@@ -113,7 +120,7 @@ def test_baseflow_reservoir_conserves_mass():
     """released + remaining == banked, at any dt."""
     lsm = CrestLSM(WM=torch.full((4, 4), 200.0), B=torch.full((4, 4), 1.0),
                    IM=torch.zeros(4, 4), Ksat=torch.full((4, 4), 20.0),
-                   init_saturation=0.5, dtype=torch.float64,
+                   init_saturation=0.5, dtype=torch.float64, device=_here(),
                    baseflow={"enabled": True, "tau_hours": 12.0})
     lsm.step(torch.full((4, 4), 30.0 / 1000.0 / 3600.0, dtype=torch.float64), 3600.0)
     banked = lsm.RS.clone()
