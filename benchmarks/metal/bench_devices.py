@@ -1,4 +1,4 @@
-"""CREST-iMAP v2 solver throughput: CPU vs Apple Metal (mps).
+"""CREST-iMAP v2 solver throughput: CPU vs a GPU, CUDA or Apple Metal (mps).
 
 Synthetic rain on a partly flooded rough bed, on the production path: float32,
 second order, adaptive `SWESolver.step`. Each device and grid size runs in its own
@@ -7,6 +7,7 @@ process so peak memory is that run's alone. No data is needed:
     python benchmarks/metal/bench_devices.py --out metal.json
     python benchmarks/metal/bench_devices.py --devices cpu --threads 1 \
         --throughput-only --out cpu_1thread.json
+    python benchmarks/metal/bench_devices.py --devices cuda --out a100.json
 
 Other load on the machine moves the CPU numbers far more than the GPU ones, so the
 load average is recorded with every result. Check it before quoting a ratio.
@@ -53,7 +54,9 @@ def setup(n, device, dtype):
 
 
 def wait(device):
-    if device == "mps":
+    if device.startswith("cuda"):
+        torch.cuda.synchronize()
+    elif device == "mps":
         torch.mps.synchronize()
 
 
@@ -90,6 +93,9 @@ def throughput(n, device, budget_s, repeats):
            "peak_rss_gib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / RSS_PER_GIB}
     if device == "mps":
         out["gpu_alloc_gib"] = torch.mps.driver_allocated_memory() / 2**30
+    elif device.startswith("cuda"):
+        out["gpu_peak_gib"] = torch.cuda.max_memory_allocated() / 2**30
+        out["gpu_name"] = torch.cuda.get_device_name()
     return out
 
 
@@ -123,9 +129,9 @@ def fidelity(n, device, dtype, t_end):
                "mass_error": h.sum().item() / supplied - 1.0}
 
 
-def compare(n, t_end):
+def compare(n, t_end, device):
     runs = {"cpu_f64": ("cpu", torch.float64), "cpu_f32": ("cpu", torch.float32),
-            "mps_f32": ("mps", torch.float32)}
+            f"{device}_f32": (device, torch.float32)}
     depth, out = {}, {}
     for name, (device, dtype) in runs.items():
         depth[name], out[name] = fidelity(n, device, dtype, t_end)
@@ -145,7 +151,7 @@ def child(args):
     elif args.mode == "gradient":
         r = gradient(args.n, args.device)
     else:
-        r = compare(args.n, args.t_end)
+        r = compare(args.n, args.t_end, args.device)
     r.update(mode=args.mode, n=args.n, device=args.device, load=os.getloadavg()[0])
     print(json.dumps(r), flush=True)
 
@@ -201,9 +207,11 @@ def main():
         results.append(r)
         print(r if "error" in r else
               f"gradient {r['n']}^2 {device:4s} {r['seconds']:.2f} s", flush=True)
-    r = spawn(args, "fidelity", args.fidelity_n, "mps")
-    results.append(r)
-    print(json.dumps(r, indent=1), flush=True)
+    gpus = [d for d in args.devices if d != "cpu"]
+    if gpus:    # float32 on the GPU against float64 and float32 on CPU
+        r = spawn(args, "fidelity", args.fidelity_n, gpus[0])
+        results.append(r)
+        print(json.dumps(r, indent=1), flush=True)
     if args.out:
         pathlib.Path(args.out).write_text(json.dumps(results, indent=1))
 
